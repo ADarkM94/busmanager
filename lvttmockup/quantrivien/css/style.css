@@ -173,6 +173,9 @@
 .thongke > div:nth-child(2) {
 	height: 60%;
 }
+.thongke > div:nth-child(2) > div {
+	height: 100%;
+}
 .the {
 	padding: 0;
 	border: 1px solid grey;
@@ -192,24 +195,104 @@
 	text-align: left;
 	margin-bottom: .2em;
 }
+/*Xem và chỉnh sửa loại xe*/
 .loaixe > div {
 	height: 100%;
+	padding-top: 1em; 
 }
-.loaixe > .col-lg-7 > div:nth-child(1) {
+.loaixe > .col-lg-6:nth-child(1) > div:nth-child(1) {
 	height: 35%;
 	margin-top: 1em; 
 	padding: 1em;
 	border: 1px solid grey;
 	border-radius: 5px;
+	position: relative;
 }
-.loaixe > .col-lg-7 > div > div {
+.loaixe > .col-lg-6:nth-child(1) > div:nth-child(1) > span {
+	position: absolute;
+	left: .5em;
+	top: -1.2em;
+	padding: .3em 1em;
+	background: #008cff;
+	color: white;
+	border-radius: 5px;
+}
+.loaixe > .col-lg-6:nth-child(1) > div > div {
 	height: 100%;
 	overflow: auto;
 }
-.loaixe > .col-lg-7 > div > div > table {
+.loaixe > .col-lg-6:nth-child(1) > div > div > table {
 	width: 100%;
 	height: 100%;
 	padding: .5em;
+}
+.loaixe > .col-lg-6:nth-child(1) > div:nth-child(2) {
+	max-height: 60%;
+	margin-top: 2em; 
+	padding: 1em;
+	border: 1px solid grey;
+	border-radius: 5px;
+	position: relative;
+}
+.loaixe > .col-lg-6:nth-child(1) > div:nth-child(2) > span {
+	position: absolute;
+	left: .5em;
+	top: -1.2em;
+	padding: .3em 1em;
+	background: #008cff;
+	color: white;
+	border-radius: 5px;
+}
+.loaixe > .col-lg-6:nth-child(1) > div:nth-child(2) > form > input {
+	margin-top: .5em;
+}
+.loaixe > .col-lg-6:nth-child(2) > div {
+	width: 100%;
+	max-height: 100%;
+	padding: 1em;
+	margin-top: 1em;
+	border: 1px solid grey; 
+	border-radius: 5px;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+.loaixe > .col-lg-6:nth-child(2) > div > div:nth-child(1) {
+	text-align: center;
+	color: #008cff;
+	font-size: 1em;
+}
+.sodoxe ~ div > div > span {
+	display: inline-block;
+	padding: .5em 1.5em;
+	background: white;
+	color: #008cff;
+	border: 1px solid #008cff;
+	border-radius: 5px;
+	transition: .3s ease-in-out;
+	cursor: pointer;
+	margin-top: 1em;
+}
+.sodoxe ~ div > div:nth-child(1) {
+	text-align: left;
+}
+.sodoxe ~ div > div:nth-child(1) > span {
+	margin-left: 1em;
+}
+.sodoxe ~  div > div:nth-child(2) {
+	text-align: right;
+}
+.sodoxe ~ div > div:nth-child(2) > span {
+	margin-right: 1em;
+}
+.sodoxe ~  div > div > span:hover {
+	background: #008cff;
+	color: white;
+	transform: translate(0,-3px);
+	box-shadow: 0 3px 5px grey;
+}
+.sodoxe ~  div > div > span:active {
+	transform: translate(0,0);
+	box-shadow: none;
 }
 .datve > div {
 	height: 100%;
@@ -396,7 +479,8 @@
 }
 .sodoxe {
 	min-height: 40%;
-	overflow: auto; 
+	width: 100%;
+	overflow: auto;
 }
 .sodoxe .row {
 }
