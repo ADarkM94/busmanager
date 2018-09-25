@@ -2,19 +2,21 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Trang chủ</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>TinTuc</title>
+	<meta charset="utf-8">
+  	<meta name="viewport" content="width=device-width, initial-scale=1">
+  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  	<script type="text/javascript" src="js/js.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<link rel="stylesheet prefetch" href="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css">
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
 
 </head>
 <body>
-	<div class="header">
+		<div class="header">
 		<ul>
 			<li><button type="button" class="btn btn-primary">Đăng ký</button></li>
 			<li><button type="button" class="btn btn-primary">Đăng nhập</button></li>
@@ -53,60 +55,13 @@
 		</ul>
 	</div>
 	<div style="clear: all;"></div>
-	<div class="maindatve">
-		<div class="timchuyendidatve"><h3>Tìm chuyến đi</h3></div>
-		<ul>
-			<li>
-				<div class="diadiemdatve">
-				<label>Chọn Nơi Khởi Hành </label>
-				<div class="the">
-				<i class="fa fa-bus"></i>
-				<select>
-					<option>Quảng Ngãi</option>
-					<option>Hồ Chí Minh</option>
-					<option>Hà Nội</option>
-					<option>Bình Định</option>
-				</select>
-				</div>
-				<div class="chonloaixe">
-					<p>Chọn loại xe</p>
-					<form>
-						<input checked="checked" name="gioitinh" type="radio" />Giường nằm
-						<br>
-						<input type="radio" name="gioitinh" />Ghế ngồi
-					</form>
-				</div>
+		<div class="maingioithieu">
+			<div class="tentintuc"><h2>Giới Thiệu</h2></div>
+			<div style="margin-top: 4em;">
+				<p>Là một trong những công ty hàng đầu trong lĩnh vực xe khách đường dài.</p>
 			</div>
-			</li>
-			<li>
-				<div class="diadiemdatve">
-				<label>Chọn Nơi Đến </label>
-				<div class="the">
-				<i class="fa fa-bus"></i>
-				<select>
-					<option>Hồ Chí Minh</option>
-					<option>Hà Nội</option>
-					<option>Quảng Ngãi</option>
-					<option>Bình Định</option>
-				</select>
-				</div>
-			</div>
-			</li>
-			<li>
-				<div class="ngaydidatve">
-				<label>Chọn Thời Gian đi </label>
-				<div id="datepicker" class="input-group date" data-date-format="dd-mm-yyyy"> <input class="form-control" readonly="" type="text"> <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span> 
-				</div>
-				<div class="tim">
-					<i class="fa fa-ticket icon-flat bg-btn-actived"></i>
-					<button type="button" class="btn"><a href="chuyenxe.html">Tìm vé</a></button>
-				</div>
-			</div>
-			</li>
-		</ul>
-		
-	</div>
-	<div class="main">
+		</div>
+		<main class="main">
 		<div class="footer">
 			<ul>
 				<li>
@@ -124,6 +79,6 @@
 				</li>
 			</ul>
 		</div>
-	</div>
-	<script type="text/javascript" src="js/date.js"></script>
+	</main>
 </body>
+</html>
