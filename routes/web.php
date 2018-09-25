@@ -11,6 +11,14 @@
 |
 */
 
+// Route::get('/', function () {
+    // return view('welcome');
+// });
+
 Route::get('/', function () {
-    return view('welcome');
+	return view('tttn-web.index');
+});
+
+Route::get('/datve', function () {
+	return view('tttn-web.datve');
 });
