@@ -22,3 +22,25 @@ Route::get('/', function () {
 Route::get('/datve', function () {
 	return view('tttn-web.datve');
 });
+
+Route::get('/lienhe', function () {
+    return view('tttn-web.lienhe');
+});
+
+Route::get('/chuyenxe', function () {
+    return view('tttn-web.chuyenxe');
+});
+
+Route::get('/chonve', function () {
+    return view('tttn-web.chonve');
+});
+
+Route::get('/gioithieu', function () {
+    return view('tttn-web.gioithieu');
+});
+
+Route::get('/tintuc', function () {
+    return view('tttn-web.tintuc');
+});
+
+Route::get('/checkconnection', 'Controller@checkConnection');
