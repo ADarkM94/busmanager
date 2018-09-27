@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th9 26, 2018 lúc 12:39 PM
+-- Thời gian đã tạo: Th9 27, 2018 lúc 11:48 AM
 -- Phiên bản máy phục vụ: 10.1.32-MariaDB
 -- Phiên bản PHP: 7.2.5
 
@@ -35,7 +35,8 @@ CREATE TABLE `bus_model` (
   `Sơ_đồ` tinytext NOT NULL,
   `Mã_nhân_viên_tạo` int(11) NOT NULL,
   `Mã_nhân_viên_chỉnh_sửa` int(11) NOT NULL,
-  `Update_gần_nhất` datetime NOT NULL
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -51,7 +52,8 @@ CREATE TABLE `chuyen_xe` (
   `Mã_tài_xế` int(11) NOT NULL,
   `Mã_xe` int(11) NOT NULL,
   `Thời_gian_xuất_phát` datetime NOT NULL,
-  `Update_gần_nhất` datetime NOT NULL
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -62,15 +64,16 @@ CREATE TABLE `chuyen_xe` (
 
 CREATE TABLE `customer` (
   `Mã` int(11) NOT NULL,
-  `Tên` varchar(255) NOT NULL,
-  `Ngày_sinh` date NOT NULL,
-  `Giới tính` set('0','1','2') NOT NULL,
-  `Địa chỉ` tinytext NOT NULL,
-  `Username` varchar(255) NOT NULL,
+  `Tên` varchar(255) DEFAULT NULL,
+  `Ngày_sinh` date DEFAULT NULL,
+  `Giới tính` set('0','1','2') DEFAULT NULL,
+  `Địa chỉ` tinytext,
+  `Nickname` varchar(255) DEFAULT NULL,
   `Password` varchar(255) NOT NULL,
-  `Email` varchar(255) NOT NULL,
+  `Email` varchar(255) DEFAULT NULL,
   `Sđt` varchar(255) NOT NULL,
-  `Update_gần_nhất` datetime NOT NULL
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -83,7 +86,9 @@ CREATE TABLE `duong_di` (
   `Mã` int(11) NOT NULL,
   `Mã_Trạm_Start` int(11) NOT NULL,
   `Mã_Trạm_End` int(11) NOT NULL,
-  `Tọa_độ_detail` text NOT NULL
+  `Tọa_độ_detail` text NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -106,7 +111,8 @@ CREATE TABLE `employee` (
   `Bằng_lái` varchar(255) DEFAULT NULL,
   `Sđt` varchar(255) NOT NULL,
   `Date_Starting` date NOT NULL,
-  `Update_gần_nhất` datetime NOT NULL
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -122,7 +128,8 @@ CREATE TABLE `lo_trinh` (
   `Nơi_đi` varchar(255) NOT NULL,
   `Nơi_đến` varchar(255) NOT NULL,
   `Các_trạm_dừng_chân` varchar(255) NOT NULL,
-  `Update_gần_nhất` datetime DEFAULT NULL
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -134,8 +141,17 @@ CREATE TABLE `lo_trinh` (
 CREATE TABLE `tinh` (
   `Mã` int(11) NOT NULL,
   `Tên` varchar(255) NOT NULL,
-  `Mã_vùng` varchar(255) NOT NULL
+  `Mã_vùng` varchar(255) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Đang đổ dữ liệu cho bảng `tinh`
+--
+
+INSERT INTO `tinh` (`Mã`, `Tên`, `Mã_vùng`, `created_at`, `updated_at`) VALUES
+(1, 'An Giang', '67', '2018-09-27 06:37:58', '2018-09-27 06:37:58');
 
 -- --------------------------------------------------------
 
@@ -149,7 +165,8 @@ CREATE TABLE `tram_dung` (
   `Tọa_độ` varchar(255) NOT NULL,
   `Mã_nhân_viên_tạo` int(11) NOT NULL,
   `Mã_nhân_viên_chỉnh_sửa` int(11) NOT NULL,
-  `Update_gần_nhất` datetime NOT NULL
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -161,13 +178,14 @@ CREATE TABLE `tram_dung` (
 CREATE TABLE `ve` (
   `Mã` int(11) NOT NULL,
   `Mã_chuyến_xe` int(11) NOT NULL,
-  `Mã_nhân_viên_đặt` int(11) NOT NULL,
+  `Mã_nhân_viên_đặt` int(11) DEFAULT NULL,
   `Mã_khách_hàng` int(11) DEFAULT NULL,
-  `Sđt_khách_hàng` varchar(255) NOT NULL,
+  `Sđt_khách_hàng` varchar(255) DEFAULT NULL,
   `Vị_trí_ghế` varchar(255) NOT NULL,
   `Giá` int(11) NOT NULL,
   `Trạng_thái` int(11) DEFAULT NULL,
-  `Update_gần_nhất` datetime NOT NULL
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -180,9 +198,10 @@ CREATE TABLE `xe` (
   `Mã` int(11) NOT NULL,
   `Biển_số` varchar(255) NOT NULL,
   `Mã_loại_xe` int(11) NOT NULL,
-  `Ngày_bảo_gần_nhất` date NOT NULL,
+  `Ngày_bảo_trì_gần_nhất` date NOT NULL,
   `Ngày_bảo_trì_tiếp_theo` date NOT NULL,
-  `Update_gần_nhất` datetime NOT NULL
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -213,9 +232,9 @@ ALTER TABLE `chuyen_xe`
 --
 ALTER TABLE `customer`
   ADD PRIMARY KEY (`Mã`),
-  ADD UNIQUE KEY `Username` (`Username`),
+  ADD UNIQUE KEY `Sđt` (`Sđt`),
   ADD UNIQUE KEY `Email` (`Email`),
-  ADD UNIQUE KEY `Sđt` (`Sđt`);
+  ADD UNIQUE KEY `Nickname` (`Nickname`) USING BTREE;
 
 --
 -- Chỉ mục cho bảng `duong_di`
@@ -246,7 +265,9 @@ ALTER TABLE `lo_trinh`
 -- Chỉ mục cho bảng `tinh`
 --
 ALTER TABLE `tinh`
-  ADD PRIMARY KEY (`Mã`);
+  ADD PRIMARY KEY (`Mã`),
+  ADD UNIQUE KEY `Tên` (`Tên`) USING BTREE,
+  ADD UNIQUE KEY `Mã_vùng` (`Mã_vùng`);
 
 --
 -- Chỉ mục cho bảng `tram_dung`
@@ -319,7 +340,7 @@ ALTER TABLE `lo_trinh`
 -- AUTO_INCREMENT cho bảng `tinh`
 --
 ALTER TABLE `tinh`
-  MODIFY `Mã` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Mã` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT cho bảng `tram_dung`

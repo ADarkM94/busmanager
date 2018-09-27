@@ -1,4 +1,7 @@
 @extends('tttn-web.main')
+@section('title')
+    Đặt vé
+@endsection
 @section('content')
     <div class="maindatve">
         <div class="timchuyendidatve"><h3>Tìm chuyến đi</h3></div>

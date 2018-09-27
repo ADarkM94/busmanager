@@ -1,4 +1,7 @@
 @extends('tttn-web.main')
+@section('title')
+    Liên hệ
+@endsection
 @section('content')
     <div class="container-fluid">
         <div id="main">

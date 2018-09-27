@@ -1,4 +1,7 @@
 @extends('tttn-web.main')
+@section('title')
+    Chuyến xe
+@endsection
 @section('content')
     <div class="chuyenxemain">
         <div class="chuyenxechon"><h4>Chọn Chuyến</h4></div>
@@ -30,7 +33,7 @@
                 <td>Giường Nằm</td>
                 <td><div class="chuyenxetim">
                         <i class="fa fa-arrow-right icon-flat bg-btn-actived"></i>
-                        <button type="button" class="btn"><a href="chonve.html">02 ngày 12:12:11</a></button>
+                        <button type="button" class="btn"><a href="chonve">02 ngày 12:12:11</a></button>
                     </div></td>
             </tr>
             <tr>
@@ -41,7 +44,7 @@
                 <td>Giường Nằm</td>
                 <td><div class="chuyenxetim">
                         <i class="fa fa-arrow-right icon-flat bg-btn-actived"></i>
-                        <button type="button" class="btn"><a href="chonve.html">02 ngày 12:12:11</a></button>
+                        <button type="button" class="btn"><a href="chonve">02 ngày 12:12:11</a></button>
                     </div></td>
             </tr>
             <tr>
@@ -52,7 +55,7 @@
                 <td>Giường Nằm</td>
                 <td><div class="chuyenxetim">
                         <i class="fa fa-arrow-right icon-flat bg-btn-actived"></i>
-                        <button type="button" class="btn"><a href="chonve.html">02 ngày 12:12:11</a></button>
+                        <button type="button" class="btn"><a href="chonve">02 ngày 12:12:11</a></button>
                     </div></td>
             </tr>
         </table>

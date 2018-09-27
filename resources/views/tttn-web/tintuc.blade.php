@@ -1,4 +1,7 @@
 @extends('tttn-web.main')
+@section('title')
+    Tin tức
+@endsection
 @section('content')
     <div class="maintintuc">
         <div class="trangtintuc">

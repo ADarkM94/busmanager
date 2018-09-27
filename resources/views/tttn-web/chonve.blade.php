@@ -1,4 +1,7 @@
 @extends('tttn-web.main')
+@section('title')
+    Chọn vé
+@endsection
 @section('content')
     <div class="chonvemain">
         <div class="chonveleft">

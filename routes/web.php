@@ -43,4 +43,14 @@ Route::get('/tintuc', function () {
     return view('tttn-web.tintuc');
 });
 
+Route::get('/quanlydatve', function() {
+    return view('quanlydatve.index');
+});
+
+Route::get('/quantrivien', function() {
+    return view('quantrivien.index');
+});
+
 Route::get('/checkconnection', 'Controller@checkConnection');
+
+

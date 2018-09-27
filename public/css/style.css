@@ -14,7 +14,7 @@ a{
 	background: rgb(245,245,245);
 }
 .header button{
-	background: #F3AD45;
+	background: #FFA000;
 	color: #FFF;
 	border: none;
 }
@@ -36,7 +36,7 @@ a{
 	border-radius: 5px;
 	box-shadow: 0 0 3em #CCC;
 	margin-top: 1em;
-	background: #F3AD45;
+	background: #FFA000;
 }
 .menu ul{
 	list-style-type: none;
@@ -68,7 +68,7 @@ a{
     background: #FFF;
     padding: 10px;
     border-radius: 50%;
-    color: #F3AD45;
+    color: #FFA000;
 }
 /*main*/
 .main{
@@ -95,7 +95,7 @@ a{
 	background: rgb(245,245,245);
 }
 .tentintuc{
-	background-color: #F3AD45;
+	background-color: #FFA000;
 	border-radius: 30px;
 	width: 30%;
 	text-align: center;
@@ -143,7 +143,7 @@ a{
 	height: 30px;
 }
 .tintucbutton button:hover{
-	background: #F3AD45;
+	background: #FFA000;
 }
 .tintucbutton button:hover a{
 	text-decoration: none;
@@ -224,10 +224,10 @@ a{
 .timchuyendi{
 	width: 100%;
 	margin: auto;
-	border: 1px solid #F3AD45;
+	border: 1px solid #FFA000;
 	text-align: center;
 	border-radius: 0.5em 0.5em 0  0;
-	background: #F3AD45;
+	background: #FFA000;
 }
 .timchuyendi h4{
 	color: #FFF;
@@ -244,7 +244,7 @@ a{
 	position: absolute;
 	top: 8px;
 	margin-left: 5px;
-	color: #F3AD45;
+	color: #FFA000;
 }
 .diadiem select{
 	width: 250px;
@@ -253,7 +253,7 @@ a{
 	cursor: pointer;
 	color: #003;
 	border: none;
-	box-shadow: 0 3px #F3AD45; 
+	box-shadow: 0 3px #FFA000; 
 }
 .ngaydi{
 	width: 90%;
@@ -276,7 +276,7 @@ a{
 }
 .tim button{
 	width: 150px;
-	background: #F3AD45;
+	background: #FFA000;
 }
 .tim i{
 	position: absolute;
@@ -299,7 +299,7 @@ a{
 	border-radius:  1em 1em 0 0;
 	box-shadow: 0 0 2em #CCC;
 	margin-top: 1em;
-	background: #F3AD45;
+	background: #FFA000;
 	min-height: 170px;
 }
 .footer ul{
@@ -348,7 +348,7 @@ a{
 	position: absolute;
 	top: 8px;
 	margin-left: 5px;
-	color: #F3AD45;
+	color: #FFA000;
 }
 .diadiemdatve select{
 	width: 300px;
@@ -357,7 +357,7 @@ a{
 	cursor: pointer;
 	color: #003;
 	border: none;
-	box-shadow: 0 3px #F3AD45; 
+	box-shadow: 0 3px #FFA000; 
 }
 .timchuyendidatve{
 	width: 100%;
@@ -367,7 +367,7 @@ a{
 	margin-top: 3em;
 	border-radius: 0.5em;
 	box-shadow: 0 0 2em #CCC;
-	background: #F3AD45;
+	background: #FFA000;
 }
 .timchuyendidatve h3{
 	color: #FFF;
@@ -395,7 +395,7 @@ a{
 .chonloaixe{
 	margin-top: 2em;
 	padding-top: 1em;
-	border: 1px solid #F3AD45;
+	border: 1px solid #FFA000;
 	background: #FFF;
 	font-weight: bold;
 	width: 75%;
@@ -465,7 +465,7 @@ a{
 	border-radius: 0.5em;
 	box-shadow: 0 0 2em #CCC;
 	margin-bottom: 1em;
-	background: #F3AD45;
+	background: #FFA000;
 }
 .chuyenxetim{
 	text-align: center;
@@ -517,10 +517,10 @@ a{
 	width: 200px;
 }
 .chonvemain i{
-	color: #F3AD45;
+	color: #FFA000;
 }
 .chonvemain span{
-	color: #F3AD45;
+	color: #FFA000;
 }
 .chonveright{
 	width: 58%;
@@ -630,7 +630,7 @@ a{
 	background: rgb(245,245,245);
 }
 .trangtentintuc{
-	background-color: #F3AD45;
+	background-color: #FFA000;
 	border-radius: 30px;
 	width: 30%;
 	text-align: center;
@@ -679,7 +679,7 @@ a{
 	height: 30px;
 }
 .trangtintucbutton button:hover{
-	background: #F3AD45;
+	background: #FFA000;
 }
 .trangtintucbutton button:hover a{
 	text-decoration: none;

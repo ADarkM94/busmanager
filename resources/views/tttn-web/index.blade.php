@@ -1,4 +1,7 @@
 @extends('tttn-web.main')
+@section('title')
+    Trang chủ
+@endsection
 @section('content')
     <div class="main">
         <div class="left">
