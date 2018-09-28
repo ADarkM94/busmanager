@@ -53,4 +53,8 @@ Route::get('/quantrivien', function() {
 
 Route::get('/checkconnection', 'Controller@checkConnection');
 
+//Testing
+Route::get("/login", function () {
+    return view("tttn-web.login");
+});
 

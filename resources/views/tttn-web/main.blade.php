@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <title>@yield('title')</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="stylesheet" type="text/css" href="css/style-lienhe.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet prefetch" href="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css">
     <script src="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
 
@@ -17,8 +17,8 @@
 <body>
 <div class="header">
     <ul>
-        <li><button type="button" class="btn btn-primary">Đăng ký</button></li>
-        <li><button type="button" class="btn btn-primary">Đăng nhập</button></li>
+        <li><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#register">Đăng ký</button></li>
+        <li><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#login">Đăng nhập</button></li>
     </ul>
 </div>
 <div class="menu">
@@ -53,9 +53,9 @@
         </li>
     </ul>
 </div>
-<div style="clear: all;"></div>
+<div style="clear: both;"></div>
 @yield('content')
-<div style="clear: all;"></div>
+<div style="clear: both;"></div>
 <main class="main">
     <div class="footer">
         <ul>
@@ -75,5 +75,7 @@
         </ul>
     </div>
 </main>
+@extends('tttn-web.login')
+@extends('tttn-web.register')
 @yield('script')
 </body>
