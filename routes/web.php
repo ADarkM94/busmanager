@@ -14,7 +14,7 @@
 // Route::get('/', function () {
     // return view('welcome');
 // });
-
+/* Bắt đầu phần Route cho trang khách hàng */
 Route::get('/', function () {
 	return view('tttn-web.index');
 });
@@ -43,18 +43,58 @@ Route::get('/tintuc', function () {
     return view('tttn-web.tintuc');
 });
 
-Route::get('/quanlydatve', function() {
-    return view('quanlydatve.index');
+/* Kết thúc phần Route cho trang khách hàng */
+
+/* Bắt đầu phần Route cho trang quản lý đặt vé */
+
+Route::get('/qldv/giamsat', function() {
+    return view('quanlydatve.giamsat');
 });
 
-Route::get('/quantrivien', function() {
-    return view('quantrivien.index');
+Route::get('/qldv/datve', function() {
+    return view('quanlydatve.datve');
 });
+
+/* Kết thúc phần Route cho trang quản lý đặt vé */
+
+/* Bắt đầu phần Route cho trang quản trị hệ thống */
+
+Route::get('admin/thongke', function () {
+    return view('quantrivien.thongke');
+});
+
+Route::get('admin/khachhang', function () {
+    return view('quantrivien.khachhang');
+});
+
+Route::get('admin/chuyenxe', function () {
+    return view('quantrivien.chuyenxe');
+});
+
+Route::get('admin/loaixe', function () {
+    return view('quantrivien.loaixe');
+});
+
+Route::get('admin/lotrinh', function () {
+    return view('quantrivien.lotrinh');
+});
+
+Route::get('admin/nhanvien', function () {
+    return view('quantrivien.nhanvien');
+});
+
+/* Kết thúc phần Route cho trang quản trị hệ thống */
+
+/* Bắt đầu phần Route để test chức năng */
 
 Route::get('/checkconnection', 'Controller@checkConnection');
 
 //Testing
-Route::get("/login", function () {
-    return view("tttn-web.login");
+Route::get('/admintest', 'AdminController@test');
+Route::get('/admintest/test', function() {
+    return view('test');
 });
+Route::post('/admintest/login', 'AdminController@login')->name('login');
+
+/* Kết thúc phần Route để test chức năng */
 

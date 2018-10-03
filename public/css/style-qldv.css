@@ -1,6 +1,9 @@
 * {
 	box-sizing: border-box;
 }
+a:hover, a:visited {
+    text-decoration: none;
+}
 .container-fluid {
 	padding: 0;
 	width: 100%;
@@ -307,13 +310,13 @@
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-    background: #888; 
+    background: #888;
     border-radius: 2.5px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-    background: #555; 
+    background: #555;
 }
 /* Modal Settings */
 #modaldatve .modal-content {
@@ -342,7 +345,7 @@
 }
 .sodoxe {
 	min-height: 40%;
-	overflow: auto; 
+	overflow: auto;
 }
 .sodoxe .row {
 }

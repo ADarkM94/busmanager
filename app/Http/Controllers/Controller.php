@@ -23,7 +23,12 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    function checkConnection(){
+//    public  function __construct()
+//    {
+//        $this->middleware('auth');
+//    }
+
+    public function checkConnection(){
         try {
 
             DB::connection()->getPdo();
@@ -33,7 +38,7 @@ class Controller extends BaseController
         }
     }
 
-    function register(Request $request){
+    public function register(Request $request){
         try {
             $account = new Khachhang;
             $account["Sđt"] = $request->query("phone");
@@ -43,7 +48,7 @@ class Controller extends BaseController
             die("Không thể đăng ký được tài khoản: ".$e);
         }
     }
-    function addBusModel(Request $request){
+    public function addBusModel(Request $request){
         try {
             $busmodel = new Loaixe;
             $busmodel["Tên_Loại"] = $request->query("busname");
@@ -56,7 +61,7 @@ class Controller extends BaseController
             die("Có lỗi xảy ra: ".$e);
         }
     }
-    function addChuyenxe(Request $request){
+    public function addChuyenxe(Request $request){
         try {
             $chuyenxe = new Chuyenxe;
             $chuyenxe["Mã_nhân_viên_tạo"] = $request->query("nhanvientao");
@@ -69,7 +74,7 @@ class Controller extends BaseController
             die("Có lỗi xảy ra: ".$e);
         }
     }
-    function addDuongdi(Request $request){
+    public function addDuongdi(Request $request){
         try {
             $duongdi = new Duongdi;
             $duongdi["Mã_Trạm_Start"] = $request->query("tramkhoihanh");
@@ -80,7 +85,7 @@ class Controller extends BaseController
             die("Có lỗi xảy ra: ".$e);
         }
     }
-    function addLotrinh(Request $request){
+    public function addLotrinh(Request $request){
         try {
             $lotrinh = new Lotrinh;
             $lotrinh["Mã_nhân_viên_tạo"] = $request->query("nhanvientao");
@@ -93,7 +98,7 @@ class Controller extends BaseController
             die("Có lỗi xảy ra: ".$e);
         }
     }
-    function addProvince(Request $request){
+    public function addProvince(Request $request){
         try {
             $province = new Tinh;
             $province["Tên"] = $request->query("province");
@@ -103,7 +108,7 @@ class Controller extends BaseController
             die("Không thể thêm tỉnh/thành phố: ".$e);
         }
     }
-    function addTramdung(Request $request){
+    public function addTramdung(Request $request){
         try {
             $tramdung = new Tramdung;
             $tramdung["Tên"] = $request->query("tentramdung");
@@ -115,7 +120,7 @@ class Controller extends BaseController
             die("Có lỗi xảy ra: ".$e);
         }
     }
-    function addVe(Request $request){
+    public function addVe(Request $request){
         try {
             $ve = new Ve;
             $ve["Mã_chuyến_xe"] = $request->query("chuyenxe");
@@ -127,7 +132,7 @@ class Controller extends BaseController
             die("Có lỗi xảy ra: ".$e);
         }
     }
-    function addXe(Request $request){
+    public function addXe(Request $request){
         try {
             $xe = new Xe;
             $xe["Biển_số"] = $request->query("bienso");
