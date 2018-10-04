@@ -63,9 +63,11 @@ Route::get('admin/thongke', function () {
     return view('quantrivien.thongke');
 });
 
-Route::get('admin/khachhang', function () {
-    return view('quantrivien.khachhang');
-});
+Route::get('admin/khachhang', 'AdminController@khachhang');
+
+Route:: get('admin/addkhachhang/{index?}', 'AdminController@addkhachhang');
+
+Route::post('admin/addcustomer','AdminController@addcustomer')->name('addcustomer');
 
 Route::get('admin/chuyenxe', function () {
     return view('quantrivien.chuyenxe');
@@ -79,9 +81,11 @@ Route::get('admin/lotrinh', function () {
     return view('quantrivien.lotrinh');
 });
 
-Route::get('admin/nhanvien', function () {
-    return view('quantrivien.nhanvien');
-});
+Route::get('admin/nhanvien', 'AdminController@nhanvien');
+
+Route:: get('admin/addnhanvien/{index?}', 'AdminController@addnhanvien');
+
+Route::post('admin/addemployee','AdminController@addemployee')->name('addemployee');
 
 /* Kết thúc phần Route cho trang quản trị hệ thống */
 

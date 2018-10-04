@@ -1,245 +1,16 @@
 @extends('quantrivien.main')
 @section('content')
-    <div class="content datve row show">
-        <div class="col-lg-4">
-            <div class="searchroute">
-                <span>Tìm chuyến xe</span>
-                <form>
-                    <div>
-                        <div class="input-group">
-                            <span class="input-group-addon">Nơi đi</span>
-                            <input type="text" name="noidi" class="form-control" list="diadiem" placeholder="Nơi đi">
-                        </div>
-                        <br>
-                        <div class="input-group">
-                            <span class="input-group-addon">Nơi đến</span>
-                            <input type="text" name="noiden" class="form-control" list="diadiem" placeholder="Nơi đến">
-                        </div>
-                        <br>
-                        <div class="input-group">
-                            <span class="input-group-addon">Ngày đi</span>
-                            <input type="date" name="ngaydi" class="form-control">
-                        </div>
-                        <br>
-                        <div class="selecttype">
-                            <span>Loại xe</span>
-                            <label class="radio-inline"><input type="radio" name="loaighe" value="ghe">Ghế ngồi</label>
-                            <label class="radio-inline"><input type="radio" name="loaighe" value="giuong">Giường nằm</label>
-                        </div>
-                    </div>
-                </form>
-                <span class="glyphicon glyphicon-search"></span>
-            </div>
-            <div class="searchresult">
-                <div class="chuyenxe">
-                    <ul>
-                        <li>Chuyến xe # <i class="glyphicon glyphicon-ban-circle" style="color: gray;"></i></li>
-                        <li>Chuyến xe # <i class="glyphicon glyphicon-ok-circle" style="color: green;"></i></li>
-                        <li>Chuyến xe # <i class="glyphicon glyphicon-ok-circle" style="color: green;"></i></li>
-                        <li>Chuyến xe # <i class="glyphicon glyphicon-ok-circle" style="color: green;"></i></li>
-                        <li>Chuyến xe # <i class="glyphicon glyphicon-ok-circle" style="color: green;"></i></li>
-                        <li>Chuyến xe # <i class="glyphicon glyphicon-ok-circle" style="color: green;"></i></li>
-                        <li>Chuyến xe # <i class="glyphicon glyphicon-ok-circle" style="color: green;"></i></li>
-                        <li>Chuyến xe # <i class="glyphicon glyphicon-ok-circle" style="color: green;"></i></li>
-                        <li>Chuyến xe # <i class="glyphicon glyphicon-ok-circle" style="color: green;"></i></li>
-                        <li>Chuyến xe # <i class="glyphicon glyphicon-ok-circle" style="color: green;"></i></li>
-                        <li>Chuyến xe # <i class="glyphicon glyphicon-ok-circle" style="color: green;"></i></li>
-                        <li>Chuyến xe # <i class="glyphicon glyphicon-ok-circle" style="color: green;"></i></li>
-                        <li>Chuyến xe # <i class="glyphicon glyphicon-ok-circle" style="color: green;"></i></li>
-                        <li>Chuyến xe # <i class="glyphicon glyphicon-ok-circle" style="color: green;"></i></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-4">
-            <div class="ttdatve">
-                <span>Thông tin đặt vé</span>
-                <hr>
-                <form class="form-vertical">
-                    <input type="text" name="hoten" class="form-control" placeholder="Họ tên">
-                    <br>
-                    <input type="text" name="sodienthoai" class="form-control" placeholder="Số điện thoại">
-                    <br>
-                    <input type="text" name="cmnd" class="form-control" placeholder="CMND">
-                    <br>
-                    <input type="text" name="noidonkhach" class="form-control" placeholder="Nơi đón khách">
-                    <br>
-                    <input type="text" name="noidi" class="form-control" list="diadiem" placeholder="Nơi đi">
-                    <br>
-                    <input type="text" name="noiden" class="form-control" list="diadiem" placeholder="Nơi đến">
-                </form>
-                <span data-toggle="modal" data-target="#modaldadat">Vé đã đặt</span>
-                <br>
-                <span data-toggle="modal" data-target="#modaldatve">Đặt vé</span>
-            </div>
-        </div>
-        <div class="col-lg-4">
-            <div class="searchcustomer">
-                <span>Tìm Khách Hàng</span>
-                <form>
-                    <div>
-                        <input type="text" name="searchkh" class="form-control" placeholder="Search">
-                        <span class="glyphicon glyphicon-search"></span>
-                    </div>
-                </form>
-                <div class="kqtimkh">
-                    <ul>
-                        <li>Khách hàng # <span class="glyphicon glyphicon-plus" style="color: gray;"></span></li>
-                        <li>Khách hàng # <span class="glyphicon glyphicon-plus" style="color: gray;"></span></li>
-                        <li>Khách hàng # <span class="glyphicon glyphicon-plus" style="color: gray;"></span></li>
-                        <li>Khách hàng # <span class="glyphicon glyphicon-plus" style="color: gray;"></span></li>
-                        <li>Khách hàng # <span class="glyphicon glyphicon-plus" style="color: gray;"></span></li>
-                        <li>Khách hàng # <span class="glyphicon glyphicon-plus" style="color: gray;"></span></li>
-                        <li>Khách hàng # <span class="glyphicon glyphicon-plus" style="color: gray;"></span></li>
-                        <li>Khách hàng # <span class="glyphicon glyphicon-plus" style="color: gray;"></span></li>
-                        <li>Khách hàng # <span class="glyphicon glyphicon-plus" style="color: gray;"></span></li>
-                        <li>Khách hàng # <span class="glyphicon glyphicon-plus" style="color: gray;"></span></li>
-                        <li>Khách hàng # <span class="glyphicon glyphicon-plus" style="color: gray;"></span></li>
-                        <li>Khách hàng # <span class="glyphicon glyphicon-plus" style="color: gray;"></span></li>
-                        <li>Khách hàng # <span class="glyphicon glyphicon-plus" style="color: gray;"></span></li>
-                        <li>Khách hàng # <span class="glyphicon glyphicon-plus" style="color: gray;"></span></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+    <div class="content nhanvien show">
+        <div id="employee"></div>
     </div>
+    <a href="javascript:void(0)" onclick="window.open('{{url("admin/addnhanvien")}}')" style="width: 2em; height: 2em; line-height: 2em; background: white; font-size: 1.5em; position: absolute; bottom: 1em; left: 2em; box-shadow: 0 0 5px black; border-radius: 50%;">
+        <i class="glyphicon glyphicon-plus"></i>
+    </a>
+    <a href="javascript:void(0)" onclick="refreshNV()" style="width: 2em; height: 2em; line-height: 2em; background: white; font-size: 1.5em; position: absolute; bottom: 4em; left: 2em; box-shadow: 0 0 5px black; border-radius: 50%;">
+        <i class="glyphicon glyphicon-refresh"></i>
+    </a>
 @endsection
 @section('excontent')
-    <datalist id="diadiem" style="display: none;">
-        <option>Quảng Ngãi</option>
-        <option>Quảng Nam</option>
-        <option>Đà Nẵng</option>
-        <option>Sài Gòn</option>
-        <option>Bình Định</option>
-        <option>Hà Nội</option>
-    </datalist>
-    <div id="modaldatve" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button class="close" data-dismiss="modal">&times;</button>
-                    <div class="modal-title">Chuyến xe #</div>
-                </div>
-                <div class="modal-body">
-                    <form id="ttchuyenxe">
-                        <div class="row form-group">
-                            <div class="col-lg-6">
-                                <label>Nơi đi</label>
-                                <input type="text" name="noidi" class="form-control" placeholder="Điểm đi" readonly="">
-                            </div>
-                            <div class="col-lg-6">
-                                <label>Nơi đến</label>
-                                <input type="text" name="noiden" class="form-control" placeholder="Điểm đến" readonly="">
-                            </div>
-                        </div>
-                        <div class="row form-group">
-                            <div class="col-lg-6">
-                                <label>Thời gian đi</label>
-                                <input type="text" name="thoigiandi" class="form-control" placeholder="Thời gian đi" readonly="">
-                            </div>
-                            <div class="col-lg-6">
-                                <label>Thời gian đến dự kiến</label>
-                                <input type="text" name="thoigianden" class="form-control" placeholder="Thời gian đến dự kiến" readonly="">
-                            </div>
-                        </div>
-                    </form>
-                    <span>Sơ đồ xe</span>
-                    <label class="checkbox-inline"><input type="checkbox" name="multi">Chọn nhiều chỗ</label>
-                    <div class="sodoxe">
-                        <div class="col-lg-4"></div>
-                        <div class="col-lg-4">
-                            <div class="row">
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                            </div>
-                            <br>
-                            <div class="row">
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                            </div>
-                            <br>
-                            <div class="row">
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                            </div>
-                            <br>
-                            <div class="row">
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                            </div>
-                            <br>
-                            <div class="row">
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                            </div>
-                            <br>
-                            <div class="row">
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4"></div>
-                    </div>
-                    <br>
-                    <span>Chọn</span>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div id="modaldadat" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button class="close" data-dismiss="modal">&times;</button>
-                    <div class="modal-title">Vé đặt</div>
-                </div>
-                <div class="modal-body">
-                    <ul>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
-                    </ul>
-                </div>
-                <div class="modal-footer">
-                    <div class="col-lg-12">
-                        <label>Tổng tiền</label>
-                        <input type="text" name="tongtien" class="form-control" placeholder="Tổng tiền" readonly="">
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <span>Xác nhận</span>
-                        </div>
-                        <div class="col-lg-6">
-                            <span>Hoàn tác</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 @endsection
 @section('script')
     <script>
@@ -248,5 +19,330 @@
             option[i].classList.remove('selected');
         }
         option[5].classList.add('selected');
+        $(function () {
+            var obj = {
+                width: '100%',
+                height: '100%',
+                showTop: false,
+                showBottom: false,
+                collapsible: false,
+                showHeader: true,
+                filterModel: {on: true, mode: "AND", header: true},
+                scrollModel: {autoFit: true},
+                resizable: false,
+                roundCorners: false,
+                rowBorders: false,
+                columnBorders: false,
+                selectionModel: { type: 'row', mode: 'single' },
+                numberCell: { show: false },
+                stripeRows: false,
+                cellDblClick: function (event,ui) {
+                    window.open("{{url('/admin/addnhanvien')}}" + "/" + ui.rowData["Mã"]);
+                }
+            };
+            obj.colModel = [
+                {
+                    title: "ID",
+                    width: 50,
+                    dataIndx: "Mã",
+                    dataType: "string",
+                    editor: false,
+                    align: 'center',
+                    filter: {
+                        type: 'textbox',
+                        condition: 'contain',
+                        listeners: ['keyup']
+                    }
+                },
+                {
+                    title: "Loại NV",
+                    width: 100,
+                    dataIndx: "Loại_NV",
+                    dataType: "string",
+                    editor: false,
+                    align: 'center',
+                    render: function (ui) {
+                        switch (ui.rowData["Loại_NV"]){
+                            case "QTV":
+                                return "Quản trị viên";
+                                break;
+                            case "QLDV":
+                                return "Quản lý đặt vé";
+                                break;
+                            case "TX":
+                                return "Tài xế";
+                                break;
+                            default:
+                                break;
+                        }
+                    },
+                    filter: {
+                        type: "select",
+                        condition: "equal",
+                        options: [
+                            {"":"All"},
+                            {"QTV":"Quản trị viên"},
+                            {"QLDV":"Quản lý đặt vé"},
+                            {"TX":"Tài xế"}
+                        ],
+                        listeners: ["change"]
+                    }
+                },
+                {
+                    title: "Name",
+                    width: 150,
+                    dataIndx: "Họ_Tên",
+                    dataType: "string",
+                    editor: false,
+                    align: 'center',
+                    filter: {
+                        type: 'textbox',
+                        condition: 'contain',
+                        listeners: ['keyup']
+                    }
+                },
+                {
+                    title: "Giới tính",
+                    width: 100,
+                    dataIndx: "Giới_tính",
+                    dataType: "string",
+                    editor: false,
+                    align: "center",
+                    render: function (ui) {
+                        switch(ui.rowData["Giới_tính"]){
+                            case "0":
+                                return "Không xác định";
+                                break;
+                            case "1":
+                                return "Nam";
+                                break;
+                            case "2":
+                                return "Nữ";
+                                break;
+                            default:
+                                break;
+                        }
+                    },
+                    filter: {
+                        type: "select",
+                        condition: "equal",
+                        options: [
+                            {"":"All"},
+                            {"1":"Nam"},
+                            {"2":"Nữ"},
+                            {"0":"Không xác định"}
+                        ],
+                        listeners: ["change"]
+                    }
+                },
+                {
+                    title: "Ngày sinh",
+                    width: 200,
+                    dataIndx: "Ngày_sinh",
+                    dataType: "date",
+                    editor: false,
+                    align: 'center',
+                    filter: {
+                        type: 'textbox', condition: 'between', init: pqDatePicker,
+                        listeners: [{
+                            'change': function (evt, ui) {
+                                if (ui.value != "") {
+                                    var d1 = ui.value.split('/');
+                                    ui.value = d1[2] + '/' + d1[0] + '/' + d1[1];
+                                }
+                                if (ui.value2 != "") {
+                                    var d1 = ui.value2.split('/');
+                                    ui.value2 = d1[2] + '/' + d1[0] + '/' + d1[1];
+                                }
+                                var $grid = $(this).closest(".pq-grid");
+                                $grid.pqGrid("filter", {
+                                    oper: 'add',
+                                    data: [ui]
+                                });
+                            }
+                        }]},
+                    render: function(ui){
+                        var cellData = ui.cellData;
+                        var str = '';
+                        if (cellData != "") {
+                            var d1 = cellData.split('-');
+                            str += d1[2] + '/' + d1[1] + '/' + d1[0];
+                        }
+                        return {text: str};
+                    }
+                },
+                {
+                    title: "Tên đăng nhập",
+                    width: 100,
+                    dataIndx: "Username",
+                    dataType: "string",
+                    editor: false,
+                    align: 'center',
+                    filter: {
+                        type: 'textbox',
+                        condition: 'contain',
+                        listeners: ['keyup']
+                    }
+                },
+                {
+                    title: "Email",
+                    width: 200,
+                    dataIndx: "Email",
+                    dataType: "string",
+                    editor: false,
+                    align: 'center',
+                    filter: {
+                        type: 'textbox',
+                        condition: 'contain',
+                        listeners: ['keyup']
+                    }
+                },
+                {
+                    title: "Phone",
+                    width: 100,
+                    dataIndx: "Sđt",
+                    dataType: "string",
+                    editor: false,
+                    align: 'center',
+                    filter: {
+                        type: 'textbox',
+                        condition: 'contain',
+                        listeners: ['keyup']
+                    }
+                },
+                {
+                    title: "Địa chỉ",
+                    width: 100,
+                    dataIndx: "Địa_chỉ",
+                    dataType: "string",
+                    editor: false,
+                    align: 'center',
+                    filter: {
+                        type: 'textbox',
+                        condition: 'contain',
+                        listeners: ['keyup']
+                    }
+                },
+                {
+                    title: "Chi nhánh",
+                    width: 100,
+                    dataIndx: "Chi_nhánh",
+                    dataType: "string",
+                    editor: false,
+                    align: 'center',
+                    filter: {
+                        type: 'textbox',
+                        condition: 'contain',
+                        listeners: ['keyup']
+                    }
+                },
+                {
+                    title: "Bằng lái",
+                    width: 100,
+                    dataIndx: "Bằng_lái",
+                    dataType: "string",
+                    editor: false,
+                    align: 'center',
+                    filter: {
+                        type: 'textbox',
+                        condition: 'contain',
+                        listeners: ['keyup']
+                    }
+                },
+                {
+                    title: "Ngày bắt đầu",
+                    width: 200,
+                    dataIndx: "Date_Starting",
+                    dataType: "date",
+                    editor: false,
+                    align: 'center',
+                    filter: {
+                        type: 'textbox', condition: 'between', init: pqDatePicker,
+                        listeners: [{
+                            'change': function (evt, ui) {
+                                if (ui.value != "") {
+                                    var d1 = ui.value.split('/');
+                                    ui.value = d1[2] + '/' + d1[0] + '/' + d1[1];
+                                }
+                                if (ui.value2 != "") {
+                                    var d1 = ui.value2.split('/');
+                                    ui.value2 = d1[2] + '/' + d1[0] + '/' + d1[1];
+                                }
+                                var $grid = $(this).closest(".pq-grid");
+                                $grid.pqGrid("filter", {
+                                    oper: 'add',
+                                    data: [ui]
+                                });
+                            }
+                        }]},
+                    render: function(ui){
+                        var cellData = ui.cellData;
+                        var str = '';
+                        if (cellData != "") {
+                            var d1 = cellData.split('-');
+                            str += d1[2] + '/' + d1[1] + '/' + d1[0];
+                        }
+                        return {text: str};
+                    }
+                    /*filter: {
+                        type: 'textbox',
+                        condition: 'contain',
+                        listeners: ['keyup']
+                    }*/
+                },
+                {
+                    title: "Action",
+                    width: 100,
+                    editor: false,
+                    dataIndx: "View",
+                    render: function (ui) {
+                        var str = '';
+                        str += '<a title="Edit" id="idEditCustomer" ><i class="glyphicon glyphicon-edit  text-yellow"></i></a>';
+                        return str;
+                    },
+                    /*postRender: function (ui) {
+                        var rowData = ui.rowData,
+                            $cell = this.getCell(ui);
+                        //add button
+                        $cell.find("a#idEditCustomer")
+                            .unbind("click")
+                            .bind("click", function (evt) {
+                                window.open("w3schools.com");
+                            });
+                    }*/
+                }
+            ];
+
+            obj.dataModel = {
+                data: {!! json_encode($employee) !!},
+                location: "local",
+                sorting: "local",
+                sortDir: "down"
+            };
+            obj.pageModel = {type: 'local', rPP: 20, rPPOptions: [20, 30, 40, 50]};
+            var $grid = $("#employee").pqGrid(obj);
+            $grid.pqGrid("refreshDataAndView");
+        });
+        function pqDatePicker(ui) {
+            var $this = $(this);
+            $this
+            //.css({ zIndex: 3, position: "relative" })
+                .datepicker({
+                    yearRange: "-25:+0", //25 years prior to present.
+                    changeYear: true,
+                    changeMonth: true,
+                    //showButtonPanel: true,
+                    onClose: function (evt, ui) {
+                        $(this).focus();
+                    }
+                });
+            //default From date
+            $this.filter(".pq-from").datepicker("option", "defaultDate", new Date("01/01/1996"));
+            //default To date
+            $this.filter(".pq-to").datepicker("option", "defaultDate", new Date("12/31/1998"));
+        }
+        function refreshNV(){
+            $("#employee").pqGrid("reset",{filter : true});
+        }
     </script>
 @endsection

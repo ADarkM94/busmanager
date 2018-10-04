@@ -1,108 +1,14 @@
 @extends('quantrivien.main')
 @section('content')
-    <div class="content datve row show">
-        <div class="col-lg-4">
-            <div class="searchroute">
-                <span>Tìm chuyến xe</span>
-                <form>
-                    <div>
-                        <div class="input-group">
-                            <span class="input-group-addon">Nơi đi</span>
-                            <input type="text" name="noidi" class="form-control" list="diadiem" placeholder="Nơi đi">
-                        </div>
-                        <br>
-                        <div class="input-group">
-                            <span class="input-group-addon">Nơi đến</span>
-                            <input type="text" name="noiden" class="form-control" list="diadiem" placeholder="Nơi đến">
-                        </div>
-                        <br>
-                        <div class="input-group">
-                            <span class="input-group-addon">Ngày đi</span>
-                            <input type="date" name="ngaydi" class="form-control">
-                        </div>
-                        <br>
-                        <div class="selecttype">
-                            <span>Loại xe</span>
-                            <label class="radio-inline"><input type="radio" name="loaighe" value="ghe">Ghế ngồi</label>
-                            <label class="radio-inline"><input type="radio" name="loaighe" value="giuong">Giường nằm</label>
-                        </div>
-                    </div>
-                </form>
-                <span class="glyphicon glyphicon-search"></span>
-            </div>
-            <div class="searchresult">
-                <div class="chuyenxe">
-                    <ul>
-                        <li>Chuyến xe # <i class="glyphicon glyphicon-ban-circle" style="color: gray;"></i></li>
-                        <li>Chuyến xe # <i class="glyphicon glyphicon-ok-circle" style="color: green;"></i></li>
-                        <li>Chuyến xe # <i class="glyphicon glyphicon-ok-circle" style="color: green;"></i></li>
-                        <li>Chuyến xe # <i class="glyphicon glyphicon-ok-circle" style="color: green;"></i></li>
-                        <li>Chuyến xe # <i class="glyphicon glyphicon-ok-circle" style="color: green;"></i></li>
-                        <li>Chuyến xe # <i class="glyphicon glyphicon-ok-circle" style="color: green;"></i></li>
-                        <li>Chuyến xe # <i class="glyphicon glyphicon-ok-circle" style="color: green;"></i></li>
-                        <li>Chuyến xe # <i class="glyphicon glyphicon-ok-circle" style="color: green;"></i></li>
-                        <li>Chuyến xe # <i class="glyphicon glyphicon-ok-circle" style="color: green;"></i></li>
-                        <li>Chuyến xe # <i class="glyphicon glyphicon-ok-circle" style="color: green;"></i></li>
-                        <li>Chuyến xe # <i class="glyphicon glyphicon-ok-circle" style="color: green;"></i></li>
-                        <li>Chuyến xe # <i class="glyphicon glyphicon-ok-circle" style="color: green;"></i></li>
-                        <li>Chuyến xe # <i class="glyphicon glyphicon-ok-circle" style="color: green;"></i></li>
-                        <li>Chuyến xe # <i class="glyphicon glyphicon-ok-circle" style="color: green;"></i></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-4">
-            <div class="ttdatve">
-                <span>Thông tin đặt vé</span>
-                <hr>
-                <form class="form-vertical">
-                    <input type="text" name="hoten" class="form-control" placeholder="Họ tên">
-                    <br>
-                    <input type="text" name="sodienthoai" class="form-control" placeholder="Số điện thoại">
-                    <br>
-                    <input type="text" name="cmnd" class="form-control" placeholder="CMND">
-                    <br>
-                    <input type="text" name="noidonkhach" class="form-control" placeholder="Nơi đón khách">
-                    <br>
-                    <input type="text" name="noidi" class="form-control" list="diadiem" placeholder="Nơi đi">
-                    <br>
-                    <input type="text" name="noiden" class="form-control" list="diadiem" placeholder="Nơi đến">
-                </form>
-                <span data-toggle="modal" data-target="#modaldadat">Vé đã đặt</span>
-                <br>
-                <span data-toggle="modal" data-target="#modaldatve">Đặt vé</span>
-            </div>
-        </div>
-        <div class="col-lg-4">
-            <div class="searchcustomer">
-                <span>Tìm Khách Hàng</span>
-                <form>
-                    <div>
-                        <input type="text" name="searchkh" class="form-control" placeholder="Search">
-                        <span class="glyphicon glyphicon-search"></span>
-                    </div>
-                </form>
-                <div class="kqtimkh">
-                    <ul>
-                        <li>Khách hàng # <span class="glyphicon glyphicon-plus" style="color: gray;"></span></li>
-                        <li>Khách hàng # <span class="glyphicon glyphicon-plus" style="color: gray;"></span></li>
-                        <li>Khách hàng # <span class="glyphicon glyphicon-plus" style="color: gray;"></span></li>
-                        <li>Khách hàng # <span class="glyphicon glyphicon-plus" style="color: gray;"></span></li>
-                        <li>Khách hàng # <span class="glyphicon glyphicon-plus" style="color: gray;"></span></li>
-                        <li>Khách hàng # <span class="glyphicon glyphicon-plus" style="color: gray;"></span></li>
-                        <li>Khách hàng # <span class="glyphicon glyphicon-plus" style="color: gray;"></span></li>
-                        <li>Khách hàng # <span class="glyphicon glyphicon-plus" style="color: gray;"></span></li>
-                        <li>Khách hàng # <span class="glyphicon glyphicon-plus" style="color: gray;"></span></li>
-                        <li>Khách hàng # <span class="glyphicon glyphicon-plus" style="color: gray;"></span></li>
-                        <li>Khách hàng # <span class="glyphicon glyphicon-plus" style="color: gray;"></span></li>
-                        <li>Khách hàng # <span class="glyphicon glyphicon-plus" style="color: gray;"></span></li>
-                        <li>Khách hàng # <span class="glyphicon glyphicon-plus" style="color: gray;"></span></li>
-                        <li>Khách hàng # <span class="glyphicon glyphicon-plus" style="color: gray;"></span></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+    <div class="content khachhang show">
+        <div id="customer"></div>
     </div>
+    <a href="javascript:void(0)" onclick="window.open('{{url("admin/addkhachhang")}}')" style="width: 2em; height: 2em; line-height: 2em; background: white; font-size: 1.5em; position: absolute; bottom: 1em; left: 2em; box-shadow: 0 0 5px black; border-radius: 50%;">
+        <i class="glyphicon glyphicon-plus"></i>
+    </a>
+    <a href="javascript:void(0)" onclick="refreshKH()" style="width: 2em; height: 2em; line-height: 2em; background: white; font-size: 1.5em; position: absolute; bottom: 4em; left: 2em; box-shadow: 0 0 5px black; border-radius: 50%;">
+        <i class="glyphicon glyphicon-refresh"></i>
+    </a>
 @endsection
 @section('excontent')
     <datalist id="diadiem" style="display: none;">
@@ -248,5 +154,151 @@
             option[i].classList.remove('selected');
         }
         option[1].classList.add('selected');
+        $(function () {
+            var obj = {
+                width: '100%',
+                height: '100%',
+                showTop: false,
+                showBottom: false,
+                collapsible: false,
+                showHeader: true,
+                filterModel: {on: true, mode: "AND", header: true},
+                scrollModel: {autoFit: true},
+                resizable: false,
+                roundCorners: false,
+                rowBorders: false,
+                hwrap: true,
+                columnBorders: false,
+                selectionModel: { type: 'row', mode: 'single' },
+                numberCell: { show: false },
+                stripeRows: false,
+                cellDblClick: function (event,ui) {
+                    window.open("{{url('/admin/addkhachhang')}}" + "/" + ui.rowData["Mã"]);
+                }
+            };
+            obj.colModel = [
+                {
+                    title: "ID",
+                    width: 100,
+                    dataIndx: "Mã",
+                    dataType: "string",
+                    editor: false,
+                    align: 'center',
+                    filter: {
+                        type: 'textbox',
+                        condition: 'contain',
+                        listeners: ['keyup']
+                    }
+                },
+                {
+                    title: "Name",
+                    width: 200,
+                    dataIndx: "Tên",
+                    dataType: "string",
+                    editor: false,
+                    align: 'center',
+                    filter: {
+                        type: 'textbox',
+                        condition: 'contain',
+                        listeners: ['keyup']
+                    }
+                },
+                {
+                    title: "Giới tính",
+                    width: 70,
+                    dataIndx: "Giới tính",
+                    dataType: "string",
+                    editor: false,
+                    align: "center",
+                    render: function (ui) {
+                        switch(ui.rowData["Giới tính"]){
+                            case "0":
+                                return "Không xác định";
+                                break;
+                            case "1":
+                                return "Nam";
+                                break;
+                            case "2":
+                                return "Nữ";
+                                break;
+                        }
+                    },
+                    filter: {
+                        type: "select",
+                        condition: "equal",
+                        options: [
+                            {"":"All"},
+                            {"1":"Nam"},
+                            {"2":"Nữ"},
+                            {"0":"Không xác định"}
+                            ],
+                        listeners: ["change"]
+                    }
+                },
+                {
+                    title: "Email",
+                    width: 200,
+                    dataIndx: "Email",
+                    dataType: "string",
+                    editor: false,
+                    align: 'center',
+                    filter: {
+                        type: 'textbox',
+                        condition: 'contain',
+                        listeners: ['keyup']
+                    }
+                },
+                {
+                    title: "Phone",
+                    width: 170,
+                    dataIndx: "Sđt",
+                    dataType: "string",
+                    editor: false,
+                    align: 'center',
+                    filter: {
+                        type: 'textbox',
+                        condition: 'contain',
+                        listeners: ['keyup']
+                    }
+                },
+                {
+                    title: "Action",
+                    width: 100,
+                    editor: false,
+                    dataIndx: "View",
+                    render: function (ui) {
+                        var str = '';
+                        str += '<a title="Edit" id="idEditCustomer" ><i class="glyphicon glyphicon-edit  text-yellow"></i></a>';
+                        return str;
+                    },
+                    /*postRender: function (ui) {
+                        var rowData = ui.rowData,
+                            $cell = this.getCell(ui);
+                        //add button
+                        $cell.find("a#idEditCustomer")
+                            .unbind("click")
+                            .bind("click", function (evt) {
+                                window.open("w3schools.com");
+                            });
+                    }*/
+                }
+            ];
+
+            obj.dataModel = {
+                data: {!! json_encode($customer) !!},
+                location: "local",
+                sorting: "local",
+                sortDir: "down"
+            };
+            obj.pageModel = {type: 'local', rPP: 20, rPPOptions: [20, 30, 40, 50]};
+            var $grid = $("#customer").pqGrid(obj);
+            $grid.pqGrid("refreshDataAndView");
+            function editRowCustomer(e) {
+                alert(e);
+            }
+        });
+        function refreshKH(){
+            $("#customer").pqGrid("reset",{filter : true});
+        }
     </script>
 @endsection

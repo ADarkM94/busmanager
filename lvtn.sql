@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th9 27, 2018 lúc 11:48 AM
+-- Thời gian đã tạo: Th10 04, 2018 lúc 11:50 PM
 -- Phiên bản máy phục vụ: 10.1.32-MariaDB
 -- Phiên bản PHP: 7.2.5
 
@@ -76,6 +76,17 @@ CREATE TABLE `customer` (
   `updated_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Đang đổ dữ liệu cho bảng `customer`
+--
+
+INSERT INTO `customer` (`Mã`, `Tên`, `Ngày_sinh`, `Giới tính`, `Địa chỉ`, `Nickname`, `Password`, `Email`, `Sđt`, `created_at`, `updated_at`) VALUES
+(1, 'Phan Anh Minh', '1994-04-10', '1', 'Quảng Ngãi', 'admin', 'a970a7e3b359f88a4732b56050822888', 'phananhminh51202164@gmail.com', '01202639775', '2018-09-28 21:09:52', '2018-10-04 07:15:54'),
+(3, 'Phan Anh Test', '1994-04-10', '0', 'Địa chỉ Test', 'usertest', '25f9e794323b453885f5181f1b624d0b', 'test@gmail.com', '01646881949', '2018-10-04 01:48:31', '2018-10-04 01:48:31'),
+(4, 'Phan Anh Test1', '1994-11-10', '1', 'Quảng Ngãi', 'usertest1', '25f9e794323b453885f5181f1b624d0b', 'test1@email.com', '123456789', '2018-10-04 03:32:51', '2018-10-04 03:32:51'),
+(5, 'Phan Anh Test2', '1994-11-10', '2', 'Quảng Ngãi', 'usertest2', '25f9e794323b453885f5181f1b624d0b', 'test2@email.com', '123456788', '2018-10-04 03:43:23', '2018-10-04 03:43:23'),
+(6, 'Phan Anh Test3', '1994-02-10', '1', 'Quảng Nam', 'usertest3', '25f9e794323b453885f5181f1b624d0b', 'test3@email.com', '123456787', '2018-10-04 03:47:18', '2018-10-04 03:47:18');
+
 -- --------------------------------------------------------
 
 --
@@ -103,7 +114,7 @@ CREATE TABLE `employee` (
   `Ngày_sinh` date NOT NULL,
   `Giới_tính` set('0','1','2') DEFAULT NULL,
   `Địa_chỉ` tinytext NOT NULL,
-  `Username` varchar(255) NOT NULL,
+  `Username` varchar(255) DEFAULT NULL,
   `Password` varchar(255) NOT NULL,
   `Email` varchar(255) NOT NULL,
   `Loại_NV` set('QTV','BV','TX') NOT NULL,
@@ -114,6 +125,14 @@ CREATE TABLE `employee` (
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Đang đổ dữ liệu cho bảng `employee`
+--
+
+INSERT INTO `employee` (`Mã`, `Họ_Tên`, `Ngày_sinh`, `Giới_tính`, `Địa_chỉ`, `Username`, `Password`, `Email`, `Loại_NV`, `Chi_nhánh`, `Bằng_lái`, `Sđt`, `Date_Starting`, `created_at`, `updated_at`) VALUES
+(1, 'Phan Anh Minh', '1994-04-10', '1', 'Quảng Ngãi', 'admin', '25f9e794323b453885f5181f1b624d0b', 'phananhminh51202164@gmail.com', 'QTV', NULL, NULL, '01646881949', '2018-09-01', '2018-09-28 20:02:37', '2018-09-28 20:02:37'),
+(2, 'Phan Anh Test', '1994-04-10', '1', '506/19/15 3/2 street', 'taixetest', 'd41d8cd98f00b204e9800998ecf8427e', '51202164@gmail.com', 'TX', 'Ho Chi Minh City', '999999999', '0123456789', '2017-10-10', '2018-10-04 09:34:13', '2018-10-04 09:47:55');
 
 -- --------------------------------------------------------
 
@@ -249,9 +268,9 @@ ALTER TABLE `duong_di`
 --
 ALTER TABLE `employee`
   ADD PRIMARY KEY (`Mã`),
-  ADD UNIQUE KEY `Username` (`Username`),
   ADD UNIQUE KEY `Email` (`Email`),
-  ADD UNIQUE KEY `Sđt` (`Sđt`);
+  ADD UNIQUE KEY `Sđt` (`Sđt`),
+  ADD UNIQUE KEY `Username` (`Username`);
 
 --
 -- Chỉ mục cho bảng `lo_trinh`
@@ -316,7 +335,7 @@ ALTER TABLE `chuyen_xe`
 -- AUTO_INCREMENT cho bảng `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `Mã` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Mã` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT cho bảng `duong_di`
@@ -328,7 +347,7 @@ ALTER TABLE `duong_di`
 -- AUTO_INCREMENT cho bảng `employee`
 --
 ALTER TABLE `employee`
-  MODIFY `Mã` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Mã` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT cho bảng `lo_trinh`
@@ -340,7 +359,7 @@ ALTER TABLE `lo_trinh`
 -- AUTO_INCREMENT cho bảng `tinh`
 --
 ALTER TABLE `tinh`
-  MODIFY `Mã` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `Mã` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT cho bảng `tram_dung`

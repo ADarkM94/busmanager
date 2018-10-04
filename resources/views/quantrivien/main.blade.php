@@ -4,11 +4,20 @@
     <title>Quản trị viên</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
-    <script src="../js/jquery-3.3.1.min.js"></script>
-    <script src="../js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="../js/Chart.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="../css/style-qtv.css">
+    <link rel="stylesheet" type="text/css" href="{{asset('css/bootstrap.min.css')}}">
+    <link href="{{asset('plugins/jquery-ui-1.12.1/jquery-ui.min.css')}}" rel="stylesheet">
+    <link href="{{asset('plugins/jquery-ui-1.12.1/jquery-ui.theme.min.css')}}" rel="stylesheet">
+	<link href="{{asset('plugins/paramquery-3.3.4/pqgrid.min.css')}}" rel="stylesheet">
+    <link href="{{asset('plugins/paramquery-3.3.4/pqgrid.bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{asset('plugins/paramquery-3.3.4/pqgrid.ui.min.css')}}" rel="stylesheet">
+    <link href="{{asset('plugins/paramquery-3.3.4/themes/custom/pqgrid.css')}}" rel="stylesheet">
+    <script src="{{asset('js/jquery-3.3.1.min.js')}}"></script>
+    <script src="{{asset('js/bootstrap.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('js/Chart.min.js')}}"></script>
+    <script src="{{asset('plugins/jquery-ui-1.12.1/jquery-ui.min.js')}}"></script>
+    <script src="{{asset('plugins/paramquery-3.3.4/pqgrid.min.js')}}"></script>
+    <script src="{{asset('plugins/paramquery-3.3.4/jsZip-2.5.0/jszip.min.js')}}"></script>
+    <link rel="stylesheet" type="text/css" href="{{asset('css/style-qtv.css')}}">
 </head>
 <body>
 <div class="container-fluid">
@@ -27,22 +36,22 @@
         <div class="sidebar">
             <div class="menu">
                 <ul>
-                    <a href="thongke">
+                    <a href="{{url('/admin/thongke')}}">
                         <li class="option selected">Thống kê</li>
                     </a>
-                    <a href="khachhang">
+                    <a href="{{url('/admin/khachhang')}}">
                         <li class="option">Khách hàng</li>
                     </a>
-                    <a href="chuyenxe">
+                    <a href="{{url('/admin/chuyenxe')}}">
                         <li class="option">Chuyến xe</li>
                     </a>
-                    <a href="loaixe">
+                    <a href="{{url('/admin/loaixe')}}">
                         <li class="option">Loại xe</li>
                     </a>
-                    <a href="lotrinh">
+                    <a href="{{url('/admin/lotrinh')}}">
                         <li class="option">Lộ trình</li>
                     </a>
-                    <a href="nhanvien">
+                    <a href="{{url('/admin/nhanvien')}}">
                         <li class="option">Nhân viên</li>
                     </a>
                 </ul>
