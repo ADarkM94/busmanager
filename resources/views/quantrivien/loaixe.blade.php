@@ -4,120 +4,7 @@
         <div class="col-lg-6">
             <div class="col-lg-12">
                 <span>Loại xe</span>
-                <div>
-                    <table>
-                        <tr>
-                            <th>Mã loại</th>
-                            <th>Tên loại</th>
-                            <th>Kích thước</th>
-                            <th>Số ghế</th>
-                            <th>Thao tác</th>
-                        </tr>
-                        <tr>
-                            <td>Mã loại #</td>
-                            <td>Tên loại #</td>
-                            <td>Kích thước #</td>
-                            <td>số ghế</td>
-                            <td>
-                                <select>
-                                    <option>Chọn:</option>
-                                    <option>Sửa</option>
-                                    <option>Xóa</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Mã loại #</td>
-                            <td>Tên loại #</td>
-                            <td>Kích thước #</td>
-                            <td>số ghế</td>
-                            <td>
-                                <select>
-                                    <option>Chọn:</option>
-                                    <option>Sửa</option>
-                                    <option>Xóa</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Mã loại #</td>
-                            <td>Tên loại #</td>
-                            <td>Kích thước #</td>
-                            <td>số ghế</td>
-                            <td>
-                                <select>
-                                    <option>Chọn:</option>
-                                    <option>Sửa</option>
-                                    <option>Xóa</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Mã loại #</td>
-                            <td>Tên loại #</td>
-                            <td>Kích thước #</td>
-                            <td>số ghế</td>
-                            <td>
-                                <select>
-                                    <option>Chọn:</option>
-                                    <option>Sửa</option>
-                                    <option>Xóa</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Mã loại #</td>
-                            <td>Tên loại #</td>
-                            <td>Kích thước #</td>
-                            <td>số ghế</td>
-                            <td>
-                                <select>
-                                    <option>Chọn:</option>
-                                    <option>Sửa</option>
-                                    <option>Xóa</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Mã loại #</td>
-                            <td>Tên loại #</td>
-                            <td>Kích thước #</td>
-                            <td>số ghế</td>
-                            <td>
-                                <select>
-                                    <option>Chọn:</option>
-                                    <option>Sửa</option>
-                                    <option>Xóa</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Mã loại #</td>
-                            <td>Tên loại #</td>
-                            <td>Kích thước #</td>
-                            <td>số ghế</td>
-                            <td>
-                                <select>
-                                    <option>Chọn:</option>
-                                    <option>Sửa</option>
-                                    <option>Xóa</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Mã loại #</td>
-                            <td>Tên loại #</td>
-                            <td>Kích thước #</td>
-                            <td>số ghế</td>
-                            <td>
-                                <select>
-                                    <option>Chọn:</option>
-                                    <option>Sửa</option>
-                                    <option>Xóa</option>
-                                </select>
-                            </td>
-                        </tr>
-                    </table>
+                <div id="busmodel">
                 </div>
             </div>
             <div class="col-lg-12">
@@ -336,5 +223,120 @@
             option[i].classList.remove('selected');
         }
         option[3].classList.add('selected');
+        $(function () {
+            var obj = {
+                width: '100%',
+                height: '100%',
+                showTop: false,
+                showBottom: false,
+                collapsible: false,
+                showHeader: true,
+                filterModel: {on: true, mode: "AND", header: true},
+                scrollModel: {autoFit: true},
+                resizable: false,
+                roundCorners: false,
+                rowBorders: false,
+                columnBorders: false,
+                postRenderInterval: -1,
+                selectionModel: { type: 'row', mode: 'single' },
+                numberCell: { show: false },
+                stripeRows: false,
+                cellDblClick: function (event,ui) {
+                    window.open("{{url('/admin/addnhanvien')}}" + "/" + ui.rowData["Mã"]);
+                }
+            };
+            obj.colModel = [
+                {
+                    title: "ID",
+                    width: 50,
+                    dataIndx: "Mã",
+                    dataType: "string",
+                    editor: false,
+                    align: 'center',
+                    filter: {
+                        type: 'textbox',
+                        condition: 'contain',
+                        listeners: ['keyup']
+                    }
+                },
+                {
+                    title: "Tên Loại",
+                    width: 100,
+                    dataIndx: "Tên_Loại",
+                    dataType: "string",
+                    editor: false,
+                    align: 'center',
+                    filter: {
+                        type: 'textbox',
+                        condition: 'contain',
+                        listeners: ['keyup']
+                    }
+                },
+                {
+                    title: "Số ghế",
+                    width: 150,
+                    dataIndx: "Số_ghế",
+                    dataType: "string",
+                    editor: false,
+                    align: 'center',
+                    filter: {
+                        type: 'textbox',
+                        condition: 'contain',
+                        listeners: ['keyup']
+                    }
+                },
+                {
+                    title: "SƠ đồ",
+                    width: 100,
+                    dataIndx: "Sơ_đồ",
+                    dataType: "string",
+                    editor: false,
+                    align: "center",
+                    filter: {
+                        type: 'textbox',
+                        condition: 'contain',
+                        listeners: ['keyup']
+                    }
+                },
+                {
+                    title: "Action",
+                    width: 100,
+                    editor: false,
+                    dataIndx: "View",
+                    render: function (ui) {
+                        var str = '';
+                        str += '<a title="Edit" id="idEditEmployee" ><i class="glyphicon glyphicon-edit  text-success" style="padding-right: 5px; cursor: pointer;"></i></a>';
+                        str += '<a title="Delete" id="idDelEmployee" ><i class="glyphicon glyphicon-remove  text-danger" style="padding-right: 5px; cursor: pointer;"></i></a>';
+                        return str;
+                    },
+                    postRender: function (ui) {
+                        var rowData = ui.rowData,
+                            $cell = this.getCell(ui);
+                        //add button
+                        $cell.find("a#idEditEmployee")
+                            .unbind("click")
+                            .bind("click", function (evt) {
+                                window.open("{{url('admin/addnhanvien')}}"+"/"+rowData["Mã"]);
+                            });
+                        $cell.find("a#idDelEmployee")
+                            .unbind("click")
+                            .bind("click", function (evt) {
+                                if(confirm("Bạn chắc chắn muốn xóa?"))
+                                    location.assign("{{url('admin/delnhanvien')}}"+"/"+rowData["Mã"]);
+                            });
+                    }
+                }
+            ];
+
+            obj.dataModel = {
+                data: {!! json_encode($busmodel) !!},
+                location: "local",
+                sorting: "local",
+                sortDir: "down"
+            };
+            obj.pageModel = {type: 'local', rPP: 20, rPPOptions: [20, 30, 40, 50]};
+            var $grid = $("#busmodel").pqGrid(obj);
+            $grid.pqGrid("refreshDataAndView");
+        });
     </script>
 @endsection

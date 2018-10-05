@@ -33,6 +33,7 @@
                 roundCorners: false,
                 rowBorders: false,
                 columnBorders: false,
+                postRenderInterval: -1,
                 selectionModel: { type: 'row', mode: 'single' },
                 numberCell: { show: false },
                 stripeRows: false,
@@ -297,19 +298,26 @@
                     dataIndx: "View",
                     render: function (ui) {
                         var str = '';
-                        str += '<a title="Edit" id="idEditCustomer" ><i class="glyphicon glyphicon-edit  text-yellow"></i></a>';
+                        str += '<a title="Edit" id="idEditEmployee" ><i class="glyphicon glyphicon-edit  text-success" style="padding-right: 5px; cursor: pointer;"></i></a>';
+                        str += '<a title="Delete" id="idDelEmployee" ><i class="glyphicon glyphicon-remove  text-danger" style="padding-right: 5px; cursor: pointer;"></i></a>';
                         return str;
                     },
-                    /*postRender: function (ui) {
+                    postRender: function (ui) {
                         var rowData = ui.rowData,
                             $cell = this.getCell(ui);
                         //add button
-                        $cell.find("a#idEditCustomer")
+                        $cell.find("a#idEditEmployee")
                             .unbind("click")
                             .bind("click", function (evt) {
-                                window.open("w3schools.com");
+                                window.open("{{url('admin/addnhanvien')}}"+"/"+rowData["Mã"]);
                             });
-                    }*/
+                        $cell.find("a#idDelEmployee")
+                            .unbind("click")
+                            .bind("click", function (evt) {
+                                if(confirm("Bạn chắc chắn muốn xóa?"))
+                                    location.assign("{{url('admin/delnhanvien')}}"+"/"+rowData["Mã"]);
+                            });
+                    }
                 }
             ];
 

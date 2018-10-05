@@ -63,29 +63,35 @@ Route::get('admin/thongke', function () {
     return view('quantrivien.thongke');
 });
 
+//Phần khách hàng
+
 Route::get('admin/khachhang', 'AdminController@khachhang');
 
 Route:: get('admin/addkhachhang/{index?}', 'AdminController@addkhachhang');
 
-Route::post('admin/addcustomer','AdminController@addcustomer')->name('addcustomer');
+Route::post('admin/addcustomer', 'AdminController@addcustomer')->name('addcustomer');
+
+Route::get('admin/delkhachhang/{id}', 'AdminController@delcustomer');
 
 Route::get('admin/chuyenxe', function () {
     return view('quantrivien.chuyenxe');
 });
 
-Route::get('admin/loaixe', function () {
-    return view('quantrivien.loaixe');
-});
+Route::get('admin/loaixe', 'AdminController@loaixe');
 
 Route::get('admin/lotrinh', function () {
     return view('quantrivien.lotrinh');
 });
+
+//Phần nhân viên
 
 Route::get('admin/nhanvien', 'AdminController@nhanvien');
 
 Route:: get('admin/addnhanvien/{index?}', 'AdminController@addnhanvien');
 
 Route::post('admin/addemployee','AdminController@addemployee')->name('addemployee');
+
+Route::get('admin/delnhanvien/{id}','AdminController@delemployee');
 
 /* Kết thúc phần Route cho trang quản trị hệ thống */
 

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Khachhang;
 use App\Nhanvien;
+use App\Loaixe;
 
 class AdminController extends Controller
 {
@@ -29,10 +30,13 @@ class AdminController extends Controller
         echo $request->username;
         echo bcrypt($request->password);
     }*/
+
+    //Phần khách hàng
     public function khachhang(){
         $customer = Khachhang::all();
         return view('quantrivien.khachhang', compact('customer'));
     }
+
     public function addkhachhang($index=""){
         if($index==""){
             return view("quantrivien.addkhachhang");
@@ -47,6 +51,7 @@ class AdminController extends Controller
             die("Lỗi: ".$e);
         }
     }
+
     public  function addcustomer(Request $request){
         $name = $request->name;
         $brtday = $request->brtday;
@@ -75,6 +80,15 @@ class AdminController extends Controller
             else
                 return redirect()->back()->with('alert','Thêm thất bại!');
         }
+    }
+
+    public function delcustomer($id){
+        try {
+            DB::delete('DELETE FROM customer WHERE Mã = ?',[$id]);
+        } catch (\Exception $e) {
+            die("Lỗi xóa dữ liệu :".$e);
+        }
+        return redirect()->back();
     }
 
     //Phần nhân viên
@@ -128,5 +142,19 @@ class AdminController extends Controller
             else
                 return redirect()->back()->with('alert','Thêm thất bại!');
         }
+    }
+    public function delemployee($id){
+        try {
+            DB::delete('DELETE FROM employee WHERE Mã = ?',[$id]);
+        } catch (\Exception $e) {
+            die("Lỗi xóa dữ liệu :".$e);
+        }
+        return redirect()->back();
+    }
+
+    //Phần loại xe
+    public function loaixe(){
+        $busmodel = Loaixe::all();
+        return view('quantrivien.loaixe',compact('busmodel'));
     }
 }

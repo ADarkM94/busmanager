@@ -167,6 +167,7 @@
                 resizable: false,
                 roundCorners: false,
                 rowBorders: false,
+                postRenderInterval: -1,
                 hwrap: true,
                 columnBorders: false,
                 selectionModel: { type: 'row', mode: 'single' },
@@ -268,19 +269,26 @@
                     dataIndx: "View",
                     render: function (ui) {
                         var str = '';
-                        str += '<a title="Edit" id="idEditCustomer" ><i class="glyphicon glyphicon-edit  text-yellow"></i></a>';
+                        str += '<a title="Edit" id="idEditCustomer" ><i class="glyphicon glyphicon-edit  text-success" style="padding-right: 5px; cursor: pointer;"></i></a>';
+                        str += '<a title="Delete" id="idDelCustomer" ><i class="glyphicon glyphicon-remove  text-danger" style="padding-right: 5px; cursor: pointer;"></i></a>';
                         return str;
                     },
-                    /*postRender: function (ui) {
+                    postRender: function (ui) {
                         var rowData = ui.rowData,
                             $cell = this.getCell(ui);
                         //add button
                         $cell.find("a#idEditCustomer")
                             .unbind("click")
                             .bind("click", function (evt) {
-                                window.open("w3schools.com");
+                                window.open("{{url('admin/addkhachhang')}}"+"/"+rowData["Mã"]);
                             });
-                    }*/
+                        $cell.find("a#idDelCustomer")
+                            .unbind("click")
+                            .bind("click", function (evt) {
+                                if(confirm("Bạn chắc chắn muốn xóa?"))
+                                    location.assign("{{url('admin/delkhachhang')}}"+"/"+rowData["Mã"]);
+                            });
+                    }
                 }
             ];
 
