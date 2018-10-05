@@ -37,22 +37,22 @@
             <div class="menu">
                 <ul>
                     <a href="{{url('/admin/thongke')}}">
-                        <li class="option selected">Thống kê</li>
+                        <li class="option selected"><img src="{{asset('images/icons/business-report.png')}}" alt="icon">Thống kê</li>
                     </a>
                     <a href="{{url('/admin/khachhang')}}">
-                        <li class="option">Khách hàng</li>
+                        <li class="option"><img src="{{asset('images/icons/customer.png')}}" alt="icon">Khách hàng</li>
                     </a>
                     <a href="{{url('/admin/chuyenxe')}}">
-                        <li class="option">Chuyến xe</li>
+                        <li class="option"><img src="{{asset('images/icons/chuyenxe.png')}}" alt="icon">Chuyến xe</li>
                     </a>
                     <a href="{{url('/admin/loaixe')}}">
-                        <li class="option">Loại xe</li>
+                        <li class="option"><img src="{{asset('images/icons/bus.png')}}" alt="icon">Loại xe</li>
                     </a>
                     <a href="{{url('/admin/lotrinh')}}">
-                        <li class="option">Lộ trình</li>
+                        <li class="option"><img src="{{asset('images/icons/route.png')}}" alt="icon">Lộ trình</li>
                     </a>
                     <a href="{{url('/admin/nhanvien')}}">
-                        <li class="option">Nhân viên</li>
+                        <li class="option"><img src="{{asset('images/icons/partnership.png')}}" alt="icon">Nhân viên</li>
                     </a>
                 </ul>
             </div>
@@ -64,7 +64,7 @@
                     <li class="option" onclick="change(this)">Nhập vé</li>
                 </ul>
             </span> -->
-            <span><a href="./">Trang chủ</a></span>
+            <span><a href="{{url('/')}}">Trang chủ</a></span>
             @yield('content')
         </div>
     </div>

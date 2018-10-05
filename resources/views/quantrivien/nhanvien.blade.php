@@ -19,6 +19,7 @@
             option[i].classList.remove('selected');
         }
         option[5].classList.add('selected');
+        option[5].getElementsByTagName('img')[0].setAttribute('src','{{asset("images/icons/partnership-hover.png")}}');
         $(function () {
             var obj = {
                 width: '100%',

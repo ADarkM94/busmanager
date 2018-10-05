@@ -223,6 +223,7 @@
             option[i].classList.remove('selected');
         }
         option[3].classList.add('selected');
+        option[3].getElementsByTagName('img')[0].setAttribute('src','{{asset("images/icons/bus-hover.png")}}');
         $(function () {
             var obj = {
                 width: '100%',

@@ -9,10 +9,11 @@ a:hover, a:visited {
 	width: 100%;
 	height: 100%;
 	position: absolute;
+    background: #000714;
 }
 .header {
-	background: #008cff;
-	color: white;
+	background: white;
+	color: #008cff;
 	border-radius: 5px;
 	padding: .5em;
 	position: fixed;
@@ -41,6 +42,7 @@ a:hover, a:visited {
 	background: white;
 	color: #008cff;
 	border-radius: 5px;
+    border: 1px solid #008cff;
 	cursor: pointer;
 	position: relative;
 }
@@ -52,7 +54,7 @@ a:hover, a:visited {
 	transform: translate(0,-50%);
 	background: white;
 	border-radius: .5em;
-	border: 1px solid white;
+	border: 1px solid #008cff;
 }
 .header > hr {
 	border-color: white;
@@ -116,8 +118,15 @@ a:hover, a:visited {
 	bottom: 100%;
 	padding: .1em 1em;
 	margin: .2em 0;
-	border: 1px solid #008cff;
+	border: 1px solid #FFA000;
 	border-radius: 5px;
+    background: #FFA000;
+}
+.noidung > div:not([class~="sidebar"]) > span:nth-child(1) a {
+    color: white;
+}
+.noidung > div:not([class~="sidebar"]) > span:nth-child(1) a:hover {
+    text-decoration: underline;
 }
 .noidung > div:not([class~="sidebar"]) > div {
 	display: none;
@@ -127,12 +136,13 @@ a:hover, a:visited {
 	border-radius: 5px;
 	overflow: auto;
 	border-top: .5em solid #008cff;
+    background: white;
 }
 .menu {
 	width: 100%;
 	height: 100%;
-	border: 1px solid #008cff;
-	border-radius: 5px;
+	/*border: 1px solid #008cff;*/
+	/*border-radius: 5px;*/
 	padding: 0;
 	overflow: hidden;
 }
@@ -150,10 +160,36 @@ a:hover, a:visited {
 	background: white;
 	color: #008cff;
 	border-bottom: 1px solid #008cff;
-	text-align: center;
+	text-align: left;
 	font-weight: bold;
 	cursor: pointer;
-	transition: .3s ease-in-out;
+}
+.menu > ul > a:nth-child(odd) > .option {
+    border-radius: 0 10px;
+}
+.menu > ul > a:nth-child(even) > .option {
+    border-radius: 10px 0;
+}
+.menu > ul > a > .option > img {
+    width: 30px;
+}
+.menu > ul > a:nth-child(1) > .option:hover > img {
+    content: url("../images/icons/business-report-hover.png");
+}
+.menu > ul > a:nth-child(2) > .option:hover > img {
+    content: url("../images/icons/customer-hover.png");
+}
+.menu > ul > a:nth-child(3) > .option:hover > img {
+    content: url("../images/icons/chuyenxe-hover.png");
+}
+.menu > ul > a:nth-child(4) > .option:hover > img {
+    content: url("../images/icons/bus-hover.png");
+}
+.menu > ul > a:nth-child(5) > .option:hover > img {
+    content: url("../images/icons/route-hover.png");
+}
+.menu > ul > a:nth-child(6) > .option:hover > img {
+    content: url("../images/icons/partnership-hover.png");
 }
 .option:hover {
 	background: #008cff;
@@ -183,6 +219,7 @@ a:hover, a:visited {
 	padding: 0;
 	border: 1px solid grey;
 	border-radius: 10px;
+    background: linear-gradient(to top right,#a2a2a2,#d2d2d2,#dddddd,#c2c2c2,#a2a2a2);
 }
 .the a {
 	display: block;
@@ -193,10 +230,17 @@ a:hover, a:visited {
 }
 .the a > div > div {
 	font-size: 5em;
+    color: #0051f4;
 }
 .the a > div > p {
 	text-align: left;
 	margin-bottom: .2em;
+    color: white;
+    text-shadow: 0 0 3px lightblue, 0 0 6px darkblue;
+}
+.the:hover {
+    animation: theanimation 1s ease-in-out;
+    animation-iteration-count: infinite;
 }
 /*Xem và chỉnh sửa loại xe*/
 .loaixe > div {
@@ -620,4 +664,17 @@ a:hover, a:visited {
 #modaldadat .modal-footer > div > div > span:active {
 	transform: translate(0,0);
 	box-shadow: none;
+}
+@keyframes theanimation {
+    0% { background: linear-gradient(to top right,#a2a2a2,#d2d2d2,#dddddd,#c2c2c2,#a2a2a2);}
+    10% { background: linear-gradient(to top right,#a2a2a2,#a2a2a2,#d2d2d2,#dddddd,#c2c2c2);}
+    20% { background: linear-gradient(to top right,#c2c2c2,#a2a2a2,#a2a2a2,#d2d2d2,#dddddd);}
+    30% { background: linear-gradient(to top right,#dddddd,#c2c2c2,#a2a2a2,#a2a2a2,#d2d2d2);}
+    40% { background: linear-gradient(to top right,#d2d2d2,#dddddd,#c2c2c2,#a2a2a2,#a2a2a2);}
+    50% { background: linear-gradient(to top right,#a2a2a2,#d2d2d2,#dddddd,#c2c2c2,#a2a2a2);}
+    60% { background: linear-gradient(to top right,#a2a2a2,#a2a2a2,#d2d2d2,#dddddd,#c2c2c2);}
+    70% { background: linear-gradient(to top right,#c2c2c2,#a2a2a2,#a2a2a2,#d2d2d2,#dddddd);}
+    80% { background: linear-gradient(to top right,#dddddd,#c2c2c2,#a2a2a2,#a2a2a2,#d2d2d2);}
+    90% { background: linear-gradient(to top right,#d2d2d2,#dddddd,#c2c2c2,#a2a2a2,#a2a2a2);}
+    100% { background: linear-gradient(to top right,#a2a2a2,#d2d2d2,#dddddd,#c2c2c2,#a2a2a2);}
 }

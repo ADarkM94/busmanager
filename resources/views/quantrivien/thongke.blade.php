@@ -88,6 +88,7 @@
             option[i].classList.remove('selected');
         }
         option[0].classList.add('selected');
+        option[0].getElementsByTagName('img')[0].setAttribute('src','{{asset("images/icons/business-report-hover.png")}}');
         var buyerData = {
             labels : ["January","February","March","April","May","June"],
             datasets : [

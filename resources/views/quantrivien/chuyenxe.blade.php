@@ -248,5 +248,6 @@
             option[i].classList.remove('selected');
         }
         option[2].classList.add('selected');
+        option[2].getElementsByTagName('img')[0].setAttribute('src','{{asset("images/icons/chuyenxe-hover.png")}}');
     </script>
 @endsection

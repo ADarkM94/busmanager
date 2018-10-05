@@ -248,5 +248,6 @@
             option[i].classList.remove('selected');
         }
         option[4].classList.add('selected');
+        option[4].getElementsByTagName('img')[0].setAttribute('src','{{asset("images/icons/route-hover.png")}}');
     </script>
 @endsection

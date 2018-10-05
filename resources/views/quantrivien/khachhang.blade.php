@@ -154,6 +154,7 @@
             option[i].classList.remove('selected');
         }
         option[1].classList.add('selected');
+        option[1].getElementsByTagName('img')[0].setAttribute('src','{{asset("images/icons/customer-hover.png")}}');
         $(function () {
             var obj = {
                 width: '100%',
