@@ -59,6 +59,10 @@ Route::get('/qldv/datve', function() {
 
 /* Bắt đầu phần Route cho trang quản trị hệ thống */
 
+Route::get('admin/', function () {
+    return view('quantrivien.thongke');
+});
+
 Route::get('admin/thongke', function () {
     return view('quantrivien.thongke');
 });
