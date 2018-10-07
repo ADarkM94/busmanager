@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.0.1
+-- version 4.8.3
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 04, 2018 lúc 11:50 PM
--- Phiên bản máy phục vụ: 10.1.32-MariaDB
--- Phiên bản PHP: 7.2.5
+-- Thời gian đã tạo: Th10 07, 2018 lúc 03:06 PM
+-- Phiên bản máy phục vụ: 10.1.36-MariaDB
+-- Phiên bản PHP: 7.2.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -32,12 +32,21 @@ CREATE TABLE `bus_model` (
   `Mã` int(11) NOT NULL,
   `Tên_Loại` varchar(255) NOT NULL,
   `Số_ghế` int(11) NOT NULL,
+  `Số_hàng` int(11) NOT NULL,
+  `Số_cột` int(11) NOT NULL,
   `Sơ_đồ` tinytext NOT NULL,
   `Mã_nhân_viên_tạo` int(11) NOT NULL,
   `Mã_nhân_viên_chỉnh_sửa` int(11) NOT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Đang đổ dữ liệu cho bảng `bus_model`
+--
+
+INSERT INTO `bus_model` (`Mã`, `Tên_Loại`, `Số_ghế`, `Số_hàng`, `Số_cột`, `Sơ_đồ`, `Mã_nhân_viên_tạo`, `Mã_nhân_viên_chỉnh_sửa`, `created_at`, `updated_at`) VALUES
+(1, 'Model_1', 30, 5, 10, '00000', 1, 1, '2018-10-07 18:24:23', '2018-10-07 18:24:23');
 
 -- --------------------------------------------------------
 
@@ -224,6 +233,13 @@ CREATE TABLE `xe` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
+-- Đang đổ dữ liệu cho bảng `xe`
+--
+
+INSERT INTO `xe` (`Mã`, `Biển_số`, `Mã_loại_xe`, `Ngày_bảo_trì_gần_nhất`, `Ngày_bảo_trì_tiếp_theo`, `created_at`, `updated_at`) VALUES
+(1, '123456', 1, '2018-10-07', '2018-10-07', '2018-10-07 18:43:48', '2018-10-07 18:43:48');
+
+--
 -- Chỉ mục cho các bảng đã đổ
 --
 
@@ -323,7 +339,7 @@ ALTER TABLE `xe`
 -- AUTO_INCREMENT cho bảng `bus_model`
 --
 ALTER TABLE `bus_model`
-  MODIFY `Mã` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Mã` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT cho bảng `chuyen_xe`
@@ -377,7 +393,7 @@ ALTER TABLE `ve`
 -- AUTO_INCREMENT cho bảng `xe`
 --
 ALTER TABLE `xe`
-  MODIFY `Mã` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Mã` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Các ràng buộc cho các bảng đã đổ
