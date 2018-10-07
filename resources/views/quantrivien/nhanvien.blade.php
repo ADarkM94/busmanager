@@ -332,24 +332,6 @@
             var $grid = $("#employee").pqGrid(obj);
             $grid.pqGrid("refreshDataAndView");
         });
-        function pqDatePicker(ui) {
-            var $this = $(this);
-            $this
-            //.css({ zIndex: 3, position: "relative" })
-                .datepicker({
-                    yearRange: "-25:+0", //25 years prior to present.
-                    changeYear: true,
-                    changeMonth: true,
-                    //showButtonPanel: true,
-                    onClose: function (evt, ui) {
-                        $(this).focus();
-                    }
-                });
-            //default From date
-            $this.filter(".pq-from").datepicker("option", "defaultDate", new Date("01/01/1996"));
-            //default To date
-            $this.filter(".pq-to").datepicker("option", "defaultDate", new Date("12/31/1998"));
-        }
         function refreshNV(){
             $("#employee").pqGrid("reset",{filter : true});
         }

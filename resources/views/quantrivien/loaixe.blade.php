@@ -9,11 +9,11 @@
             </div>
             <div class="col-lg-12">
                 <span>Thông tin loại xe</span>
-                <form class="">
-                    <input type="text" name="" class="form-control" placeholder="Tên loại xe">
-                    <input type="text" name="" class="form-control" placeholder="Số hàng">
-                    <input type="text" name="" class="form-control" placeholder="Số cột">
-                    <input type="button" name="" class="btn btn-success" value="Áp dụng">
+                <form name="ttmodel" class="">
+                    <input type="text" name="name" class="form-control" placeholder="Tên loại xe">
+                    <input type="text" name="row" class="form-control" placeholder="Số hàng">
+                    <input type="text" name="col" class="form-control" placeholder="Số cột">
+                    <input type="button" name="submit" class="btn btn-success" value="Áp dụng">
                 </form>
             </div>
         </div>
@@ -287,6 +287,32 @@
                     }
                 },
                 {
+                    title: "Số hàng",
+                    width: 150,
+                    dataIndx: "Số_hàng",
+                    dataType: "string",
+                    editor: false,
+                    align: 'center',
+                    filter: {
+                        type: 'textbox',
+                        condition: 'contain',
+                        listeners: ['keyup']
+                    }
+                },
+                {
+                    title: "Số cột",
+                    width: 150,
+                    dataIndx: "Số_cột",
+                    dataType: "string",
+                    editor: false,
+                    align: 'center',
+                    filter: {
+                        type: 'textbox',
+                        condition: 'contain',
+                        listeners: ['keyup']
+                    }
+                },
+                {
                     title: "SƠ đồ",
                     width: 100,
                     dataIndx: "Sơ_đồ",
@@ -317,7 +343,7 @@
                         $cell.find("a#idEditEmployee")
                             .unbind("click")
                             .bind("click", function (evt) {
-                                window.open("{{url('admin/addnhanvien')}}"+"/"+rowData["Mã"]);
+                                editModel(rowData["Tên_Loại"],rowData["Số_hàng"],rowData["Số_cột"],rowData["Sơ_đồ"]);
                             });
                         $cell.find("a#idDelEmployee")
                             .unbind("click")
@@ -338,6 +364,15 @@
             obj.pageModel = {type: 'local', rPP: 20, rPPOptions: [20, 30, 40, 50]};
             var $grid = $("#busmodel").pqGrid(obj);
             $grid.pqGrid("refreshDataAndView");
+            function editModel(name,row,col,filename){
+                var ttname = document.forms["ttmodel"]["name"];
+                var ttrow = document.forms["ttmodel"]["row"];
+                var ttcol = document.forms["ttmodel"]["col"];
+                var ttsubmit = document.forms["ttmodel"]["submit"];
+                ttname.value = name;
+                ttrow.value = row;
+                ttcol.value = col;
+            }
         });
     </script>
 @endsection

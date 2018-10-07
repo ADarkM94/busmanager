@@ -54,6 +54,9 @@
                     <a href="{{url('/admin/nhanvien')}}">
                         <li class="option"><img src="{{asset('images/icons/partnership.png')}}" alt="icon">Nhân viên</li>
                     </a>
+                    <a href="{{url('/admin/xe')}}">
+                        <li class="option"><img src="{{asset('images/icons/partnership.png')}}" alt="icon">Xe</li>
+                    </a>
                 </ul>
             </div>
         </div>
@@ -73,6 +76,24 @@
 <script>
     document.getElementsByClassName("container-fluid")[0].style.paddingTop=document.getElementsByClassName("header")[0].clientHeight+30+"px";
     document.getElementsByClassName("container-fluid")[0].style.paddingBottom= "15px";
+    function pqDatePicker(ui) {
+        var $this = $(this);
+        $this
+        //.css({ zIndex: 3, position: "relative" })
+            .datepicker({
+                yearRange: "-25:+0", //25 years prior to present.
+                changeYear: true,
+                changeMonth: true,
+                //showButtonPanel: true,
+                onClose: function (evt, ui) {
+                    $(this).focus();
+                }
+            });
+        //default From date
+        $this.filter(".pq-from").datepicker("option", "defaultDate", new Date("01/01/1996"));
+        //default To date
+        $this.filter(".pq-to").datepicker("option", "defaultDate", new Date("12/31/1998"));
+    }
 </script>
 @yield('script')
 <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDPoe4NcaI69_-eBqxW9Of05dHNF0cRJ78&callback=showMap"></script> -->

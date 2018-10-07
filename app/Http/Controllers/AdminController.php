@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Khachhang;
 use App\Nhanvien;
 use App\Loaixe;
+use App\Xe;
 
 class AdminController extends Controller
 {
@@ -156,5 +157,58 @@ class AdminController extends Controller
     public function loaixe(){
         $busmodel = Loaixe::all();
         return view('quantrivien.loaixe',compact('busmodel'));
+    }
+
+    //Phần xe
+    public function xe(){
+        $bus = Xe::all();
+        return view('quantrivien.xe',compact('bus'));
+    }
+    public function addxe($index = ""){
+        $bustypes = DB::select("SELECT Mã,Tên_Loại FROM bus_model");
+        if($index == ""){
+            return view("quantrivien.addxe",["bustypes"=>$bustypes]);
+        }
+        try {
+            $ttxes = DB::select("SELECT * FROM xe WHERE Mã = ?",[$index]);
+            foreach ($ttxes as $row){
+                $ttxe = $row;
+            }
+            return view("quantrivien.addxe",["ttxe" => $ttxe,"bustypes"=>$bustypes]);
+        } catch (\Exception $e) {
+            die("Lỗi: ".$e);
+        }
+    }
+    public  function addbus(Request $request){
+        $bienso = $request->bienso;
+        $idtypebus = $request->idtypebus;
+        $gannhat = $request->baotrigannhat;
+        $tieptheo = $request->baotritieptheo;
+        $created_at = date('Y-m-d h-i-s');
+        $updated_at = date('Y-m-d h-i-s');
+        if(isset($request->ID)){
+            if(DB::update("UPDATE `xe` SET `Biển_số`= ?,`Mã_loại_xe`= ?,`Ngày_bảo_trì_gần_nhất`= ?,`Ngày_bảo_trì_tiếp_theo`= ?,`updated_at`= ? WHERE `Mã`= ?",
+                [$bienso,$idtypebus,$gannhat,$tieptheo,$updated_at,$request->ID]))
+                return redirect()->back()->with('alert','Sửa thành công!');
+            else
+                return redirect()->back()->with('alert','Sửa thất bại!');
+        }
+        else {
+            if( DB::insert("INSERT INTO `xe`(`Biển_số`, `Mã_loại_xe`, `Ngày_bảo_trì_gần_nhất`, `Ngày_bảo_trì_tiếp_theo`, `created_at`, `updated_at`) VALUES (?,?,?,?,?,?)",
+                [$bienso,$idtypebus,$gannhat,$tieptheo,$created_at,$updated_at]))
+            {
+                return redirect()->back()->with('alert','Thêm thành công!');
+            }
+            else
+                return redirect()->back()->with('alert','Thêm thất bại!');
+        }
+    }
+    public function delbus($id){
+        try {
+            DB::delete('DELETE FROM xe WHERE Mã = ?',[$id]);
+        } catch (\Exception $e) {
+            die("Lỗi xóa dữ liệu :".$e);
+        }
+        return redirect()->back();
     }
 }

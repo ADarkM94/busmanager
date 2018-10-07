@@ -97,6 +97,16 @@ Route::post('admin/addemployee','AdminController@addemployee')->name('addemploye
 
 Route::get('admin/delnhanvien/{id}','AdminController@delemployee');
 
+//Phần xe
+
+Route::get('admin/xe', 'AdminController@xe');
+
+Route:: get('admin/addxe/{index?}', 'AdminController@addxe');
+
+Route::post('admin/addbus','AdminController@addbus')->name('addbus');
+
+Route::get('admin/delxe/{id}','AdminController@delbus');
+
 /* Kết thúc phần Route cho trang quản trị hệ thống */
 
 /* Bắt đầu phần Route để test chức năng */

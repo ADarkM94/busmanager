@@ -19,10 +19,10 @@
                     <?php
                     $ttkhachhang = (array)$ttkhachhang;
                     ?>
-                    <input type="hidden" name="ID" value="{{$ttkhachhang['Mã'] or ''}}">
+                    <input type="hidden" name="ID" value="{{ $ttkhachhang['Mã'] or '' }}">
                 @endisset
                 <label>Tên</label>
-                <input type="text" class="form-control" name="name" value="{{$ttkhachhang['Tên'] or ''}}" placeholder="Tên đầy đủ">
+                <input type="text" class="form-control" name="name" value="{{ $ttkhachhang['Tên'] or '' }}" placeholder="Tên đầy đủ">
                 <br>
                 <label>Ngày sinh</label>
                 <input type="date" class="form-control"  name="brtday" value="{{$ttkhachhang['Ngày_sinh'] or ''}}" placeholder="Ngày sinh">
@@ -66,5 +66,6 @@
             option[i].classList.remove('selected');
         }
         option[1].classList.add('selected');
+        option[1].getElementsByTagName('img')[0].setAttribute('src','{{asset("images/icons/customer-hover.png")}}');
     </script>
 @endsection
