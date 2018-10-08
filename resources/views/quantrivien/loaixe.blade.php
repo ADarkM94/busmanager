@@ -10,10 +10,14 @@
             <div class="col-lg-12">
                 <span>Thông tin loại xe</span>
                 <form name="ttmodel" class="">
+                    <input type="hidden" name="ID">
                     <input type="text" name="name" class="form-control" placeholder="Tên loại xe">
                     <input type="text" name="row" class="form-control" placeholder="Số hàng">
                     <input type="text" name="col" class="form-control" placeholder="Số cột">
-                    <input type="button" name="submit" class="btn btn-success" value="Áp dụng">
+                    <input type="hidden" name="sodo">
+                    <input type="hidden" name="noidung">
+                    <input type="button" onclick="changemodel()" class="btn btn-success" value="Áp dụng">
+                    <input type="button" onclick="checksubmit(this)" name="submit" class="btn btn-warning" value="Lưu thay đổi">
                 </form>
             </div>
         </div>
@@ -69,10 +73,10 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-6">
-                        <span>Xác nhận</span>
+                        <span onclick="xacnhan()">Xác nhận</span>
                     </div>
                     <div class="col-lg-6">
-                        <span>Hoàn tác</span>
+                        <span onclick="huy()">Hoàn tác</span>
                     </div>
                 </div>
             </div>
@@ -83,6 +87,7 @@
 @endsection
 @section('script')
     <script>
+        var xacnhan=0;
         var option = document.getElementsByClassName("option");
         for (var i = 0; i < option.length; i++) {
             option[i].classList.remove('selected');
@@ -209,7 +214,7 @@
                         $cell.find("a#idEditEmployee")
                             .unbind("click")
                             .bind("click", function (evt) {
-                                editModel(rowData["Tên_Loại"],rowData["Số_hàng"],rowData["Số_cột"],rowData["Sơ_đồ"]);
+                                editModel(rowData["Mã"],rowData["Tên_Loại"],rowData["Số_hàng"],rowData["Số_cột"],rowData["Sơ_đồ"]);
                             });
                         $cell.find("a#idDelEmployee")
                             .unbind("click")
@@ -231,10 +236,12 @@
             var $grid = $("#busmodel").pqGrid(obj);
             $grid.pqGrid("refreshDataAndView");
         });
-        function editModel(name,row,col,sodo){
+        function editModel(id,name,row,col,sodo){
             var ttname = document.forms["ttmodel"]["name"];
             var ttrow = document.forms["ttmodel"]["row"];
             var ttcol = document.forms["ttmodel"]["col"];
+            var tensodo = document.forms["ttmodel"]["sodo"];
+            var noidungsodo =document.forms["ttmodel"]["noidung"];
             var ttsubmit = document.forms["ttmodel"]["submit"];
             var ttsodo = model[sodo].split('');
             var view = document.getElementById('mapxe');
@@ -252,9 +259,12 @@
                 str+="</tr>";
             }
             str +="</table>";
+            document.forms["ttmodel"]["ID"].value = id;
             ttname.value = name;
             ttrow.value = row;
             ttcol.value = col;
+            tensodo.value = sodo;
+            noidungsodo.value = model[sodo];
             view.innerHTML = str;
         }
         function change(ev) {
@@ -266,6 +276,34 @@
                 ev.classList.remove('glyphicon-unchecked');
                 ev.classList.add('glyphicon-check');
             }
+        }
+        function changemodel() {
+            var id = document.forms["ttmodel"]["ID"].value;
+            var row = document.forms["ttmodel"]["row"].value;
+            var col = document.forms["ttmodel"]["col"].value;
+            if(id!=""&&row>0&&col>0){
+                var view = document.getElementById('mapxe');
+                var str ="<table style='width: 100%; height: 500px; border-collapse: separate; border-spacing: 5px 5px; '>";
+                for (var i = 0; i<row;i++) {
+                    str+="<tr>"
+                    for (var j =0; j<col;j++) {
+                        str += "<td onclick='change(this)' class='glyphicon glyphicon-unchecked'></td>";
+                    }
+                    str+="</tr>";
+                }
+                str +="</table>";
+                view.innerHTML = str;
+            }
+        }
+        function xacnhan() {
+
+        }
+        function huy() {
+            location.assign(location.href);
+        }
+        function checksubmit(ev) {
+            if(xacnhan==0)
+                ev.preventDefault;
         }
     </script>
 @endsection
