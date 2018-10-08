@@ -180,7 +180,7 @@
         function openmap(x,y){
             var mapOptions = {
                 center: new google.maps.LatLng(x, y),
-                zoom: 10,
+                zoom: 16,
                 mapTypeId:google.maps.MapTypeId.ROADMAP
             };
             var marker = new google.maps.Marker({
@@ -190,5 +190,5 @@
             marker.setMap(map);
         }
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDPoe4NcaI69_-eBqxW9Of05dHNF0cRJ78&sensor=false"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDPoe4NcaI69_-eBqxW9Of05dHNF0cRJ78"></script>
 @endsection

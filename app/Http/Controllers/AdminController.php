@@ -232,11 +232,11 @@ class AdminController extends Controller
             return view("quantrivien.addtramdung");
         }
         try {
-            $ttxes = DB::select("SELECT * FROM xe WHERE Mã = ?",[$index]);
-            foreach ($ttxes as $row){
-                $ttxe = $row;
+            $tttramdungs = DB::select("SELECT * FROM tram_dung WHERE Mã = ?",[$index]);
+            foreach ($tttramdungs as $row){
+                $tttramdung = $row;
             }
-            return view("quantrivien.addtramdung",["tttramdung" => $ttxe);
+            return view("quantrivien.addtramdung",["tttramdung" => $tttramdung]);
         } catch (\Exception $e) {
             die("Lỗi: ".$e);
         }
