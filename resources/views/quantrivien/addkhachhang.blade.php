@@ -19,13 +19,13 @@
                     <?php
                     $ttkhachhang = (array)$ttkhachhang;
                     ?>
-                    <input type="hidden" name="ID" value="{{ $ttkhachhang['Mã'] or '' }}">
+                    <input type="hidden" name="ID" value="{{isset($ttkhachhang['Mã'])? $ttkhachhang['Mã']:''}}">
                 @endisset
                 <label>Tên</label>
-                <input type="text" class="form-control" name="name" value="{{ $ttkhachhang['Tên'] or '' }}" placeholder="Tên đầy đủ">
+                <input type="text" class="form-control" name="name" value="{{isset($ttkhachhang['Tên'])? $ttkhachhang['Tên']:''}}" placeholder="Tên đầy đủ">
                 <br>
                 <label>Ngày sinh</label>
-                <input type="date" class="form-control"  name="brtday" value="{{$ttkhachhang['Ngày_sinh'] or ''}}" placeholder="Ngày sinh">
+                <input type="date" class="form-control"  name="brtday" value="{{isset($ttkhachhang['Ngày_sinh'])? $ttkhachhang['Ngày_sinh']:''}}" placeholder="Ngày sinh">
                 <br>
                 <label>Giới tính</label>
                 <br>
@@ -34,19 +34,19 @@
                 <input type="radio" class="form-inline" name="gender" value="2" <?php if(isset($ttkhachhang)&&$ttkhachhang['Giới tính']=='2') echo "checked";?>> Nữ
                 <br>
                 <label>Địa chỉ</label>
-                <input type="text" class="form-control"  name="address" value="{{$ttkhachhang['Địa chỉ'] or ''}}" placeholder="Địa chỉ">
+                <input type="text" class="form-control"  name="address" value="{{isset($ttkhachhang['Địa chỉ'])? $ttkhachhang['Địa chỉ']:''}}" placeholder="Địa chỉ">
                 <br>
                 <label>Nickname</label>
-                <input type="text" class="form-control"  name="nickname" value="{{$ttkhachhang['Nickname'] or ''}}" placeholder="Bí danh">
+                <input type="text" class="form-control"  name="nickname" value="{{isset($ttkhachhang['Nickname'])? $ttkhachhang['Nickname']:''}}" placeholder="Bí danh">
                 <br>
                 <label>Password<i class="text text-danger">*</i></label>
-                <input type="password" class="form-control"  name="password" value="{{$ttkhachhang['Password'] or ''}}" <?php echo isset($ttkhachhang)? "disabled":"";?> placeholder="Mật khẩu" required>
+                <input type="password" class="form-control"  name="password" value="{{isset($ttkhachhang['Password'])? $ttkhachhang['Password']:''}}" <?php echo isset($ttkhachhang)? "disabled":"";?> placeholder="Mật khẩu" required>
                 <br>
                 <label>Email<i class="text text-danger">*</i></label>
-                <input type="email" class="form-control"  name="email" value="{{$ttkhachhang['Email'] or ''}}" placeholder="Địa chỉ Email" required>
+                <input type="email" class="form-control"  name="email" value="{{isset($ttkhachhang['Email'])? $ttkhachhang['Email']:''}}" placeholder="Địa chỉ Email" required>
                 <br>
                 <label>Số điện thoại<i class="text text-danger">*</i></label>
-                <input type="tel" class="form-control"  name="phone" value="{{$ttkhachhang['Sđt'] or ''}}" placeholder="Số điện thoại" required>
+                <input type="tel" class="form-control"  name="phone" value="{{isset($ttkhachhang['Sđt'])? $ttkhachhang['Sđt']:''}}" placeholder="Số điện thoại" required>
                 <br>
                 <div style="text-align: center">
                     <input type="submit" class="btn btn-success" value="<?php echo isset($ttkhachhang)? 'Sửa Thông Tin':'Thêm Người Dùng';?>">
