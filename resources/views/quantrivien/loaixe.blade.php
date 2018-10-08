@@ -23,7 +23,7 @@
                     <div>Chỉnh sửa sơ đồ loại xe
                         <hr>
                     </div>
-                    <div class="col-lg-12">
+                    <div class="col-lg-12" id="mapxe">
                         <div class="row">
                             <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
                             <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
@@ -80,150 +80,16 @@
     </div>
 @endsection
 @section('excontent')
-    <datalist id="diadiem" style="display: none;">
-        <option>Quảng Ngãi</option>
-        <option>Quảng Nam</option>
-        <option>Đà Nẵng</option>
-        <option>Sài Gòn</option>
-        <option>Bình Định</option>
-        <option>Hà Nội</option>
-    </datalist>
-    <div id="modaldatve" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button class="close" data-dismiss="modal">&times;</button>
-                    <div class="modal-title">Chuyến xe #</div>
-                </div>
-                <div class="modal-body">
-                    <form id="ttchuyenxe">
-                        <div class="row form-group">
-                            <div class="col-lg-6">
-                                <label>Nơi đi</label>
-                                <input type="text" name="noidi" class="form-control" placeholder="Điểm đi" readonly="">
-                            </div>
-                            <div class="col-lg-6">
-                                <label>Nơi đến</label>
-                                <input type="text" name="noiden" class="form-control" placeholder="Điểm đến" readonly="">
-                            </div>
-                        </div>
-                        <div class="row form-group">
-                            <div class="col-lg-6">
-                                <label>Thời gian đi</label>
-                                <input type="text" name="thoigiandi" class="form-control" placeholder="Thời gian đi" readonly="">
-                            </div>
-                            <div class="col-lg-6">
-                                <label>Thời gian đến dự kiến</label>
-                                <input type="text" name="thoigianden" class="form-control" placeholder="Thời gian đến dự kiến" readonly="">
-                            </div>
-                        </div>
-                    </form>
-                    <span>Sơ đồ xe</span>
-                    <label class="checkbox-inline"><input type="checkbox" name="multi">Chọn nhiều chỗ</label>
-                    <div class="sodoxe">
-                        <div class="col-lg-4"></div>
-                        <div class="col-lg-4">
-                            <div class="row">
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                            </div>
-                            <br>
-                            <div class="row">
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                            </div>
-                            <br>
-                            <div class="row">
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                            </div>
-                            <br>
-                            <div class="row">
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                            </div>
-                            <br>
-                            <div class="row">
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                            </div>
-                            <br>
-                            <div class="row">
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4"></div>
-                    </div>
-                    <br>
-                    <span>Chọn</span>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div id="modaldadat" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button class="close" data-dismiss="modal">&times;</button>
-                    <div class="modal-title">Vé đặt</div>
-                </div>
-                <div class="modal-body">
-                    <ul>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
-                    </ul>
-                </div>
-                <div class="modal-footer">
-                    <div class="col-lg-12">
-                        <label>Tổng tiền</label>
-                        <input type="text" name="tongtien" class="form-control" placeholder="Tổng tiền" readonly="">
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <span>Xác nhận</span>
-                        </div>
-                        <div class="col-lg-6">
-                            <span>Hoàn tác</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 @endsection
 @section('script')
     <script>
-        option = document.getElementsByClassName("option");
+        var option = document.getElementsByClassName("option");
         for (var i = 0; i < option.length; i++) {
             option[i].classList.remove('selected');
         }
         option[3].classList.add('selected');
         option[3].getElementsByTagName('img')[0].setAttribute('src','{{asset("images/icons/bus-hover.png")}}');
+        var model = {!!json_encode($model)!!};
         $(function () {
             var obj = {
                 width: '100%',
@@ -364,15 +230,42 @@
             obj.pageModel = {type: 'local', rPP: 20, rPPOptions: [20, 30, 40, 50]};
             var $grid = $("#busmodel").pqGrid(obj);
             $grid.pqGrid("refreshDataAndView");
-            function editModel(name,row,col,filename){
-                var ttname = document.forms["ttmodel"]["name"];
-                var ttrow = document.forms["ttmodel"]["row"];
-                var ttcol = document.forms["ttmodel"]["col"];
-                var ttsubmit = document.forms["ttmodel"]["submit"];
-                ttname.value = name;
-                ttrow.value = row;
-                ttcol.value = col;
-            }
         });
+        function editModel(name,row,col,sodo){
+            var ttname = document.forms["ttmodel"]["name"];
+            var ttrow = document.forms["ttmodel"]["row"];
+            var ttcol = document.forms["ttmodel"]["col"];
+            var ttsubmit = document.forms["ttmodel"]["submit"];
+            var ttsodo = model[sodo].split('');
+            var view = document.getElementById('mapxe');
+            var str ="<table style='width: 100%; height: 500px; border-collapse: separate; border-spacing: 5px 5px; '>";
+            for (var i = 0; i<row;i++) {
+                str+="<tr>"
+                for (var j =0; j<col;j++) {
+                    if (ttsodo[i*col+j]==1) {
+                        str+="<td onclick='change(this)' class='glyphicon glyphicon-check'></td>";
+                    }
+                    else if (ttsodo[i*col+j]==0) {
+                        str+="<td onclick='change(this)' class='glyphicon glyphicon-unchecked'></td>";
+                    }
+                }
+                str+="</tr>";
+            }
+            str +="</table>";
+            ttname.value = name;
+            ttrow.value = row;
+            ttcol.value = col;
+            view.innerHTML = str;
+        }
+        function change(ev) {
+            if(ev.classList.contains('glyphicon-check')) {
+                ev.classList.remove('glyphicon-check');
+                ev.classList.add('glyphicon-unchecked');
+            }
+            else {
+                ev.classList.remove('glyphicon-unchecked');
+                ev.classList.add('glyphicon-check');
+            }
+        }
     </script>
 @endsection

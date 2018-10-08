@@ -157,7 +157,19 @@ class AdminController extends Controller
     //Phần loại xe
     public function loaixe(){
         $busmodel = Loaixe::all();
-        return view('quantrivien.loaixe',compact('busmodel'));
+        foreach ($busmodel as $row){
+            $filepath = 'busmodel/'.$row['Sơ_đồ'].'.txt';
+            if(file_exists($filepath)) {
+                $file = fopen($filepath,'r');
+                $model[$row['Sơ_đồ']]=fread($file,filesize($filepath));
+                fclose($file);
+            }
+            else {
+                $model[$row['Sơ_đồ']]='';
+            }
+
+        }
+        return view('quantrivien.loaixe',compact('busmodel','model'));
     }
 
     //Phần xe
