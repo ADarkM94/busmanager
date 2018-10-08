@@ -19,7 +19,7 @@
                     <?php
                     $ttkhachhang = (array)$ttkhachhang;
                     ?>
-                    <input type="hidden" name="ID" value="{{isset($ttkhachhang['Mã'])? $ttkhachhang['Mã']:''}}">
+                    <input type="hidden" name="ID" value="{{$ttkhachhang['Mã']}}">
                 @endisset
                 <label>Tên</label>
                 <input type="text" class="form-control" name="name" value="{{isset($ttkhachhang['Tên'])? $ttkhachhang['Tên']:''}}" placeholder="Tên đầy đủ">

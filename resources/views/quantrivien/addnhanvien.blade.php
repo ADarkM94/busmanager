@@ -19,7 +19,7 @@
                     <?php
                     $ttnhanvien = (array)$ttnhanvien;
                     ?>
-                    <input type="hidden" name="ID" value="{{$ttnhanvien['Mã'] or ''}}">
+                    <input type="hidden" name="ID" value="{{$ttnhanvien['Mã']}}">
                 @endisset
                 <label>Tên</label>
                 <input type="text" class="form-control" name="name" value="{{isset($ttnhanvien['Họ_Tên'])? $ttnhanvien['Họ_Tên']:''}}" placeholder="Tên đầy đủ">

@@ -241,4 +241,35 @@ class AdminController extends Controller
             die("Lỗi: ".$e);
         }
     }
+    public  function addbusstop(Request $request){
+        $name = $request->name;
+        $employeeid = $request->employeeID;
+        $toado = $request->toado;
+        $created_at = date('Y-m-d h-i-s');
+        $updated_at = date('Y-m-d h-i-s');
+        if(isset($request->ID)){
+            if(DB::update("UPDATE `tram_dung` SET `Tên`= ?,`Tọa_độ`= ?,`Mã_nhân_viên_chỉnh_sửa`= ?,`updated_at`= ? WHERE `Mã`= ?",
+                [$name,$toado,$employeeid,$updated_at,$request->ID]))
+                return redirect()->back()->with('alert','Sửa thành công!');
+            else
+                return redirect()->back()->with('alert','Sửa thất bại!');
+        }
+        else {
+            if( DB::insert("INSERT INTO `tram_dung`(`Tên`, `Tọa_độ`, `Mã_nhân_viên_tạo`, `Mã_nhân_viên_chỉnh_sửa`, `created_at`, `updated_at`) VALUES (?,?,?,?,?,?)",
+                [$name,$toado,$employeeid,$employeeid,$created_at,$updated_at]))
+            {
+                return redirect()->back()->with('alert','Thêm thành công!');
+            }
+            else
+                return redirect()->back()->with('alert','Thêm thất bại!');
+        }
+    }
+    public function delbusstop($id){
+        try {
+            DB::delete('DELETE FROM tram_dung WHERE Mã = ?',[$id]);
+        } catch (\Exception $e) {
+            die("Lỗi xóa dữ liệu :".$e);
+        }
+        return redirect()->back();
+    }
 }

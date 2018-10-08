@@ -19,7 +19,7 @@
                     <?php
                     $ttxe = (array)$ttxe;
                     ?>
-                    <input type="hidden" name="ID" value="{{$ttxe['Mã'] or ''}}">
+                    <input type="hidden" name="ID" value="{{$ttxe['Mã']}}">
                 @endisset
                 <label>Biển số</label>
                 <input type="text" class="form-control" name="bienso" value="{{isset($ttxe['Biển_số'])? $ttxe['Biển_số']:''}}" placeholder="Biển số xe">
