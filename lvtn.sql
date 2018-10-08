@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 07, 2018 lúc 03:06 PM
+-- Thời gian đã tạo: Th10 08, 2018 lúc 03:05 PM
 -- Phiên bản máy phục vụ: 10.1.36-MariaDB
 -- Phiên bản PHP: 7.2.10
 
@@ -34,7 +34,7 @@ CREATE TABLE `bus_model` (
   `Số_ghế` int(11) NOT NULL,
   `Số_hàng` int(11) NOT NULL,
   `Số_cột` int(11) NOT NULL,
-  `Sơ_đồ` tinytext NOT NULL,
+  `Sơ_đồ` varchar(255) NOT NULL,
   `Mã_nhân_viên_tạo` int(11) NOT NULL,
   `Mã_nhân_viên_chỉnh_sửa` int(11) NOT NULL,
   `created_at` datetime NOT NULL,
@@ -46,7 +46,8 @@ CREATE TABLE `bus_model` (
 --
 
 INSERT INTO `bus_model` (`Mã`, `Tên_Loại`, `Số_ghế`, `Số_hàng`, `Số_cột`, `Sơ_đồ`, `Mã_nhân_viên_tạo`, `Mã_nhân_viên_chỉnh_sửa`, `created_at`, `updated_at`) VALUES
-(1, 'Model_1', 30, 5, 10, '00000', 1, 1, '2018-10-07 18:24:23', '2018-10-07 18:24:23');
+(1, 'Model_1', 30, 10, 5, '00000', 1, 1, '2018-10-07 18:24:23', '2018-10-08 11:42:13'),
+(4, 'Model_2', 26, 10, 6, '00001', 1, 1, '2018-10-08 11:56:21', '2018-10-08 11:56:21');
 
 -- --------------------------------------------------------
 
@@ -140,8 +141,7 @@ CREATE TABLE `employee` (
 --
 
 INSERT INTO `employee` (`Mã`, `Họ_Tên`, `Ngày_sinh`, `Giới_tính`, `Địa_chỉ`, `Username`, `Password`, `Email`, `Loại_NV`, `Chi_nhánh`, `Bằng_lái`, `Sđt`, `Date_Starting`, `created_at`, `updated_at`) VALUES
-(1, 'Phan Anh Minh', '1994-04-10', '1', 'Quảng Ngãi', 'admin', '25f9e794323b453885f5181f1b624d0b', 'phananhminh51202164@gmail.com', 'QTV', NULL, NULL, '01646881949', '2018-09-01', '2018-09-28 20:02:37', '2018-09-28 20:02:37'),
-(2, 'Phan Anh Test', '1994-04-10', '1', '506/19/15 3/2 street', 'taixetest', 'd41d8cd98f00b204e9800998ecf8427e', '51202164@gmail.com', 'TX', 'Ho Chi Minh City', '999999999', '0123456789', '2017-10-10', '2018-10-04 09:34:13', '2018-10-04 09:47:55');
+(1, 'Phan Anh Minh', '1994-04-10', '1', 'Quảng Ngãi', 'admin', '25f9e794323b453885f5181f1b624d0b', 'phananhminh51202164@gmail.com', 'QTV', NULL, NULL, '01646881949', '2018-09-01', '2018-09-28 20:02:37', '2018-09-28 20:02:37');
 
 -- --------------------------------------------------------
 
@@ -197,6 +197,14 @@ CREATE TABLE `tram_dung` (
   `updated_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Đang đổ dữ liệu cho bảng `tram_dung`
+--
+
+INSERT INTO `tram_dung` (`Mã`, `Tên`, `Tọa_độ`, `Mã_nhân_viên_tạo`, `Mã_nhân_viên_chỉnh_sửa`, `created_at`, `updated_at`) VALUES
+(1, 'Trường Đại Học Ngân Hàng', '10.860252,106.761847', 1, 1, '2018-10-08 13:25:29', '2018-10-08 13:25:29'),
+(3, 'Trạm dừng 1', '10.863760207175778,106.7552897195435', 1, 1, '2018-10-08 11:58:21', '2018-10-08 11:58:21');
+
 -- --------------------------------------------------------
 
 --
@@ -249,6 +257,7 @@ INSERT INTO `xe` (`Mã`, `Biển_số`, `Mã_loại_xe`, `Ngày_bảo_trì_gần
 ALTER TABLE `bus_model`
   ADD PRIMARY KEY (`Mã`),
   ADD UNIQUE KEY `Tên_Loại` (`Tên_Loại`),
+  ADD UNIQUE KEY `Sơ_đồ` (`Sơ_đồ`),
   ADD KEY `Mã_nhân_viên_chỉnh_sửa` (`Mã_nhân_viên_chỉnh_sửa`),
   ADD KEY `Mã_nhân_viên_tạo` (`Mã_nhân_viên_tạo`);
 
@@ -339,7 +348,7 @@ ALTER TABLE `xe`
 -- AUTO_INCREMENT cho bảng `bus_model`
 --
 ALTER TABLE `bus_model`
-  MODIFY `Mã` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `Mã` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT cho bảng `chuyen_xe`
@@ -381,7 +390,7 @@ ALTER TABLE `tinh`
 -- AUTO_INCREMENT cho bảng `tram_dung`
 --
 ALTER TABLE `tram_dung`
-  MODIFY `Mã` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Mã` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT cho bảng `ve`
