@@ -87,6 +87,8 @@ Route::get('admin/loaixe', 'AdminController@loaixe');
 
 Route::post('admin/addbusmodel', 'AdminController@addbusmodel')->name('addbusmodel');
 
+Route::get('admin/delloaixe/{id}', 'AdminController@delbusmodel');
+
 Route::get('admin/lotrinh', function () {
     return view('quantrivien.lotrinh');
 });

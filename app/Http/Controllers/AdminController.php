@@ -208,6 +208,14 @@ class AdminController extends Controller
                 return redirect()->back()->with('alert','Thêm thất bại!');
         }
     }
+    public function delbusmodel($id){
+        try {
+            DB::delete('DELETE FROM bus_model WHERE Mã = ?',[$id]);
+        } catch (\Exception $e) {
+            die("Lỗi xóa dữ liệu :".$e);
+        }
+        return redirect()->back();
+    }
 
     //Phần xe
     public function xe(){
