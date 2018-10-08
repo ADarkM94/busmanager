@@ -21,6 +21,8 @@
         option[6].classList.add('selected');
         option[6].getElementsByTagName('img')[0].setAttribute('src','{{asset("images/icons/customer-hover.png")}}');
         $(function () {
+            var typebus = {!!json_encode($typebus)!!};
+            alert(typebus);
             var obj = {
                 width: '100%',
                 height: '100%',
@@ -78,7 +80,22 @@
                     editor: false,
                     align: "center",
                     render: function (ui) {
-
+                        return typebus[ui.rowData['Mã_loại_xe']];
+                    },
+                    filter: {
+                        type: "select",
+                        condition: "equal",
+                        options: function (ui) {
+                            var opts = [{ '': '[ All ]'}];
+                            var properties = Object.getOwnPropertyNames(typebus);
+                            for (var i = 0; i < properties.length; i++) {
+                                var obj = {};
+                                obj[properties[i]] = typebus[properties[i]];
+                                opts.push(obj);
+                            }
+                            return opts;
+                        },
+                        listeners: ["change"]
                     }
                 },
                 {

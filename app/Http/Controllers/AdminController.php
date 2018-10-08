@@ -162,7 +162,12 @@ class AdminController extends Controller
     //Phần xe
     public function xe(){
         $bus = Xe::all();
-        return view('quantrivien.xe',compact('bus'));
+        $typebuses = Loaixe::all();
+        $typebus = [];
+        foreach ($typebuses as $row){
+            $typebus["{$row['Mã']}"]=$row['Tên_Loại'];
+        }
+        return view('quantrivien.xe',compact('bus','typebus'));
     }
     public function addxe($index = ""){
         $bustypes = DB::select("SELECT Mã,Tên_Loại FROM bus_model");
