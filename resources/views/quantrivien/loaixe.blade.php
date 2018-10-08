@@ -9,14 +9,14 @@
             </div>
             <div class="col-lg-12">
                 <span>Thông tin loại xe</span>
-                <form name="ttmodel" class="">
+                <form name="ttmodel" action="{{route('addbusmodel')}}" method="post" class="">
                     <input type="hidden" name="ID">
                     <input type="text" name="name" class="form-control" placeholder="Tên loại xe">
                     <input type="text" name="row" class="form-control" placeholder="Số hàng">
                     <input type="text" name="col" class="form-control" placeholder="Số cột">
                     <input type="hidden" name="sodo">
                     <input type="hidden" name="noidung">
-                    <input type="button" onclick="changemodel()" class="btn btn-success" value="Áp dụng">
+                    <input type="button" onclick="changemodel()" name="apdung" class="btn btn-success" value="Áp dụng">
                     <input type="button" onclick="checksubmit(this)" name="submit" class="btn btn-warning" value="Lưu thay đổi">
                 </form>
             </div>
@@ -73,7 +73,7 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-6">
-                        <span onclick="xacnhan()">Xác nhận</span>
+                        <span onclick="fxacnhan()">Xác nhận</span>
                     </div>
                     <div class="col-lg-6">
                         <span onclick="huy()">Hoàn tác</span>
@@ -293,10 +293,32 @@
                 }
                 str +="</table>";
                 view.innerHTML = str;
+                document.forms["ttmodel"]["name"].setAttribute("readonly","");
+                document.forms["ttmodel"]["row"].setAttribute("readonly","");
+                document.forms["ttmodel"]["col"].setAttribute("readonly","");
+                document.forms["ttmodel"]["apdung"].setAttribute("readonly","");
             }
         }
-        function xacnhan() {
-
+        function fxacnhan() {
+            var view = document.getElementById('mapxe');
+            var row = document.forms['ttmodel']['row'].value;
+            var col =document.forms['ttmodel']['col'].value;
+            var str ="";
+            for (var i = 0;i<row;i++){
+                var trow = view.getElementsByTagName('tr')[i];
+                for(var j = 0;j<col;j++){
+                    var tcol =trow.getElementsByTagName('td')[j];
+                    if(tcol.classList.contains('glyphicon-check')) {
+                        str+="1";
+                    }
+                    else if(tcol.classList.contains('glyphicon-unchecked')) {
+                        str+="0";
+                    }
+                }
+            }
+            alert(str+str.length);
+            document.forms['ttmodel']['noidung'].value = str;
+            xacnhan = 1;
         }
         function huy() {
             location.assign(location.href);
