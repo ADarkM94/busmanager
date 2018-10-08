@@ -57,6 +57,9 @@
                     <a href="{{url('/admin/xe')}}">
                         <li class="option"><img src="{{asset('images/icons/partnership.png')}}" alt="icon">Xe</li>
                     </a>
+                    <a href="{{url('/admin/tramdung')}}">
+                        <li class="option"><img src="{{asset('images/icons/partnership.png')}}" alt="icon">Trạm dừng</li>
+                    </a>
                 </ul>
             </div>
         </div>

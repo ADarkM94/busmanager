@@ -107,6 +107,16 @@ Route::post('admin/addbus','AdminController@addbus')->name('addbus');
 
 Route::get('admin/delxe/{id}','AdminController@delbus');
 
+//Phần trạm dừng
+
+Route::get('admin/tramdung', 'AdminController@tramdung');
+
+Route:: get('admin/addtramdung/{index?}', 'AdminController@addtramdung');
+
+Route::post('admin/addbusstop','AdminController@addbusstop')->name('addbusstop');
+
+Route::get('admin/deltramdung/{id}','AdminController@delbusstop');
+
 /* Kết thúc phần Route cho trang quản trị hệ thống */
 
 /* Bắt đầu phần Route để test chức năng */

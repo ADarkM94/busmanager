@@ -10,6 +10,7 @@ use App\Khachhang;
 use App\Nhanvien;
 use App\Loaixe;
 use App\Xe;
+use App\Tramdung;
 
 class AdminController extends Controller
 {
@@ -215,5 +216,29 @@ class AdminController extends Controller
             die("Lỗi xóa dữ liệu :".$e);
         }
         return redirect()->back();
+    }
+
+    //Phần trạm dừng
+    public function tramdung(){
+        $busstop = Tramdung::all();
+        $employees = Nhanvien::all();
+        foreach ($employees as $row){
+            $employee["{$row['Mã']}"] = $row["Họ_Tên"];
+        }
+        return view("quantrivien.tramdung",compact('busstop','employee'));
+    }
+    public function addtramdung($index = ""){
+        if($index == ""){
+            return view("quantrivien.addtramdung");
+        }
+        try {
+            $ttxes = DB::select("SELECT * FROM xe WHERE Mã = ?",[$index]);
+            foreach ($ttxes as $row){
+                $ttxe = $row;
+            }
+            return view("quantrivien.addtramdung",["tttramdung" => $ttxe);
+        } catch (\Exception $e) {
+            die("Lỗi: ".$e);
+        }
     }
 }
