@@ -22,18 +22,18 @@
                     <input type="hidden" name="ID" value="{{$ttxe['Mã'] or ''}}">
                 @endisset
                 <label>Biển số</label>
-                <input type="text" class="form-control" name="bienso" value="{{$ttxe['Biển_số'] or ''}}" placeholder="Biển số xe">
+                <input type="text" class="form-control" name="bienso" value="{{isset($ttxe['Biển_số'])? $ttxe['Biển_số']:''}}" placeholder="Biển số xe">
                 <br>
                 <label>Loại xe</label>
-                <input type="text" list="bustype" class="form-control"  name="idtypebus" value="{{$ttxe['Mã_loại_xe'] or ''}}" placeholder="Mã loại xe">
+                <input type="text" list="bustype" class="form-control"  name="idtypebus" value="{{isset($ttxe['Mã_loại_xe'])? $ttxe['Mã_loại_xe']:''}}" placeholder="Mã loại xe">
                 <br>
                 <label>Lần bảo trì gần nhất</label>
                 <br>
-                <input type="date" class="form-control" name="baotrigannhat" value="{{$ttxe['Ngày_bảo_trì_gần_nhất'] or ''}}">
+                <input type="date" class="form-control" name="baotrigannhat" value="{{isset($ttxe['Ngày_bảo_trì_gần_nhất'])? $ttxe['Ngày_bảo_trì_gần_nhất']:''}}">
                 <br>
                 <label>Lần bảo trì tiếp theo</label>
                 <br>
-                <input type="date" class="form-control" name="baotritieptheo" value="{{$ttxe['Ngày_bảo_trì_tiếp_theo'] or ''}}">
+                <input type="date" class="form-control" name="baotritieptheo" value="{{isset($ttxe['Ngày_bảo_trì_tiếp_theo'])? $ttxe['Ngày_bảo_trì_tiếp_theo']:''}}">
                 <br>
                 <div style="text-align: center">
                     <input type="submit" class="btn btn-success" value="<?php echo isset($ttxe)? 'Sửa Thông Tin':'Thêm Xe';?>">
