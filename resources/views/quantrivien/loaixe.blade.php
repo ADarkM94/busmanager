@@ -9,7 +9,7 @@
             </div>
             <div class="col-lg-12">
                 <span>Thông tin loại xe</span>
-                <form name="ttmodel" action="" method="post" class="">
+                <form name="ttmodel" action="{{route('addbusmodel')}}" method="post" class="">
                     <input type="hidden" name="ID" value="">
                     <input type="text" name="name" class="form-control" placeholder="Tên loại xe">
                     <input type="number" min="1" name="row" class="form-control" placeholder="Số hàng">

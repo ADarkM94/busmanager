@@ -171,6 +171,33 @@ class AdminController extends Controller
         }
         return view('quantrivien.loaixe',compact('busmodel','model'));
     }
+    public function addbusmodel(Request $request){
+        $name = $request->name;
+        $row = $request->row;
+        $col = $request->col;
+        $employeeid = $request->employeeID;
+        $soghe = $request->soghe;
+        $sodo = $request->sodo;
+        $noidung = $request->noidung;
+        $created_at = date('Y-m-d h-i-s');
+        $updated_at = date('Y-m-d h-i-s');
+        if(!empty($request->ID)){
+            if(DB::update("UPDATE `bus_model` SET `Tên_Loại`= ?,`Số_ghế`= ?,`Số_hàng`= ?,`Số_cột`= ?,`Sơ_đồ`= ?,`Mã_nhân_viên_chỉnh_sửa`= ?,`updated_at`= ? WHERE `Mã`= ?",
+                [$name,$soghe,$row,$col,$sodo,$employeeid,$updated_at,$request->ID]))
+                return redirect()->back()->with('alert','Sửa thành công!');
+            else
+                return redirect()->back()->with('alert','Sửa thất bại!');
+        }
+        else {
+            if( DB::insert("INSERT INTO `bus_model`(`Tên_Loại`, `Số_ghế`, `Số_hàng`, `Số_cột`, `Sơ_đồ`, `Mã_nhân_viên_tạo`, `Mã_nhân_viên_chỉnh_sửa`, `created_at`, `updated_at`) VALUES (?,?,?,?,?,?)",
+                [$bienso,$idtypebus,$gannhat,$tieptheo,$created_at,$updated_at]))
+            {
+                return redirect()->back()->with('alert','Thêm thành công!');
+            }
+            else
+                return redirect()->back()->with('alert','Thêm thất bại!');
+        }
+    }
 
     //Phần xe
     public function xe(){

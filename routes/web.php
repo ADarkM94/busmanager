@@ -81,7 +81,11 @@ Route::get('admin/chuyenxe', function () {
     return view('quantrivien.chuyenxe');
 });
 
+//Phần loại xe
+
 Route::get('admin/loaixe', 'AdminController@loaixe');
+
+Route::post('admin/addbusmodel', 'AdminController@addbusmodel')->name('addbusmodel');
 
 Route::get('admin/lotrinh', function () {
     return view('quantrivien.lotrinh');
