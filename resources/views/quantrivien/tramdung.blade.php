@@ -55,7 +55,7 @@
                 numberCell: { show: false },
                 stripeRows: false,
                 cellDblClick: function (event,ui) {
-                    window.open("{{url('/admin/viewtramdung')}}" + "/" + ui.rowData["Mã"]);
+                    window.open("{{url('/admin/addtramdung')}}" + "/" + ui.rowData["Mã"]);
                 }
             };
             obj.colModel = [
@@ -109,11 +109,11 @@
                     dataType: "string",
                     editor: false,
                     align: 'center',
-                    filter: {
-                        type: 'textbox',
-                        condition: 'contain',
-                        listeners: ['keyup']
-                    },
+                    // filter: {
+                    //     type: 'textbox',
+                    //     condition: 'contain',
+                    //     listeners: ['keyup']
+                    // },
                     render: function(ui){
                         return employee[ui.rowData['Mã_nhân_viên_tạo']];
                     }
@@ -125,11 +125,11 @@
                     dataType: "string",
                     editor: false,
                     align: 'center',
-                    filter: {
-                        type: 'textbox',
-                        condition: 'contain',
-                        listeners: ['keyup']
-                    },
+                    // filter: {
+                    //     type: 'textbox',
+                    //     condition: 'contain',
+                    //     listeners: ['keyup']
+                    // },
                     render: function(ui){
                         return employee[ui.rowData['Mã_nhân_viên_chỉnh_sửa']];
                     }
