@@ -9,15 +9,15 @@
             </div>
             <div class="col-lg-12">
                 <span>Thông tin loại xe</span>
-                <form name="ttmodel" action="{{route('addbusmodel')}}" method="post" class="">
-                    <input type="hidden" name="ID">
+                <form name="ttmodel" action="" method="post" class="">
+                    <input type="hidden" name="ID" value="">
                     <input type="text" name="name" class="form-control" placeholder="Tên loại xe">
-                    <input type="text" name="row" class="form-control" placeholder="Số hàng">
-                    <input type="text" name="col" class="form-control" placeholder="Số cột">
+                    <input type="number" min="1" name="row" class="form-control" placeholder="Số hàng">
+                    <input type="number" min="1" name="col" class="form-control" placeholder="Số cột">
                     <input type="hidden" name="sodo">
                     <input type="hidden" name="noidung">
                     <input type="button" onclick="changemodel()" name="apdung" class="btn btn-success" value="Áp dụng">
-                    <input type="button" onclick="checksubmit(this)" name="submit" class="btn btn-warning" value="Lưu thay đổi">
+                    <input type="button" onclick="checksubmit(this)" name="submit" class="btn btn-warning" value="Thêm Loại Xe">
                 </form>
             </div>
         </div>
@@ -266,6 +266,7 @@
             tensodo.value = sodo;
             noidungsodo.value = model[sodo];
             view.innerHTML = str;
+            ttsubmit.value = "Lưu Thay Đổi";
         }
         function change(ev) {
             if(ev.classList.contains('glyphicon-check')) {
@@ -281,7 +282,12 @@
             var id = document.forms["ttmodel"]["ID"].value;
             var row = document.forms["ttmodel"]["row"].value;
             var col = document.forms["ttmodel"]["col"].value;
-            if(id!=""&&row>0&&col>0){
+            var name = document.forms["ttmodel"]["name"].value;
+            if(id==""){
+                var filename = Date.now();
+                document.forms["ttmodel"]["sodo"].value = prompt("Nhập tên file muốn lưu sơ đồ xe:",filename);
+            }
+            if(row>0&&col>0&&name!=""){
                 var view = document.getElementById('mapxe');
                 var str ="<table style='width: 100%; height: 500px; border-collapse: separate; border-spacing: 5px 5px; '>";
                 for (var i = 0; i<row;i++) {
@@ -296,7 +302,10 @@
                 document.forms["ttmodel"]["name"].setAttribute("readonly","");
                 document.forms["ttmodel"]["row"].setAttribute("readonly","");
                 document.forms["ttmodel"]["col"].setAttribute("readonly","");
-                document.forms["ttmodel"]["apdung"].setAttribute("readonly","");
+                document.forms["ttmodel"]["apdung"].setAttribute("disabled","");
+            }
+            else {
+                alert("Chưa điền đầy đủ thông tin của loại xe!");
             }
         }
         function fxacnhan() {
