@@ -10,6 +10,7 @@
             <div class="col-lg-12">
                 <span>Thông tin loại xe</span>
                 <form name="ttmodel" action="{{route('addbusmodel')}}" method="post" class="">
+                    @csrf
                     <input type="hidden" name="employeeID" value="1">
                     <input type="hidden" name="ID" value="">
                     <input type="text" name="name" class="form-control" placeholder="Tên loại xe">
@@ -19,7 +20,7 @@
                     <input type="hidden" name="sodo">
                     <input type="hidden" name="noidung">
                     <input type="button" onclick="changemodel()" name="apdung" class="btn btn-success" value="Áp dụng">
-                    <input type="button" onclick="checksubmit(this)" name="submit" class="btn btn-warning" value="Thêm Loại Xe">
+                    <input type="submit" onclick="checksubmit(this)" name="submit" class="btn btn-warning" value="Thêm Loại Xe" disabled>
                 </form>
             </div>
         </div>
@@ -73,7 +74,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row" id="xnsodo">
                     <div class="col-lg-6">
                         <span onclick="fxacnhan()">Xác nhận</span>
                     </div>
@@ -205,24 +206,24 @@
                     dataIndx: "View",
                     render: function (ui) {
                         var str = '';
-                        str += '<a title="Edit" id="idEditEmployee" ><i class="glyphicon glyphicon-edit  text-success" style="padding-right: 5px; cursor: pointer;"></i></a>';
-                        str += '<a title="Delete" id="idDelEmployee" ><i class="glyphicon glyphicon-remove  text-danger" style="padding-right: 5px; cursor: pointer;"></i></a>';
+                        str += '<a title="Edit" id="idEditBusModel" ><i class="glyphicon glyphicon-edit  text-success" style="padding-right: 5px; cursor: pointer;"></i></a>';
+                        str += '<a title="Delete" id="idDelBusModel" ><i class="glyphicon glyphicon-remove  text-danger" style="padding-right: 5px; cursor: pointer;"></i></a>';
                         return str;
                     },
                     postRender: function (ui) {
                         var rowData = ui.rowData,
                             $cell = this.getCell(ui);
                         //add button
-                        $cell.find("a#idEditEmployee")
+                        $cell.find("a#idEditBusModel")
                             .unbind("click")
                             .bind("click", function (evt) {
                                 editModel(rowData["Mã"],rowData["Tên_Loại"],rowData["Số_hàng"],rowData["Số_cột"],rowData["Sơ_đồ"]);
                             });
-                        $cell.find("a#idDelEmployee")
+                        $cell.find("a#idDelBusModel")
                             .unbind("click")
                             .bind("click", function (evt) {
                                 if(confirm("Bạn chắc chắn muốn xóa?"))
-                                    location.assign("{{url('admin/delnhanvien')}}"+"/"+rowData["Mã"]);
+                                    location.assign("{{url('admin/delloaixe')}}"+"/"+rowData["Mã"]);
                             });
                     }
                 }
@@ -269,6 +270,14 @@
             noidungsodo.value = model[sodo];
             view.innerHTML = str;
             ttsubmit.value = "Lưu Thay Đổi";
+            document.forms["ttmodel"]["name"].removeAttribute("readonly");
+            document.forms["ttmodel"]["row"].removeAttribute("readonly");
+            document.forms["ttmodel"]["col"].removeAttribute("readonly");
+            document.forms["ttmodel"]["apdung"].removeAttribute("disabled");
+            ttsubmit.setAttribute("disabled","");
+            document.getElementById("xnsodo").getElementsByTagName("span")[0].removeAttribute("disabled");
+            document.getElementById("xnsodo").getElementsByTagName("span")[1].removeAttribute("disabled");
+            xacnhan = 1;
         }
         function change(ev) {
             if(ev.classList.contains('glyphicon-check')) {
@@ -285,11 +294,11 @@
             var row = document.forms["ttmodel"]["row"].value;
             var col = document.forms["ttmodel"]["col"].value;
             var name = document.forms["ttmodel"]["name"].value;
-            if(id==""){
-                var filename = Date.now();
-                document.forms["ttmodel"]["sodo"].value = prompt("Nhập tên file muốn lưu sơ đồ xe:",filename);
-            }
             if(row>0&&col>0&&name!=""){
+                if(id==""){
+                    var filename = Date.now();
+                    document.forms["ttmodel"]["sodo"].value = prompt("Nhập tên file muốn lưu sơ đồ xe:",filename);
+                }
                 var view = document.getElementById('mapxe');
                 var str ="<table style='width: 100%; height: 500px; border-collapse: separate; border-spacing: 5px 5px; '>";
                 for (var i = 0; i<row;i++) {
@@ -305,6 +314,7 @@
                 document.forms["ttmodel"]["row"].setAttribute("readonly","");
                 document.forms["ttmodel"]["col"].setAttribute("readonly","");
                 document.forms["ttmodel"]["apdung"].setAttribute("disabled","");
+                xacnhan = 1;
             }
             else {
                 alert("Chưa điền đầy đủ thông tin của loại xe!");
@@ -316,6 +326,8 @@
             var col =document.forms['ttmodel']['col'].value;
             var str ="";
             var soghe = 0;
+            if (xacnhan==0)
+                return;
             for (var i = 0;i<row;i++){
                 var trow = view.getElementsByTagName('tr')[i];
                 for(var j = 0;j<col;j++){
@@ -332,14 +344,13 @@
             alert(str+str.length+soghe);
             document.forms['ttmodel']['noidung'].value = str;
             document.forms['ttmodel']['soghe'].value = soghe;
-            xacnhan = 1;
+            document.forms['ttmodel']['submit'].removeAttribute("disabled");
+            xacnhan = 2;
         }
         function huy() {
             location.assign(location.href);
         }
         function checksubmit(ev) {
-            if(xacnhan==0)
-                ev.preventDefault;
         }
     </script>
 @endsection

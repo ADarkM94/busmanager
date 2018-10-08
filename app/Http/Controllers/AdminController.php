@@ -181,17 +181,27 @@ class AdminController extends Controller
         $noidung = $request->noidung;
         $created_at = date('Y-m-d h-i-s');
         $updated_at = date('Y-m-d h-i-s');
-        if(!empty($request->ID)){
-            if(DB::update("UPDATE `bus_model` SET `Tên_Loại`= ?,`Số_ghế`= ?,`Số_hàng`= ?,`Số_cột`= ?,`Sơ_đồ`= ?,`Mã_nhân_viên_chỉnh_sửa`= ?,`updated_at`= ? WHERE `Mã`= ?",
-                [$name,$soghe,$row,$col,$sodo,$employeeid,$updated_at,$request->ID]))
-                return redirect()->back()->with('alert','Sửa thành công!');
+        if(!empty($request->ID)) {
+            if (DB::update("UPDATE `bus_model` SET `Tên_Loại`= ?,`Số_ghế`= ?,`Số_hàng`= ?,`Số_cột`= ?,`Sơ_đồ`= ?,`Mã_nhân_viên_chỉnh_sửa`= ?,`updated_at`= ? WHERE `Mã`= ?",
+                [$name, $soghe, $row, $col, $sodo, $employeeid, $updated_at, $request->ID]))
+            {
+                $filepath = 'busmodel/' . $sodo . '.txt';
+                $file = fopen($filepath, 'w+');
+                fwrite($file, $noidung);
+                fclose($file);
+                return redirect()->back()->with('alert', 'Sửa thành công!');
+            }
             else
                 return redirect()->back()->with('alert','Sửa thất bại!');
         }
         else {
-            if( DB::insert("INSERT INTO `bus_model`(`Tên_Loại`, `Số_ghế`, `Số_hàng`, `Số_cột`, `Sơ_đồ`, `Mã_nhân_viên_tạo`, `Mã_nhân_viên_chỉnh_sửa`, `created_at`, `updated_at`) VALUES (?,?,?,?,?,?)",
+            if( DB::insert("INSERT INTO `bus_model`(`Tên_Loại`, `Số_ghế`, `Số_hàng`, `Số_cột`, `Sơ_đồ`, `Mã_nhân_viên_tạo`, `Mã_nhân_viên_chỉnh_sửa`, `created_at`, `updated_at`) VALUES (?,?,?,?,?,?,?,?,?)",
                 [$name,$soghe,$row,$col,$sodo,$employeeid,$employeeid,$created_at,$updated_at]))
             {
+                $filepath = 'busmodel/' . $sodo . '.txt';
+                $file = fopen($filepath, 'w+');
+                fwrite($file, $noidung);
+                fclose($file);
                 return redirect()->back()->with('alert','Thêm thành công!');
             }
             else
