@@ -33,7 +33,7 @@
             option[i].classList.remove('selected');
         }
         option[7].classList.add('selected');
-        option[7].getElementsByTagName('img')[0].setAttribute('src','{{asset("images/icons/customer-hover.png")}}');
+        option[7].getElementsByTagName('img')[0].setAttribute('src','{{asset("images/icons/parking-hover.png")}}');
         $(function () {
             var employee = {!!json_encode($employee)!!};
             var obj = {

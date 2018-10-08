@@ -22,7 +22,6 @@
         option[6].getElementsByTagName('img')[0].setAttribute('src','{{asset("images/icons/customer-hover.png")}}');
         $(function () {
             var typebus = {!!json_encode($typebus)!!};
-            alert(typebus);
             var obj = {
                 width: '100%',
                 height: '100%',

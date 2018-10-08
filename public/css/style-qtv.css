@@ -14,7 +14,7 @@ a:hover, a:visited {
 }
 .header {
 	background: white;
-	color: #008cff;
+	color: #004964;
 	border-radius: 5px;
 	padding: .5em;
 	position: fixed;
@@ -28,7 +28,7 @@ a:hover, a:visited {
 	margin: 0;
 }
 .row > *:nth-child(1) {
-	font-size: 1.5em,
+	font-size: 1.5em;
 }
 .row > *:nth-child(2) {
 	text-align: center;
@@ -41,9 +41,9 @@ a:hover, a:visited {
 	padding: .1em 1em;
 	vertical-align: middle;
 	background: white;
-	color: #008cff;
+	color: #004964;
 	border-radius: 5px;
-    border: 1px solid #008cff;
+    border: 1px solid #004964;
 	cursor: pointer;
 	position: relative;
 }
@@ -55,10 +55,10 @@ a:hover, a:visited {
 	transform: translate(0,-50%);
 	background: white;
 	border-radius: .5em;
-	border: 1px solid #008cff;
+	border: 1px solid #004964;
 }
 .header > hr {
-	border-color: white;
+	border-color: #FFA000;
 	margin: 0;
 	margin-top: .5em;
 }
@@ -136,7 +136,7 @@ a:hover, a:visited {
 	border: 1px solid gray;
 	border-radius: 5px;
 	overflow: auto;
-	border-top: .5em solid #008cff;
+	border-top: .5em solid #FFA000;
     background: white;
 }
 .menu {
@@ -159,8 +159,8 @@ a:hover, a:visited {
 	position: relative;
 	padding: .5em 1em;
 	background: white;
-	color: #008cff;
-	border-bottom: 1px solid #008cff;
+	color: #004964;
+	border-bottom: 1px solid #004964;
 	text-align: left;
 	font-weight: bold;
 	cursor: pointer;
@@ -175,7 +175,7 @@ a:hover, a:visited {
     width: 30px;
 }
 .menu > ul > a:nth-child(1) > .option:hover > img {
-    content: url("../images/icons/business-report-hover.png");
+    content: url("../images/icons/report-hover.png");
 }
 .menu > ul > a:nth-child(2) > .option:hover > img {
     content: url("../images/icons/customer-hover.png");
@@ -192,12 +192,18 @@ a:hover, a:visited {
 .menu > ul > a:nth-child(6) > .option:hover > img {
     content: url("../images/icons/partnership-hover.png");
 }
-.option:hover {
-	background: #008cff;
+.menu > ul > a:nth-child(7) > .option:hover > img {
+	content: url("../images/icons/partnership-hover.png");
+}
+.menu > ul > a:nth-child(8) > .option:hover > img {
+	content: url("../images/icons/parking-hover.png");
+}
+.option:not([class~='selected']):hover {
+	background: #004964;
 	color: white;
 }
 .selected {
-	background: #008cff;
+	background: #FFA000;
 	color: white;
 }
 .show {
@@ -218,7 +224,7 @@ a:hover, a:visited {
 }
 .the {
 	padding: 0;
-	border: 1px solid grey;
+	border: 1px solid #004964;
 	border-radius: 10px;
     background: linear-gradient(to top right,#a2a2a2,#d2d2d2,#dddddd,#c2c2c2,#a2a2a2);
 }
@@ -231,7 +237,7 @@ a:hover, a:visited {
 }
 .the a > div > div {
 	font-size: 5em;
-    color: #0051f4;
+    color: #004964;
 }
 .the a > div > p {
 	text-align: left;
@@ -261,7 +267,7 @@ a:hover, a:visited {
 	left: .5em;
 	top: -1.2em;
 	padding: .3em 1em;
-	background: #008cff;
+	background: #004964;
 	color: white;
 	border-radius: 5px;
 }
@@ -287,7 +293,7 @@ a:hover, a:visited {
 	left: .5em;
 	top: -1.2em;
 	padding: .3em 1em;
-	background: #008cff;
+	background: #004964;
 	color: white;
 	border-radius: 5px;
 }
@@ -306,15 +312,15 @@ a:hover, a:visited {
 }
 .loaixe > .col-lg-6:nth-child(2) > div > div:nth-child(1) {
 	text-align: center;
-	color: #008cff;
+	color: #004964;
 	font-size: 1em;
 }
 .sodoxe ~ div > div > span {
 	display: inline-block;
 	padding: .5em 1.5em;
 	background: white;
-	color: #008cff;
-	border: 1px solid #008cff;
+	color: #004964;
+	border: 1px solid #004964;
 	border-radius: 5px;
 	transition: .3s ease-in-out;
 	cursor: pointer;
@@ -322,6 +328,7 @@ a:hover, a:visited {
 }
 .sodoxe ~ div > div:nth-child(1) {
 	text-align: left;
+	font-size: 1em;
 }
 .sodoxe ~ div > div:nth-child(1) > span {
 	margin-left: 1em;
@@ -333,7 +340,7 @@ a:hover, a:visited {
 	margin-right: 1em;
 }
 .sodoxe ~  div > div > span:hover {
-	background: #008cff;
+	background: #004964;
 	color: white;
 	transform: translate(0,-3px);
 	box-shadow: 0 3px 5px grey;
@@ -515,9 +522,9 @@ a:hover, a:visited {
 #ttchuyenxe + span {
 	display: inline-block;
 	padding: .5em 2em;
-	color: #008cff;
+	color: #004964;
 	background: white;
-	border: 1px solid #008cff;
+	border: 1px solid #004964;
 	border-radius: 5px;
 }
 #ttchuyenxe ~ label {

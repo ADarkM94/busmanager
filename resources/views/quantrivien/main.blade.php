@@ -37,28 +37,28 @@
             <div class="menu">
                 <ul>
                     <a href="{{url('/admin/thongke')}}">
-                        <li class="option selected"><img src="{{asset('images/icons/business-report.png')}}" alt="icon">Thống kê</li>
+                        <li class="option selected"><img src="{{asset('images/icons/report.png')}}" alt="icon">&nbsp;Thống kê</li>
                     </a>
                     <a href="{{url('/admin/khachhang')}}">
-                        <li class="option"><img src="{{asset('images/icons/customer.png')}}" alt="icon">Khách hàng</li>
+                        <li class="option"><img src="{{asset('images/icons/customer.png')}}" alt="icon">&nbsp;Khách hàng</li>
                     </a>
                     <a href="{{url('/admin/chuyenxe')}}">
-                        <li class="option"><img src="{{asset('images/icons/chuyenxe.png')}}" alt="icon">Chuyến xe</li>
+                        <li class="option"><img src="{{asset('images/icons/chuyenxe.png')}}" alt="icon">&nbsp;Chuyến xe</li>
                     </a>
                     <a href="{{url('/admin/loaixe')}}">
-                        <li class="option"><img src="{{asset('images/icons/bus.png')}}" alt="icon">Loại xe</li>
+                        <li class="option"><img src="{{asset('images/icons/bus.png')}}" alt="icon">&nbsp;Loại xe</li>
                     </a>
                     <a href="{{url('/admin/lotrinh')}}">
-                        <li class="option"><img src="{{asset('images/icons/route.png')}}" alt="icon">Lộ trình</li>
+                        <li class="option"><img src="{{asset('images/icons/route.png')}}" alt="icon">&nbsp;Lộ trình</li>
                     </a>
                     <a href="{{url('/admin/nhanvien')}}">
-                        <li class="option"><img src="{{asset('images/icons/partnership.png')}}" alt="icon">Nhân viên</li>
+                        <li class="option"><img src="{{asset('images/icons/partnership.png')}}" alt="icon">&nbsp;Nhân viên</li>
                     </a>
                     <a href="{{url('/admin/xe')}}">
-                        <li class="option"><img src="{{asset('images/icons/partnership.png')}}" alt="icon">Xe</li>
+                        <li class="option"><img src="{{asset('images/icons/partnership.png')}}" alt="icon">&nbsp;Xe</li>
                     </a>
                     <a href="{{url('/admin/tramdung')}}">
-                        <li class="option"><img src="{{asset('images/icons/partnership.png')}}" alt="icon">Trạm dừng</li>
+                        <li class="option"><img src="{{asset('images/icons/parking.png')}}" alt="icon">&nbsp;Trạm dừng</li>
                     </a>
                 </ul>
             </div>

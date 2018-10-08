@@ -1,6 +1,6 @@
 @extends('quantrivien.main')
 @section('content')
-    <div class="content datve row show">
+    {{--<div class="content datve row show">
         <div class="col-lg-4">
             <div class="searchroute">
                 <span>Tìm chuyến xe</span>
@@ -102,10 +102,10 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>--}}
 @endsection
 @section('excontent')
-    <datalist id="diadiem" style="display: none;">
+   {{-- <datalist id="diadiem" style="display: none;">
         <option>Quảng Ngãi</option>
         <option>Quảng Nam</option>
         <option>Đà Nẵng</option>
@@ -239,7 +239,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>--}}
 @endsection
 @section('script')
     <script>
