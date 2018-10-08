@@ -10,10 +10,12 @@
             <div class="col-lg-12">
                 <span>Thông tin loại xe</span>
                 <form name="ttmodel" action="{{route('addbusmodel')}}" method="post" class="">
+                    <input type="hidden" name="employeeID" value="1">
                     <input type="hidden" name="ID" value="">
                     <input type="text" name="name" class="form-control" placeholder="Tên loại xe">
                     <input type="number" min="1" name="row" class="form-control" placeholder="Số hàng">
                     <input type="number" min="1" name="col" class="form-control" placeholder="Số cột">
+                    <input type="hidden" name="soghe">
                     <input type="hidden" name="sodo">
                     <input type="hidden" name="noidung">
                     <input type="button" onclick="changemodel()" name="apdung" class="btn btn-success" value="Áp dụng">
@@ -313,20 +315,23 @@
             var row = document.forms['ttmodel']['row'].value;
             var col =document.forms['ttmodel']['col'].value;
             var str ="";
+            var soghe = 0;
             for (var i = 0;i<row;i++){
                 var trow = view.getElementsByTagName('tr')[i];
                 for(var j = 0;j<col;j++){
                     var tcol =trow.getElementsByTagName('td')[j];
                     if(tcol.classList.contains('glyphicon-check')) {
                         str+="1";
+                        soghe+=1;
                     }
                     else if(tcol.classList.contains('glyphicon-unchecked')) {
                         str+="0";
                     }
                 }
             }
-            alert(str+str.length);
+            alert(str+str.length+soghe);
             document.forms['ttmodel']['noidung'].value = str;
+            document.forms['ttmodel']['soghe'].value = soghe;
             xacnhan = 1;
         }
         function huy() {

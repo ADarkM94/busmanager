@@ -190,7 +190,7 @@ class AdminController extends Controller
         }
         else {
             if( DB::insert("INSERT INTO `bus_model`(`Tên_Loại`, `Số_ghế`, `Số_hàng`, `Số_cột`, `Sơ_đồ`, `Mã_nhân_viên_tạo`, `Mã_nhân_viên_chỉnh_sửa`, `created_at`, `updated_at`) VALUES (?,?,?,?,?,?)",
-                [$bienso,$idtypebus,$gannhat,$tieptheo,$created_at,$updated_at]))
+                [$name,$soghe,$row,$col,$sodo,$employeeid,$employeeid,$created_at,$updated_at]))
             {
                 return redirect()->back()->with('alert','Thêm thành công!');
             }
