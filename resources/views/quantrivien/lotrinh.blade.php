@@ -16,7 +16,7 @@
             <h4 style="position: absolute; top: 0; left: 0; width: 100%;">Bảng Các tỉnh</h4>
             <div id="district">
             </div>
-            <a href="javascript:void(0)" onclick="prepareAdd()" data-toggle="modal" data-target="#addlotrinh" style="width: 2em; height: 2em; line-height: 2em; background: white; font-size: 1.5em; position: absolute; bottom: 1em; left: 2em; box-shadow: 0 0 5px black; border-radius: 50%;">
+            <a href="javascript:void(0)" onclick="" data-toggle="modal" data-target="#addtinh" style="width: 2em; height: 2em; line-height: 2em; background: white; font-size: 1.5em; position: absolute; bottom: 1em; left: 2em; box-shadow: 0 0 5px black; border-radius: 50%;">
                 <i class="glyphicon glyphicon-plus"></i>
             </a>
             <a href="javascript:void(0)" onclick="getBusRoute(2)" style="width: 2em; height: 2em; line-height: 2em; background: white; font-size: 1.5em; position: absolute; bottom: 4em; left: 2em; box-shadow: 0 0 5px black; border-radius: 50%;">
@@ -50,7 +50,7 @@
                                 <label>Nơi đi</label>
                                 <input type="text" class="form-control" list="diadiem" name="noidi" placeholder="Địa điểm đi">
                             </div>
-                            <div class="col-lg-6" style="width: 50%;">
+                            <div class="col-lg-6" style="width: 50%; text-align: left;">
                                 <label>Nơi đến</label>
                                 <input type="text" class="form-control" list="diadiem" name="noiden" placeholder="Địa điểm đến">
                             </div>
@@ -80,41 +80,21 @@
                 </div>
                 <div class="modal-body">
                     <form name="adddistrict">
-                        <input type="hidden" name="employeeID" value="1">
                         <input type="hidden" name="ID" value="">
                         <div class="row">
                             <div class="col-lg-6" style="font-size: 1em; width: 50%">
                                 <label>Tên gọi</label>
                                 <input type="text" class="form-control" name="name" placeholder="Tên tỉnh thành">
                             </div>
-                            <div class="col-lg-6" style="width: 50%;">
+                            <div class="col-lg-6" style="width: 50%; text-align: left;">
                                 <label>Mã vùng</label>
-                                <input type="text" class="form-control" name="Mã vùng" placeholder="Mã vùng biển số">
+                                <input type="text" class="form-control" name="mavung" placeholder="Mã vùng biển số">
                             </div>
-                        </div>
-                        <div class="row" style="padding: 1em 5em;">
-                            Chọn các trạm dừng:
-                            <br>
-                            @foreach($busstops as $busstop)
-                                <input type="checkbox" class="busstops" value="{{$busstop['Mã']}}">{{$busstop['Tên']}}
-                                <br>
-                            @endforeach
                         </div>
                     </form>
                 </div>
-                <div class="modal-footer">
-                    <div class="col-lg-12">
-                        <label>Tổng tiền</label>
-                        <input type="text" name="tongtien" class="form-control" placeholder="Tổng tiền" readonly="">
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <span>Xác nhận</span>
-                        </div>
-                        <div class="col-lg-6">
-                            <span>Hoàn tác</span>
-                        </div>
-                    </div>
+                <div class="modal-footer" style="text-align: center;">
+                        <button class="btn btn-success" id="btnsubmit1" onclick="addTinh()">Thêm Tỉnh</button>
                 </div>
             </div>
         </div>
@@ -464,6 +444,32 @@
                     }
                     else {
                         alert('Xóa thất bại');
+                    }
+                }
+            });
+        }
+        //Hàm cho phần tỉnh
+        function addTinh() {
+            var id = document.forms["adddistrict"]["ID"].value;
+            var name = document.forms["adddistrict"]["name"].value;
+            var mavung = document.forms["adddistrict"]["mavung"].value;
+            $.ajax({
+                url: '{{route("adddistrict")}}',
+                type: 'POST',
+                data: {
+                    _token: '{{csrf_token()}}',
+                    ID: id,
+                    name: name,
+                    mavung: mavung
+                },
+                success: function (data) {
+                    if(data.result==1){
+                        $("#addtinh").modal('hide');
+                        alert('Thêm sửa thành công');
+                        getBusRoute(2);
+                    }
+                    else {
+                        alert('Thêm sửa thất bại');
                     }
                 }
             });
