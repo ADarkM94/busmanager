@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use core_question\bank\view;
 use gradereport_singleview\local\screen\select;
+use http\Env\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Khachhang;
@@ -333,10 +334,39 @@ class AdminController extends Controller
 
     //Phần lộ trình
     public function lotrinh($cm =""){
+        $busstops = Tramdung::all();
         if($cm == "")
         {
             $busroute = Lotrinh::all();
-            return view("quantrivien.lotrinh",compact('busroute'));
+            return view("quantrivien.lotrinh",compact('busroute','busstops'));
+        }
+        elseif($cm == "1"){
+            $busroute = Lotrinh::all();
+            return \response()->json(['msg'=>$busroute]);
+        }
+    }
+    public function addbusroute(Request $request) {
+        $noidi = $request->noidi;
+        $noiden = $request->noiden;
+        $employeeid = $request->employeeID;
+        $busstops = $request->busstops;
+        $created_at = date('Y-m-d h-i-s');
+        $updated_at = date('Y-m-d h-i-s');
+        if(isset($request->ID)){
+            if(DB::update("UPDATE `lo_trinh` SET `Nơi_đi`= ?,`Nơi_đến`= ?,`Các_trạm_dừng_chân`= ?,`Mã_nhân_viên_chỉnh_sửa`= ?,`updated_at`= ? WHERE `Mã`= ?",
+                [$noidi,$noiden,$busstops,$employeeid,$updated_at,$request->ID]))
+                return redirect()->back()->with('alert','Sửa thành công!');
+            else
+                return redirect()->back()->with('alert','Sửa thất bại!');
+        }
+        else {
+            if( DB::insert("INSERT INTO `lo_trinh`(`Tên`, `Tọa_độ`, `Mã_nhân_viên_tạo`, `Mã_nhân_viên_chỉnh_sửa`, `created_at`, `updated_at`) VALUES (?,?,?,?,?,?)",
+                [$name,$toado,$employeeid,$employeeid,$created_at,$updated_at]))
+            {
+                return redirect()->back()->with('alert','Thêm thành công!');
+            }
+            else
+                return redirect()->back()->with('alert','Thêm thất bại!');
         }
     }
 }

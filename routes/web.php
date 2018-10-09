@@ -123,6 +123,8 @@ Route::get('admin/deltramdung/{id}','AdminController@delbusstop');
 
 Route::get('admin/lotrinh/{cm?}', 'AdminController@lotrinh');
 
+Route::post('admin/addbusroute', 'AdminController@addbusroute');
+
 /* Kết thúc phần Route cho trang quản trị hệ thống */
 
 /* Bắt đầu phần Route để test chức năng */
