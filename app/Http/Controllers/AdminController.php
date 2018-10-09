@@ -346,6 +346,10 @@ class AdminController extends Controller
             $busroute = Lotrinh::all();
             return \response()->json(['msg'=>$busroute]);
         }
+        elseif($cm == "2"){
+            $district = Tinh::all();
+            return \response()->json(['msg'=>$district]);
+        }
     }
     public function addbusroute(Request $request) {
         $noidi = $request->noidi;

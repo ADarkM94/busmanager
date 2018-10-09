@@ -19,7 +19,7 @@
             <a href="javascript:void(0)" onclick="prepareAdd()" data-toggle="modal" data-target="#addlotrinh" style="width: 2em; height: 2em; line-height: 2em; background: white; font-size: 1.5em; position: absolute; bottom: 1em; left: 2em; box-shadow: 0 0 5px black; border-radius: 50%;">
                 <i class="glyphicon glyphicon-plus"></i>
             </a>
-            <a href="javascript:void(0)" onclick="getBusRoute(1)" style="width: 2em; height: 2em; line-height: 2em; background: white; font-size: 1.5em; position: absolute; bottom: 4em; left: 2em; box-shadow: 0 0 5px black; border-radius: 50%;">
+            <a href="javascript:void(0)" onclick="getBusRoute(2)" style="width: 2em; height: 2em; line-height: 2em; background: white; font-size: 1.5em; position: absolute; bottom: 4em; left: 2em; box-shadow: 0 0 5px black; border-radius: 50%;">
                 <i class="glyphicon glyphicon-refresh"></i>
             </a>
         </div>
@@ -39,7 +39,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button class="close" data-dismiss="modal">&times;</button>
-                    <div class="modal-title">Thêm Lộ trình</div>
+                    <div class="modal-title">Thông Tin Lộ trình</div>
                 </div>
                 <div class="modal-body">
                     <form name="addbusroute">
@@ -71,30 +71,36 @@
             </div>
         </div>
     </div>
-    <div id="modaldadat" class="modal fade">
+    <div id="addtinh" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button class="close" data-dismiss="modal">&times;</button>
-                    <div class="modal-title">Vé đặt</div>
+                    <div class="modal-title">Thông Tin Tỉnh Thành</div>
                 </div>
                 <div class="modal-body">
-                    <ul>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
-                    </ul>
+                    <form name="adddistrict">
+                        <input type="hidden" name="employeeID" value="1">
+                        <input type="hidden" name="ID" value="">
+                        <div class="row">
+                            <div class="col-lg-6" style="font-size: 1em; width: 50%">
+                                <label>Tên gọi</label>
+                                <input type="text" class="form-control" name="name" placeholder="Tên tỉnh thành">
+                            </div>
+                            <div class="col-lg-6" style="width: 50%;">
+                                <label>Mã vùng</label>
+                                <input type="text" class="form-control" name="Mã vùng" placeholder="Mã vùng biển số">
+                            </div>
+                        </div>
+                        <div class="row" style="padding: 1em 5em;">
+                            Chọn các trạm dừng:
+                            <br>
+                            @foreach($busstops as $busstop)
+                                <input type="checkbox" class="busstops" value="{{$busstop['Mã']}}">{{$busstop['Tên']}}
+                                <br>
+                            @endforeach
+                        </div>
+                    </form>
                 </div>
                 <div class="modal-footer">
                     <div class="col-lg-12">
@@ -392,7 +398,7 @@
                             sortDir: "down"
                         };
                         obj2.pageModel = {type: 'local', rPP: 20, rPPOptions: [20, 30, 40, 50]};
-                        var $grid2 = $("#busroute").pqGrid(obj2);
+                        var $grid2 = $("#district").pqGrid(obj2);
                         $grid2.pqGrid("refreshDataAndView");
                     }
                 }
