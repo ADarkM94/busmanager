@@ -1,11 +1,13 @@
 @extends('quantrivien.main')
 @section('content')
     <div class="content lotrinh row show">
-        <div class="col-lg-7">
+        <div class="col-lg-7" style="position: relative; height: 100%; font-size: 1em; padding: 3em 1em 1em;">
+            <h4 style="position: absolute; top: 0; left: 0; width: 100%;">Bảng Lộ trình</h4>
             <div id="busroute">
             </div>
         </div>
-        <div class="col-lg-5">
+        <div class="col-lg-5" style="position: relative; height: 100%; font-size: 1em; padding: 3em 1em 1em;">
+            <h4 style="position: absolute; top: 0; left: 0; width: 100%;">Bảng Các tỉnh</h4>
             <div class="district">
             </div>
         </div>
@@ -294,7 +296,7 @@
                 sortDir: "down"
             };
             obj1.pageModel = {type: 'local', rPP: 20, rPPOptions: [20, 30, 40, 50]};
-            var $grid = $("#busmodel").pqGrid(obj1);
+            var $grid = $("#busroute").pqGrid(obj1);
             $grid.pqGrid("refreshDataAndView");
         });
     </script>

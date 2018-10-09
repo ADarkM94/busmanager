@@ -332,8 +332,11 @@ class AdminController extends Controller
     }
 
     //Phần lộ trình
-    public function lotrinh(){
-        $busroute = Lotrinh::all();
-        return view("quantrivien.lotrinh",compact('busroute'));
+    public function lotrinh($cm =""){
+        if($cm == "")
+        {
+            $busroute = Lotrinh::all();
+            return view("quantrivien.lotrinh",compact('busroute'));
+        }
     }
 }

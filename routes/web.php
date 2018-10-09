@@ -121,7 +121,7 @@ Route::get('admin/deltramdung/{id}','AdminController@delbusstop');
 
 //Phần lộ trinh
 
-Route::get('admin/lotrinh', 'AdminController@lotrinh');
+Route::get('admin/lotrinh/{cm?}', 'AdminController@lotrinh');
 
 /* Kết thúc phần Route cho trang quản trị hệ thống */
 
