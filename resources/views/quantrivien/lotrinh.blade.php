@@ -286,11 +286,12 @@
                     j++;
                 }
             }
+            busstops = busstops.join(',');
             $.ajax({
                 type: 'POST',
-                url:'{{asset("/admin/addbusroute")}}',
+                url:'{{route("addbusroute")}}',
                 data:{
-                    '_token':{{csrf_token()}},
+                    '_token':'{{csrf_token()}}',
                     'employeeID': employeeid,
                     'noidi': noidi,
                     'noiden': noiden,

@@ -355,18 +355,18 @@ class AdminController extends Controller
         if(isset($request->ID)){
             if(DB::update("UPDATE `lo_trinh` SET `Nơi_đi`= ?,`Nơi_đến`= ?,`Các_trạm_dừng_chân`= ?,`Mã_nhân_viên_chỉnh_sửa`= ?,`updated_at`= ? WHERE `Mã`= ?",
                 [$noidi,$noiden,$busstops,$employeeid,$updated_at,$request->ID]))
-                return redirect()->back()->with('alert','Sửa thành công!');
+                return \response()->json(['result'=>'1']);
             else
-                return redirect()->back()->with('alert','Sửa thất bại!');
+                return \response()->json(['result'=>'0']);
         }
         else {
-            if( DB::insert("INSERT INTO `lo_trinh`(`Tên`, `Tọa_độ`, `Mã_nhân_viên_tạo`, `Mã_nhân_viên_chỉnh_sửa`, `created_at`, `updated_at`) VALUES (?,?,?,?,?,?)",
-                [$name,$toado,$employeeid,$employeeid,$created_at,$updated_at]))
+            if( DB::insert("INSERT INTO `lo_trinh`(`Nơi_đi`, `Nơi_đến`, `Các_trạm_dừng_chân`, `Mã_nhân_viên_tạo`, `Mã_nhân_viên_chỉnh_sửa`, `created_at`, `updated_at`) VALUES (?,?,?,?,?,?)",
+                [$noidi,$noiden,$busstops,$employeeid,$employeeid,$created_at,$updated_at]))
             {
-                return redirect()->back()->with('alert','Thêm thành công!');
+                return \response()->json(['result'=>'1']);
             }
             else
-                return redirect()->back()->with('alert','Thêm thất bại!');
+                return \response()->json(['result'=>'0']);
         }
     }
 }
