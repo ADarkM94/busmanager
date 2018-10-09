@@ -339,16 +339,16 @@ class AdminController extends Controller
         if($cm == "")
         {
             $busroute = Lotrinh::all();
-            $district = Tinh::all();
-            return view("quantrivien.lotrinh",compact('busroute','busstops','district'));
+            $province = Tinh::all();
+            return view("quantrivien.lotrinh",compact('busroute','busstops','province'));
         }
         elseif($cm == "1"){
             $busroute = Lotrinh::all();
             return \response()->json(['msg'=>$busroute]);
         }
         elseif($cm == "2"){
-            $district = Tinh::all();
-            return \response()->json(['msg'=>$district]);
+            $province = Tinh::all();
+            return \response()->json(['msg'=>$province]);
         }
     }
     public function addbusroute(Request $request) {
@@ -387,7 +387,7 @@ class AdminController extends Controller
     }
 
     //Phần tỉnh
-    public function addistrict(Request $request) {
+    public function addprovince(Request $request) {
         $name = $request->name;
         $mavung = $request->mavung;
         $created_at = date('Y-m-d h-i-s');
@@ -400,8 +400,8 @@ class AdminController extends Controller
                 return \response()->json(['result'=>'0']);
         }
         else {
-            if( DB::insert("INSERT INTO `lo_trinh`(`Nơi_đi`, `Nơi_đến`, `Các_trạm_dừng_chân`, `Mã_nhân_viên_tạo`, `Mã_nhân_viên_chỉnh_sửa`, `created_at`, `updated_at`) VALUES (?,?,?,?,?,?,?)",
-                [$noidi,$noiden,$busstops,$employeeid,$employeeid,$created_at,$updated_at]))
+            if( DB::insert("INSERT INTO `tinh`(`Tên`, `Mã_vùng`, `created_at`, `updated_at`) VALUES (?,?,?,?)",
+                [$name,$mavung,$created_at,$updated_at]))
             {
                 return \response()->json(['result'=>'1']);
             }

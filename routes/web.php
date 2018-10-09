@@ -119,13 +119,17 @@ Route::post('admin/addbusstop','AdminController@addbusstop')->name('addbusstop')
 
 Route::get('admin/deltramdung/{id}','AdminController@delbusstop');
 
-//Phần lộ trinh
+//Phần lộ trình
 
 Route::get('admin/lotrinh/{cm?}', 'AdminController@lotrinh');
 
 Route::post('admin/addbusroute', 'AdminController@addbusroute')->name('addbusroute');
 
 Route::post('admin/delbusroute', 'AdminController@delbusroute')->name('delbusroute');
+
+//Phần tỉnh
+
+Route:: post('admin/addprovince', 'AdminController@addprovince')->name('addprovince');
 
 /* Kết thúc phần Route cho trang quản trị hệ thống */
 

@@ -14,7 +14,7 @@
         </div>
         <div class="col-lg-5" style="position: relative; height: 100%; font-size: 1em; padding: 3em 1em 1em;">
             <h4 style="position: absolute; top: 0; left: 0; width: 100%;">Bảng Các tỉnh</h4>
-            <div id="district">
+            <div id="province">
             </div>
             <a href="javascript:void(0)" onclick="" data-toggle="modal" data-target="#addtinh" style="width: 2em; height: 2em; line-height: 2em; background: white; font-size: 1.5em; position: absolute; bottom: 1em; left: 2em; box-shadow: 0 0 5px black; border-radius: 50%;">
                 <i class="glyphicon glyphicon-plus"></i>
@@ -79,7 +79,7 @@
                     <div class="modal-title">Thông Tin Tỉnh Thành</div>
                 </div>
                 <div class="modal-body">
-                    <form name="adddistrict">
+                    <form name="addprovince">
                         <input type="hidden" name="ID" value="">
                         <div class="row">
                             <div class="col-lg-6" style="font-size: 1em; width: 50%">
@@ -295,15 +295,15 @@
                 dataIndx: "View",
                 render: function (ui) {
                     var str = '';
-                    str += '<a title="Edit" id="idEditDistrict" ><i class="glyphicon glyphicon-edit  text-success" style="padding-right: 5px; cursor: pointer;"></i></a>';
-                    str += '<a title="Delete" id="idDelDistrict" ><i class="glyphicon glyphicon-remove  text-danger" style="padding-right: 5px; cursor: pointer;"></i></a>';
+                    str += '<a title="Edit" id="idEditProvince" ><i class="glyphicon glyphicon-edit  text-success" style="padding-right: 5px; cursor: pointer;"></i></a>';
+                    str += '<a title="Delete" id="idDelprovince" ><i class="glyphicon glyphicon-remove  text-danger" style="padding-right: 5px; cursor: pointer;"></i></a>';
                     return str;
                 },
                 postRender: function (ui) {
                     var rowData = ui.rowData,
                         $cell = this.getCell(ui);
                     //add button
-                    $cell.find("a#idEditDistrict")
+                    $cell.find("a#idEditProvince")
                         .unbind("click")
                         .bind("click", function (evt) {
                             document.forms["addbusroute"]["noidi"].value = rowData["Nơi_đi"];
@@ -323,7 +323,7 @@
                             document.getElementById("btnsubmit").innerHTML="Sửa Lộ Trình";
                             $("#addlotrinh").modal("show");
                         });
-                    $cell.find("a#idDelDistrict")
+                    $cell.find("a#idDelProvince")
                         .unbind("click")
                         .bind("click", function (evt) {
                             if(confirm("Bạn chắc chắn muốn xóa?")){
@@ -345,13 +345,13 @@
             var $grid1 = $("#busroute").pqGrid(obj1);
             $grid1.pqGrid("refreshDataAndView");
             obj2.dataModel = {
-                data: {!! json_encode($district) !!},
+                data: {!! json_encode($province) !!},
                 location: "local",
                 sorting: "local",
                 sortDir: "down"
             };
             obj2.pageModel = {type: 'local', rPP: 20, rPPOptions: [20, 30, 40, 50]};
-            var $grid2 = $("#district").pqGrid(obj2);
+            var $grid2 = $("#province").pqGrid(obj2);
             $grid2.pqGrid("refreshDataAndView");
         });
         function getBusRoute(index) {
@@ -378,7 +378,7 @@
                             sortDir: "down"
                         };
                         obj2.pageModel = {type: 'local', rPP: 20, rPPOptions: [20, 30, 40, 50]};
-                        var $grid2 = $("#district").pqGrid(obj2);
+                        var $grid2 = $("#province").pqGrid(obj2);
                         $grid2.pqGrid("refreshDataAndView");
                     }
                 }
@@ -450,11 +450,11 @@
         }
         //Hàm cho phần tỉnh
         function addTinh() {
-            var id = document.forms["adddistrict"]["ID"].value;
-            var name = document.forms["adddistrict"]["name"].value;
-            var mavung = document.forms["adddistrict"]["mavung"].value;
+            var id = document.forms["addprovince"]["ID"].value;
+            var name = document.forms["addprovince"]["name"].value;
+            var mavung = document.forms["addprovince"]["mavung"].value;
             $.ajax({
-                url: '{{route("adddistrict")}}',
+                url: '{{route("addprovince")}}',
                 type: 'POST',
                 data: {
                     _token: '{{csrf_token()}}',
