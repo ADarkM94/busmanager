@@ -60,7 +60,7 @@
                     </form>
                 </div>
                 <div class="modal-footer" style="text-align: center;">
-                    <button class="btn btn-success" onclick="addLotrinh()">Thêm Lộ Trình</button>
+                    <button class="btn btn-success" id="btnsubmit" onclick="addLotrinh()">Thêm Lộ Trình</button>
                 </div>
             </div>
         </div>
@@ -205,7 +205,7 @@
                     var rowData = ui.rowData,
                         $cell = this.getCell(ui);
                     //add button
-                    $cell.find("a#idEdiBusRoute")
+                    $cell.find("a#idEditBusRoute")
                         .unbind("click")
                         .bind("click", function (evt) {
                             document.forms["addbusroute"]["noidi"].value = rowData["Nơi_đi"];
@@ -213,8 +213,18 @@
                             var tramdungs =document.getElementsByClassName("busstops");
                             document.forms["addbusroute"]["ID"].value = rowData["Mã"];
                             var arr = rowData["Các_trạm_dừng_chân"].split(",");
-                            var i = 0;
-                            while(i<arr.length)
+                            var i = arr.length - 1;
+                            var j = tramdungs.length - 1;
+                            while( i >= 0 && j >= 0) {
+                                if (tramdungs[j].value == arr[i]){
+                                    tramdungs[j].setAttribute("checked","");
+                                    i--;
+                                }
+                                j--;
+                            }
+                            document.getElementById("btnsubmit").innerHTML="Sửa Lộ Trình";
+                            document.getElementById("btnsubmit").
+                            $("#addlotrinh").modal("show");
                         });
                     $cell.find("a#idDelBusRoute")
                         .unbind("click")
