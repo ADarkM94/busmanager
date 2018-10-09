@@ -5,7 +5,7 @@
             <h4 style="position: absolute; top: 0; left: 0; width: 100%;">Bảng Lộ trình</h4>
             <div id="busroute">
             </div>
-            <a href="javascript:void(0)" onclick="prepareAdd()" data-toggle="modal" data-target="#addlotrinh" style="width: 2em; height: 2em; line-height: 2em; background: white; font-size: 1.5em; position: absolute; bottom: 1em; left: 2em; box-shadow: 0 0 5px black; border-radius: 50%;">
+            <a href="javascript:void(0)" onclick="prepareAddLT()" data-toggle="modal" data-target="#addlotrinh" style="width: 2em; height: 2em; line-height: 2em; background: white; font-size: 1.5em; position: absolute; bottom: 1em; left: 2em; box-shadow: 0 0 5px black; border-radius: 50%;">
                 <i class="glyphicon glyphicon-plus"></i>
             </a>
             <a href="javascript:void(0)" onclick="getBusRoute(1)" style="width: 2em; height: 2em; line-height: 2em; background: white; font-size: 1.5em; position: absolute; bottom: 4em; left: 2em; box-shadow: 0 0 5px black; border-radius: 50%;">
@@ -16,7 +16,7 @@
             <h4 style="position: absolute; top: 0; left: 0; width: 100%;">Bảng Các tỉnh</h4>
             <div id="province">
             </div>
-            <a href="javascript:void(0)" onclick="" data-toggle="modal" data-target="#addtinh" style="width: 2em; height: 2em; line-height: 2em; background: white; font-size: 1.5em; position: absolute; bottom: 1em; left: 2em; box-shadow: 0 0 5px black; border-radius: 50%;">
+            <a href="javascript:void(0)" onclick="prepareAddT()" data-toggle="modal" data-target="#addtinh" style="width: 2em; height: 2em; line-height: 2em; background: white; font-size: 1.5em; position: absolute; bottom: 1em; left: 2em; box-shadow: 0 0 5px black; border-radius: 50%;">
                 <i class="glyphicon glyphicon-plus"></i>
             </a>
             <a href="javascript:void(0)" onclick="getBusRoute(2)" style="width: 2em; height: 2em; line-height: 2em; background: white; font-size: 1.5em; position: absolute; bottom: 4em; left: 2em; box-shadow: 0 0 5px black; border-radius: 50%;">
@@ -306,28 +306,17 @@
                     $cell.find("a#idEditProvince")
                         .unbind("click")
                         .bind("click", function (evt) {
-                            document.forms["addbusroute"]["noidi"].value = rowData["Nơi_đi"];
-                            document.forms["addbusroute"]["noiden"].value = rowData["Nơi_đến"];
-                            var tramdungs =document.getElementsByClassName("busstops");
-                            document.forms["addbusroute"]["ID"].value = rowData["Mã"];
-                            var arr = rowData["Các_trạm_dừng_chân"].split(",");
-                            var i = arr.length - 1;
-                            var j = tramdungs.length - 1;
-                            while( i >= 0 && j >= 0) {
-                                if (tramdungs[j].value == arr[i]){
-                                    tramdungs[j].checked = true;
-                                    i--;
-                                }
-                                j--;
-                            }
-                            document.getElementById("btnsubmit").innerHTML="Sửa Lộ Trình";
-                            $("#addlotrinh").modal("show");
+                            document.forms["addprovince"]["name"].value = rowData["Tên"];
+                            document.forms["addprovince"]["mavung"].value = rowData["Mã_vùng"];
+                            document.forms["addprovince"]["ID"].value = rowData["Mã"];
+                            document.getElementById("btnsubmit1").innerHTML="Sửa Thông Tin Tỉnh";
+                            $("#addtinh").modal("show");
                         });
                     $cell.find("a#idDelProvince")
                         .unbind("click")
                         .bind("click", function (evt) {
                             if(confirm("Bạn chắc chắn muốn xóa?")){
-                                delbusroute(rowData["Mã"]);
+                                delprovince(rowData["Mã"]);
                             }
                         });
                 }
@@ -384,7 +373,7 @@
                 }
             });
         }
-        function prepareAdd() {
+        function prepareAddLT() {
             var id =document.forms["addbusroute"]["employeeID"].value;
             document.forms["addbusroute"].reset();
             document.forms["addbusroute"]["employeeID"].value = id;
@@ -449,6 +438,11 @@
             });
         }
         //Hàm cho phần tỉnh
+        function prepareAddT() {
+            document.forms["addprovince"].reset();
+            document.forms["addprovince"]["ID"].value = "";
+            document.getElementById("btnsubmit1").innerHTML="Thêm Tỉnh";
+        }
         function addTinh() {
             var id = document.forms["addprovince"]["ID"].value;
             var name = document.forms["addprovince"]["name"].value;
@@ -473,6 +467,25 @@
                     }
                 }
             });
+            function delprovince(id) {
+                $.ajax({
+                    url: '{{route("delprovince")}}',
+                    type: 'POST',
+                    data: {
+                        _token: '{{csrf_token()}}',
+                        ID: id
+                    },
+                    success: function (data) {
+                        if(data.result==1){
+                            alert('Xóa thành công');
+                            getBusRoute(2);
+                        }
+                        else {
+                            alert('Xóa thất bại');
+                        }
+                    }
+                });
+            }
         }
     </script>
 @endsection
