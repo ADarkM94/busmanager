@@ -360,7 +360,7 @@ class AdminController extends Controller
                 return \response()->json(['result'=>'0']);
         }
         else {
-            if( DB::insert("INSERT INTO `lo_trinh`(`Nơi_đi`, `Nơi_đến`, `Các_trạm_dừng_chân`, `Mã_nhân_viên_tạo`, `Mã_nhân_viên_chỉnh_sửa`, `created_at`, `updated_at`) VALUES (?,?,?,?,?,?)",
+            if( DB::insert("INSERT INTO `lo_trinh`(`Nơi_đi`, `Nơi_đến`, `Các_trạm_dừng_chân`, `Mã_nhân_viên_tạo`, `Mã_nhân_viên_chỉnh_sửa`, `created_at`, `updated_at`) VALUES (?,?,?,?,?,?,?)",
                 [$noidi,$noiden,$busstops,$employeeid,$employeeid,$created_at,$updated_at]))
             {
                 return \response()->json(['result'=>'1']);

@@ -5,7 +5,7 @@
             <h4 style="position: absolute; top: 0; left: 0; width: 100%;">Bảng Lộ trình</h4>
             <div id="busroute">
             </div>
-            <a href="javascript:void(0)" data-toggle="modal" data-target="#addlotrinh" style="width: 2em; height: 2em; line-height: 2em; background: white; font-size: 1.5em; position: absolute; bottom: 1em; left: 2em; box-shadow: 0 0 5px black; border-radius: 50%;">
+            <a href="javascript:void(0)" onclick="" data-toggle="modal" data-target="#addlotrinh" style="width: 2em; height: 2em; line-height: 2em; background: white; font-size: 1.5em; position: absolute; bottom: 1em; left: 2em; box-shadow: 0 0 5px black; border-radius: 50%;">
                 <i class="glyphicon glyphicon-plus"></i>
             </a>
             <a href="javascript:void(0)" onclick="getBusRoute()" style="width: 2em; height: 2em; line-height: 2em; background: white; font-size: 1.5em; position: absolute; bottom: 4em; left: 2em; box-shadow: 0 0 5px black; border-radius: 50%;">
@@ -38,6 +38,7 @@
                 <div class="modal-body">
                     <form name="addbusroute">
                         <input type="hidden" name="employeeID" value="1">
+                        <input type="hidden" name="ID" value="">
                         <div class="row">
                             <div class="col-lg-6" style="font-size: 1em; width: 50%">
                                 <label>Nơi đi</label>
@@ -278,6 +279,7 @@
             var noidi = document.forms["addbusroute"]["noidi"].value;
             var noiden = document.forms["addbusroute"]["noiden"].value;
             var tramdungs =document.getElementsByClassName("busstops");
+            document.forms["addbusroute"]["ID"].value = "";
             var busstops = [];
             var j =0;
             for(var i = 0;i<tramdungs.length;i++) {
@@ -287,15 +289,16 @@
                 }
             }
             busstops = busstops.join(',');
+            alert(employeeid+","+noidi+","+noiden+","+busstops);
             $.ajax({
+                url: '{{route("addbusroute")}}',
                 type: 'POST',
-                url:'{{route("addbusroute")}}',
-                data:{
-                    '_token':'{{csrf_token()}}',
-                    'employeeID': employeeid,
-                    'noidi': noidi,
-                    'noiden': noiden,
-                    'bustops': busstops
+                data: {
+                    _token: '{{csrf_token()}}',
+                    employeeID: employeeid,
+                    noidi: noidi,
+                    noiden: noiden,
+                    busstops: busstops
                 },
                 success: function (data) {
                     if(data.result==1){
@@ -303,7 +306,7 @@
                         getBusRoute();
                     }
                 }
-            })
+            });
         }
     </script>
 @endsection
