@@ -27,12 +27,9 @@
 @endsection
 @section('excontent')
     <datalist id="diadiem" style="display: none;">
-        <option>Quảng Ngãi</option>
-        <option>Quảng Nam</option>
-        <option>Đà Nẵng</option>
-        <option>Sài Gòn</option>
-        <option>Bình Định</option>
-        <option>Hà Nội</option>
+        @foreach($province as $row)
+            <option>{{$row["Tên"]}}</option>
+        @endforeach
     </datalist>
     <div id="addlotrinh" class="modal fade">
         <div class="modal-dialog">
@@ -94,7 +91,7 @@
                     </form>
                 </div>
                 <div class="modal-footer" style="text-align: center;">
-                        <button class="btn btn-success" id="btnsubmit1" onclick="addTinh()">Thêm Tỉnh</button>
+                    <button class="btn btn-success" id="btnsubmit1" onclick="addTinh()">Thêm Tỉnh</button>
                 </div>
             </div>
         </div>
@@ -296,7 +293,7 @@
                 render: function (ui) {
                     var str = '';
                     str += '<a title="Edit" id="idEditProvince" ><i class="glyphicon glyphicon-edit  text-success" style="padding-right: 5px; cursor: pointer;"></i></a>';
-                    str += '<a title="Delete" id="idDelprovince" ><i class="glyphicon glyphicon-remove  text-danger" style="padding-right: 5px; cursor: pointer;"></i></a>';
+                    str += '<a title="Delete" id="idDelProvince" ><i class="glyphicon glyphicon-remove  text-danger" style="padding-right: 5px; cursor: pointer;"></i></a>';
                     return str;
                 },
                 postRender: function (ui) {
@@ -360,6 +357,11 @@
                         $grid1.pqGrid("refreshDataAndView");
                     }
                     else if (index == 2) {
+                        var diadiem = document.getElementById('diadiem');
+                        diadiem.innerHTML = "";
+                        for (var i = 0;i<data.msg.length;i++) {
+                            diadiem.innerHTML += "<option>"+data.msg[i]["Tên"]+"</option>";
+                        }
                         obj2.dataModel = {
                             data: data.msg,
                             location: "local",
@@ -467,25 +469,25 @@
                     }
                 }
             });
-            function delprovince(id) {
-                $.ajax({
-                    url: '{{route("delprovince")}}',
-                    type: 'POST',
-                    data: {
-                        _token: '{{csrf_token()}}',
-                        ID: id
-                    },
-                    success: function (data) {
-                        if(data.result==1){
-                            alert('Xóa thành công');
-                            getBusRoute(2);
-                        }
-                        else {
-                            alert('Xóa thất bại');
-                        }
+        }
+        function delprovince(id) {
+            $.ajax({
+                url: '{{route("delprovince")}}',
+                type: 'POST',
+                data: {
+                    _token: '{{csrf_token()}}',
+                    ID: id
+                },
+                success: function (data) {
+                    if(data.result==1){
+                        alert('Xóa thành công');
+                        getBusRoute(2);
                     }
-                });
-            }
+                    else {
+                        alert('Xóa thất bại');
+                    }
+                }
+            });
         }
     </script>
 @endsection
