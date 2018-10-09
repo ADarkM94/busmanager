@@ -125,6 +125,8 @@ Route::get('admin/lotrinh/{cm?}', 'AdminController@lotrinh');
 
 Route::post('admin/addbusroute', 'AdminController@addbusroute')->name('addbusroute');
 
+Route::post('admin/delbusroute', 'AdminController@delbusroute')->name('delbusroute');
+
 /* Kết thúc phần Route cho trang quản trị hệ thống */
 
 /* Bắt đầu phần Route để test chức năng */

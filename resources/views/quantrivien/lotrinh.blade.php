@@ -228,8 +228,9 @@
                     $cell.find("a#idDelBusRoute")
                         .unbind("click")
                         .bind("click", function (evt) {
-                            if(confirm("Bạn chắc chắn muốn xóa?"))
-                                location.assign("{{url('admin/delloaixe')}}"+"/"+rowData["Mã"]);
+                            if(confirm("Bạn chắc chắn muốn xóa?")){
+                                delbusroute(rowData["Mã"]);
+                            }
                         });
                 }
             }
@@ -299,8 +300,30 @@
                 success: function (data) {
                     if(data.result==1){
                         $("#addlotrinh").modal('hide');
-                        alert('Thành công');
+                        alert('Thêm sửa thành công');
                         getBusRoute();
+                    }
+                    else {
+                        alert('Thêm sửa thất bại');
+                    }
+                }
+            });
+        }
+        function delbusroute(id) {
+            $.ajax({
+                url: '{{route("delbusroute")}}',
+                type: 'POST',
+                data: {
+                    _token: '{{csrf_token()}}',
+                    ID: id
+                },
+                success: function (data) {
+                    if(data.result==1){
+                        alert('Xóa thành công');
+                        getBusRoute();
+                    }
+                    else {
+                        alert('Xóa thất bại');
                     }
                 }
             });
