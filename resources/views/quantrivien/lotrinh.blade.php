@@ -5,7 +5,7 @@
             <h4 style="position: absolute; top: 0; left: 0; width: 100%;">Bảng Lộ trình</h4>
             <div id="busroute">
             </div>
-            <a href="javascript:void(0)" onclick="" data-toggle="modal" data-target="#addlotrinh" style="width: 2em; height: 2em; line-height: 2em; background: white; font-size: 1.5em; position: absolute; bottom: 1em; left: 2em; box-shadow: 0 0 5px black; border-radius: 50%;">
+            <a href="javascript:void(0)" onclick="prepareAdd()" data-toggle="modal" data-target="#addlotrinh" style="width: 2em; height: 2em; line-height: 2em; background: white; font-size: 1.5em; position: absolute; bottom: 1em; left: 2em; box-shadow: 0 0 5px black; border-radius: 50%;">
                 <i class="glyphicon glyphicon-plus"></i>
             </a>
             <a href="javascript:void(0)" onclick="getBusRoute()" style="width: 2em; height: 2em; line-height: 2em; background: white; font-size: 1.5em; position: absolute; bottom: 4em; left: 2em; box-shadow: 0 0 5px black; border-radius: 50%;">
@@ -178,32 +178,6 @@
                 }
             },
             {
-                title: "Nhân viên tạo",
-                width: 150,
-                dataIndx: "Mã_nhân_viên_tạo",
-                dataType: "string",
-                editor: false,
-                align: 'center',
-                filter: {
-                    type: 'textbox',
-                    condition: 'contain',
-                    listeners: ['keyup']
-                }
-            },
-            {
-                title: "Nhân viên chỉnh sửa",
-                width: 150,
-                dataIndx: "Mã_nhân_viên_chỉnh_sửa",
-                dataType: "string",
-                editor: false,
-                align: 'center',
-                filter: {
-                    type: 'textbox',
-                    condition: 'contain',
-                    listeners: ['keyup']
-                }
-            },
-            {
                 title: "Các trạm dừng",
                 width: 100,
                 dataIndx: "Các_trạm_dừng_chân",
@@ -234,7 +208,13 @@
                     $cell.find("a#idEdiBusRoute")
                         .unbind("click")
                         .bind("click", function (evt) {
-                            editModel(rowData["Mã"],rowData["Tên_Loại"],rowData["Số_hàng"],rowData["Số_cột"],rowData["Sơ_đồ"]);
+                            document.forms["addbusroute"]["noidi"].value = rowData["Nơi_đi"];
+                            document.forms["addbusroute"]["noiden"].value = rowData["Nơi_đến"];
+                            var tramdungs =document.getElementsByClassName("busstops");
+                            document.forms["addbusroute"]["ID"].value = rowData["Mã"];
+                            var arr = rowData["Các_trạm_dừng_chân"].split(",");
+                            var i = 0;
+                            while(i<arr.length)
                         });
                     $cell.find("a#idDelBusRoute")
                         .unbind("click")
@@ -274,12 +254,16 @@
                 }
             });
         }
+        function prepareAdd() {
+            var id =document.forms["addbusroute"]["employeeID"].value;
+            document.forms["addbusroute"].reset();
+            document.forms["addbusroute"]["employeeID"].value = id;
+        }
         function addLotrinh() {
             var employeeid = document.forms["addbusroute"]["employeeID"].value;
             var noidi = document.forms["addbusroute"]["noidi"].value;
             var noiden = document.forms["addbusroute"]["noiden"].value;
             var tramdungs =document.getElementsByClassName("busstops");
-            document.forms["addbusroute"]["ID"].value = "";
             var busstops = [];
             var j =0;
             for(var i = 0;i<tramdungs.length;i++) {
@@ -289,7 +273,6 @@
                 }
             }
             busstops = busstops.join(',');
-            alert(employeeid+","+noidi+","+noiden+","+busstops);
             $.ajax({
                 url: '{{route("addbusroute")}}',
                 type: 'POST',
@@ -302,6 +285,7 @@
                 },
                 success: function (data) {
                     if(data.result==1){
+                        $("#addlotrinh").modal('hide');
                         alert('Thành công');
                         getBusRoute();
                     }
