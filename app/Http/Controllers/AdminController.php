@@ -13,6 +13,7 @@ use App\Loaixe;
 use App\Xe;
 use App\Tramdung;
 use App\Lotrinh;
+use App\Tinh;
 
 class AdminController extends Controller
 {
@@ -338,7 +339,8 @@ class AdminController extends Controller
         if($cm == "")
         {
             $busroute = Lotrinh::all();
-            return view("quantrivien.lotrinh",compact('busroute','busstops'));
+            $district = Tinh::all();
+            return view("quantrivien.lotrinh",compact('busroute','busstops','district'));
         }
         elseif($cm == "1"){
             $busroute = Lotrinh::all();

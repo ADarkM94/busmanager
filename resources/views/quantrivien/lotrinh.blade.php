@@ -8,14 +8,20 @@
             <a href="javascript:void(0)" onclick="prepareAdd()" data-toggle="modal" data-target="#addlotrinh" style="width: 2em; height: 2em; line-height: 2em; background: white; font-size: 1.5em; position: absolute; bottom: 1em; left: 2em; box-shadow: 0 0 5px black; border-radius: 50%;">
                 <i class="glyphicon glyphicon-plus"></i>
             </a>
-            <a href="javascript:void(0)" onclick="getBusRoute()" style="width: 2em; height: 2em; line-height: 2em; background: white; font-size: 1.5em; position: absolute; bottom: 4em; left: 2em; box-shadow: 0 0 5px black; border-radius: 50%;">
+            <a href="javascript:void(0)" onclick="getBusRoute(1)" style="width: 2em; height: 2em; line-height: 2em; background: white; font-size: 1.5em; position: absolute; bottom: 4em; left: 2em; box-shadow: 0 0 5px black; border-radius: 50%;">
                 <i class="glyphicon glyphicon-refresh"></i>
             </a>
         </div>
         <div class="col-lg-5" style="position: relative; height: 100%; font-size: 1em; padding: 3em 1em 1em;">
             <h4 style="position: absolute; top: 0; left: 0; width: 100%;">Bảng Các tỉnh</h4>
-            <div class="district">
+            <div id="district">
             </div>
+            <a href="javascript:void(0)" onclick="prepareAdd()" data-toggle="modal" data-target="#addlotrinh" style="width: 2em; height: 2em; line-height: 2em; background: white; font-size: 1.5em; position: absolute; bottom: 1em; left: 2em; box-shadow: 0 0 5px black; border-radius: 50%;">
+                <i class="glyphicon glyphicon-plus"></i>
+            </a>
+            <a href="javascript:void(0)" onclick="getBusRoute(1)" style="width: 2em; height: 2em; line-height: 2em; background: white; font-size: 1.5em; position: absolute; bottom: 4em; left: 2em; box-shadow: 0 0 5px black; border-radius: 50%;">
+                <i class="glyphicon glyphicon-refresh"></i>
+            </a>
         </div>
     </div>
 @endsection
@@ -235,6 +241,112 @@
                 }
             }
         ];
+        var obj2 = {
+            width: '100%',
+            height: '100%',
+            showTop: false,
+            showBottom: false,
+            collapsible: false,
+            showHeader: true,
+            filterModel: {on: true, mode: "AND", header: true},
+            scrollModel: {autoFit: true},
+            resizable: false,
+            roundCorners: false,
+            rowBorders: false,
+            columnBorders: false,
+            postRenderInterval: -1,
+            selectionModel: { type: 'row', mode: 'single' },
+            numberCell: { show: false },
+            stripeRows: false,
+            /*cellDblClick: function (event,ui) {
+                window.open( + "/" + ui.rowData["Mã"]);
+                }*/
+        };
+        obj2.colModel = [
+            {
+                title: "ID",
+                width: 50,
+                dataIndx: "Mã",
+                dataType: "string",
+                editor: false,
+                align: 'center',
+                filter: {
+                    type: 'textbox',
+                    condition: 'contain',
+                    listeners: ['keyup']
+                }
+            },
+            {
+                title: "Tên tỉnh",
+                width: 100,
+                dataIndx: "Tên",
+                dataType: "string",
+                editor: false,
+                align: 'center',
+                filter: {
+                    type: 'textbox',
+                    condition: 'contain',
+                    listeners: ['keyup']
+                }
+            },
+            {
+                title: "Mã vùng biển số",
+                width: 150,
+                dataIndx: "Mã_vùng",
+                dataType: "string",
+                editor: false,
+                align: 'center',
+                filter: {
+                    type: 'textbox',
+                    condition: 'contain',
+                    listeners: ['keyup']
+                }
+            },
+            {
+                title: "Action",
+                width: 100,
+                editor: false,
+                dataIndx: "View",
+                render: function (ui) {
+                    var str = '';
+                    str += '<a title="Edit" id="idEditDistrict" ><i class="glyphicon glyphicon-edit  text-success" style="padding-right: 5px; cursor: pointer;"></i></a>';
+                    str += '<a title="Delete" id="idDelDistrict" ><i class="glyphicon glyphicon-remove  text-danger" style="padding-right: 5px; cursor: pointer;"></i></a>';
+                    return str;
+                },
+                postRender: function (ui) {
+                    var rowData = ui.rowData,
+                        $cell = this.getCell(ui);
+                    //add button
+                    $cell.find("a#idEditDistrict")
+                        .unbind("click")
+                        .bind("click", function (evt) {
+                            document.forms["addbusroute"]["noidi"].value = rowData["Nơi_đi"];
+                            document.forms["addbusroute"]["noiden"].value = rowData["Nơi_đến"];
+                            var tramdungs =document.getElementsByClassName("busstops");
+                            document.forms["addbusroute"]["ID"].value = rowData["Mã"];
+                            var arr = rowData["Các_trạm_dừng_chân"].split(",");
+                            var i = arr.length - 1;
+                            var j = tramdungs.length - 1;
+                            while( i >= 0 && j >= 0) {
+                                if (tramdungs[j].value == arr[i]){
+                                    tramdungs[j].checked = true;
+                                    i--;
+                                }
+                                j--;
+                            }
+                            document.getElementById("btnsubmit").innerHTML="Sửa Lộ Trình";
+                            $("#addlotrinh").modal("show");
+                        });
+                    $cell.find("a#idDelDistrict")
+                        .unbind("click")
+                        .bind("click", function (evt) {
+                            if(confirm("Bạn chắc chắn muốn xóa?")){
+                                delbusroute(rowData["Mã"]);
+                            }
+                        });
+                }
+            }
+        ];
         $(function () {
 
             obj1.dataModel = {
@@ -244,23 +356,45 @@
                 sortDir: "down"
             };
             obj1.pageModel = {type: 'local', rPP: 20, rPPOptions: [20, 30, 40, 50]};
-            var $grid = $("#busroute").pqGrid(obj1);
-            $grid.pqGrid("refreshDataAndView");
+            var $grid1 = $("#busroute").pqGrid(obj1);
+            $grid1.pqGrid("refreshDataAndView");
+            obj2.dataModel = {
+                data: {!! json_encode($district) !!},
+                location: "local",
+                sorting: "local",
+                sortDir: "down"
+            };
+            obj2.pageModel = {type: 'local', rPP: 20, rPPOptions: [20, 30, 40, 50]};
+            var $grid2 = $("#district").pqGrid(obj2);
+            $grid2.pqGrid("refreshDataAndView");
         });
-        function getBusRoute() {
+        function getBusRoute(index) {
             $.ajax({
                 type:'GET',
-                url:'{{asset("/admin/lotrinh")}}/1',
+                url:'{{asset("/admin/lotrinh")}}/'+index,
                 success:function(data){
-                    obj1.dataModel = {
-                        data: data.msg,
-                        location: "local",
-                        sorting: "local",
-                        sortDir: "down"
-                    };
-                    obj1.pageModel = {type: 'local', rPP: 20, rPPOptions: [20, 30, 40, 50]};
-                    var $grid = $("#busroute").pqGrid(obj1);
-                    $grid.pqGrid("refreshDataAndView");
+                    if (index == 1) {
+                        obj1.dataModel = {
+                            data: data.msg,
+                            location: "local",
+                            sorting: "local",
+                            sortDir: "down"
+                        };
+                        obj1.pageModel = {type: 'local', rPP: 20, rPPOptions: [20, 30, 40, 50]};
+                        var $grid1 = $("#busroute").pqGrid(obj1);
+                        $grid1.pqGrid("refreshDataAndView");
+                    }
+                    else if (index == 2) {
+                        obj2.dataModel = {
+                            data: data.msg,
+                            location: "local",
+                            sorting: "local",
+                            sortDir: "down"
+                        };
+                        obj2.pageModel = {type: 'local', rPP: 20, rPPOptions: [20, 30, 40, 50]};
+                        var $grid2 = $("#busroute").pqGrid(obj2);
+                        $grid2.pqGrid("refreshDataAndView");
+                    }
                 }
             });
         }
@@ -301,7 +435,7 @@
                     if(data.result==1){
                         $("#addlotrinh").modal('hide');
                         alert('Thêm sửa thành công');
-                        getBusRoute();
+                        getBusRoute(1);
                     }
                     else {
                         alert('Thêm sửa thất bại');
@@ -320,7 +454,7 @@
                 success: function (data) {
                     if(data.result==1){
                         alert('Xóa thành công');
-                        getBusRoute();
+                        getBusRoute(1);
                     }
                     else {
                         alert('Xóa thất bại');
