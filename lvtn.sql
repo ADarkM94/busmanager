@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 08, 2018 lúc 03:05 PM
+-- Thời gian đã tạo: Th10 09, 2018 lúc 01:40 PM
 -- Phiên bản máy phục vụ: 10.1.36-MariaDB
 -- Phiên bản PHP: 7.2.10
 
@@ -160,6 +160,16 @@ CREATE TABLE `lo_trinh` (
   `updated_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Đang đổ dữ liệu cho bảng `lo_trinh`
+--
+
+INSERT INTO `lo_trinh` (`Mã`, `Mã_nhân_viên_tạo`, `Mã_nhân_viên_chỉnh_sửa`, `Nơi_đi`, `Nơi_đến`, `Các_trạm_dừng_chân`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 'Sài Gòn', 'Quảng Ngãi', '1,3', '2018-10-09 12:38:30', '2018-10-09 12:38:30'),
+(2, 1, 1, 'Quảng Ngãi', 'Sài Gòn', '3', '2018-10-09 08:50:20', '2018-10-09 09:40:14'),
+(3, 1, 1, 'Quảng Nam', 'Sài Gòn', '3', '2018-10-09 08:51:33', '2018-10-09 08:51:33'),
+(4, 1, 1, 'Đà Nẵng', 'Sài Gòn', '1', '2018-10-09 08:56:45', '2018-10-09 08:56:45');
+
 -- --------------------------------------------------------
 
 --
@@ -179,7 +189,10 @@ CREATE TABLE `tinh` (
 --
 
 INSERT INTO `tinh` (`Mã`, `Tên`, `Mã_vùng`, `created_at`, `updated_at`) VALUES
-(1, 'An Giang', '67', '2018-09-27 06:37:58', '2018-09-27 06:37:58');
+(1, 'An Giang', '67', '2018-09-27 06:37:58', '2018-09-27 06:37:58'),
+(2, 'Quảng Ngãi', '79', '2018-10-09 17:13:46', '2018-10-09 17:13:46'),
+(3, 'Quảng Nam', '70', '2018-10-09 10:42:25', '2018-10-09 10:54:53'),
+(6, 'Đà Nẵng', '59', '2018-10-09 11:09:39', '2018-10-09 11:09:39');
 
 -- --------------------------------------------------------
 
@@ -378,13 +391,13 @@ ALTER TABLE `employee`
 -- AUTO_INCREMENT cho bảng `lo_trinh`
 --
 ALTER TABLE `lo_trinh`
-  MODIFY `Mã` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Mã` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT cho bảng `tinh`
 --
 ALTER TABLE `tinh`
-  MODIFY `Mã` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `Mã` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT cho bảng `tram_dung`
