@@ -409,4 +409,14 @@ class AdminController extends Controller
                 return \response()->json(['result'=>'0']);
         }
     }
+    public function delprovince(Request $request) {
+        if(isset($request->ID)) {
+            try {
+                DB::delete('DELETE FROM tinh WHERE Mã = ?',[$request->ID]);
+            } catch (\Exception $e) {
+                return \response()->json(['result'=>'0']);
+            }
+            return \response()->json(['result'=>'1']);
+        }
+    }
 }

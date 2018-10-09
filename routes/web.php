@@ -131,6 +131,8 @@ Route::post('admin/delbusroute', 'AdminController@delbusroute')->name('delbusrou
 
 Route:: post('admin/addprovince', 'AdminController@addprovince')->name('addprovince');
 
+Route::post('admin/delprovince', 'AdminController@delprovince')->name('delprovince');
+
 /* Kết thúc phần Route cho trang quản trị hệ thống */
 
 /* Bắt đầu phần Route để test chức năng */
