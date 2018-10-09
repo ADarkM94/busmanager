@@ -217,13 +217,12 @@
                             var j = tramdungs.length - 1;
                             while( i >= 0 && j >= 0) {
                                 if (tramdungs[j].value == arr[i]){
-                                    tramdungs[j].setAttribute("checked","");
+                                    tramdungs[j].checked = true;
                                     i--;
                                 }
                                 j--;
                             }
                             document.getElementById("btnsubmit").innerHTML="Sửa Lộ Trình";
-                            document.getElementById("btnsubmit").
                             $("#addlotrinh").modal("show");
                         });
                     $cell.find("a#idDelBusRoute")
@@ -268,8 +267,11 @@
             var id =document.forms["addbusroute"]["employeeID"].value;
             document.forms["addbusroute"].reset();
             document.forms["addbusroute"]["employeeID"].value = id;
+            document.forms["addbusroute"]["ID"].value = "";
+            document.getElementById("btnsubmit").innerHTML="Thêm Lộ Trình";
         }
         function addLotrinh() {
+            var id = document.forms["addbusroute"]["ID"].value;
             var employeeid = document.forms["addbusroute"]["employeeID"].value;
             var noidi = document.forms["addbusroute"]["noidi"].value;
             var noiden = document.forms["addbusroute"]["noiden"].value;
@@ -288,6 +290,7 @@
                 type: 'POST',
                 data: {
                     _token: '{{csrf_token()}}',
+                    ID: id,
                     employeeID: employeeid,
                     noidi: noidi,
                     noiden: noiden,
