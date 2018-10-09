@@ -116,9 +116,9 @@
                 selectionModel: { type: 'row', mode: 'single' },
                 numberCell: { show: false },
                 stripeRows: false,
-                cellDblClick: function (event,ui) {
+                /*cellDblClick: function (event,ui) {
                     window.open("{{url('/admin/addnhanvien')}}" + "/" + ui.rowData["Mã"]);
-                }
+                }*/
             };
             obj.colModel = [
                 {
@@ -187,7 +187,7 @@
                     }
                 },
                 {
-                    title: "SƠ đồ",
+                    title: "Sơ đồ",
                     width: 100,
                     dataIndx: "Sơ_đồ",
                     dataType: "string",
@@ -235,7 +235,7 @@
                 sorting: "local",
                 sortDir: "down"
             };
-            obj.pageModel = {type: 'local', rPP: 20, rPPOptions: [20, 30, 40, 50]};
+            obj.pageModel = {type: 'local', rPP:5, rPPOptions: [5, 10, 15, 20]};
             var $grid = $("#busmodel").pqGrid(obj);
             $grid.pqGrid("refreshDataAndView");
         });

@@ -11,6 +11,7 @@ use App\Nhanvien;
 use App\Loaixe;
 use App\Xe;
 use App\Tramdung;
+use App\Lotrinh;
 
 class AdminController extends Controller
 {
@@ -328,5 +329,11 @@ class AdminController extends Controller
             die("Lỗi xóa dữ liệu :".$e);
         }
         return redirect()->back();
+    }
+
+    //Phần lộ trình
+    public function lotrinh(){
+        $busroute = Lotrinh::all();
+        return view("quantrivien.lotrinh",compact('busroute'));
     }
 }

@@ -89,10 +89,6 @@ Route::post('admin/addbusmodel', 'AdminController@addbusmodel')->name('addbusmod
 
 Route::get('admin/delloaixe/{id}', 'AdminController@delbusmodel');
 
-Route::get('admin/lotrinh', function () {
-    return view('quantrivien.lotrinh');
-});
-
 //Phần nhân viên
 
 Route::get('admin/nhanvien', 'AdminController@nhanvien');
@@ -122,6 +118,10 @@ Route:: get('admin/addtramdung/{index?}', 'AdminController@addtramdung');
 Route::post('admin/addbusstop','AdminController@addbusstop')->name('addbusstop');
 
 Route::get('admin/deltramdung/{id}','AdminController@delbusstop');
+
+//Phần lộ trinh
+
+Route::get('admin/lotrinh', 'AdminController@lotrinh');
 
 /* Kết thúc phần Route cho trang quản trị hệ thống */
 
