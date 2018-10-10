@@ -465,9 +465,9 @@ class AdminController extends Controller
         if(isset($request->ID)){
             if(DB::update("UPDATE `chuyen_xe` SET `Mã_lộ_trình`= ?,`Mã_tài_xế`= ?,`Mã_xe`= ?,`Thời_gian_xuất_phát`= ?,`updated_at`= ? WHERE `Mã`= ?",
                 [$idlotrinh,$idtaixe,$idxe,$starttime,$updated_at,$request->ID]))
-                return \response()->json(['result'=>'1']);
+                return redirect()->back()->with('alert','Thêm thành công!');
             else
-                return \response()->json(['result'=>'0']);
+                return redirect()->back()->with('alert','Thêm thất bại!');
         }
         else {
             try {

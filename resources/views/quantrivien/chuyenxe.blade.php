@@ -482,5 +482,11 @@
             var $grid2 = $("#ticket").pqGrid(obj2);
             $grid2.pqGrid("refreshDataAndView");
         });
+        function refreshCX(){
+            $("#chuyenxe").pqGrid("reset",{filter : true});
+        }
+        function refreshVE(){
+            $("#ticket").pqGrid("reset",{filter : true});
+        }
     </script>
 @endsection
