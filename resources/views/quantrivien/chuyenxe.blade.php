@@ -23,34 +23,35 @@
     </div>
 @endsection
 @section('excontent')
-    <div id="editticket" class="modal fade">
+    <div id="editve" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button class="close" data-dismiss="modal">&times;</button>
-                    <div class="modal-title">Thông Tin Lộ trình</div>
+                    <div class="modal-title">Thông Tin Vé</div>
                 </div>
                 <div class="modal-body">
-                    <form name="addbusroute">
-                        <input type="hidden" name="employeeID" value="1">
+                    <form name="editticket">
                         <input type="hidden" name="ID" value="">
                         <div class="row">
                             <div class="col-lg-6" style="font-size: 1em; width: 50%">
-                                <label>Nơi đi</label>
-                                <input type="text" class="form-control" list="diadiem" name="noidi" placeholder="Địa điểm đi">
+                                <label>Giá</label>
+                                <input type="number" min="0" class="form-control" name="giave" placeholder="Giá vé">
                             </div>
                             <div class="col-lg-6" style="width: 50%; text-align: left;">
-                                <label>Nơi đến</label>
-                                <input type="text" class="form-control" list="diadiem" name="noiden" placeholder="Địa điểm đến">
+                                <label>Trạng thái</label>
+                                <select name="trangthai">
+                                    <option value="0">Waiting</option>
+                                    <option value="1">Booked</option>
+                                    <option value="2">Compeleted</option>
+                                    <option value="3">Banned</option>
+                                </select>
                             </div>
-                        </div>
-                        <div class="row" style="padding: 1em 5em;">
-                           
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer" style="text-align: center;">
-                    <button class="btn btn-success" id="btnsubmit" onclick="addLotrinh()">Thêm Lộ Trình</button>
+                    <button class="btn btn-success" id="btnsubmit" onclick="editVe()">Sửa Thông Tin Vé</button>
                 </div>
             </div>
         </div>
@@ -212,7 +213,6 @@
             numberCell: { show: false },
             stripeRows: false,
             /*cellDblClick: function (event,ui) {
-                window.open("{{url('/admin/addnhanvien')}}" + "/" + ui.rowData["Mã"]);
             }*/
         };
         obj2.colModel = [
@@ -321,7 +321,8 @@
                         {'':'All'},
                         {'0':'Waiting'},
                         {'1':'Booked'},
-                        {'2':'Completed'}
+                        {'2':'Completed'},
+                        {'3':'Banned'}
                     ],
                     listeners: ['change']
                 }
@@ -333,20 +334,20 @@
                 dataIndx: "View",
                 render: function (ui) {
                     var str = '';
-                    str += '<a title="Edit" id="idEditEmployee" ><i class="glyphicon glyphicon-edit  text-success" style="padding-right: 5px; cursor: pointer;"></i></a>';
-                    str += '<a title="Delete" id="idDelEmployee" ><i class="glyphicon glyphicon-remove  text-danger" style="padding-right: 5px; cursor: pointer;"></i></a>';
+                    str += '<a title="Edit" id="idEditTicket" ><i class="glyphicon glyphicon-edit  text-success" style="padding-right: 5px; cursor: pointer;"></i></a>';
+                    str += '<a title="Delete" id="idHideTicket" ><i class="glyphicon glyphicon-eye-close  text-danger" style="padding-right: 5px; cursor: pointer;"></i></a>';
                     return str;
                 },
                 postRender: function (ui) {
                     var rowData = ui.rowData,
                         $cell = this.getCell(ui);
                     //add button
-                    $cell.find("a#idEditEmployee")
+                    $cell.find("a#idEditTicket")
                         .unbind("click")
                         .bind("click", function (evt) {
-                            window.open("{{url('admin/addnhanvien')}}"+"/"+rowData["Mã"]);
+                            document.forms["editTicket"]["ID"].value = rowData["Mã"];
                         });
-                    $cell.find("a#idDelEmployee")
+                    $cell.find("a#idHideTicket")
                         .unbind("click")
                         .bind("click", function (evt) {
                             if(confirm("Bạn chắc chắn muốn xóa?"))
@@ -378,6 +379,9 @@
         });
         function refreshCX(){
             $("#chuyenxe").pqGrid("reset",{filter : true});
+        }
+        function editVe() {
+
         }
         function refreshVE(){
             $("#ticket").pqGrid("reset",{filter : true});
