@@ -453,13 +453,13 @@ class AdminController extends Controller
     }
     public function addchuyenxexl(Request $request) {
         $employeeid = $request->employeeID;
-        $idlotrinh = $request->idlotrinh;
-        $idtaixe = $request->idtaixe;
-        $idxe = $request->idxe;
         $starttime = $request->startdate.' '.$request->starttime;
         $created_at = date('Y-m-d h-i-s');
         $updated_at = date('Y-m-d h-i-s');
         if(isset($request->ID)){
+            $idlotrinh = $request->idlotrinh;
+            $idtaixe = $request->idtaixe;
+            $idxe = $request->idxe;
             if(DB::update("UPDATE `chuyen_xe` SET `Mã_lộ_trình`= ?,`Mã_tài_xế`= ?,`Mã_xe`= ?,`Thời_gian_xuất_phát`= ?,`updated_at`= ? WHERE `Mã`= ?",
                 [$idlotrinh,$idtaixe,$idxe,$starttime,$updated_at,$request->ID]))
                 return \response()->json(['result'=>'1']);
@@ -467,6 +467,9 @@ class AdminController extends Controller
                 return \response()->json(['result'=>'0']);
         }
         else {
+            $idlotrinh = $request->lotrinh;
+            $idtaixe = $request->taixe;
+            $idxe = $request->xe;
             try {
                 /*DB::insert("INSERT INTO `chuyen_xe`(`Mã_nhân_viên_tạo`, `Mã_lộ_trình`, `Mã_tài_xế`, `Mã_xe`, `Thời_gian_xuất_phát`, `created_at`, `updated_at`) VALUES (?,?,?,?,?,?,?)",
                     [$employeeid,$idlotrinh,$idtaixe,$idxe,$starttime,$created_at,$updated_at]);*/
@@ -479,7 +482,7 @@ class AdminController extends Controller
                     'created_at' => $created_at,
                     'updated_at' => $updated_at
                 ]);
-                $loaixes = DB::table('xe')->join('bus_model','xe.Mã_loại_xe','=','bus__model.Mã')
+                $loaixes = DB::table('xe')->join('bus_model','xe.Mã_loại_xe','=','bus_model.Mã')
                     ->where('xe.Mã','=',$idxe)->select('bus_model.Số_hàng','bus_model.Số_cột','bus_model.Sơ_đồ')
                     ->get();
                 foreach ($loaixes as $row){
@@ -508,7 +511,8 @@ class AdminController extends Controller
                 }
                 return \response()->json(['result'=>'1']);
             }  catch (\Exception $e) {
-                return \response()->json(['result'=>'0']);
+                /*return \response()->json(['result'=>'0']);*/
+                die($e);
             }
         }
     }
