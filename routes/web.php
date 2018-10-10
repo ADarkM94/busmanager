@@ -85,6 +85,8 @@ Route::get('admin/addchuyenxe/{id?}', 'AdminController@addchuyenxe');
 
 Route::post('admin/addchuyenxexl', 'AdminController@addchuyenxexl')->name('addchuyenxexl');
 
+Route::get('admin/delchuyenxe/{id?}', 'AdminController@delchuyenxe');
+
 //Phần loại xe
 
 Route::get('admin/loaixe', 'AdminController@loaixe');

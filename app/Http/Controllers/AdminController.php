@@ -517,4 +517,7 @@ class AdminController extends Controller
             }
         }
     }
+    public function delchuyenxe($id = "") {
+        
+    }
 }
