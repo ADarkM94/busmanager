@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Chuyenxe;
 use core_question\bank\view;
 use gradereport_singleview\local\screen\select;
 use http\Env\Response;
@@ -467,8 +468,17 @@ class AdminController extends Controller
         }
         else {
             try {
-                DB::insert("INSERT INTO `chuyen_xe`(`Mã_nhân_viên_tạo`, `Mã_lộ_trình`, `Mã_tài_xế`, `Mã_xe`, `Thời_gian_xuất_phát`, `created_at`, `updated_at`) VALUES (?,?,?,?,?,?,?)",
-                    [$employeeid,$idlotrinh,$idtaixe,$idxe,$starttime,$created_at,$updated_at]);
+                /*DB::insert("INSERT INTO `chuyen_xe`(`Mã_nhân_viên_tạo`, `Mã_lộ_trình`, `Mã_tài_xế`, `Mã_xe`, `Thời_gian_xuất_phát`, `created_at`, `updated_at`) VALUES (?,?,?,?,?,?,?)",
+                    [$employeeid,$idlotrinh,$idtaixe,$idxe,$starttime,$created_at,$updated_at]);*/
+                $id = DB::table("chuyen_xe")->insertGetId([
+                    'Mã_nhân_viên_tạo' => $employeeid,
+                    'Mã_lộ_trình' => $idlotrinh,
+                    'Mã_tài_xế' => $idtaixe,
+                    'Mã_xe' => $idxe,
+                    'Thời_gian_xuất_phát' => $starttime,
+                    'created_at' => $created_at,
+                    'updated_at' => $updated_at
+                ]);
                 $loaixes = DB::table('xe')->join('bus_model','xe.Mã_loại_xe','=','bus__model.Mã')
                     ->where('xe.Mã','=',$idxe)->select('bus_model.Số_hàng','bus_model.Số_cột','bus_model.Sơ_đồ')
                     ->get();
