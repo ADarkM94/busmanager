@@ -327,7 +327,7 @@
                     listeners: ['change']
                 }
             },
-            {
+            /*{
                 title: "Ẩn",
                 width: 100,
                 dataIndx: "is_hide",
@@ -352,7 +352,7 @@
                     ],
                     listeners: ['change']
                 }
-            },
+            },*/
             {
                 title: "Action",
                 width: 100,
@@ -361,7 +361,6 @@
                 render: function (ui) {
                     var str = '';
                     str += '<a title="Edit" id="idEditTicket" ><i class="glyphicon glyphicon-edit  text-success" style="padding-right: 5px; cursor: pointer;"></i></a>';
-                    str += '<a title="Delete" id="idHideTicket" ><i class="glyphicon glyphicon-eye-close  text-danger" style="padding-right: 5px; cursor: pointer;"></i></a>';
                     return str;
                 },
                 postRender: function (ui) {
@@ -375,12 +374,6 @@
                             document.forms["editticket"]["giave"].value = rowData["Giá"];
                             document.forms["editticket"]["trangthai"].value = rowData["Trạng_thái"];
                             $("#editve").modal('show');
-                        });
-                    $cell.find("a#idHideTicket")
-                        .unbind("click")
-                        .bind("click", function (evt) {
-                            if(confirm("Bạn chắc chắn muốn ẩn đi?"))
-                                location.assign("{{url('admin/delnhanvien')}}"+"/"+rowData["Mã"]);
                         });
                 }
             }
