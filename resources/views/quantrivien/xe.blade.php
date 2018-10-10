@@ -19,7 +19,7 @@
             option[i].classList.remove('selected');
         }
         option[6].classList.add('selected');
-        option[6].getElementsByTagName('img')[0].setAttribute('src','{{asset("images/icons/customer-hover.png")}}');
+        option[6].getElementsByTagName('img')[0].setAttribute('src','{{asset("images/icons/bus-hover.png")}}');
         $(function () {
             var typebus = {!!json_encode($typebus)!!};
             var obj = {

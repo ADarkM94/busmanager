@@ -184,7 +184,7 @@ a:hover, a:visited {
     content: url("../images/icons/chuyenxe-hover.png");
 }
 .menu > ul > a:nth-child(4) > .option:hover > img {
-    content: url("../images/icons/bus-hover.png");
+    content: url("../images/icons/bus-type-hover.png");
 }
 .menu > ul > a:nth-child(5) > .option:hover > img {
     content: url("../images/icons/route-hover.png");
@@ -193,7 +193,7 @@ a:hover, a:visited {
     content: url("../images/icons/partnership-hover.png");
 }
 .menu > ul > a:nth-child(7) > .option:hover > img {
-	content: url("../images/icons/partnership-hover.png");
+	content: url("../images/icons/bus-hover.png");
 }
 .menu > ul > a:nth-child(8) > .option:hover > img {
 	content: url("../images/icons/parking-hover.png");

@@ -47,7 +47,7 @@
                         <li class="option"><img src="{{asset('images/icons/chuyenxe.png')}}" alt="icon">&nbsp;Chuyến xe</li>
                     </a>
                     <a href="{{url('/admin/loaixe')}}">
-                        <li class="option"><img src="{{asset('images/icons/bus.png')}}" alt="icon">&nbsp;Loại xe</li>
+                        <li class="option"><img src="{{asset('images/icons/bus-type.png')}}" alt="icon">&nbsp;Loại xe</li>
                     </a>
                     <a href="{{url('/admin/lotrinh')}}">
                         <li class="option"><img src="{{asset('images/icons/route.png')}}" alt="icon">&nbsp;Lộ trình</li>
@@ -56,7 +56,7 @@
                         <li class="option"><img src="{{asset('images/icons/partnership.png')}}" alt="icon">&nbsp;Nhân viên</li>
                     </a>
                     <a href="{{url('/admin/xe')}}">
-                        <li class="option"><img src="{{asset('images/icons/partnership.png')}}" alt="icon">&nbsp;Xe</li>
+                        <li class="option"><img src="{{asset('images/icons/bus.png')}}" alt="icon">&nbsp;Xe</li>
                     </a>
                     <a href="{{url('/admin/tramdung')}}">
                         <li class="option"><img src="{{asset('images/icons/parking.png')}}" alt="icon">&nbsp;Trạm dừng</li>

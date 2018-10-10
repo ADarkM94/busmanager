@@ -96,7 +96,7 @@
             option[i].classList.remove('selected');
         }
         option[3].classList.add('selected');
-        option[3].getElementsByTagName('img')[0].setAttribute('src','{{asset("images/icons/bus-hover.png")}}');
+        option[3].getElementsByTagName('img')[0].setAttribute('src','{{asset("images/icons/bus-type-hover.png")}}');
         var model = {!!json_encode($model)!!};
         $(function () {
             var obj = {
@@ -117,7 +117,6 @@
                 numberCell: { show: false },
                 stripeRows: false,
                 /*cellDblClick: function (event,ui) {
-                    window.open("{{url('/admin/addnhanvien')}}" + "/" + ui.rowData["Mã"]);
                 }*/
             };
             obj.colModel = [
