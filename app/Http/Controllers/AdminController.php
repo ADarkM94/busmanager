@@ -466,9 +466,9 @@ class AdminController extends Controller
                 return \response()->json(['result'=>'0']);
         }
         else {
-            if( DB::insert("INSERT INTO `chuyen_xe`(`Mã_nhân_viên_tạo`, `Mã_lộ_trình`, `Mã_tài_xế`, `Mã_xe`, `Thời_gian_xuất_phát`, `created_at`, `updated_at`) VALUES (?,?,?,?,?,?,?)",
-                [$employeeid,$idlotrinh,$idtaixe,$idxe,$starttime,$created_at,$updated_at]))
-            {
+            try {
+                DB::insert("INSERT INTO `chuyen_xe`(`Mã_nhân_viên_tạo`, `Mã_lộ_trình`, `Mã_tài_xế`, `Mã_xe`, `Thời_gian_xuất_phát`, `created_at`, `updated_at`) VALUES (?,?,?,?,?,?,?)",
+                    [$employeeid,$idlotrinh,$idtaixe,$idxe,$starttime,$created_at,$updated_at]);
                 $loaixes = DB::table('xe')->join('bus_model','xe.Mã_loại_xe','=','bus__model.Mã')
                     ->where('xe.Mã','=',$idxe)->select('bus_model.Số_hàng','bus_model.Số_cột','bus_model.Sơ_đồ')
                     ->get();
@@ -493,9 +493,9 @@ class AdminController extends Controller
                     }
                 }
                 return \response()->json(['result'=>'1']);
-            }
-            else
+            }  catch (\Exception $e) {
                 return \response()->json(['result'=>'0']);
+            }
         }
     }
 }
