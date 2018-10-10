@@ -492,16 +492,16 @@ class AdminController extends Controller
                 $file = fopen($filepath,'r');
                 $sodo = fread($file,filesize($filepath));
                 fclose($file);
-                $row = integerValue($loaixe["Số_hàng"]);
-                $col  = integerValue($loaixe["Số_cột"]);
+                $row = intval($loaixe["Số_hàng"]);
+                $col  = intval($loaixe["Số_cột"]);
                 $gia = 300000;
-                $trangthai = 'Waiting';
+                $trangthai = 0;
                 for ($i = 0;$i<$row;$i++){
                     $k = 1;
                     for ($j = 0;$j<$col;$j++){
-                        if(i*$col+j == 0)
+                        if($i*$col+$j == 0)
                             continue;
-                        if($sodo[i*$col+j]==1){
+                        if($sodo[$i*$col+$j]==1){
                             $vitri = ($i+1).'-'.($k);
                             DB::insert("INSERT INTO `ve`(`Mã_chuyến_xe`, `Vị_trí_ghế`, `Giá`, `Trạng_thái`, `created_at`, `updated_at`) VALUES (?,?,?,?,?,?)",
                                 [$id,$vitri,$gia,$trangthai,$created_at,$updated_at]);
