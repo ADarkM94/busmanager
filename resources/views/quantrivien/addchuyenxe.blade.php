@@ -24,7 +24,7 @@
                 @endisset
                 <label>Lộ trình</label>
                 <input type="hidden" name="idlotrinh" value="{{isset($ttchuyenxe['Nơi_đi'])? $ttchuyenxe['Mã_lộ_trình']:''}}">
-                <input type="date" list="lotrinh" class="form-control"  name="lotrinh" value="{{isset($ttchuyenxe['Nơi_đi'])? $ttchuyenxe['Nơi_đi'].'-'.$ttchuyenxe['Nơi_đến']:''}}" placeholder="Ngày sinh">
+                <input type="text" list="lotrinh" class="form-control"  name="lotrinh" value="{{isset($ttchuyenxe['Nơi_đi'])? $ttchuyenxe['Nơi_đi'].'-'.$ttchuyenxe['Nơi_đến']:''}}" placeholder="Ngày sinh">
                 <br>
                 <label>Tài xế</label>
                 <input type="hidden" name="idtaixe" value="{{isset($ttchuyenxe['Tài_xế'])? $ttchuyenxe['Mã_tài_xế']:''}}">
@@ -55,6 +55,7 @@
     </datalist>
     <datalist id="taixe">
         @foreach($taixes as $taixe)
+            <?php $taixe = (array)$taixe?>
             <option value="{{$taixe['Mã']}}">{{$taixe['Họ_Tên']}}</option>
         @endforeach
     </datalist>
@@ -204,7 +205,7 @@
             ];
 
             obj.dataModel = {
-                data: {!! json_encode($ticket) !!},
+                data: {{--{!! json_encode($ticket) !!}--}},
                 location: "local",
                 sorting: "local",
                 sortDir: "down"
