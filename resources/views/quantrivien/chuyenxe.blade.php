@@ -56,8 +56,10 @@
             </div>
         </div>
     </div>
-    <div id="comment">
-        Khi tạo chuyến xe, Vé sẽ được tự động tạo tương ứng với số ghế của loại xe dùng để chuyên chở trong chuyến xe!
+    <div id ="btnnotice">
+        <div id="comment">
+            Khi tạo chuyến xe, Vé sẽ được tự động tạo tương ứng với số ghế của loại xe dùng để chuyên chở trong chuyến xe!
+        </div>
     </div>
 @endsection
 @section('script')

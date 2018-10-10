@@ -585,11 +585,23 @@ a:hover, a:visited {
 	box-shadow: none;
 }
 #btnnotice {
-	
-}
-#comment {
 	position: fixed;
-	width: 20%;
+	bottom: 1.5em;
+	left: 1.5em;
+	width: 2em;
+	height: 2em;
+	border-radius: 50%;
+	background: #FFA000;
+	box-shadow: 0 0 3px purple, 0 0 8px #FFA000;
+	cursor: pointer;
+}
+#btnnotice:hover #comment {
+	visibility: visible;
+	opacity: 1;
+}
+#btnnotice #comment {
+	position: absolute;
+	width: 10em;
 	padding: 1em;
 	bottom: 2em;
 	left: 1.5em;
@@ -597,7 +609,9 @@ a:hover, a:visited {
 	color: #004964;
 	border: 1px #FFA000 solid;
 	border-radius: 5px;
-	display: none;
+	visibility: hidden;
+	transition: 1s ease-in-out;
+	opacity: 0;
 }
 #comment::after {
 	content: "";
@@ -605,7 +619,7 @@ a:hover, a:visited {
 	top: 100%;
 	left: 0;
 	margin-left: -1em;
-	border-width: 2em .5em 0;
+	border-width: 2em 1em 0;
 	transform: rotateZ(45deg) translate(-.5em,-1em);
 	border-style: solid;
 	border-color: white transparent transparent transparent;
