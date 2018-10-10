@@ -550,14 +550,14 @@ class AdminController extends Controller
     public function editticket(Request $request) {
         $id = $request->ID;
         $giave =$request->giave;
-        $trangthai = $request>trangthai;
+        $trangthai = $request->trangthai;
         $updated_at = date('Y-m-d h-i-s');
         try {
             DB::update("UPDATE `ve` SET `Giá`= ?,`Trạng_thái`= ?,`updated_at`= ? WHERE `Mã`= ?",
                 [$giave,$trangthai,$updated_at,$id]);
         } catch (\Exception $e) {
-            return \response()->json(['result'=>1]);
+            return \response()->json(['result'=>0]);
         }
-        return \response()->json(['result'=>0]);
+        return \response()->json(['result'=>1]);
     }
 }

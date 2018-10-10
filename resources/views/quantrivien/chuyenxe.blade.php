@@ -446,12 +446,12 @@
                 data: {
                     _token: '{{csrf_token()}}',
                     ID: id,
-                    name: giave,
-                    mavung: trangthai
+                    giave: giave,
+                    trangthai: trangthai
                 },
                 success: function (data) {
                     if(data.result==1){
-                        $("#editticket").modal('hide');
+                        $("#editve").modal('hide');
                         alert('Sửa thành công');
                         refresh(2);
                     }
