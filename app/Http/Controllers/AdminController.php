@@ -532,4 +532,19 @@ class AdminController extends Controller
             return redirect()->back();
         }
     }
+    public function ticket($index) {
+        if ($index==1){
+            $chuyenxe = DB::table('chuyen_xe')->join('employee','chuyen_xe.Mã_nhân_viên_tạo','=','employee.Mã')
+                ->join('lo_trinh','chuyen_xe.Mã_lộ_trình','=','lo_trinh.Mã')->join('xe','chuyen_xe.Mã_xe','=','xe.Mã')
+                ->join('employee as employee1','chuyen_xe.Mã_tài_xế','=','employee1.Mã')
+                ->where('chuyen_xe.is_del','=','0')
+                ->select('chuyen_xe.Mã','employee.Họ_Tên as Nhân_viên_tạo','employee1.Họ_Tên as Tài_xế','lo_trinh.Nơi_đi','lo_trinh.Nơi_đến','xe.Biển_số')
+                ->get();
+            return \response()->json(['msg'=>$chuyenxe]);
+        }
+        elseif ($index == 2){
+            $ticket = Ve::all();
+            return \response()->json(['msg'=>$ticket]);
+        }
+    }
 }
