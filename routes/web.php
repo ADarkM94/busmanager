@@ -77,9 +77,9 @@ Route::post('admin/addcustomer', 'AdminController@addcustomer')->name('addcustom
 
 Route::get('admin/delkhachhang/{id}', 'AdminController@delcustomer');
 
-Route::get('admin/chuyenxe', function () {
-    return view('quantrivien.chuyenxe');
-});
+//Phần chuyến xe
+
+Route::get('admin/chuyenxe', 'AdminController@chuyenxe');
 
 //Phần loại xe
 
