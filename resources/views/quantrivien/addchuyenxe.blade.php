@@ -42,6 +42,7 @@
                 <input type="date" class="form-control"  name="startdate" value="{{isset($ttchuyenxe['Thời_gian_xuất_phát'])? $starttime[0]:''}}">
                 <br>
                 <div id="ticket"></div>
+                <br>
                 <div style="text-align: center">
                     <input type="submit" class="btn btn-success" value="<?php echo isset($ttchuyenxe)? 'Sửa Thông Tin Chuyến Xe':'Thêm Chuyến Xe';?>">
                     <input type="button" onclick="location.assign('{{url('/admin/chuyenxe')}}')" class="btn btn-danger" value="Hủy">
@@ -80,7 +81,7 @@
         $(function () {
             var obj = {
                 width: '100%',
-                height: '100%',
+                height: 480,
                 showTop: false,
                 showBottom: false,
                 collapsible: false,
@@ -104,6 +105,19 @@
                     title: "ID",
                     width: 50,
                     dataIndx: "Mã",
+                    dataType: "string",
+                    editor: false,
+                    align: 'center',
+                    filter: {
+                        type: 'textbox',
+                        condition: 'contain',
+                        listeners: ['keyup']
+                    }
+                },
+                {
+                    title: "Mã chuyến xe",
+                    width: 50,
+                    dataIndx: "Mã_chuyến_xe",
                     dataType: "string",
                     editor: false,
                     align: 'center',
@@ -142,7 +156,7 @@
                 {
                     title: "Vị trí ghế",
                     width: 100,
-                    dataIndx: "Vị_trí_giá",
+                    dataIndx: "Vị_trí_ghế",
                     dataType: "string",
                     editor: false,
                     align: "center",
@@ -172,10 +186,29 @@
                     dataType: "string",
                     editor: false,
                     align: 'center',
+                    render: function(ui){
+                        switch(ui.rowData["Trạng_thái"]){
+                            case 0:
+                                return 'Waiting';
+                                break;
+                            case 1:
+                                return 'Booked';
+                                break;
+                            case 2:
+                                return 'Completed';
+                                break;
+                        }
+                    },
                     filter: {
-                        type: 'textbox',
-                        condition: 'contain',
-                        listeners: ['keyup']
+                        type: 'select',
+                        condition: 'equal',
+                        options: [
+                            {'':'All'},
+                            {'0':'Waiting'},
+                            {'1':'Booked'},
+                            {'2':'Completed'}
+                        ],
+                        listeners: ['change']
                     }
                 },
                 {
@@ -209,12 +242,12 @@
             ];
 
             obj.dataModel = {
-                data: {{--{!! json_encode($ticket) !!}--}},
+                data: {!! json_encode($ticket) !!},
                 location: "local",
                 sorting: "local",
                 sortDir: "down"
             };
-            obj.pageModel = {type: 'local', rPP: 20, rPPOptions: [20, 30, 40, 50]};
+            obj.pageModel = {type: 'local', rPP: 10, rPPOptions: [10, 20, 30, 50]};
             var $grid = $("#ticket").pqGrid(obj);
             $grid.pqGrid("refreshDataAndView");
         });

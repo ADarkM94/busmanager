@@ -447,10 +447,11 @@ class AdminController extends Controller
                 ->where('chuyen_xe.Mã','=',$id)
                 ->select('chuyen_xe.Mã','chuyen_xe.Mã_nhân_viên_tạo','employee.Họ_Tên as Nhân_viên_tạo','chuyen_xe.Mã_tài_xế','employee1.Họ_Tên as Tài_xế','chuyen_xe.Mã_lộ_trình','lo_trinh.Nơi_đi','lo_trinh.Nơi_đến','chuyen_xe.Mã_xe','xe.Biển_số','chuyen_xe.Thời_gian_xuất_phát')
                 ->get();
+            $ticket = DB::table('ve')->where('Mã_chuyến_xe','=',$id)->get();
             foreach ($ttchuyenxes as $row){
                 $ttchuyenxe = $row;
             }
-            return view("quantrivien.addchuyenxe",compact('ttchuyenxe','lotrinhs','taixes','xes'));
+            return view("quantrivien.addchuyenxe",compact('ttchuyenxe','lotrinhs','taixes','xes','ticket'));
         }
     }
     public function addchuyenxexl(Request $request) {
