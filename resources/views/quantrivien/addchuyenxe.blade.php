@@ -19,6 +19,7 @@
                 @isset($ttchuyenxe)
                     <?php
                     $ttchuyenxe = (array)$ttchuyenxe;
+                    $starttime = preg_split('/[\s]+/',$ttchuyenxe['Thời_gian_xuất_phát']);
                     ?>
                     <input type="hidden" name="ID" value="{{$ttchuyenxe['Mã']}}">
                 @endisset
@@ -34,8 +35,11 @@
                 <input type="hidden" name="idxe" value="{{isset($ttchuyenxe['Biển_số'])? $ttchuyenxe['Mã_xe']:''}}">
                 <input type="text" list="xe" class="form-control" name="xe" value="{{isset($ttchuyenxe['Biển_số'])? $ttchuyenxe['Biển_số']:''}}" placeholder="Chọn xe">
                 <br>
-                <label>Thời gian khởi hành</label>
-                <input type="datetime-local" class="form-control"  name="starttime" value="{{isset($ttchuyenxe['Thời_gian_xuất_phát'])? $ttchuyenxe['Thời_gian_xuất_phát']:''}}">
+                <label>Giờ khởi hành</label>
+                <input type="time" class="form-control"  name="starttime" value="{{isset($ttchuyenxe['Thời_gian_xuất_phát'])? $starttime[1]:''}}">
+                <br>
+                <label>Ngày khởi hành</label>
+                <input type="date" class="form-control"  name="startdate" value="{{isset($ttchuyenxe['Thời_gian_xuất_phát'])? $starttime[0]:''}}">
                 <br>
                 <div id="ticket"></div>
                 <div style="text-align: center">

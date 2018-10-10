@@ -438,7 +438,7 @@ class AdminController extends Controller
                 ->join('lo_trinh','chuyen_xe.Mã_lộ_trình','=','lo_trinh.Mã')->join('xe','chuyen_xe.Mã_xe','=','xe.Mã')
                 ->join('employee as employee1','chuyen_xe.Mã_tài_xế','=','employee1.Mã')
                 ->where('chuyen_xe.Mã','=',$id)
-                ->select('chuyen_xe.Mã','chuyen_xe.Mã_nhân_viên_tạo','employee.Họ_Tên as Nhân_viên_tạo','chuyen_xe.Mã_tài_xế','employee1.Họ_Tên as Tài_xế','chuyen_xe.Mã_lộ_trình','lo_trinh.Nơi_đi','lo_trinh.Nơi_đến','chuyen_xe.Mã_xe','xe.Biển_số')
+                ->select('chuyen_xe.Mã','chuyen_xe.Mã_nhân_viên_tạo','employee.Họ_Tên as Nhân_viên_tạo','chuyen_xe.Mã_tài_xế','employee1.Họ_Tên as Tài_xế','chuyen_xe.Mã_lộ_trình','lo_trinh.Nơi_đi','lo_trinh.Nơi_đến','chuyen_xe.Mã_xe','xe.Biển_số','chuyen_xe.Thời_gian_xuất_phát')
                 ->get();
             foreach ($ttchuyenxes as $row){
                 $ttchuyenxe = $row;
@@ -448,5 +448,11 @@ class AdminController extends Controller
             $xes = Xe::all();
             return view("quantrivien.addchuyenxe",compact('ttchuyenxe','lotrinhs','taixes','xes'));
         }
+    }
+    public function addchuyenxexl(Request $request) {
+        $employeeid =$request->employeeID;
+        $idlotrinh = $request->idlotrinh;
+        $idtaixe = $request->idtaixe;
+        $idxe = $request->idxe;
     }
 }
