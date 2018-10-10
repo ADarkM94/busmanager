@@ -12,8 +12,8 @@
                 <i class="glyphicon glyphicon-refresh"></i>
             </a>
         </div>
-        <div style="height: 50%; width: 100%; position: relative; padding: 1em;">
-            <h4 style="position: absolute; top: 0; left: 0; width: 100%;">Bảng Chuyến Xe</h4>
+        <div style="height: 50%; width: 100%; position: relative; padding: 3em 1em 1em;">
+            <h4 style="position: absolute; top: 0; left: 0; width: 100%;">Bảng Vé Xe</h4>
             <div id="ticket">
             </div>
             <a href="javascript:void(0)" onclick="refresh(2)" style="width: 2em; height: 2em; line-height: 2em; background: white; font-size: 1.5em; position: absolute; bottom: 1em; left: 2em; box-shadow: 0 0 5px black; border-radius: 50%;">
@@ -55,6 +55,9 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div id="comment">
+        Khi tạo chuyến xe, Vé sẽ được tự động tạo tương ứng với số ghế của loại xe dùng để chuyên chở trong chuyến xe!
     </div>
 @endsection
 @section('script')
