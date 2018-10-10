@@ -16,16 +16,45 @@
             <h4 style="position: absolute; top: 0; left: 0; width: 100%;">Bảng Chuyến Xe</h4>
             <div id="ticket">
             </div>
-            <a href="javascript:void(0)" onclick="window.open('{{url("admin/addve")}}')" style="width: 2em; height: 2em; line-height: 2em; background: white; font-size: 1.5em; position: absolute; bottom: 1em; left: 2em; box-shadow: 0 0 5px black; border-radius: 50%;">
-                <i class="glyphicon glyphicon-plus"></i>
-            </a>
-            <a href="javascript:void(0)" onclick="refreshVE()" style="width: 2em; height: 2em; line-height: 2em; background: white; font-size: 1.5em; position: absolute; bottom: 4em; left: 2em; box-shadow: 0 0 5px black; border-radius: 50%;">
+            <a href="javascript:void(0)" onclick="refreshVE()" style="width: 2em; height: 2em; line-height: 2em; background: white; font-size: 1.5em; position: absolute; bottom: 1em; left: 2em; box-shadow: 0 0 5px black; border-radius: 50%;">
                 <i class="glyphicon glyphicon-refresh"></i>
             </a>
         </div>
     </div>
 @endsection
 @section('excontent')
+    <div id="editticket" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" data-dismiss="modal">&times;</button>
+                    <div class="modal-title">Thông Tin Lộ trình</div>
+                </div>
+                <div class="modal-body">
+                    <form name="addbusroute">
+                        <input type="hidden" name="employeeID" value="1">
+                        <input type="hidden" name="ID" value="">
+                        <div class="row">
+                            <div class="col-lg-6" style="font-size: 1em; width: 50%">
+                                <label>Nơi đi</label>
+                                <input type="text" class="form-control" list="diadiem" name="noidi" placeholder="Địa điểm đi">
+                            </div>
+                            <div class="col-lg-6" style="width: 50%; text-align: left;">
+                                <label>Nơi đến</label>
+                                <input type="text" class="form-control" list="diadiem" name="noiden" placeholder="Địa điểm đến">
+                            </div>
+                        </div>
+                        <div class="row" style="padding: 1em 5em;">
+                           
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer" style="text-align: center;">
+                    <button class="btn btn-success" id="btnsubmit" onclick="addLotrinh()">Thêm Lộ Trình</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 @section('script')
     <script>
