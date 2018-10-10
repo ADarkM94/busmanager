@@ -23,17 +23,17 @@
                     ?>
                     <input type="hidden" name="ID" value="{{$ttchuyenxe['Mã']}}">
                 @endisset
-                <label>Lộ trình</label>
-                <input type="hidden" name="idlotrinh" value="{{isset($ttchuyenxe['Nơi_đi'])? $ttchuyenxe['Mã_lộ_trình']:''}}">
-                <input type="text" list="lotrinh" class="form-control"  name="lotrinh" value="{{isset($ttchuyenxe['Nơi_đi'])? $ttchuyenxe['Nơi_đi'].'-'.$ttchuyenxe['Nơi_đến']:''}}" placeholder="Ngày sinh">
+                <label>Mã Lộ trình</label>
+               {{-- <input type="hidden" name="idlotrinh" value="{{isset($ttchuyenxe['Nơi_đi'])? $ttchuyenxe['Mã_lộ_trình']:''}}">--}}
+                <input type="text" list="lotrinh" class="form-control"  name="lotrinh" value="{{isset($ttchuyenxe['Nơi_đi'])? $ttchuyenxe['Mã_lộ_trình']:''}}" placeholder="Ngày sinh">
                 <br>
-                <label>Tài xế</label>
-                <input type="hidden" name="idtaixe" value="{{isset($ttchuyenxe['Tài_xế'])? $ttchuyenxe['Mã_tài_xế']:''}}">
-                <input type="text" list="taixe" class="form-control" name="taixe" value="{{isset($ttchuyenxe['Tài_xế'])? $ttchuyenxe['Tài_xế']:''}}" placeholder="Tài xế">
+                <label>Mã Tài xế</label>
+               {{-- <input type="hidden" name="idtaixe" value="{{isset($ttchuyenxe['Tài_xế'])? $ttchuyenxe['Mã_tài_xế']:''}}">--}}
+                <input type="text" list="taixe" class="form-control" name="taixe" value="{{isset($ttchuyenxe['Tài_xế'])? $ttchuyenxe['Mã_tài_xế']:''}}" placeholder="Tài xế">
                 <br>
-                <label>Xe</label>
-                <input type="hidden" name="idxe" value="{{isset($ttchuyenxe['Biển_số'])? $ttchuyenxe['Mã_xe']:''}}">
-                <input type="text" list="xe" class="form-control" name="xe" value="{{isset($ttchuyenxe['Biển_số'])? $ttchuyenxe['Biển_số']:''}}" placeholder="Chọn xe">
+                <label>Mã Xe</label>
+                {{--<input type="hidden" name="idxe" value="{{isset($ttchuyenxe['Biển_số'])? $ttchuyenxe['Mã_xe']:''}}">--}}
+                <input type="text" list="xe" class="form-control" name="xe" value="{{isset($ttchuyenxe['Biển_số'])? $ttchuyenxe['Mã_xe']:''}}" placeholder="Chọn xe">
                 <br>
                 <label>Giờ khởi hành</label>
                 <input type="time" class="form-control"  name="starttime" value="{{isset($ttchuyenxe['Thời_gian_xuất_phát'])? $starttime[1]:''}}">
