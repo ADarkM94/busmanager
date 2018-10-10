@@ -519,16 +519,17 @@ class AdminController extends Controller
         }
     }
     public function delchuyenxe($id = "") {
+        $updated_at = date('Y-m-d h-i-s');
         if($id == "")
             return redirect()->back();
         else {
             try {
-
-                DB::delete('DELETE FROM tinh WHERE Mã = ?',[$request->ID]);
+                DB::update("UPDATE `chuyen_xe` SET `is_del`= ?,`updated_at`= ? WHERE `Mã`= ?",
+                    [1,$updated_at,$id]);
             } catch (\Exception $e) {
-                return \response()->json(['result'=>'0']);
+                return redirect()->back();
             }
-            return \response()->json(['result'=>'1']);
+            return redirect()->back();
         }
     }
 }
