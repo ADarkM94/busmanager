@@ -182,9 +182,9 @@
             selectionModel: { type: 'row', mode: 'single' },
             numberCell: { show: false },
             stripeRows: false,
-            cellDblClick: function (event,ui) {
+            /*cellDblClick: function (event,ui) {
                 window.open("{{url('/admin/addnhanvien')}}" + "/" + ui.rowData["Mã"]);
-            }
+            }*/
         };
         obj2.colModel = [
             {
