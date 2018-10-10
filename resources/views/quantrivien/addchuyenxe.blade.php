@@ -77,7 +77,7 @@
         }
         option[2].classList.add('selected');
         option[2].getElementsByTagName('img')[0].setAttribute('src','{{asset("images/icons/chuyenxe-hover.png")}}');
-        /*$(function () {
+        $(function () {
             var obj = {
                 width: '100%',
                 height: '100%',
@@ -217,6 +217,6 @@
             obj.pageModel = {type: 'local', rPP: 20, rPPOptions: [20, 30, 40, 50]};
             var $grid = $("#ticket").pqGrid(obj);
             $grid.pqGrid("refreshDataAndView");
-        });*/
+        });
     </script>
 @endsection

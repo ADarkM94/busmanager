@@ -277,35 +277,20 @@
                 dataIndx: "View",
                 render: function (ui) {
                     var str = '';
-                    str += '<a title="Edit" id="idEditBusRoute" ><i class="glyphicon glyphicon-edit  text-success" style="padding-right: 5px; cursor: pointer;"></i></a>';
-                    str += '<a title="Delete" id="idDelBusRoute" ><i class="glyphicon glyphicon-remove  text-danger" style="padding-right: 5px; cursor: pointer;"></i></a>';
+                    str += '<a title="Edit" id="idEditChuyenXe" ><i class="glyphicon glyphicon-edit  text-success" style="padding-right: 5px; cursor: pointer;"></i></a>';
+                    str += '<a title="Delete" id="idDelChuyenXe" ><i class="glyphicon glyphicon-remove  text-danger" style="padding-right: 5px; cursor: pointer;"></i></a>';
                     return str;
                 },
                 postRender: function (ui) {
                     var rowData = ui.rowData,
                         $cell = this.getCell(ui);
                     //add button
-                    $cell.find("a#idEditBusRoute")
+                    $cell.find("a#idEditChuyenXe")
                         .unbind("click")
                         .bind("click", function (evt) {
-                            document.forms["addbusroute"]["noidi"].value = rowData["Nơi_đi"];
-                            document.forms["addbusroute"]["noiden"].value = rowData["Nơi_đến"];
-                            var tramdungs =document.getElementsByClassName("busstops");
-                            document.forms["addbusroute"]["ID"].value = rowData["Mã"];
-                            var arr = rowData["Các_trạm_dừng_chân"].split(",");
-                            var i = arr.length - 1;
-                            var j = tramdungs.length - 1;
-                            while( i >= 0 && j >= 0) {
-                                if (tramdungs[j].value == arr[i]){
-                                    tramdungs[j].checked = true;
-                                    i--;
-                                }
-                                j--;
-                            }
-                            document.getElementById("btnsubmit").innerHTML="Sửa Lộ Trình";
-                            $("#addlotrinh").modal("show");
+                            window.open('{{url("/admin/addchuyenxe")}}/'+rowData['Mã']);
                         });
-                    $cell.find("a#idDelBusRoute")
+                    $cell.find("a#idDelChuyenXe")
                         .unbind("click")
                         .bind("click", function (evt) {
                             if(confirm("Bạn chắc chắn muốn xóa?")){
