@@ -15,6 +15,7 @@ use App\Xe;
 use App\Tramdung;
 use App\Lotrinh;
 use App\Tinh;
+use App\Ve;
 use phpDocumentor\Reflection\Types\Integer;
 
 class AdminController extends Controller
@@ -429,7 +430,8 @@ class AdminController extends Controller
             ->join('employee as employee1','chuyen_xe.Mã_tài_xế','=','employee1.Mã')
             ->select('chuyen_xe.Mã','employee.Họ_Tên as Nhân_viên_tạo','employee1.Họ_Tên as Tài_xế','lo_trinh.Nơi_đi','lo_trinh.Nơi_đến','xe.Biển_số')
             ->get();
-        return view("quantrivien.chuyenxe",compact('chuyenxe'));
+        $ticket = Ve::all();
+        return view("quantrivien.chuyenxe",compact('chuyenxe','ticket'));
     }
     public function addchuyenxe($id = "") {
         $lotrinhs = Lotrinh::all();

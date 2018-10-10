@@ -315,7 +315,7 @@
                 }
             }
         ];
-       /* var obj2 = {
+        var obj2 = {
             width: '100%',
             height: '100%',
             showTop: false,
@@ -332,11 +332,11 @@
             selectionModel: { type: 'row', mode: 'single' },
             numberCell: { show: false },
             stripeRows: false,
-            /!*cellDblClick: function (event,ui) {
-                window.open( + "/" + ui.rowData["Mã"]);
-                }*!/
-        };*/
-        /*obj2.colModel = [
+            cellDblClick: function (event,ui) {
+                window.open("{{url('/admin/addnhanvien')}}" + "/" + ui.rowData["Mã"]);
+            }
+        };
+        obj2.colModel = [
             {
                 title: "ID",
                 width: 50,
@@ -351,9 +351,9 @@
                 }
             },
             {
-                title: "Tên tỉnh",
+                title: "Nhân viên đặt",
                 width: 100,
-                dataIndx: "Tên",
+                dataIndx: "Nhân_viên_đặt",
                 dataType: "string",
                 editor: false,
                 align: 'center',
@@ -364,9 +364,48 @@
                 }
             },
             {
-                title: "Mã vùng biển số",
+                title: "Mã Khách Hàng",
                 width: 150,
-                dataIndx: "Mã_vùng",
+                dataIndx: "Mã_khách_hàng",
+                dataType: "string",
+                editor: false,
+                align: 'center',
+                filter: {
+                    type: 'textbox',
+                    condition: 'contain',
+                    listeners: ['keyup']
+                }
+            },
+            {
+                title: "Vị trí ghế",
+                width: 100,
+                dataIndx: "Vị_trí_giá",
+                dataType: "string",
+                editor: false,
+                align: "center",
+                filter: {
+                    type: 'textbox',
+                    condition: 'contain',
+                    listeners: ['keyup']
+                }
+            },
+            {
+                title: "Giá",
+                width: 200,
+                dataIndx: "Giá",
+                dataType: "string",
+                editor: false,
+                align: 'center',
+                filter: {
+                    type: 'textbox',
+                    condition: 'contain',
+                    listeners: ['keyup']
+                }
+            },
+            {
+                title: "Trạng thái",
+                width: 100,
+                dataIndx: "Trạng_thái",
                 dataType: "string",
                 editor: false,
                 align: 'center',
@@ -383,33 +422,28 @@
                 dataIndx: "View",
                 render: function (ui) {
                     var str = '';
-                    str += '<a title="Edit" id="idEditProvince" ><i class="glyphicon glyphicon-edit  text-success" style="padding-right: 5px; cursor: pointer;"></i></a>';
-                    str += '<a title="Delete" id="idDelProvince" ><i class="glyphicon glyphicon-remove  text-danger" style="padding-right: 5px; cursor: pointer;"></i></a>';
+                    str += '<a title="Edit" id="idEditEmployee" ><i class="glyphicon glyphicon-edit  text-success" style="padding-right: 5px; cursor: pointer;"></i></a>';
+                    str += '<a title="Delete" id="idDelEmployee" ><i class="glyphicon glyphicon-remove  text-danger" style="padding-right: 5px; cursor: pointer;"></i></a>';
                     return str;
                 },
                 postRender: function (ui) {
                     var rowData = ui.rowData,
                         $cell = this.getCell(ui);
                     //add button
-                    $cell.find("a#idEditProvince")
+                    $cell.find("a#idEditEmployee")
                         .unbind("click")
                         .bind("click", function (evt) {
-                            document.forms["addprovince"]["name"].value = rowData["Tên"];
-                            document.forms["addprovince"]["mavung"].value = rowData["Mã_vùng"];
-                            document.forms["addprovince"]["ID"].value = rowData["Mã"];
-                            document.getElementById("btnsubmit1").innerHTML="Sửa Thông Tin Tỉnh";
-                            $("#addtinh").modal("show");
+                            window.open("{{url('admin/addnhanvien')}}"+"/"+rowData["Mã"]);
                         });
-                    $cell.find("a#idDelProvince")
+                    $cell.find("a#idDelEmployee")
                         .unbind("click")
                         .bind("click", function (evt) {
-                            if(confirm("Bạn chắc chắn muốn xóa?")){
-                                delprovince(rowData["Mã"]);
-                            }
+                            if(confirm("Bạn chắc chắn muốn xóa?"))
+                                location.assign("{{url('admin/delnhanvien')}}"+"/"+rowData["Mã"]);
                         });
                 }
             }
-        ];*/
+        ];
         $(function () {
 
             obj1.dataModel = {
@@ -421,15 +455,15 @@
             obj1.pageModel = {type: 'local', rPP: 20, rPPOptions: [20, 30, 40, 50]};
             var $grid1 = $("#chuyenxe").pqGrid(obj1);
             $grid1.pqGrid("refreshDataAndView");
-           /* obj2.dataModel = {
-                data: ,
+            obj2.dataModel = {
+                data: {!! json_encode($ticket) !!},
                 location: "local",
                 sorting: "local",
                 sortDir: "down"
             };
             obj2.pageModel = {type: 'local', rPP: 20, rPPOptions: [20, 30, 40, 50]};
-            var $grid2 = $("#province").pqGrid(obj2);
-            $grid2.pqGrid("refreshDataAndView");*/
+            var $grid2 = $("#ticket").pqGrid(obj2);
+            $grid2.pqGrid("refreshDataAndView");
         });
     </script>
 @endsection
