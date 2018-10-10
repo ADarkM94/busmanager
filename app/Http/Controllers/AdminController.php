@@ -454,5 +454,24 @@ class AdminController extends Controller
         $idlotrinh = $request->idlotrinh;
         $idtaixe = $request->idtaixe;
         $idxe = $request->idxe;
+        $starttime = $request->startdate.' '.$request->starttime;
+        $created_at = date('Y-m-d h-i-s');
+        $updated_at = date('Y-m-d h-i-s');
+        if(isset($request->ID)){
+            if(DB::update("UPDATE `chuyen_xe` SET `Mã_lộ_trình`= ?,`Mã_tài_xế`= ?,`Mã_xe`= ?,`Thời_gian_xuất_phát`= ?,`updated_at`= ? WHERE `Mã`= ?",
+                [$idlotrinh,$idtaixe,$idxe,$starttime,$updated_at,$request->ID]))
+                return \response()->json(['result'=>'1']);
+            else
+                return \response()->json(['result'=>'0']);
+        }
+        else {
+            if( DB::insert("INSERT INTO `chuyen_xe`(`Mã_nhân_viên_tạo`, `Mã_lộ_trình`, `Mã_tài_xế`, `Mã_xe`, `Thời_gian_xuất_phát`, `created_at`, `updated_at`) VALUES (?,?,?,?,?,?,?)",
+                [$employeeid,$idlotrinh,$idtaixe,$idxe,$starttime,$created_at,$updated_at]))
+            {
+                return \response()->json(['result'=>'1']);
+            }
+            else
+                return \response()->json(['result'=>'0']);
+        }
     }
 }
