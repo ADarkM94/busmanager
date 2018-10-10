@@ -421,12 +421,28 @@ class AdminController extends Controller
     }
 
     //Phần chuyến xe
-    public function chuyenxe(){
+    public function chuyenxe() {
         $chuyenxe = DB::table('chuyen_xe')->join('employee','chuyen_xe.Mã_nhân_viên_tạo','=','employee.Mã')
             ->join('lo_trinh','chuyen_xe.Mã_lộ_trình','=','lo_trinh.Mã')->join('xe','chuyen_xe.Mã_xe','=','xe.Mã')
             ->join('employee as employee1','chuyen_xe.Mã_tài_xế','=','employee1.Mã')
             ->select('chuyen_xe.Mã','employee.Họ_Tên as Nhân_viên_tạo','employee1.Họ_Tên as Tài_xế','lo_trinh.Nơi_đi','lo_trinh.Nơi_đến','xe.Biển_số')
             ->get();
         return view("quantrivien.chuyenxe",compact('chuyenxe'));
+    }
+    public function addchuyenxe($id = "") {
+        if($id == "") {
+
+        }
+        else {
+            $ttchuyenxe = DB::table('chuyen_xe')->join('employee','chuyen_xe.Mã_nhân_viên_tạo','=','employee.Mã')
+                ->join('lo_trinh','chuyen_xe.Mã_lộ_trình','=','lo_trinh.Mã')->join('xe','chuyen_xe.Mã_xe','=','xe.Mã')
+                ->join('employee as employee1','chuyen_xe.Mã_tài_xế','=','employee1.Mã')
+                ->select('chuyen_xe.Mã','chuyen_xe.Mã_nhân_viên_tạo','employee.Họ_Tên as Nhân_viên_tạo','chuyen_xe.Mã_tài_xế','employee1.Họ_Tên as Tài_xế','chuyen_xe.Mã_lộ_trình','lo_trinh.Nơi_đi','lo_trinh.Nơi_đến','chuyen_xe.Mã_xe','xe.Biển_số')
+                ->get();
+            $lotrinhs = Lotrinh::all();
+            $taixes = DB::table('employee')->where('Loại_NV','=','TX')->select('Mã','Họ_Tên')->get();
+            $xes = Xe::all();
+            return view("quantrivien.addchuyenxe",compact('ttchuyenxe','lotrinhs','taixes','xes'));
+        }
     }
 }

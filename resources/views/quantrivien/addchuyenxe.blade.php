@@ -11,7 +11,7 @@
                 {!! session('alert') !!}
             @endif
         </div>
-        <form class="col-lg-6" action="{{route('addcustomer')}}" method="post">
+        <form class="col-lg-6" action="{{route('addchuyenxexl')}}" method="post">
             @csrf
             <fieldset>
                 <legend><?php echo isset($ttchuyenxe)? 'Sửa Thông Tin Chuyến Xe':'Thêm Chuyến Xe';?></legend>
@@ -32,7 +32,7 @@
                 <br>
                 <label>Xe</label>
                 <input type="hidden" name="idxe" value="{{isset($ttchuyenxe['Biển_số'])? $ttchuyenxe['Mã_xe']:''}}">
-                <input type="text" list="taixe" class="form-control" name="xe" value="{{isset($ttchuyenxe['Biển_số'])? $ttchuyenxe['Biển_số']:''}}" placeholder="Chọn xe">
+                <input type="text" list="xe" class="form-control" name="xe" value="{{isset($ttchuyenxe['Biển_số'])? $ttchuyenxe['Biển_số']:''}}" placeholder="Chọn xe">
                 <br>
                 <label>Thời gian khởi hành</label>
                 <input type="datetime-local" class="form-control"  name="starttime" value="{{isset($ttchuyenxe['Thời_gian_xuất_phát'])? $ttchuyenxe['Thời_gian_xuất_phát']:''}}">
@@ -48,6 +48,7 @@
     </div>
 @endsection
 @section('excontent')
+    @foreach()
 @endsection
 @section('script')
     <script>
@@ -57,7 +58,7 @@
         }
         option[2].classList.add('selected');
         option[2].getElementsByTagName('img')[0].setAttribute('src','{{asset("images/icons/chuyenxe-hover.png")}}');
-        $(function () {
+        /*$(function () {
             var obj = {
                 width: '100%',
                 height: '100%',
@@ -197,6 +198,6 @@
             obj.pageModel = {type: 'local', rPP: 20, rPPOptions: [20, 30, 40, 50]};
             var $grid = $("#ticket").pqGrid(obj);
             $grid.pqGrid("refreshDataAndView");
-        });
+        });*/
     </script>
 @endsection
