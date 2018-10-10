@@ -14,6 +14,7 @@ use App\Xe;
 use App\Tramdung;
 use App\Lotrinh;
 use App\Tinh;
+use phpDocumentor\Reflection\Types\Integer;
 
 class AdminController extends Controller
 {
@@ -468,6 +469,29 @@ class AdminController extends Controller
             if( DB::insert("INSERT INTO `chuyen_xe`(`Mã_nhân_viên_tạo`, `Mã_lộ_trình`, `Mã_tài_xế`, `Mã_xe`, `Thời_gian_xuất_phát`, `created_at`, `updated_at`) VALUES (?,?,?,?,?,?,?)",
                 [$employeeid,$idlotrinh,$idtaixe,$idxe,$starttime,$created_at,$updated_at]))
             {
+                $loaixes = DB::table('xe')->join('bus_model','xe.Mã_loại_xe','=','bus__model.Mã')
+                    ->where('xe.Mã','=',$idxe)->select('bus_model.Số_hàng','bus_model.Số_cột','bus_model.Sơ_đồ')
+                    ->get();
+                foreach ($loaixes as $row){
+                    $loaixe = (array)$row;
+                }
+                $filepath = 'busmodel/'.$loaixe["Sơ_đồ"].'.txt';
+                $file = fopen($filepath,'r');
+                $sodo = fread($file,filesize($filepath));
+                fclose($file);
+                $row = integerValue($loaixe["Số_hàng"]);
+                $col  = integerValue($loaixe["Số_cột"]);s
+                for ($i = 0;$i<$row;$i++){
+                    for ($j = 0;$j<$col;$j++){
+                        $k = 1;
+                        if(i*$col+j == 0)
+                            continue;
+                        if($sodo[i*$col+j]==1){
+                            DB::insert("INSERT INTO `ve`(`Mã_nhân_viên_tạo`, `Mã_lộ_trình`, `Mã_tài_xế`, `Mã_xe`, `Thời_gian_xuất_phát`, `created_at`, `updated_at`) VALUES (?,?,?,?,?,?,?)",
+                                [$employeeid,$idlotrinh,$idtaixe,$idxe,$starttime,$created_at,$updated_at])
+                        }
+                    }
+                }
                 return \response()->json(['result'=>'1']);
             }
             else
