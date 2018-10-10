@@ -480,15 +480,15 @@ class AdminController extends Controller
                 $sodo = fread($file,filesize($filepath));
                 fclose($file);
                 $row = integerValue($loaixe["Số_hàng"]);
-                $col  = integerValue($loaixe["Số_cột"]);s
+                $col  = integerValue($loaixe["Số_cột"]);
                 for ($i = 0;$i<$row;$i++){
                     for ($j = 0;$j<$col;$j++){
                         $k = 1;
                         if(i*$col+j == 0)
                             continue;
                         if($sodo[i*$col+j]==1){
-                            DB::insert("INSERT INTO `ve`(`Mã_nhân_viên_tạo`, `Mã_lộ_trình`, `Mã_tài_xế`, `Mã_xe`, `Thời_gian_xuất_phát`, `created_at`, `updated_at`) VALUES (?,?,?,?,?,?,?)",
-                                [$employeeid,$idlotrinh,$idtaixe,$idxe,$starttime,$created_at,$updated_at])
+                            DB::insert("INSERT INTO `ve`(`Mã_chuyến_xe`, `Vị_trí_ghế`, `Giá`, `Trạng_thái`, `created_at`, `updated_at`) VALUES (?,?,?,?,?,?)",
+                                [$employeeid,$idlotrinh,$idtaixe,$idxe,$created_at,$updated_at]);
                         }
                     }
                 }
