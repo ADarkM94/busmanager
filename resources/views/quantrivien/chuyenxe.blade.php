@@ -456,7 +456,7 @@
                         refresh(2);
                     }
                     else {
-                        alert('Thêm sửa thất bại');
+                        alert('Sửa thất bại');
                     }
                 }
             });
