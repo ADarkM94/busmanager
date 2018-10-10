@@ -432,8 +432,11 @@ class AdminController extends Controller
         return view("quantrivien.chuyenxe",compact('chuyenxe'));
     }
     public function addchuyenxe($id = "") {
+        $lotrinhs = Lotrinh::all();
+        $taixes = DB::table('employee')->where('Loại_NV','=','TX')->select('Mã','Họ_Tên')->get();
+        $xes = Xe::all();
         if($id == "") {
-
+            return view("quantrivien.addchuyenxe",compact('lotrinhs','taixes','xes'));
         }
         else {
             $ttchuyenxes = DB::table('chuyen_xe')->join('employee','chuyen_xe.Mã_nhân_viên_tạo','=','employee.Mã')
@@ -445,14 +448,11 @@ class AdminController extends Controller
             foreach ($ttchuyenxes as $row){
                 $ttchuyenxe = $row;
             }
-            $lotrinhs = Lotrinh::all();
-            $taixes = DB::table('employee')->where('Loại_NV','=','TX')->select('Mã','Họ_Tên')->get();
-            $xes = Xe::all();
             return view("quantrivien.addchuyenxe",compact('ttchuyenxe','lotrinhs','taixes','xes'));
         }
     }
     public function addchuyenxexl(Request $request) {
-        $employeeid =$request->employeeID;
+        $employeeid = $request->employeeID;
         $idlotrinh = $request->idlotrinh;
         $idtaixe = $request->idtaixe;
         $idxe = $request->idxe;
@@ -491,14 +491,18 @@ class AdminController extends Controller
                 fclose($file);
                 $row = integerValue($loaixe["Số_hàng"]);
                 $col  = integerValue($loaixe["Số_cột"]);
+                $gia = 300000;
+                $trangthai = 'Waiting';
                 for ($i = 0;$i<$row;$i++){
+                    $k = 1;
                     for ($j = 0;$j<$col;$j++){
-                        $k = 1;
                         if(i*$col+j == 0)
                             continue;
                         if($sodo[i*$col+j]==1){
+                            $vitri = ($i+1).'-'.($k);
                             DB::insert("INSERT INTO `ve`(`Mã_chuyến_xe`, `Vị_trí_ghế`, `Giá`, `Trạng_thái`, `created_at`, `updated_at`) VALUES (?,?,?,?,?,?)",
-                                [$employeeid,$idlotrinh,$idtaixe,$idxe,$created_at,$updated_at]);
+                                [$id,$vitri,$gia,$trangthai,$created_at,$updated_at]);
+                            $k++;
                         }
                     }
                 }
