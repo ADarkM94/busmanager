@@ -28,7 +28,7 @@ a:hover, a:visited {
 	margin: 0;
 }
 .row > *:nth-child(1) {
-	font-size: 1.5em;
+	font-size: 1em;
 }
 .row > *:nth-child(2) {
 	text-align: center;
