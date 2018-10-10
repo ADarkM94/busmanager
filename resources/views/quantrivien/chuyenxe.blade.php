@@ -409,8 +409,60 @@
         function refreshCX(){
             $("#chuyenxe").pqGrid("reset",{filter : true});
         }
+        function refresh(index) {
+            $.ajax({
+                type:'GET',
+                url:'{{asset("/admin/lotrinh")}}/'+index,
+                success:function(data){
+                    if (index == 1) {
+                        obj1.dataModel = {
+                            data: data.msg,
+                            location: "local",
+                            sorting: "local",
+                            sortDir: "down"
+                        };
+                        obj1.pageModel = {type: 'local', rPP: 10, rPPOptions: [10, 20, 30, 50]};
+                        var $grid1 = $("#chuyenxe").pqGrid(obj1);
+                        $grid1.pqGrid("refreshDataAndView");
+                    }
+                    else if (index == 2) {
+                        obj2.dataModel = {
+                            data: data.msg,
+                            location: "local",
+                            sorting: "local",
+                            sortDir: "down"
+                        };
+                        obj2.pageModel = {type: 'local', rPP: 10, rPPOptions: [10, 20, 30, 50]};
+                        var $grid2 = $("#ticket").pqGrid(obj2);
+                        $grid2.pqGrid("refreshDataAndView");
+                    }
+                }
+            });
+        }
         function editVe() {
-
+            var id = document.forms["editticket"]["ID"].value;
+            var giave = document.forms["editticket"]["giave"].value;
+            var trangthai = document.forms["editticket"]["trangthai"].value;
+            $.ajax({
+                url: '{{route("editticket")}}',
+                type: 'POST',
+                data: {
+                    _token: '{{csrf_token()}}',
+                    ID: id,
+                    name: giave,
+                    mavung: trangthai
+                },
+                success: function (data) {
+                    if(data.result==1){
+                        $("#editticket").modal('hide');
+                        alert('Sửa thành công');
+                        refresh(2);
+                    }
+                    else {
+                        alert('Thêm sửa thất bại');
+                    }
+                }
+            });
         }
         function refreshVE(){
             $("#ticket").pqGrid("reset",{filter : true});
