@@ -410,9 +410,15 @@
                 editor: false,
                 align: 'center',
                 filter: {
-                    type: 'textbox',
-                    condition: 'contain',
-                    listeners: ['keyup']
+                    type: 'select',
+                    condition: 'equal',
+                    options: [
+                        {'':'All'},
+                        {'0':'Waiting'},
+                        {'1':'Booked'},
+                        {'2':'Completed'}
+                    ],
+                    listeners: ['change']
                 }
             },
             {
