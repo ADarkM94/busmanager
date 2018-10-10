@@ -351,6 +351,19 @@
                 }
             },
             {
+                title: "Mã chuyến xe",
+                width: 50,
+                dataIndx: "Mã_chuyến_xe",
+                dataType: "string",
+                editor: false,
+                align: 'center',
+                filter: {
+                    type: 'textbox',
+                    condition: 'contain',
+                    listeners: ['keyup']
+                }
+            },
+            {
                 title: "Nhân viên đặt",
                 width: 100,
                 dataIndx: "Nhân_viên_đặt",
@@ -379,7 +392,7 @@
             {
                 title: "Vị trí ghế",
                 width: 100,
-                dataIndx: "Vị_trí_giá",
+                dataIndx: "Vị_trí_ghế",
                 dataType: "string",
                 editor: false,
                 align: "center",
@@ -409,6 +422,19 @@
                 dataType: "string",
                 editor: false,
                 align: 'center',
+                render: function(ui){
+                  switch(ui.rowData["Trạng_thái"]){
+                      case 0:
+                          return 'Waiting';
+                          break;
+                      case 1:
+                          return 'Booked';
+                          break;
+                      case 2:
+                          return 'Completed';
+                          break;
+                  }
+                },
                 filter: {
                     type: 'select',
                     condition: 'equal',
@@ -467,7 +493,7 @@
                 sorting: "local",
                 sortDir: "down"
             };
-            obj2.pageModel = {type: 'local', rPP: 20, rPPOptions: [20, 30, 40, 50]};
+            obj2.pageModel = {type: 'local', rPP: 10, rPPOptions: [10, 20, 30, 50]};
             var $grid2 = $("#ticket").pqGrid(obj2);
             $grid2.pqGrid("refreshDataAndView");
         });
