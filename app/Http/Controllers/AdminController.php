@@ -509,10 +509,11 @@ class AdminController extends Controller
                         }
                     }
                 }
-                return \response()->json(['result'=>'1']);
+                return redirect()->back()->with('alert','Thêm thành công!');
             }  catch (\Exception $e) {
                 /*return \response()->json(['result'=>'0']);*/
-                die($e);
+                return redirect()->back()->with('alert','Thêm thất bại!');
+                /*die($e);*/
             }
         }
     }
