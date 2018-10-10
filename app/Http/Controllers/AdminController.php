@@ -428,6 +428,7 @@ class AdminController extends Controller
         $chuyenxe = DB::table('chuyen_xe')->join('employee','chuyen_xe.Mã_nhân_viên_tạo','=','employee.Mã')
             ->join('lo_trinh','chuyen_xe.Mã_lộ_trình','=','lo_trinh.Mã')->join('xe','chuyen_xe.Mã_xe','=','xe.Mã')
             ->join('employee as employee1','chuyen_xe.Mã_tài_xế','=','employee1.Mã')
+            ->where('chuyen_xe.is_del','=','0')
             ->select('chuyen_xe.Mã','employee.Họ_Tên as Nhân_viên_tạo','employee1.Họ_Tên as Tài_xế','lo_trinh.Nơi_đi','lo_trinh.Nơi_đến','xe.Biển_số')
             ->get();
         $ticket = Ve::all();
@@ -518,6 +519,16 @@ class AdminController extends Controller
         }
     }
     public function delchuyenxe($id = "") {
-        
+        if($id == "")
+            return redirect()->back();
+        else {
+            try {
+
+                DB::delete('DELETE FROM tinh WHERE Mã = ?',[$request->ID]);
+            } catch (\Exception $e) {
+                return \response()->json(['result'=>'0']);
+            }
+            return \response()->json(['result'=>'1']);
+        }
     }
 }
