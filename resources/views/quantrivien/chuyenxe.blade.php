@@ -16,10 +16,10 @@
             <h4 style="position: absolute; top: 0; left: 0; width: 100%;">Bảng Chuyến Xe</h4>
             <div id="ticket">
             </div>
-            <a href="javascript:void(0)" onclick="window.open('{{url("admin/addchuyenxe")}}')" style="width: 2em; height: 2em; line-height: 2em; background: white; font-size: 1.5em; position: absolute; bottom: 1em; left: 2em; box-shadow: 0 0 5px black; border-radius: 50%;">
+            <a href="javascript:void(0)" onclick="window.open('{{url("admin/addve")}}')" style="width: 2em; height: 2em; line-height: 2em; background: white; font-size: 1.5em; position: absolute; bottom: 1em; left: 2em; box-shadow: 0 0 5px black; border-radius: 50%;">
                 <i class="glyphicon glyphicon-plus"></i>
             </a>
-            <a href="javascript:void(0)" onclick="refreshCX()" style="width: 2em; height: 2em; line-height: 2em; background: white; font-size: 1.5em; position: absolute; bottom: 4em; left: 2em; box-shadow: 0 0 5px black; border-radius: 50%;">
+            <a href="javascript:void(0)" onclick="refreshVE()" style="width: 2em; height: 2em; line-height: 2em; background: white; font-size: 1.5em; position: absolute; bottom: 4em; left: 2em; box-shadow: 0 0 5px black; border-radius: 50%;">
                 <i class="glyphicon glyphicon-refresh"></i>
             </a>
         </div>
@@ -315,7 +315,7 @@
                 }
             }
         ];
-        var obj2 = {
+       /* var obj2 = {
             width: '100%',
             height: '100%',
             showTop: false,
@@ -332,10 +332,10 @@
             selectionModel: { type: 'row', mode: 'single' },
             numberCell: { show: false },
             stripeRows: false,
-            /*cellDblClick: function (event,ui) {
+            /!*cellDblClick: function (event,ui) {
                 window.open( + "/" + ui.rowData["Mã"]);
-                }*/
-        };
+                }*!/
+        };*/
         /*obj2.colModel = [
             {
                 title: "ID",
