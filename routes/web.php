@@ -87,6 +87,12 @@ Route::post('admin/addchuyenxexl', 'AdminController@addchuyenxexl')->name('addch
 
 Route::get('admin/delchuyenxe/{id?}', 'AdminController@delchuyenxe');
 
+//Phần vé và reset chuyến xe
+
+Route::get('admin/ticket/{index}', 'AdminController@ticket');
+
+Route::post('admin/editticket', 'AdminController@editticket')->name('editticket');
+
 //Phần loại xe
 
 Route::get('admin/loaixe', 'AdminController@loaixe');
