@@ -48,7 +48,21 @@
     </div>
 @endsection
 @section('excontent')
-    @foreach()
+    <datalist id="lotrinh">
+        @foreach($lotrinhs as $lotrinh)
+            <option value="{{$lotrinh['Mã']}}">{{$lotrinh['Nơi_đi']}}-{{$lotrinh['Nơi_đến']}}</option>
+        @endforeach
+    </datalist>
+    <datalist id="taixe">
+        @foreach($taixes as $taixe)
+            <option value="{{$taixe['Mã']}}">{{$taixe['Họ_Tên']}}</option>
+        @endforeach
+    </datalist>
+    <datalist id="xe">
+        @foreach($xes as $xe)
+            <option value="{{$xe['Mã']}}">{{$xe['Biển_số']}}</option>
+        @endforeach
+    </datalist>
 @endsection
 @section('script')
     <script>
