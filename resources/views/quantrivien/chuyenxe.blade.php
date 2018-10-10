@@ -40,7 +40,7 @@
                             </div>
                             <div class="col-lg-6" style="width: 50%; text-align: left;">
                                 <label>Trạng thái</label>
-                                <select name="trangthai">
+                                <select class="form-control" name="trangthai">
                                     <option value="0">Waiting</option>
                                     <option value="1">Booked</option>
                                     <option value="2">Compeleted</option>
@@ -328,6 +328,32 @@
                 }
             },
             {
+                title: "Ẩn",
+                width: 100,
+                dataIndx: "is_hide",
+                dataType: "string",
+                editor: false,
+                align: 'center',
+                render: function(ui){
+                    if(ui.rowData["is_hide"]==1){
+                        return "<i class='glyphicon glyphicon-remove-circle' style='color: grey'></i>";
+                    }
+                    else {
+                        return "<i class='glyphicon glyphicon-ok-circle' style='color: lightgreen'></i>";
+                    }
+                },
+                filter: {
+                    type: 'select',
+                    condition: 'equal',
+                    options: [
+                        {'':'All'},
+                        {'0':'Show'},
+                        {'1':'Hide'},
+                    ],
+                    listeners: ['change']
+                }
+            },
+            {
                 title: "Action",
                 width: 100,
                 editor: false,
@@ -345,12 +371,15 @@
                     $cell.find("a#idEditTicket")
                         .unbind("click")
                         .bind("click", function (evt) {
-                            document.forms["editTicket"]["ID"].value = rowData["Mã"];
+                            document.forms["editticket"]["ID"].value = rowData["Mã"];
+                            document.forms["editticket"]["giave"].value = rowData["Giá"];
+                            document.forms["editticket"]["trangthai"].value = rowData["Trạng_thái"];
+                            $("#editve").modal('show');
                         });
                     $cell.find("a#idHideTicket")
                         .unbind("click")
                         .bind("click", function (evt) {
-                            if(confirm("Bạn chắc chắn muốn xóa?"))
+                            if(confirm("Bạn chắc chắn muốn ẩn đi?"))
                                 location.assign("{{url('admin/delnhanvien')}}"+"/"+rowData["Mã"]);
                         });
                 }
