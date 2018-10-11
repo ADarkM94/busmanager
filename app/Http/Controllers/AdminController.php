@@ -98,6 +98,12 @@ class AdminController extends Controller
         }
         return redirect()->back();
     }
+    public function viewkhachhang(Request $request){
+        $ttchuyendi = DB::table('ve')->join('chuyen_xe','ve.Mã_chuyến_xe','=','chuyen_xe.Mã')
+            ->join('lo_trinh','chuyen_xe.Mã_lộ_trình','=','lo_trinh.Mã')
+            ->select('')
+            ->get();
+    }
 
     //Phần nhân viên
     public function nhanvien(){

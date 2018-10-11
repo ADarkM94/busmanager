@@ -77,6 +77,8 @@ Route::post('admin/addcustomer', 'AdminController@addcustomer')->name('addcustom
 
 Route::get('admin/delkhachhang/{id}', 'AdminController@delcustomer');
 
+Route::post('admin/viewkhachhang', 'AdminController@viewkhachhang')->name('viewkhachhang');
+
 //Phần chuyến xe
 
 Route::get('admin/chuyenxe', 'AdminController@chuyenxe');
