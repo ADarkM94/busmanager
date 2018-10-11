@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 11, 2018 lúc 12:30 PM
+-- Thời gian đã tạo: Th10 11, 2018 lúc 01:50 PM
 -- Phiên bản máy phục vụ: 10.1.36-MariaDB
 -- Phiên bản PHP: 7.2.10
 
@@ -63,6 +63,7 @@ CREATE TABLE `chuyen_xe` (
   `Mã_xe` int(11) NOT NULL,
   `Thời_gian_xuất_phát` datetime NOT NULL,
   `Trạng_thái` int(11) NOT NULL DEFAULT '0',
+  `Tiền_vé` int(11) NOT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   `is_del` tinyint(1) DEFAULT '0'
@@ -72,8 +73,8 @@ CREATE TABLE `chuyen_xe` (
 -- Đang đổ dữ liệu cho bảng `chuyen_xe`
 --
 
-INSERT INTO `chuyen_xe` (`Mã`, `Mã_nhân_viên_tạo`, `Mã_lộ_trình`, `Mã_tài_xế`, `Mã_xe`, `Thời_gian_xuất_phát`, `Trạng_thái`, `created_at`, `updated_at`, `is_del`) VALUES
-(5, 1, 2, 3, 1, '2018-10-10 10:00:00', 0, '2018-10-10 10:17:07', '2018-10-10 01:14:56', 0);
+INSERT INTO `chuyen_xe` (`Mã`, `Mã_nhân_viên_tạo`, `Mã_lộ_trình`, `Mã_tài_xế`, `Mã_xe`, `Thời_gian_xuất_phát`, `Trạng_thái`, `Tiền_vé`, `created_at`, `updated_at`, `is_del`) VALUES
+(5, 1, 2, 3, 1, '2018-10-10 10:00:00', 0, 8700000, '2018-10-10 10:17:07', '2018-10-11 11:45:47', 0);
 
 -- --------------------------------------------------------
 
@@ -183,6 +184,30 @@ INSERT INTO `lo_trinh` (`Mã`, `Mã_nhân_viên_tạo`, `Mã_nhân_viên_chỉnh
 -- --------------------------------------------------------
 
 --
+-- Cấu trúc bảng cho bảng `thong_ke`
+--
+
+CREATE TABLE `thong_ke` (
+  `Mã` int(11) NOT NULL,
+  `Tháng` int(11) NOT NULL,
+  `Năm` int(11) NOT NULL,
+  `Số_chuyến_xe` int(11) NOT NULL,
+  `Chi_phí` int(11) NOT NULL,
+  `Doanh_thu` int(11) NOT NULL,
+  `created__at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Đang đổ dữ liệu cho bảng `thong_ke`
+--
+
+INSERT INTO `thong_ke` (`Mã`, `Tháng`, `Năm`, `Số_chuyến_xe`, `Chi_phí`, `Doanh_thu`, `created__at`, `updated_at`) VALUES
+(1, 1, 2018, 10, 50000000, 70000000, '2018-10-11 18:04:29', '2018-10-11 18:04:29');
+
+-- --------------------------------------------------------
+
+--
 -- Cấu trúc bảng cho bảng `tinh`
 --
 
@@ -253,8 +278,8 @@ CREATE TABLE `ve` (
 --
 
 INSERT INTO `ve` (`Mã`, `Mã_chuyến_xe`, `Mã_nhân_viên_đặt`, `Mã_khách_hàng`, `Sđt_khách_hàng`, `Vị_trí_ghế`, `Giá`, `Trạng_thái`, `created_at`, `updated_at`, `is_hide`) VALUES
-(1, 5, NULL, 1, NULL, '2-1', 310000, 0, '2018-10-10 10:17:07', '2018-10-10 01:14:18', 0),
-(2, 5, NULL, NULL, NULL, '2-2', 300000, 0, '2018-10-10 10:17:07', '2018-10-10 01:14:13', 0),
+(1, 5, NULL, 1, NULL, '2-1', 300000, 0, '2018-10-10 10:17:07', '2018-10-11 11:30:43', 0),
+(2, 5, NULL, NULL, NULL, '2-2', 300000, 0, '2018-10-10 10:17:07', '2018-10-11 11:45:47', 0),
 (3, 5, NULL, NULL, NULL, '2-3', 300000, 0, '2018-10-10 10:17:07', '2018-10-10 01:14:09', 0),
 (4, 5, NULL, NULL, NULL, '3-1', 300000, 0, '2018-10-10 10:17:07', '2018-10-10 10:17:07', 0),
 (5, 5, NULL, NULL, NULL, '3-2', 300000, 0, '2018-10-10 10:17:07', '2018-10-10 10:17:07', 0),
@@ -366,6 +391,12 @@ ALTER TABLE `lo_trinh`
   ADD KEY `Mã_nhân_viên_tạo` (`Mã_nhân_viên_tạo`);
 
 --
+-- Chỉ mục cho bảng `thong_ke`
+--
+ALTER TABLE `thong_ke`
+  ADD PRIMARY KEY (`Mã`);
+
+--
 -- Chỉ mục cho bảng `tinh`
 --
 ALTER TABLE `tinh`
@@ -439,6 +470,12 @@ ALTER TABLE `employee`
 --
 ALTER TABLE `lo_trinh`
   MODIFY `Mã` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT cho bảng `thong_ke`
+--
+ALTER TABLE `thong_ke`
+  MODIFY `Mã` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT cho bảng `tinh`
