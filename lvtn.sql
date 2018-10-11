@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 10, 2018 lúc 04:15 PM
+-- Thời gian đã tạo: Th10 11, 2018 lúc 12:30 PM
 -- Phiên bản máy phục vụ: 10.1.36-MariaDB
 -- Phiên bản PHP: 7.2.10
 
@@ -62,6 +62,7 @@ CREATE TABLE `chuyen_xe` (
   `Mã_tài_xế` int(11) NOT NULL,
   `Mã_xe` int(11) NOT NULL,
   `Thời_gian_xuất_phát` datetime NOT NULL,
+  `Trạng_thái` int(11) NOT NULL DEFAULT '0',
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   `is_del` tinyint(1) DEFAULT '0'
@@ -71,8 +72,8 @@ CREATE TABLE `chuyen_xe` (
 -- Đang đổ dữ liệu cho bảng `chuyen_xe`
 --
 
-INSERT INTO `chuyen_xe` (`Mã`, `Mã_nhân_viên_tạo`, `Mã_lộ_trình`, `Mã_tài_xế`, `Mã_xe`, `Thời_gian_xuất_phát`, `created_at`, `updated_at`, `is_del`) VALUES
-(5, 1, 2, 3, 1, '2018-10-10 10:00:00', '2018-10-10 10:17:07', '2018-10-10 01:14:56', 0);
+INSERT INTO `chuyen_xe` (`Mã`, `Mã_nhân_viên_tạo`, `Mã_lộ_trình`, `Mã_tài_xế`, `Mã_xe`, `Thời_gian_xuất_phát`, `Trạng_thái`, `created_at`, `updated_at`, `is_del`) VALUES
+(5, 1, 2, 3, 1, '2018-10-10 10:00:00', 0, '2018-10-10 10:17:07', '2018-10-10 01:14:56', 0);
 
 -- --------------------------------------------------------
 
@@ -252,7 +253,7 @@ CREATE TABLE `ve` (
 --
 
 INSERT INTO `ve` (`Mã`, `Mã_chuyến_xe`, `Mã_nhân_viên_đặt`, `Mã_khách_hàng`, `Sđt_khách_hàng`, `Vị_trí_ghế`, `Giá`, `Trạng_thái`, `created_at`, `updated_at`, `is_hide`) VALUES
-(1, 5, NULL, NULL, NULL, '2-1', 310000, 0, '2018-10-10 10:17:07', '2018-10-10 01:14:18', 0),
+(1, 5, NULL, 1, NULL, '2-1', 310000, 0, '2018-10-10 10:17:07', '2018-10-10 01:14:18', 0),
 (2, 5, NULL, NULL, NULL, '2-2', 300000, 0, '2018-10-10 10:17:07', '2018-10-10 01:14:13', 0),
 (3, 5, NULL, NULL, NULL, '2-3', 300000, 0, '2018-10-10 10:17:07', '2018-10-10 01:14:09', 0),
 (4, 5, NULL, NULL, NULL, '3-1', 300000, 0, '2018-10-10 10:17:07', '2018-10-10 10:17:07', 0),
@@ -294,6 +295,7 @@ CREATE TABLE `xe` (
   `Mã_loại_xe` int(11) NOT NULL,
   `Ngày_bảo_trì_gần_nhất` date NOT NULL,
   `Ngày_bảo_trì_tiếp_theo` date NOT NULL,
+  `location` tinytext,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -302,8 +304,8 @@ CREATE TABLE `xe` (
 -- Đang đổ dữ liệu cho bảng `xe`
 --
 
-INSERT INTO `xe` (`Mã`, `Biển_số`, `Mã_loại_xe`, `Ngày_bảo_trì_gần_nhất`, `Ngày_bảo_trì_tiếp_theo`, `created_at`, `updated_at`) VALUES
-(1, '123456', 1, '2018-10-07', '2018-10-07', '2018-10-07 18:43:48', '2018-10-07 18:43:48');
+INSERT INTO `xe` (`Mã`, `Biển_số`, `Mã_loại_xe`, `Ngày_bảo_trì_gần_nhất`, `Ngày_bảo_trì_tiếp_theo`, `location`, `created_at`, `updated_at`) VALUES
+(1, '123456', 1, '2018-10-07', '2018-10-07', NULL, '2018-10-07 18:43:48', '2018-10-07 18:43:48');
 
 --
 -- Chỉ mục cho các bảng đã đổ
