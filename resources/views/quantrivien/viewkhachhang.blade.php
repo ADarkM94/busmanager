@@ -1,38 +1,43 @@
 @extends('quantrivien.main')
 @section('content')
     <div class="content khachhang show">
-        <form name="ttkhachhang">
-            <div class="row form-group">
-                <div class="col-lg-6">
-                    <label>Tên</label>
-                    <input type="text" name="name" class="form-control" value="{{isset($ttkhachhang)? $ttkhachhang['Tên']:''}}" readonly="">
-                    <br>
-                    <label>Giới tính</label>
-                    <input type="text" name="gender" class="form-control" value="{{isset($ttkhachhang)? $ttkhachhang['Giới tính']==0? 'Không xác định':$ttkhachhang['Giới tính']==1? 'Nam':'Nữ':''}}" readonly="">
-                    <br>
-                    <label>Ngày sinh</label>
-                    <input type="date" name="brtday" class="form-control" value="{{isset($ttkhachhang)? $ttkhachhang['Ngày_sinh']:''}}" readonly="">
-                    <br>
-                    <label>Địa chỉ</label>
-                    <input type="text" name="address" class="form-control" value="{{isset($ttkhachhang)? $ttkhachhang['Tên']:''}}" readonly="">
+        <h4>Thông tin khách hàng</h4>
+        <div class="col-lg-2"></div>
+        <div class="col-lg-8">
+            <form name="ttkhachhang">
+                <div class="row form-group">
+                    <div class="col-lg-6">
+                        <label>Tên</label>
+                        <input type="text" name="name" class="form-control" value="{{isset($ttkhachhang)? $ttkhachhang['Tên']:''}}" readonly="">
+                        <br>
+                        <label>Giới tính</label>
+                        <input type="text" name="gender" class="form-control" value="{{isset($ttkhachhang)? ($ttkhachhang['Giới tính']==0? 'Không xác định':($ttkhachhang['Giới tính']==1? 'Nam':'Nữ')):''}}" readonly="">
+                        <br>
+                        <label>Ngày sinh</label>
+                        <input type="date" name="brtday" class="form-control" value="{{isset($ttkhachhang)? $ttkhachhang['Ngày_sinh']:''}}" readonly="">
+                        <br>
+                        <label>Địa chỉ</label>
+                        <input type="text" name="address" class="form-control" value="{{isset($ttkhachhang)? $ttkhachhang['Địa chỉ']:''}}" readonly="">
+                    </div>
+                    <div class="col-lg-6">
+                        <label>Nickname</label>
+                        <input type="text" name="nickname" class="form-control" value="{{isset($ttkhachhang)? $ttkhachhang['Nickname']:''}}" readonly="">
+                        <br>
+                        <label>Email</label>
+                        <input type="email" name="email" class="form-control" value="{{isset($ttkhachhang)? $ttkhachhang['Email']:''}}" readonly="">
+                        <br>
+                        <label>Số điện thoại</label>
+                        <input type="tel" name="phone" class="form-control" value="{{isset($ttkhachhang)? $ttkhachhang['Sđt']:''}}" readonly="">
+                    </div>
                 </div>
-                <div class="col-lg-6">
-                    <label>Nickname</label>
-                    <input type="text" name="nickname" class="form-control" value="{{isset($ttkhachhang)? $ttkhachhang['Tên']:''}}" readonly="">
-                    <br>
-                    <label>Email</label>
-                    <input type="email" name="email" class="form-control" value="{{isset($ttkhachhang)? $ttkhachhang['Tên']:''}}" readonly="">
-                    <br>
-                    <label>Số điện thoại</label>
-                    <input type="tel" name="phone" class="form-control" value="{{isset($ttkhachhang)? $ttkhachhang['Tên']:''}}" readonly="">
+                <div class="row form-group">
+                    <h4>Các chuyến xe đã đi</h4>
+                    <div id="chuyendi" style="height: 200px;">
+                    </div>
                 </div>
-            </div>
-            <div class="row form-group">
-                <h4>Các chuyến xe đã đi</h4>
-                <div id="chuyendi" style="height: 200px;">
-                </div>
-            </div>
-        </form>
+            </form>
+        </div>
+        <div class="col-lg-2"></div>
     </div>
 @endsection
 @section('excontent')

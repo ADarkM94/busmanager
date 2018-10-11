@@ -98,13 +98,19 @@ class AdminController extends Controller
         }
         return redirect()->back();
     }
-    public function viewkhachhang(Request $request){
+    public function viewkhachhang($id = ""){
+        if ($id == "")
+            return redirect(url('admin/khachhang'));
+        $ttkhachhangs = DB::table('customer')->where('Mã','=',$id)->get();
+        foreach ($ttkhachhangs as $row){
+            $ttkhachhang = (array)$row;
+        }
         $ttchuyendi = DB::table('ve')->join('chuyen_xe','ve.Mã_chuyến_xe','=','chuyen_xe.Mã')
             ->join('lo_trinh','chuyen_xe.Mã_lộ_trình','=','lo_trinh.Mã')
-            ->where('ve.Mã_khách_hàng','=',$request->id)
+            ->where('ve.Mã_khách_hàng','=',$id)
             ->select('lo_trinh.Nơi_đi','lo_trinh.Nơi_đến','ve.Vị_trí_ghế','ve.Giá')
             ->get();
-        return \response()->json(['msg'=>$ttchuyendi]);
+        return view('quantrivien.viewkhachhang',compact('ttkhachhang','ttchuyendi'));
     }
 
     //Phần nhân viên
