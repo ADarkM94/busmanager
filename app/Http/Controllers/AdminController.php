@@ -101,8 +101,10 @@ class AdminController extends Controller
     public function viewkhachhang(Request $request){
         $ttchuyendi = DB::table('ve')->join('chuyen_xe','ve.Mã_chuyến_xe','=','chuyen_xe.Mã')
             ->join('lo_trinh','chuyen_xe.Mã_lộ_trình','=','lo_trinh.Mã')
-            ->select('')
+            ->where('ve.Mã_khách_hàng','=',$request->id)
+            ->select('lo_trinh.Nơi_đi','lo_trinh.Nơi_đến','ve.Vị_trí_ghế','ve.Giá')
             ->get();
+        return \response()->json(['msg'=>$ttchuyendi]);
     }
 
     //Phần nhân viên

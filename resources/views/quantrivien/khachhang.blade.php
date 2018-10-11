@@ -230,9 +230,8 @@
             selectionModel: { type: 'row', mode: 'single' },
             numberCell: { show: false },
             stripeRows: false,
-            cellDblClick: function (event,ui) {
-                viewkhachhang(ui.rowData["Mã"],ui.rowData["Tên"],ui.rowData["Ngày_sinh"],ui.rowData["Giới tính"],ui.rowData["Địa chỉ"],ui.rowData["Nickname"],ui.rowData["Email"],ui.rowData["Sđt"]);
-            }
+            /*cellDblClick: function (event,ui) {
+            }*/
         };
         obj1.colModel = [
             {
@@ -264,7 +263,7 @@
             {
                 title: "Ghế",
                 width: 70,
-                dataIndx: "Vị_trí",
+                dataIndx: "Vị_trí_ghế",
                 dataType: "string",
                 editor: false,
                 align: "center",
@@ -308,25 +307,25 @@
             document.forms["ttkhachhang"]["email"].value = email;
             document.forms["ttkhachhang"]["phone"].value = phone;
             $.ajax({
-                url: {{route('viewkhachhang')}},
+                url: '{{route("viewkhachhang")}}',
                 method: 'post',
                 data: {
-                    _token: {!! csrf_token() !!},
+                    _token: '{!! csrf_token() !!}',
                     id: id
                 },
                 success: function (data) {
                     obj1.dataModel = {
-                        data: {!! json_encode($ttchuyendi) !!},
+                        data: data.msg,
                         location: "local",
                         sorting: "local",
                         sortDir: "down"
                     };
                     obj1.pageModel = {type: 'local', rPP: 5, rPPOptions: [5, 10, 15, 20]};
-                    var $grid = $("#chuyendi").pqGrid(obj1);
-                    $grid.pqGrid("refreshDataAndView");
+                    var $grid1 = $("#chuyendi").pqGrid(obj1);
+                    $grid1.pqGrid("refreshDataAndView");
+                    $("#viewkhachhang").modal('show');
                 }
             });
-            $("#viewkhachhang").modal('show');
         }
         function refreshKH(){
             $("#customer").pqGrid("reset",{filter : true});
