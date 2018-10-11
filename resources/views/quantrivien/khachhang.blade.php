@@ -211,9 +211,6 @@
             obj.pageModel = {type: 'local', rPP: 20, rPPOptions: [20, 30, 40, 50]};
             var $grid = $("#customer").pqGrid(obj);
             $grid.pqGrid("refreshDataAndView");
-            function editRowCustomer(e) {
-                alert(e);
-            }
         });
         var obj1 = {
             width: '100%',
@@ -318,7 +315,15 @@
                     id: id
                 },
                 success: function (data) {
-
+                    obj1.dataModel = {
+                        data: {!! json_encode($ttchuyendi) !!},
+                        location: "local",
+                        sorting: "local",
+                        sortDir: "down"
+                    };
+                    obj1.pageModel = {type: 'local', rPP: 5, rPPOptions: [5, 10, 15, 20]};
+                    var $grid = $("#chuyendi").pqGrid(obj1);
+                    $grid.pqGrid("refreshDataAndView");
                 }
             });
             $("#viewkhachhang").modal('show');
