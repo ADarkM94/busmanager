@@ -84,7 +84,7 @@
                 numberCell: { show: false },
                 stripeRows: false,
                 cellDblClick: function (event,ui) {
-                    window.open("{{url('/admin/viewkhachhang')}}" + "/" + ui.rowData["Mã"]);
+                    viewkhachhang(ui.rowData["Mã"],ui.rowData["Tên"],ui.rowData["Ngày_sinh"],ui.rowData["Giới tính"],ui.rowData["Địa chỉ"],ui.rowData["Nickname"],ui.rowData["Email"],ui.rowData["Sđt"]);
                 }
             };
             obj.colModel = [
@@ -215,8 +215,113 @@
                 alert(e);
             }
         });
-        function viewkhachhang() {
-            
+        var obj1 = {
+            width: '100%',
+            height: '100%',
+            showTop: false,
+            showBottom: false,
+            collapsible: false,
+            showHeader: true,
+            filterModel: {on: true, mode: "AND", header: true},
+            scrollModel: {autoFit: true},
+            resizable: false,
+            roundCorners: false,
+            rowBorders: false,
+            postRenderInterval: -1,
+            hwrap: true,
+            columnBorders: false,
+            selectionModel: { type: 'row', mode: 'single' },
+            numberCell: { show: false },
+            stripeRows: false,
+            cellDblClick: function (event,ui) {
+                viewkhachhang(ui.rowData["Mã"],ui.rowData["Tên"],ui.rowData["Ngày_sinh"],ui.rowData["Giới tính"],ui.rowData["Địa chỉ"],ui.rowData["Nickname"],ui.rowData["Email"],ui.rowData["Sđt"]);
+            }
+        };
+        obj1.colModel = [
+            {
+                title: "Nơi đi",
+                width: 100,
+                dataIndx: "Nơi_đi",
+                dataType: "string",
+                editor: false,
+                align: 'center',
+                filter: {
+                    type: 'textbox',
+                    condition: 'contain',
+                    listeners: ['keyup']
+                }
+            },
+            {
+                title: "Nơi đến",
+                width: 200,
+                dataIndx: "Nơi_đến",
+                dataType: "string",
+                editor: false,
+                align: 'center',
+                filter: {
+                    type: 'textbox',
+                    condition: 'contain',
+                    listeners: ['keyup']
+                }
+            },
+            {
+                title: "Ghế",
+                width: 70,
+                dataIndx: "Vị_trí",
+                dataType: "string",
+                editor: false,
+                align: "center",
+                filter: {
+                    type: 'textbox',
+                    condition: 'contain',
+                    listeners: ['keyup']
+                }
+            },
+            {
+                title: "Giá",
+                width: 200,
+                dataIndx: "Giá",
+                dataType: "string",
+                editor: false,
+                align: 'center',
+                filter: {
+                    type: 'textbox',
+                    condition: 'contain',
+                    listeners: ['keyup']
+                }
+            }
+        ];
+        function viewkhachhang(id,name,brtday,gender,address,nickname,email,phone) {
+            document.forms["ttkhachhang"]["name"].value = name;
+            document.forms["ttkhachhang"]["brtday"].value = brtday;
+            switch (gender) {
+                case '0':
+                    document.forms["ttkhachhang"]["gender"].value = "Không xác định";
+                    break;
+                case '1':
+                    document.forms["ttkhachhang"]["gender"].value = "Nam";
+                    break;
+                case '2':
+                    document.forms["ttkhachhang"]["gender"].value = "Nữ";
+                    break;
+                default:
+            }
+            document.forms["ttkhachhang"]["address"].value = address;
+            document.forms["ttkhachhang"]["nickname"].value = nickname;
+            document.forms["ttkhachhang"]["email"].value = email;
+            document.forms["ttkhachhang"]["phone"].value = phone;
+            $.ajax({
+                url: {{route('viewkhachhang')}},
+                method: 'post',
+                data: {
+                    _token: {!! csrf_token() !!},
+                    id: id
+                },
+                success: function (data) {
+
+                }
+            });
+            $("#viewkhachhang").modal('show');
         }
         function refreshKH(){
             $("#customer").pqGrid("reset",{filter : true});
