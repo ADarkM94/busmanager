@@ -443,7 +443,7 @@ class AdminController extends Controller
             ->join('lo_trinh','chuyen_xe.Mã_lộ_trình','=','lo_trinh.Mã')->join('xe','chuyen_xe.Mã_xe','=','xe.Mã')
             ->join('employee as employee1','chuyen_xe.Mã_tài_xế','=','employee1.Mã')
             ->where('chuyen_xe.is_del','=','0')
-            ->select('chuyen_xe.Mã','employee.Họ_Tên as Nhân_viên_tạo','employee1.Họ_Tên as Tài_xế','lo_trinh.Nơi_đi','lo_trinh.Nơi_đến','xe.Biển_số')
+            ->select('chuyen_xe.Mã','employee.Họ_Tên as Nhân_viên_tạo','employee1.Họ_Tên as Tài_xế','lo_trinh.Nơi_đi','lo_trinh.Nơi_đến','xe.Biển_số','chuyen_xe.Tiền_vé')
             ->get();
         $ticket = Ve::all();
         return view("quantrivien.chuyenxe",compact('chuyenxe','ticket'));
@@ -552,7 +552,7 @@ class AdminController extends Controller
                 ->join('lo_trinh','chuyen_xe.Mã_lộ_trình','=','lo_trinh.Mã')->join('xe','chuyen_xe.Mã_xe','=','xe.Mã')
                 ->join('employee as employee1','chuyen_xe.Mã_tài_xế','=','employee1.Mã')
                 ->where('chuyen_xe.is_del','=','0')
-                ->select('chuyen_xe.Mã','employee.Họ_Tên as Nhân_viên_tạo','employee1.Họ_Tên as Tài_xế','lo_trinh.Nơi_đi','lo_trinh.Nơi_đến','xe.Biển_số')
+                ->select('chuyen_xe.Mã','employee.Họ_Tên as Nhân_viên_tạo','employee1.Họ_Tên as Tài_xế','lo_trinh.Nơi_đi','lo_trinh.Nơi_đến','xe.Biển_số','chuyen_xe.Tiền_vé')
                 ->get();
             return \response()->json(['msg'=>$chuyenxe]);
         }
@@ -569,6 +569,12 @@ class AdminController extends Controller
         try {
             DB::update("UPDATE `ve` SET `Giá`= ?,`Trạng_thái`= ?,`updated_at`= ? WHERE `Mã`= ?",
                 [$giave,$trangthai,$updated_at,$id]);
+            $tickets = DB::table("ve")->where('Mã_chuyến_xe','=',)->select('Giá')->get();
+            $tongtien = 0;
+            foreach ($tickets as $ticket) {
+                $tongtien += intval($ticket["Giá"]);
+            }
+
         } catch (\Exception $e) {
             return \response()->json(['result'=>0]);
         }

@@ -33,6 +33,7 @@
                 <div class="modal-body">
                     <form name="editticket">
                         <input type="hidden" name="ID" value="">
+                        <input type="hidden" name="IDchuyenxe" value="">
                         <div class="row">
                             <div class="col-lg-6" style="font-size: 1em; width: 50%">
                                 <label>Giá</label>
@@ -161,6 +162,19 @@
                 title: "Xe biển số",
                 width: 100,
                 dataIndx: "Biển_số",
+                dataType: "string",
+                editor: false,
+                align: "center",
+                filter: {
+                    type: 'textbox',
+                    condition: 'contain',
+                    listeners: ['keyup']
+                }
+            },
+            {
+                title: "Tiền vé",
+                width: 100,
+                dataIndx: "Tiền_vé",
                 dataType: "string",
                 editor: false,
                 align: "center",
@@ -376,6 +390,7 @@
                         .unbind("click")
                         .bind("click", function (evt) {
                             document.forms["editticket"]["ID"].value = rowData["Mã"];
+                            document.forms["editticket"]["IDchuyenxe"].value = rowData["Mã_chuyến_xe"];
                             document.forms["editticket"]["giave"].value = rowData["Giá"];
                             document.forms["editticket"]["trangthai"].value = rowData["Trạng_thái"];
                             $("#editve").modal('show');
@@ -436,6 +451,7 @@
         }
         function editVe() {
             var id = document.forms["editticket"]["ID"].value;
+            var idchuyenxe = document.forms["editticket"]["IDchuyenxe"].value;
             var giave = document.forms["editticket"]["giave"].value;
             var trangthai = document.forms["editticket"]["trangthai"].value;
             $.ajax({
@@ -444,6 +460,7 @@
                 data: {
                     _token: '{{csrf_token()}}',
                     ID: id,
+                    IDchuyenxe: idchuyenxe,
                     giave: giave,
                     trangthai: trangthai
                 },
