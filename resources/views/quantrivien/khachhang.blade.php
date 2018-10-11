@@ -11,137 +11,46 @@
     </a>
 @endsection
 @section('excontent')
-    <datalist id="diadiem" style="display: none;">
-        <option>Quảng Ngãi</option>
-        <option>Quảng Nam</option>
-        <option>Đà Nẵng</option>
-        <option>Sài Gòn</option>
-        <option>Bình Định</option>
-        <option>Hà Nội</option>
-    </datalist>
-    <div id="modaldatve" class="modal fade">
+    <div id="viewkhachhang" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button class="close" data-dismiss="modal">&times;</button>
-                    <div class="modal-title">Chuyến xe #</div>
+                    <div class="modal-title">Thông Tin Khách Hàng</div>
                 </div>
                 <div class="modal-body">
-                    <form id="ttchuyenxe">
+                    <form name="ttkhachhang">
                         <div class="row form-group">
                             <div class="col-lg-6">
-                                <label>Nơi đi</label>
-                                <input type="text" name="noidi" class="form-control" placeholder="Điểm đi" readonly="">
+                                <label>Tên</label>
+                                <input type="text" name="name" class="form-control" readonly="">
+                                <br>
+                                <label>Giới tính</label>
+                                <input type="text" name="gender" class="form-control" readonly="">
+                                <br>
+                                <label>Ngày sinh</label>
+                                <input type="date" name="brtday" class="form-control" readonly="">
+                                <br>
+                                <label>Địa chỉ</label>
+                                <input type="text" name="address" class="form-control" readonly="">
                             </div>
                             <div class="col-lg-6">
-                                <label>Nơi đến</label>
-                                <input type="text" name="noiden" class="form-control" placeholder="Điểm đến" readonly="">
+                                <label>Nickname</label>
+                                <input type="text" name="nickname" class="form-control" readonly="">
+                                <br>
+                                <label>Email</label>
+                                <input type="email" name="email" class="form-control" readonly="">
+                                <br>
+                                <label>Số điện thoại</label>
+                                <input type="tel" name="phone" class="form-control" readonly="">
                             </div>
                         </div>
                         <div class="row form-group">
-                            <div class="col-lg-6">
-                                <label>Thời gian đi</label>
-                                <input type="text" name="thoigiandi" class="form-control" placeholder="Thời gian đi" readonly="">
-                            </div>
-                            <div class="col-lg-6">
-                                <label>Thời gian đến dự kiến</label>
-                                <input type="text" name="thoigianden" class="form-control" placeholder="Thời gian đến dự kiến" readonly="">
+                            <h4>Các chuyến xe đã đi</h4>
+                            <div id="chuyendi" style="height: 200px;">
                             </div>
                         </div>
                     </form>
-                    <span>Sơ đồ xe</span>
-                    <label class="checkbox-inline"><input type="checkbox" name="multi">Chọn nhiều chỗ</label>
-                    <div class="sodoxe">
-                        <div class="col-lg-4"></div>
-                        <div class="col-lg-4">
-                            <div class="row">
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                            </div>
-                            <br>
-                            <div class="row">
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                            </div>
-                            <br>
-                            <div class="row">
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                            </div>
-                            <br>
-                            <div class="row">
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                            </div>
-                            <br>
-                            <div class="row">
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                            </div>
-                            <br>
-                            <div class="row">
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4"></div>
-                    </div>
-                    <br>
-                    <span>Chọn</span>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div id="modaldadat" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button class="close" data-dismiss="modal">&times;</button>
-                    <div class="modal-title">Vé đặt</div>
-                </div>
-                <div class="modal-body">
-                    <ul>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
-                    </ul>
-                </div>
-                <div class="modal-footer">
-                    <div class="col-lg-12">
-                        <label>Tổng tiền</label>
-                        <input type="text" name="tongtien" class="form-control" placeholder="Tổng tiền" readonly="">
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <span>Xác nhận</span>
-                        </div>
-                        <div class="col-lg-6">
-                            <span>Hoàn tác</span>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -175,7 +84,7 @@
                 numberCell: { show: false },
                 stripeRows: false,
                 cellDblClick: function (event,ui) {
-                    window.open("{{url('/admin/addkhachhang')}}" + "/" + ui.rowData["Mã"]);
+                    window.open("{{url('/admin/viewkhachhang')}}" + "/" + ui.rowData["Mã"]);
                 }
             };
             obj.colModel = [
@@ -306,6 +215,9 @@
                 alert(e);
             }
         });
+        function viewkhachhang() {
+            
+        }
         function refreshKH(){
             $("#customer").pqGrid("reset",{filter : true});
         }
