@@ -468,6 +468,7 @@
                     if(data.result==1){
                         $("#editve").modal('hide');
                         alert('Sửa thành công');
+                        refresh(1);
                         refresh(2);
                     }
                     else {

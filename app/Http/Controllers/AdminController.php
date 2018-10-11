@@ -563,18 +563,21 @@ class AdminController extends Controller
     }
     public function editticket(Request $request) {
         $id = $request->ID;
+        $idchuyenxe = $request->IDchuyenxe;
         $giave =$request->giave;
         $trangthai = $request->trangthai;
         $updated_at = date('Y-m-d h-i-s');
         try {
             DB::update("UPDATE `ve` SET `Giá`= ?,`Trạng_thái`= ?,`updated_at`= ? WHERE `Mã`= ?",
                 [$giave,$trangthai,$updated_at,$id]);
-            $tickets = DB::table("ve")->where('Mã_chuyến_xe','=',)->select('Giá')->get();
+            $tickets = DB::table("ve")->where('Mã_chuyến_xe','=',$idchuyenxe)->select('Giá')->get();
             $tongtien = 0;
             foreach ($tickets as $ticket) {
+                $ticket = (array)$ticket;
                 $tongtien += intval($ticket["Giá"]);
             }
-
+            DB::update("UPDATE `chuyen_xe` SET `Tiền_vé`= ?,`updated_at`= ? WHERE `Mã`= ?",
+                [$tongtien,$updated_at,$idchuyenxe]);
         } catch (\Exception $e) {
             return \response()->json(['result'=>0]);
         }
