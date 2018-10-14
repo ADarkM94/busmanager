@@ -288,9 +288,10 @@
                 $grid.pqGrid("refreshDataAndView");
             });
             function refresh() {
+                var idchuyenxe = "{{isset($ttchuyenxe)? $ttchuyenxe['Mã']:''}}";
                 $.ajax({
                     type:'GET',
-                    url:'{{asset("/admin/ticket")}}/2',
+                    url:'{{asset("/admin/ticket")}}/2/'+idchuyenxe,
                     success:function(data){
                         obj.dataModel = {
                             data: data.msg,

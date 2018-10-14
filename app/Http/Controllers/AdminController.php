@@ -235,8 +235,8 @@ class AdminController extends Controller
         }
         try {
             $ttxes = DB::table('xe')
-            ->where('xe.Mã','=',$index)
-            ->select('xe.Mã','xe.Biển_số','xe.Mã_loại_xe','xe.Ngày_bảo_trì_gần_nhất','xe.Ngày_bảo_trì_tiếp_theo')->get();
+                ->where('xe.Mã','=',$index)
+                ->select('xe.Mã','xe.Biển_số','xe.Mã_loại_xe','xe.Ngày_bảo_trì_gần_nhất','xe.Ngày_bảo_trì_tiếp_theo')->get();
             foreach ($ttxes as $row){
                 $ttxe = $row;
             }
@@ -472,37 +472,43 @@ class AdminController extends Controller
         $created_at = date('Y-m-d h-i-s');
         $updated_at = date('Y-m-d h-i-s');
         if(isset($request->ID)){
-            if(DB::update("UPDATE `chuyen_xe` SET `Mã_lộ_trình`= ?,`Mã_tài_xế`= ?,`Mã_xe`= ?,`Tiền_vé`= ?,`Ngày_xuất_phát`= ?,`Giờ_xuất_phát`= ?,`updated_at`= ? WHERE `Mã`= ?",
-                [$idlotrinh,$idtaixe,$idxe,$giave,$startdate,$starttime,$updated_at,$request->ID]))
-            {
-                DB::delete('DELETE FROM ve WHERE Mã_chuyến_xe = ?',[$request->ID]);
-                $loaixes = DB::table('xe')->join('bus_model','xe.Mã_loại_xe','=','bus_model.Mã')
-                    ->where('xe.Mã','=',$idxe)->select('bus_model.Số_hàng','bus_model.Số_cột','bus_model.Sơ_đồ')
-                    ->get();
-                foreach ($loaixes as $row){
-                    $loaixe = (array)$row;
-                }
-                $sodo = $loaixe["Sơ_đồ"];
-                $row = intval($loaixe["Số_hàng"]);
-                $col  = intval($loaixe["Số_cột"]);
-                $trangthai = 0;
-                for ($i = 0;$i<$row;$i++){
-                    $k = 1;
-                    for ($j = 0;$j<$col;$j++){
-                        if($i*$col+$j == 0)
-                            continue;
-                        if($sodo[$i*$col+$j]==1){
-                            $vitri = ($i+1).'-'.($k);
-                            DB::insert("INSERT INTO `ve`(`Mã_chuyến_xe`, `Vị_trí_ghế`, `Trạng_thái`, `created_at`, `updated_at`) VALUES (?,?,?,?,?)",
-                                [$request->ID,$vitri,$trangthai,$created_at,$updated_at]);
-                            $k++;
+            try {
+                if(!DB::select("SELECT * FROM chuyen_xe WHERE Mã = ? AND Mã_xe = ?",[$request->ID,$idxe])) {
+                    DB::delete('DELETE FROM ve WHERE Mã_chuyến_xe = ?', [$request->ID]);
+                    $loaixes = DB::table('xe')->join('bus_model', 'xe.Mã_loại_xe', '=', 'bus_model.Mã')
+                        ->where('xe.Mã', '=', $idxe)->select('bus_model.Số_hàng', 'bus_model.Số_cột', 'bus_model.Sơ_đồ')
+                        ->get();
+                    foreach ($loaixes as $row) {
+                        $loaixe = (array)$row;
+                    }
+                    $sodo = $loaixe["Sơ_đồ"];
+                    $row = intval($loaixe["Số_hàng"]);
+                    $col = intval($loaixe["Số_cột"]);
+                    $trangthai = 0;
+                    for ($i = 0; $i < $row; $i++) {
+                        $k = 1;
+                        for ($j = 0; $j < $col; $j++) {
+                            if ($i * $col + $j == 0)
+                                continue;
+                            if ($sodo[$i * $col + $j] == 1) {
+                                $vitri = ($i + 1) . '-' . ($k);
+                                DB::insert("INSERT INTO `ve`(`Mã_chuyến_xe`, `Vị_trí_ghế`, `Trạng_thái`, `created_at`, `updated_at`) VALUES (?,?,?,?,?)",
+                                    [$request->ID, $vitri, $trangthai, $created_at, $updated_at]);
+                                $k++;
+                            }
                         }
                     }
+                    DB::update("UPDATE `chuyen_xe` SET `Mã_lộ_trình`= ?,`Mã_tài_xế`= ?,`Mã_xe`= ?,`Tiền_vé`= ?,`Ngày_xuất_phát`= ?,`Giờ_xuất_phát`= ?,`updated_at`= ? WHERE `Mã`= ?",
+                        [$idlotrinh, $idtaixe, $idxe, $giave, $startdate, $starttime, $updated_at, $request->ID]);
                 }
-                return redirect()->back()->with('alert','Thêm thành công!');
+                else{
+                    DB::update("UPDATE `chuyen_xe` SET `Mã_lộ_trình`= ?,`Mã_tài_xế`= ?,`Mã_xe`= ?,`Tiền_vé`= ?,`Ngày_xuất_phát`= ?,`Giờ_xuất_phát`= ?,`updated_at`= ? WHERE `Mã`= ?",
+                        [$idlotrinh, $idtaixe, $idxe, $giave, $startdate, $starttime, $updated_at, $request->ID]);
+                }
+            } catch (\Exception $e) {
+                return redirect()->back()->with('alert','Sửa thất bại!');
             }
-            else
-                return redirect()->back()->with('alert','Thêm thất bại!');
+            return redirect()->back()->with('alert','Sửa thành công!');
         }
         else {
             try {
@@ -564,8 +570,8 @@ class AdminController extends Controller
             return redirect()->back();
         }
     }
-    public function ticket($index) {
-        if ($index==1){
+    public function ticket($index,$id = '') {
+        if ($index==1&&$id==''){
             $chuyenxe = DB::table('chuyen_xe')->join('employee','chuyen_xe.Mã_nhân_viên_tạo','=','employee.Mã')
                 ->join('lo_trinh','chuyen_xe.Mã_lộ_trình','=','lo_trinh.Mã')->join('xe','chuyen_xe.Mã_xe','=','xe.Mã')
                 ->join('bus_model','xe.Mã_loại_xe','=','bus_model.Mã')
@@ -575,10 +581,19 @@ class AdminController extends Controller
                 ->get();
             return \response()->json(['msg'=>$chuyenxe]);
         }
-        elseif ($index == 2){
+        elseif ($index==2&&$id==''){
             $ticket = DB::table('ve')->join('chuyen_xe','ve.Mã_chuyến_xe','=','chuyen_xe.Mã')
                 ->join('xe','xe.Mã','=','chuyen_xe.Mã_xe')
                 ->join('bus_model','bus_model.Mã','=','xe.Mã_loại_xe')
+                ->select('ve.Mã','ve.Mã_chuyến_xe','ve.Mã_nhân_viên_đặt','ve.Mã_khách_hàng','ve.Sđt_khách_hàng','ve.Vị_trí_ghế','ve.Trạng_thái','chuyen_xe.Tiền_vé','bus_model.Loại_ghế')
+                ->get();
+            return \response()->json(['msg'=>$ticket]);
+        }
+        elseif ($index==2&&$id!=''){
+            $ticket = DB::table('ve')->join('chuyen_xe','ve.Mã_chuyến_xe','=','chuyen_xe.Mã')
+                ->join('xe','xe.Mã','=','chuyen_xe.Mã_xe')
+                ->join('bus_model','bus_model.Mã','=','xe.Mã_loại_xe')
+                ->where('ve.Mã_chuyến_xe','=',$id)
                 ->select('ve.Mã','ve.Mã_chuyến_xe','ve.Mã_nhân_viên_đặt','ve.Mã_khách_hàng','ve.Sđt_khách_hàng','ve.Vị_trí_ghế','ve.Trạng_thái','chuyen_xe.Tiền_vé','bus_model.Loại_ghế')
                 ->get();
             return \response()->json(['msg'=>$ticket]);

@@ -91,7 +91,7 @@ Route::get('admin/delchuyenxe/{id?}', 'AdminController@delchuyenxe');
 
 //Phần vé và reset chuyến xe
 
-Route::get('admin/ticket/{index}', 'AdminController@ticket');
+Route::get('admin/ticket/{index}/{id?}', 'AdminController@ticket');
 
 Route::post('admin/editticket', 'AdminController@editticket')->name('editticket');
 
