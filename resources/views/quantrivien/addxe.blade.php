@@ -25,7 +25,12 @@
                 <input type="text" class="form-control" name="bienso" value="{{isset($ttxe['Biển_số'])? $ttxe['Biển_số']:''}}" placeholder="Biển số xe">
                 <br>
                 <label>Loại xe</label>
-                <input type="text" list="bustype" class="form-control"  name="idtypebus" value="{{isset($ttxe['Mã_loại_xe'])? $ttxe['Mã_loại_xe']:''}}" placeholder="Mã loại xe">
+                <select class="form-control" name="idtypebus" value="{{isset($ttxe['Mã_loại_xe'])? $ttxe['Mã_loại_xe'].'-'.$ttxe['Loại_ghế']:''}}">
+                    @foreach($bustypes as $bustype)
+                        <?php $bustype = (array)$bustype;?>
+                        <option value="{{$bustype['Mã']}}-{{$bustype['Loại_ghế']}}">{{$bustype['Tên_Loại']}}-{{$bustype['Loại_ghế']==0? 'Ghế_ngồi':'Giường_nằm'}}</option>
+                    @endforeach
+                </select>
                 <br>
                 <label>Lần bảo trì gần nhất</label>
                 <br>
@@ -45,12 +50,6 @@
     </div>
 @endsection
 @section('excontent')
-    <datalist id="bustype">
-        @foreach($bustypes as $bustype)
-            <?php $bustype = (array)$bustype;?>
-            <option value="{{$bustype['Mã']}}">{{$bustype['Tên_Loại']}}</option>
-        @endforeach
-    </datalist>
 @endsection
 @section('script')
     <script>

@@ -228,7 +228,7 @@ class AdminController extends Controller
         return view('quantrivien.xe',compact('bus','typebus'));
     }
     public function addxe($index = ""){
-        $bustypes = DB::select("SELECT Mã,Tên_Loại FROM bus_model");
+        $bustypes = DB::select("SELECT Mã,Tên_Loại,Loại_ghế FROM bus_model");
         if($index == ""){
             return view("quantrivien.addxe",["bustypes"=>$bustypes]);
         }
