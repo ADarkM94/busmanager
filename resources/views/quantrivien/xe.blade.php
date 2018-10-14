@@ -98,6 +98,30 @@
                     }
                 },
                 {
+                    title: "Loại ghế",
+                    width: 100,
+                    dataIndx: "Loại_ghế",
+                    dataType: "string",
+                    editor: false,
+                    align: "center",
+                    render: function(ui){
+                        if(ui.rowData["Loại_ghế"]==0)
+                            return "Ghế ngồi";
+                        else if(ui.rowData["Loại_ghế"])
+                            return "Giường nằm";
+                    },
+                    filter: {
+                        type: 'select',
+                        condition: 'equal',
+                        listeners: ['change'],
+                        options: [
+                            {'':'[All]'},
+                            {'0':'Ghế ngồi'},
+                            {'1':'Giường nằm'}
+                        ]
+                    }
+                },
+                {
                     title: "Lần bảo trì gần nhất",
                     width: 200,
                     dataIndx: "Ngày_bảo_trì_gần_nhất",

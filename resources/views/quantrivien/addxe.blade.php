@@ -25,10 +25,10 @@
                 <input type="text" class="form-control" name="bienso" value="{{isset($ttxe['Biển_số'])? $ttxe['Biển_số']:''}}" placeholder="Biển số xe">
                 <br>
                 <label>Loại xe</label>
-                <select class="form-control" name="idtypebus" value="{{isset($ttxe['Mã_loại_xe'])? $ttxe['Mã_loại_xe'].'-'.$ttxe['Loại_ghế']:''}}">
+                <select class="form-control" name="idtypebus">
                     @foreach($bustypes as $bustype)
                         <?php $bustype = (array)$bustype;?>
-                        <option value="{{$bustype['Mã']}}-{{$bustype['Loại_ghế']}}">{{$bustype['Tên_Loại']}}-{{$bustype['Loại_ghế']==0? 'Ghế_ngồi':'Giường_nằm'}}</option>
+                        <option value="{{$bustype['Mã']}}-{{$bustype['Loại_ghế']}}" {{isset($ttxe['Mã_loại_xe'])? ($bustype['Mã']==$ttxe['Mã_loại_xe']? 'selected':''):''}}>{{$bustype['Tên_Loại']}}-{{$bustype['Loại_ghế']==0? 'Ghế_ngồi':'Giường_nằm'}}</option>
                     @endforeach
                 </select>
                 <br>

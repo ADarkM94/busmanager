@@ -244,21 +244,21 @@ class AdminController extends Controller
     }
     public  function addbus(Request $request){
         $bienso = $request->bienso;
-        $idtypebus = $request->idtypebus;
+        $idtypebus = preg_split('/\-/',$request->idtypebus);
         $gannhat = $request->baotrigannhat;
         $tieptheo = $request->baotritieptheo;
         $created_at = date('Y-m-d h-i-s');
         $updated_at = date('Y-m-d h-i-s');
         if(isset($request->ID)){
-            if(DB::update("UPDATE `xe` SET `Biển_số`= ?,`Mã_loại_xe`= ?,`Ngày_bảo_trì_gần_nhất`= ?,`Ngày_bảo_trì_tiếp_theo`= ?,`updated_at`= ? WHERE `Mã`= ?",
-                [$bienso,$idtypebus,$gannhat,$tieptheo,$updated_at,$request->ID]))
+            if(DB::update("UPDATE `xe` SET `Biển_số`= ?,`Mã_loại_xe`= ?,`Loại_ghế`= ?,`Ngày_bảo_trì_gần_nhất`= ?,`Ngày_bảo_trì_tiếp_theo`= ?,`updated_at`= ? WHERE `Mã`= ?",
+                [$bienso,$idtypebus[0],$idtypebus[1],$gannhat,$tieptheo,$updated_at,$request->ID]))
                 return redirect()->back()->with('alert','Sửa thành công!');
             else
                 return redirect()->back()->with('alert','Sửa thất bại!');
         }
         else {
-            if( DB::insert("INSERT INTO `xe`(`Biển_số`, `Mã_loại_xe`, `Ngày_bảo_trì_gần_nhất`, `Ngày_bảo_trì_tiếp_theo`, `created_at`, `updated_at`) VALUES (?,?,?,?,?,?)",
-                [$bienso,$idtypebus,$gannhat,$tieptheo,$created_at,$updated_at]))
+            if( DB::insert("INSERT INTO `xe`(`Biển_số`, `Mã_loại_xe`, `Loại_ghế`, `Ngày_bảo_trì_gần_nhất`, `Ngày_bảo_trì_tiếp_theo`, `created_at`, `updated_at`) VALUES (?,?,?,?,?,?,?)",
+                [$bienso,$idtypebus[0],$idtypebus[1],$gannhat,$tieptheo,$created_at,$updated_at]))
             {
                 return redirect()->back()->with('alert','Thêm thành công!');
             }
