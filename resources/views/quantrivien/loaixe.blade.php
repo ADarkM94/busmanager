@@ -291,6 +291,7 @@
             ttsubmit.setAttribute("disabled","");
             document.getElementById("xnsodo").getElementsByTagName("span")[0].removeAttribute("disabled");
             document.getElementById("xnsodo").getElementsByTagName("span")[1].removeAttribute("disabled");
+            xacnhan += 1;
         }
         function change(ev) {
             if(ev.classList.contains('glyphicon-check')) {
