@@ -23,11 +23,11 @@
                     <input type="hidden" name="ID" value="{{$ttchuyenxe['Mã']}}">
                 @endisset
                 <label>Mã Lộ trình</label>
-               {{-- <input type="hidden" name="idlotrinh" value="{{isset($ttchuyenxe['Nơi_đi'])? $ttchuyenxe['Mã_lộ_trình']:''}}">--}}
+                {{-- <input type="hidden" name="idlotrinh" value="{{isset($ttchuyenxe['Nơi_đi'])? $ttchuyenxe['Mã_lộ_trình']:''}}">--}}
                 <input type="text" list="lotrinh" class="form-control"  name="lotrinh" value="{{isset($ttchuyenxe['Nơi_đi'])? $ttchuyenxe['Mã_lộ_trình']:''}}" placeholder="Lộ trình">
                 <br>
                 <label>Mã Tài xế</label>
-               {{-- <input type="hidden" name="idtaixe" value="{{isset($ttchuyenxe['Tài_xế'])? $ttchuyenxe['Mã_tài_xế']:''}}">--}}
+                {{-- <input type="hidden" name="idtaixe" value="{{isset($ttchuyenxe['Tài_xế'])? $ttchuyenxe['Mã_tài_xế']:''}}">--}}
                 <input type="text" list="taixe" class="form-control" name="taixe" value="{{isset($ttchuyenxe['Tài_xế'])? $ttchuyenxe['Mã_tài_xế']:''}}" placeholder="Tài xế">
                 <br>
                 <label>Mã Xe</label>
@@ -40,11 +40,9 @@
                 <label>Ngày khởi hành</label>
                 <input type="date" class="form-control"  name="startdate" value="{{isset($ttchuyenxe['Ngày_xuất_phát'])? $ttchuyenxe['Ngày_xuất_phát']:''}}">
                 <br>
-                @isset($ttchuyenxe)
-                    <label>Tiền vé</label>
-                    <input type="text" class="form-control"  name="tien" value="{{$ttchuyenxe['Tiền_vé']}}" readonly>
-                    <br>
-                @endisset
+                <label>Tiền vé</label>
+                <input type="number" min="0" class="form-control"  name="tien" value="{{isset($ttchuyenxe['Tiền_vé'])? $ttchuyenxe['Tiền_vé']:''}}">
+                <br>
                 <div id="ticket"></div>
                 <br>
                 <div style="text-align: center">
@@ -83,7 +81,6 @@
                 <div class="modal-body">
                     <form name="editticket">
                         <input type="hidden" name="ID" value="">
-                        <input type="hidden" name="IDchuyenxe" value="">
                         <div class="row">
                             <div class="col-lg-6" style="font-size: 1em; width: 50%">
                                 <label>Giá</label>
@@ -136,8 +133,8 @@
                 selectionModel: { type: 'row', mode: 'single' },
                 numberCell: { show: false },
                 stripeRows: false,
-               /* cellDblClick: function (event,ui) {
-                }*/
+                /* cellDblClick: function (event,ui) {
+                 }*/
             };
             obj.colModel = [
                 {
@@ -208,7 +205,7 @@
                 {
                     title: "Giá",
                     width: 100,
-                    dataIndx: "Giá",
+                    dataIndx: "Tiền_vé",
                     dataType: "string",
                     editor: false,
                     align: 'center',
@@ -272,8 +269,7 @@
                             .unbind("click")
                             .bind("click", function (evt) {
                                 document.forms["editticket"]["ID"].value = rowData["Mã"];
-                                document.forms["editticket"]["IDchuyenxe"].value = rowData["Mã_chuyến_xe"];
-                                document.forms["editticket"]["giave"].value = rowData["Giá"];
+                                document.forms["editticket"]["giave"].value = rowData["Tiền_vé"];
                                 document.forms["editticket"]["trangthai"].value = rowData["Trạng_thái"];
                                 $("#editve").modal('show');
                             });
@@ -310,8 +306,6 @@
             }
             function editVe() {
                 var id = document.forms["editticket"]["ID"].value;
-                var idchuyenxe = document.forms["editticket"]["IDchuyenxe"].value;
-                var giave = document.forms["editticket"]["giave"].value;
                 var trangthai = document.forms["editticket"]["trangthai"].value;
                 $.ajax({
                     url: '{{route("editticket")}}',
@@ -319,15 +313,12 @@
                     data: {
                         _token: '{{csrf_token()}}',
                         ID: id,
-                        IDchuyenxe: idchuyenxe,
-                        giave: giave,
                         trangthai: trangthai
                     },
                     success: function (data) {
                         if(data.result==1){
                             $("#editve").modal('hide');
                             alert('Sửa thành công');
-                            document.forms["ttchuyenxe"]["tongtien"].value = data.tongtien;
                             refresh();
                         }
                         else {

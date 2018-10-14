@@ -33,11 +33,10 @@
                 <div class="modal-body">
                     <form name="editticket">
                         <input type="hidden" name="ID" value="">
-                        <input type="hidden" name="IDchuyenxe" value="">
                         <div class="row">
                             <div class="col-lg-6" style="font-size: 1em; width: 50%">
                                 <label>Giá</label>
-                                <input type="number" min="0" class="form-control" name="giave" placeholder="Giá vé">
+                                <input type="number" min="0" class="form-control" name="giave" placeholder="Giá vé" readonly>
                             </div>
                             <div class="col-lg-6" style="width: 50%; text-align: left;">
                                 <label>Trạng thái</label>
@@ -258,19 +257,6 @@
                 }
             },
             {
-                title: "Tổng tiền vé",
-                width: 100,
-                dataIndx: "Tổng_tiền_vé",
-                dataType: "string",
-                editor: false,
-                align: "center",
-                filter: {
-                    type: 'textbox',
-                    condition: 'contain',
-                    listeners: ['keyup']
-                }
-            },
-            {
                 title: "Action",
                 width: 100,
                 editor: false,
@@ -387,9 +373,33 @@
                 }
             },
             {
+                title: "Loại ghế",
+                width: 100,
+                dataIndx: "Loại_ghế",
+                dataType: "string",
+                editor: false,
+                align: "center",
+                render: function(ui){
+                    if(ui.rowData["Loại_ghế"]==0)
+                        return "Ghế ngồi";
+                    else if(ui.rowData["Loại_ghế"])
+                        return "Giường nằm";
+                },
+                filter: {
+                    type: 'select',
+                    condition: 'equal',
+                    listeners: ['change'],
+                    options: [
+                        {'':'[All]'},
+                        {'0':'Ghế ngồi'},
+                        {'1':'Giường nằm'}
+                    ]
+                }
+            },
+            {
                 title: "Giá",
                 width: 200,
-                dataIndx: "Giá",
+                dataIndx: "Tiền_vé",
                 dataType: "string",
                 editor: false,
                 align: 'center',
@@ -416,6 +426,9 @@
                           break;
                       case 2:
                           return 'Completed';
+                          break;
+                      case 3:
+                          return 'Banned';
                           break;
                   }
                 },
@@ -476,8 +489,7 @@
                         .unbind("click")
                         .bind("click", function (evt) {
                             document.forms["editticket"]["ID"].value = rowData["Mã"];
-                            document.forms["editticket"]["IDchuyenxe"].value = rowData["Mã_chuyến_xe"];
-                            document.forms["editticket"]["giave"].value = rowData["Giá"];
+                            document.forms["editticket"]["giave"].value = rowData["Tiền_vé"];
                             document.forms["editticket"]["trangthai"].value = rowData["Trạng_thái"];
                             $("#editve").modal('show');
                         });
@@ -520,6 +532,7 @@
                         obj1.pageModel = {type: 'local', rPP: 10, rPPOptions: [10, 20, 30, 50]};
                         var $grid1 = $("#chuyenxe").pqGrid(obj1);
                         $grid1.pqGrid("refreshDataAndView");
+                        $("#chuyenxe").pqGrid("reset",{filter : true});
                     }
                     else if (index == 2) {
                         obj2.dataModel = {
@@ -531,14 +544,13 @@
                         obj2.pageModel = {type: 'local', rPP: 10, rPPOptions: [10, 20, 30, 50]};
                         var $grid2 = $("#ticket").pqGrid(obj2);
                         $grid2.pqGrid("refreshDataAndView");
+                        $("#ticket").pqGrid("reset",{filter : true});
                     }
                 }
             });
         }
         function editVe() {
             var id = document.forms["editticket"]["ID"].value;
-            var idchuyenxe = document.forms["editticket"]["IDchuyenxe"].value;
-            var giave = document.forms["editticket"]["giave"].value;
             var trangthai = document.forms["editticket"]["trangthai"].value;
             $.ajax({
                 url: '{{route("editticket")}}',
@@ -546,8 +558,6 @@
                 data: {
                     _token: '{{csrf_token()}}',
                     ID: id,
-                    IDchuyenxe: idchuyenxe,
-                    giave: giave,
                     trangthai: trangthai
                 },
                 success: function (data) {
