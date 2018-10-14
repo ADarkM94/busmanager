@@ -201,6 +201,7 @@ a:hover, a:visited {
 .option:not([class~='selected']):hover {
 	background: #004964;
 	color: white;
+	border-bottom: 1px solid #004964;
 }
 .selected {
 	background: #FFA000;
