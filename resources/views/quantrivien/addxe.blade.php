@@ -28,7 +28,7 @@
                 <select class="form-control" name="idtypebus">
                     @foreach($bustypes as $bustype)
                         <?php $bustype = (array)$bustype;?>
-                        <option value="{{$bustype['Mã']}}-{{$bustype['Loại_ghế']}}" {{isset($ttxe['Mã_loại_xe'])? ($bustype['Mã']==$ttxe['Mã_loại_xe']? 'selected':''):''}}>{{$bustype['Tên_Loại']}}-{{$bustype['Loại_ghế']==0? 'Ghế_ngồi':'Giường_nằm'}}</option>
+                        <option value="{{$bustype['Mã']}}" {{isset($ttxe['Mã_loại_xe'])? ($bustype['Mã']==$ttxe['Mã_loại_xe']? 'selected':''):''}}>{{$bustype['Tên_Loại']}}-{{$bustype['Loại_ghế']==0? 'Ghế_ngồi':'Giường_nằm'}}</option>
                     @endforeach
                 </select>
                 <br>

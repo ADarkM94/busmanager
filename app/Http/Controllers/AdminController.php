@@ -219,7 +219,8 @@ class AdminController extends Controller
 
     //Phần xe
     public function xe(){
-        $bus = Xe::all();
+        $bus = DB::table('xe')->join('bus_model','xe.Mã_loại_xe','=','bus_model.Mã')
+            ->select('xe.Mã','xe.Biển_số','xe.Mã_loại_xe','bus_model.Loại_ghế','xe.Ngày_bảo_trì_gần_nhất','xe.Ngày_bảo_trì_tiếp_theo')->get();
         $typebuses = Loaixe::all();
         $typebus = [];
         foreach ($typebuses as $row){
@@ -233,7 +234,9 @@ class AdminController extends Controller
             return view("quantrivien.addxe",["bustypes"=>$bustypes]);
         }
         try {
-            $ttxes = DB::select("SELECT * FROM xe WHERE Mã = ?",[$index]);
+            $ttxes = DB::table('xe')
+            ->where('xe.Mã','=',$index)
+            ->select('xe.Mã','xe.Biển_số','xe.Mã_loại_xe','xe.Ngày_bảo_trì_gần_nhất','xe.Ngày_bảo_trì_tiếp_theo')->get();
             foreach ($ttxes as $row){
                 $ttxe = $row;
             }
@@ -244,21 +247,21 @@ class AdminController extends Controller
     }
     public  function addbus(Request $request){
         $bienso = $request->bienso;
-        $idtypebus = preg_split('/\-/',$request->idtypebus);
+        $idtypebus = $request->idtypebus;
         $gannhat = $request->baotrigannhat;
         $tieptheo = $request->baotritieptheo;
         $created_at = date('Y-m-d h-i-s');
         $updated_at = date('Y-m-d h-i-s');
         if(isset($request->ID)){
-            if(DB::update("UPDATE `xe` SET `Biển_số`= ?,`Mã_loại_xe`= ?,`Loại_ghế`= ?,`Ngày_bảo_trì_gần_nhất`= ?,`Ngày_bảo_trì_tiếp_theo`= ?,`updated_at`= ? WHERE `Mã`= ?",
-                [$bienso,$idtypebus[0],$idtypebus[1],$gannhat,$tieptheo,$updated_at,$request->ID]))
+            if(DB::update("UPDATE `xe` SET `Biển_số`= ?,`Mã_loại_xe`= ?,`Ngày_bảo_trì_gần_nhất`= ?,`Ngày_bảo_trì_tiếp_theo`= ?,`updated_at`= ? WHERE `Mã`= ?",
+                [$bienso,$idtypebus,$gannhat,$tieptheo,$updated_at,$request->ID]))
                 return redirect()->back()->with('alert','Sửa thành công!');
             else
                 return redirect()->back()->with('alert','Sửa thất bại!');
         }
         else {
-            if( DB::insert("INSERT INTO `xe`(`Biển_số`, `Mã_loại_xe`, `Loại_ghế`, `Ngày_bảo_trì_gần_nhất`, `Ngày_bảo_trì_tiếp_theo`, `created_at`, `updated_at`) VALUES (?,?,?,?,?,?,?)",
-                [$bienso,$idtypebus[0],$idtypebus[1],$gannhat,$tieptheo,$created_at,$updated_at]))
+            if( DB::insert("INSERT INTO `xe`(`Biển_số`, `Mã_loại_xe`, `Ngày_bảo_trì_gần_nhất`, `Ngày_bảo_trì_tiếp_theo`, `created_at`, `updated_at`) VALUES (?,?,?,?,?,?)",
+                [$bienso,$idtypebus,$gannhat,$tieptheo,$created_at,$updated_at]))
             {
                 return redirect()->back()->with('alert','Thêm thành công!');
             }
@@ -423,7 +426,7 @@ class AdminController extends Controller
             ->join('lo_trinh','chuyen_xe.Mã_lộ_trình','=','lo_trinh.Mã')->join('xe','chuyen_xe.Mã_xe','=','xe.Mã')
             ->join('employee as employee1','chuyen_xe.Mã_tài_xế','=','employee1.Mã')
             ->where('chuyen_xe.is_del','=','0')
-            ->select('chuyen_xe.Mã','employee.Họ_Tên as Nhân_viên_tạo','employee1.Họ_Tên as Tài_xế','lo_trinh.Nơi_đi','lo_trinh.Nơi_đến','xe.Biển_số','chuyen_xe.Tiền_vé')
+            ->select('chuyen_xe.Mã','employee.Họ_Tên as Nhân_viên_tạo','employee1.Họ_Tên as Tài_xế','lo_trinh.Nơi_đi','lo_trinh.Nơi_đến','xe.Biển_số','chuyen_xe.Tiền_vé','chuyen_xe.Tổng_tiền_vé','xe.Loại_ghế','chuyen_xe.Ngày_xuất_phát','chuyen_xe.Giờ_xuất_phát')
             ->get();
         $ticket = Ve::all();
         return view("quantrivien.chuyenxe",compact('chuyenxe','ticket'));

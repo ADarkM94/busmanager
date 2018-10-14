@@ -172,9 +172,95 @@
                 }
             },
             {
+                title: "Loại ghế",
+                width: 100,
+                dataIndx: "Loại_ghế",
+                dataType: "string",
+                editor: false,
+                align: "center",
+                render: function(ui){
+                    if(ui.rowData["Loại_ghế"]==0)
+                        return "Ghế ngồi";
+                    else if(ui.rowData["Loại_ghế"])
+                        return "Giường nằm";
+                },
+                filter: {
+                    type: 'select',
+                    condition: 'equal',
+                    listeners: ['change'],
+                    options: [
+                        {'':'[All]'},
+                        {'0':'Ghế ngồi'},
+                        {'1':'Giường nằm'}
+                    ]
+                }
+            },
+            {
+                title: "Ngày xuất phát",
+                width: 200,
+                dataIndx: "Ngày_xuất_phát",
+                dataType: "date",
+                editor: false,
+                align: 'center',
+                filter: {
+                    type: 'textbox', condition: 'between', init: pqDatePicker,
+                    listeners: [{
+                        'change': function (evt, ui) {
+                            if (ui.value != "") {
+                                var d1 = ui.value.split('/');
+                                ui.value = d1[2] + '/' + d1[0] + '/' + d1[1];
+                            }
+                            if (ui.value2 != "") {
+                                var d1 = ui.value2.split('/');
+                                ui.value2 = d1[2] + '/' + d1[0] + '/' + d1[1];
+                            }
+                            var $grid = $(this).closest(".pq-grid");
+                            $grid.pqGrid("filter", {
+                                oper: 'add',
+                                data: [ui]
+                            });
+                        }
+                    }]},
+                render: function(ui){
+                    var cellData = ui.cellData;
+                    var str = '';
+                    if (cellData != "") {
+                        var d1 = cellData.split('-');
+                        str += d1[2] + '/' + d1[1] + '/' + d1[0];
+                    }
+                    return {text: str};
+                }
+            },
+            {
+                title: "Giờ xuất phát",
+                width: 100,
+                dataIndx: "Giờ_xuất_phát",
+                dataType: "string",
+                editor: false,
+                align: "center",
+                filter: {
+                    type: 'textbox',
+                    condition: 'contain',
+                    listeners: ['keyup']
+                }
+            },
+            {
                 title: "Tiền vé",
                 width: 100,
                 dataIndx: "Tiền_vé",
+                dataType: "string",
+                editor: false,
+                align: "center",
+                filter: {
+                    type: 'textbox',
+                    condition: 'contain',
+                    listeners: ['keyup']
+                }
+            },
+            {
+                title: "Tổng tiền vé",
+                width: 100,
+                dataIndx: "Tổng_tiền_vé",
                 dataType: "string",
                 editor: false,
                 align: "center",
