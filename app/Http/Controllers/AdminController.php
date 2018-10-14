@@ -108,7 +108,7 @@ class AdminController extends Controller
         $ttchuyendi = DB::table('ve')->join('chuyen_xe','ve.Mã_chuyến_xe','=','chuyen_xe.Mã')
             ->join('lo_trinh','chuyen_xe.Mã_lộ_trình','=','lo_trinh.Mã')
             ->where('ve.Mã_khách_hàng','=',$id)
-            ->select('lo_trinh.Nơi_đi','lo_trinh.Nơi_đến','ve.Vị_trí_ghế','ve.Giá')
+            ->select('lo_trinh.Nơi_đi','lo_trinh.Nơi_đến','ve.Vị_trí_ghế','chuyen_xe.Tiền_vé')
             ->get();
         return view('quantrivien.viewkhachhang',compact('ttkhachhang','ttchuyendi'));
     }

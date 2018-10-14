@@ -5,10 +5,10 @@
             <h4 style="position: absolute; top: 0; left: 0; width: 100%;">Bảng Lộ trình</h4>
             <div id="busroute">
             </div>
-            <a href="javascript:void(0)" onclick="prepareAddLT()" data-toggle="modal" data-target="#addlotrinh" style="width: 2em; height: 2em; line-height: 2em; background: white; font-size: 1.5em; position: absolute; bottom: 1em; left: 2em; box-shadow: 0 0 5px black; border-radius: 50%;">
+            <a href="javascript:void(0)" onclick="prepareAddLT()" data-toggle="modal" data-target="#addlotrinh" style="width: 2em; height: 2em; line-height: 2em; background: white; font-size: 1.5em; position: absolute; bottom: 1em; left: 2em; box-shadow: 0 0 5px black; border-radius: 50%;" title="Thêm Lộ Trình">
                 <i class="glyphicon glyphicon-plus"></i>
             </a>
-            <a href="javascript:void(0)" onclick="getBusRoute(1)" style="width: 2em; height: 2em; line-height: 2em; background: white; font-size: 1.5em; position: absolute; bottom: 4em; left: 2em; box-shadow: 0 0 5px black; border-radius: 50%;">
+            <a href="javascript:void(0)" onclick="getBusRoute(1)" style="width: 2em; height: 2em; line-height: 2em; background: white; font-size: 1.5em; position: absolute; bottom: 4em; left: 2em; box-shadow: 0 0 5px black; border-radius: 50%;" title="Làm Mới">
                 <i class="glyphicon glyphicon-refresh"></i>
             </a>
         </div>
@@ -16,10 +16,10 @@
             <h4 style="position: absolute; top: 0; left: 0; width: 100%;">Bảng Các tỉnh</h4>
             <div id="province">
             </div>
-            <a href="javascript:void(0)" onclick="prepareAddT()" data-toggle="modal" data-target="#addtinh" style="width: 2em; height: 2em; line-height: 2em; background: white; font-size: 1.5em; position: absolute; bottom: 1em; left: 2em; box-shadow: 0 0 5px black; border-radius: 50%;">
+            <a href="javascript:void(0)" onclick="prepareAddT()" data-toggle="modal" data-target="#addtinh" style="width: 2em; height: 2em; line-height: 2em; background: white; font-size: 1.5em; position: absolute; bottom: 1em; left: 2em; box-shadow: 0 0 5px black; border-radius: 50%;" title="Thêm Tỉnh/Thành Phố">
                 <i class="glyphicon glyphicon-plus"></i>
             </a>
-            <a href="javascript:void(0)" onclick="getBusRoute(2)" style="width: 2em; height: 2em; line-height: 2em; background: white; font-size: 1.5em; position: absolute; bottom: 4em; left: 2em; box-shadow: 0 0 5px black; border-radius: 50%;">
+            <a href="javascript:void(0)" onclick="getBusRoute(2)" style="width: 2em; height: 2em; line-height: 2em; background: white; font-size: 1.5em; position: absolute; bottom: 4em; left: 2em; box-shadow: 0 0 5px black; border-radius: 50%;" title="Làm Mới">
                 <i class="glyphicon glyphicon-refresh"></i>
             </a>
         </div>

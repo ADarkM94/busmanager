@@ -3,10 +3,10 @@
     <div class="content xe show">
         <div id="bus"></div>
     </div>
-    <a href="javascript:void(0)" onclick="window.open('{{url("admin/addxe")}}')" style="width: 2em; height: 2em; line-height: 2em; background: white; font-size: 1.5em; position: absolute; bottom: 1em; left: 2em; box-shadow: 0 0 5px black; border-radius: 50%;">
+    <a href="javascript:void(0)" onclick="window.open('{{url("admin/addxe")}}')" style="width: 2em; height: 2em; line-height: 2em; background: white; font-size: 1.5em; position: absolute; bottom: 1em; left: 2em; box-shadow: 0 0 5px black; border-radius: 50%;" title="Thêm  Xe">
         <i class="glyphicon glyphicon-plus"></i>
     </a>
-    <a href="javascript:void(0)" onclick="refreshXE()" style="width: 2em; height: 2em; line-height: 2em; background: white; font-size: 1.5em; position: absolute; bottom: 4em; left: 2em; box-shadow: 0 0 5px black; border-radius: 50%;">
+    <a href="javascript:void(0)" onclick="refreshXE()" style="width: 2em; height: 2em; line-height: 2em; background: white; font-size: 1.5em; position: absolute; bottom: 4em; left: 2em; box-shadow: 0 0 5px black; border-radius: 50%;" title="Làm Mới">
         <i class="glyphicon glyphicon-refresh"></i>
     </a>
 @endsection

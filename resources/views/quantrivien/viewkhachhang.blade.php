@@ -115,7 +115,7 @@
                 {
                     title: "Giá",
                     width: 200,
-                    dataIndx: "Giá",
+                    dataIndx: "Tiền_vé",
                     dataType: "string",
                     editor: false,
                     align: 'center',
