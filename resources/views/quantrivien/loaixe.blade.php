@@ -16,8 +16,12 @@
                     <input type="text" name="name" class="form-control" placeholder="Tên loại xe">
                     <input type="number" min="1" name="row" class="form-control" placeholder="Số hàng">
                     <input type="number" min="1" name="col" class="form-control" placeholder="Số cột">
+                    <label>Loại ghế</label>
+                    <select class="form-control" name="loaighe">
+                        <option value="0">Ghế ngồi</option>
+                        <option value="1">Giường nằm</option>
+                    </select>
                     <input type="hidden" name="soghe">
-                    <input type="hidden" name="sodo">
                     <input type="hidden" name="noidung">
                     <input type="button" onclick="changemodel()" name="apdung" class="btn btn-success" value="Áp dụng">
                     <input type="submit" onclick="checksubmit(this)" name="submit" class="btn btn-warning" value="Thêm Loại Xe" disabled>
@@ -186,16 +190,27 @@
                     }
                 },
                 {
-                    title: "Sơ đồ",
+                    title: "Loại ghế",
                     width: 100,
-                    dataIndx: "Sơ_đồ",
+                    dataIndx: "Loại_ghế",
                     dataType: "string",
                     editor: false,
                     align: "center",
+                    render: function(ui){
+                        if(ui.rowData["Loại_ghế"]==0)
+                            return "Ghế ngồi";
+                        else if(ui.rowData["Loại_ghế"])
+                            return "Giường nằm";
+                    },
                     filter: {
-                        type: 'textbox',
-                        condition: 'contain',
-                        listeners: ['keyup']
+                        type: 'select',
+                        condition: 'equal',
+                        listeners: ['change'],
+                        options: [
+                            {'':'All'},
+                            {'0':'Ghế ngồi'},
+                            {'1':'Giường nằm'}
+                        ]
                     }
                 },
                 {
@@ -216,7 +231,7 @@
                         $cell.find("a#idEditBusModel")
                             .unbind("click")
                             .bind("click", function (evt) {
-                                editModel(rowData["Mã"],rowData["Tên_Loại"],rowData["Số_hàng"],rowData["Số_cột"],rowData["Sơ_đồ"]);
+                                editModel(rowData["Mã"],rowData["Tên_Loại"],rowData["Số_hàng"],rowData["Số_cột"],rowData["Loại_ghế"],rowData["Sơ_đồ"]);
                             });
                         $cell.find("a#idDelBusModel")
                             .unbind("click")
@@ -238,14 +253,14 @@
             var $grid = $("#busmodel").pqGrid(obj);
             $grid.pqGrid("refreshDataAndView");
         });
-        function editModel(id,name,row,col,sodo){
+        function editModel(id,name,row,col,loaighe,sodo){
             var ttname = document.forms["ttmodel"]["name"];
             var ttrow = document.forms["ttmodel"]["row"];
             var ttcol = document.forms["ttmodel"]["col"];
-            var tensodo = document.forms["ttmodel"]["sodo"];
+            var ttloaighe = document.forms["ttmodel"]["loaighe"];
             var noidungsodo =document.forms["ttmodel"]["noidung"];
             var ttsubmit = document.forms["ttmodel"]["submit"];
-            var ttsodo = model[sodo].split('');
+            var ttsodo = sodo.split('');
             var view = document.getElementById('mapxe');
             var str ="<table style='width: 100%; height: 500px; border-collapse: separate; border-spacing: 5px 5px; '>";
             for (var i = 0; i<row;i++) {
@@ -265,8 +280,8 @@
             ttname.value = name;
             ttrow.value = row;
             ttcol.value = col;
-            tensodo.value = sodo;
-            noidungsodo.value = model[sodo];
+            ttloaighe.value = loaighe;
+            noidungsodo.value = sodo;
             view.innerHTML = str;
             ttsubmit.value = "Lưu Thay Đổi";
             document.forms["ttmodel"]["name"].removeAttribute("readonly");
@@ -294,10 +309,6 @@
             var col = document.forms["ttmodel"]["col"].value;
             var name = document.forms["ttmodel"]["name"].value;
             if(row>0&&col>0&&name!=""){
-                if(id==""){
-                    var filename = Date.now();
-                    document.forms["ttmodel"]["sodo"].value = prompt("Nhập tên file muốn lưu sơ đồ xe:",filename);
-                }
                 var view = document.getElementById('mapxe');
                 var str ="<table style='width: 100%; height: 500px; border-collapse: separate; border-spacing: 5px 5px; '>";
                 for (var i = 0; i<row;i++) {
