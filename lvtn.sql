@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 11, 2018 lúc 02:24 PM
+-- Thời gian đã tạo: Th10 14, 2018 lúc 08:32 AM
 -- Phiên bản máy phục vụ: 10.1.36-MariaDB
 -- Phiên bản PHP: 7.2.10
 
@@ -31,6 +31,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `bus_model` (
   `Mã` int(11) NOT NULL,
   `Tên_Loại` varchar(255) NOT NULL,
+  `Loại_ghế` int(11) NOT NULL,
   `Số_ghế` int(11) NOT NULL,
   `Số_hàng` int(11) NOT NULL,
   `Số_cột` int(11) NOT NULL,
@@ -45,9 +46,9 @@ CREATE TABLE `bus_model` (
 -- Đang đổ dữ liệu cho bảng `bus_model`
 --
 
-INSERT INTO `bus_model` (`Mã`, `Tên_Loại`, `Số_ghế`, `Số_hàng`, `Số_cột`, `Sơ_đồ`, `Mã_nhân_viên_tạo`, `Mã_nhân_viên_chỉnh_sửa`, `created_at`, `updated_at`) VALUES
-(1, 'Model_1', 30, 10, 5, '00000', 1, 1, '2018-10-07 18:24:23', '2018-10-08 11:42:13'),
-(4, 'Model_2', 26, 10, 6, '00001', 1, 1, '2018-10-08 11:56:21', '2018-10-08 11:56:21');
+INSERT INTO `bus_model` (`Mã`, `Tên_Loại`, `Loại_ghế`, `Số_ghế`, `Số_hàng`, `Số_cột`, `Sơ_đồ`, `Mã_nhân_viên_tạo`, `Mã_nhân_viên_chỉnh_sửa`, `created_at`, `updated_at`) VALUES
+(1, 'Model_1', 1, 30, 10, 5, '10000101011010110101101011010110101101011010111111', 1, 1, '2018-10-07 18:24:23', '2018-10-08 11:42:13'),
+(4, 'Model_2', 0, 26, 10, 6, '100000111001111001110001010001100001010001100001001001110011', 1, 1, '2018-10-08 11:56:21', '2018-10-08 11:56:21');
 
 -- --------------------------------------------------------
 
@@ -64,6 +65,7 @@ CREATE TABLE `chuyen_xe` (
   `Thời_gian_xuất_phát` datetime NOT NULL,
   `Trạng_thái` int(11) NOT NULL DEFAULT '0',
   `Tiền_vé` int(11) NOT NULL,
+  `Tổng_tiền_vé` int(11) NOT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   `is_del` tinyint(1) DEFAULT '0'
@@ -73,8 +75,8 @@ CREATE TABLE `chuyen_xe` (
 -- Đang đổ dữ liệu cho bảng `chuyen_xe`
 --
 
-INSERT INTO `chuyen_xe` (`Mã`, `Mã_nhân_viên_tạo`, `Mã_lộ_trình`, `Mã_tài_xế`, `Mã_xe`, `Thời_gian_xuất_phát`, `Trạng_thái`, `Tiền_vé`, `created_at`, `updated_at`, `is_del`) VALUES
-(5, 1, 2, 3, 1, '2018-10-10 10:00:00', 0, 8700000, '2018-10-10 10:17:07', '2018-10-11 11:45:47', 0);
+INSERT INTO `chuyen_xe` (`Mã`, `Mã_nhân_viên_tạo`, `Mã_lộ_trình`, `Mã_tài_xế`, `Mã_xe`, `Thời_gian_xuất_phát`, `Trạng_thái`, `Tiền_vé`, `Tổng_tiền_vé`, `created_at`, `updated_at`, `is_del`) VALUES
+(5, 1, 2, 3, 1, '2018-10-10 10:00:00', 0, 300000, 8700000, '2018-10-10 10:17:07', '2018-10-11 11:45:47', 0);
 
 -- --------------------------------------------------------
 
@@ -324,6 +326,7 @@ CREATE TABLE `xe` (
   `Mã` int(11) NOT NULL,
   `Biển_số` varchar(255) NOT NULL,
   `Mã_loại_xe` int(11) NOT NULL,
+  `Loại_ghế` int(11) NOT NULL,
   `Ngày_bảo_trì_gần_nhất` date NOT NULL,
   `Ngày_bảo_trì_tiếp_theo` date NOT NULL,
   `location` tinytext,
@@ -335,8 +338,8 @@ CREATE TABLE `xe` (
 -- Đang đổ dữ liệu cho bảng `xe`
 --
 
-INSERT INTO `xe` (`Mã`, `Biển_số`, `Mã_loại_xe`, `Ngày_bảo_trì_gần_nhất`, `Ngày_bảo_trì_tiếp_theo`, `location`, `created_at`, `updated_at`) VALUES
-(1, '123456', 1, '2018-10-07', '2018-10-07', NULL, '2018-10-07 18:43:48', '2018-10-07 18:43:48');
+INSERT INTO `xe` (`Mã`, `Biển_số`, `Mã_loại_xe`, `Loại_ghế`, `Ngày_bảo_trì_gần_nhất`, `Ngày_bảo_trì_tiếp_theo`, `location`, `created_at`, `updated_at`) VALUES
+(1, '123456', 1, 0, '2018-10-07', '2018-10-07', NULL, '2018-10-07 18:43:48', '2018-10-07 18:43:48');
 
 --
 -- Chỉ mục cho các bảng đã đổ
