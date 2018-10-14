@@ -3,8 +3,14 @@
     Chuyến xe
 @endsection
 @section('content')
+    <div class="buoc">
+        <ul>
+            <li>Tìm Chuyến</li>
+            <li style="background: #f57812; color: #FFF;" class="stay">Chọn Chuyến</li>
+            <li>Chi Tiết Vé</li>
+        </ul>
+    </div>
     <div class="chuyenxemain">
-        <div class="chuyenxechon"><h4>Chọn Chuyến</h4></div>
         <table>
             <tr>
                 <th>Tuyến</th>

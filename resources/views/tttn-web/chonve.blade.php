@@ -3,6 +3,13 @@
     Chọn vé
 @endsection
 @section('content')
+    <div class="buoc">
+        <ul>
+            <li>Tìm Chuyến</li>
+            <li>Chọn Vé</li>
+            <li style="background: #f57812; color: #FFF;" class="stay">Chi Tiếc vé</li>
+        </ul>
+    </div>
     <div class="chonvemain">
         <div class="chonveleft">
             <h3>Thông tin vé</h3>

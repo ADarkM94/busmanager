@@ -1,7 +1,6 @@
 *{
 	padding: 0px;
 	margin: 0px;
-	box-sizing: border-box;
 }
 a{
 	text-decoration: none;
@@ -9,40 +8,47 @@ a{
 /*header*/
 .header{
 	min-height: 40px;
-	width: 90%;
-	margin: auto;
-	border-radius: 5px;
-	background: rgb(245,245,245);
+	width: 100%;
+	background: #002835;
+	padding-right: 3em;
+	position: relative;
 }
 .header button{
-	background: #FFA000;
+	background: #002835;
 	color: #FFF;
 	border: none;
+	min-height: 30px;
+	border: 1px solid #004963;
+	margin-top: 2.5px;
+	transition: all 1s ease-in-out;
+}
+.header img{
+	position: absolute;
+	margin-left: 5em;
+}
+.header button:hover{
+	background: #FFF;
+	color: #CCC;
 }
 .header ul{
 	list-style-type: none;
+	margin: 0;
 }
 .header ul li{
 	float: right;
 	margin-left: 0.5em;
 }
-.header ul li button{
-	min-height: 40px;
-}
 /*menu*/
 .menu{
-	width: 90%;
-	margin: auto;
+	width: 100%;
 	min-height: 50px;
-	border-radius: 5px;
-	box-shadow: 0 0 3em #CCC;
-	margin-top: 1em;
-	background: #FFA000;
+	background: rgb(0,64,87);
 }
 .menu ul{
 	list-style-type: none;
 	line-height: 50px;
-	margin-left: 2em;
+	margin: 0px;
+	margin-left: 5em;
 }
 .menu ul li{
 	float: left;
@@ -53,111 +59,52 @@ a{
 	font-size: 16px;
 	font-weight: 500;
 	margin-left: 0.5em;
+	padding-bottom: 3px;
+	border-bottom: 1px solid #FFF;
+	transition: all 1.8s ease-in-out;
+}
+.menu i{
+	font-size: 18px;
+    padding: 0;
+    color: #FFF;
+    transition: all 1s ease-in-out;
 }
 .menu a:hover{
 	text-decoration: none;
 }
-.menu a:hover span{
-	color: #000;
-	border-bottom: 1px #000 solid;
-}
 .menu a:hover i{
-	color: #f48f41;
+	color: #F3AD45;
+}
+.menu a:hover span{
+	color: #F3AD45;
+	border-bottom: 1px solid #F3AD45;
 }
 .menu i{
-	font-size: 14px;
-    background: #FFF;
-    padding: 10px;
-    border-radius: 50%;
-    color: #FFA000;
+	animation: hieuungvaotrang 0.5s ease-in;
 }
+@keyframes hieuungvaotrang{
+				0%{transform: scale(0);}
+				10%{transform: scale(0.1);}
+				20%{transform: scale(0.2);}
+				30%{transform: scale(0.3);}
+				40%{transform: scale(0.4);}
+				50%{transform: scale(0.5);}
+				60%{transform: scale(0.6);}
+				70%{transform: scale(0.7);}
+				80%{transform: scale(0.8);}
+				90%{transform: scale(0.9);}
+				100%{transform: scale(1);}
+			}
 /*main*/
 .main{
-	width: 90%;
+	width: 100%;
 	margin: auto;
-	margin-top: 1em;
+	position: relative;
 }
 /*left*/
 .left{
-	width: 70%;
+	width: 100%;
 	min-height: 400px;
-	border-radius: 1em;
-	box-shadow: 0 0 2em #CCC;
-	float: left;
-}
-/*tin tuc*/
-.tintuc{
-	width: 100%;
-	min-height: 450px;
-	margin-top: 1em;
-	border-radius: 1em;
-	box-shadow: 0 0 2em #CCC;
-	position: relative;
-	background: rgb(245,245,245);
-}
-.tentintuc{
-	background-color: #FFA000;
-	border-radius: 30px;
-	width: 30%;
-	text-align: center;
-	height: 3.5em;
-	color: #FFF;
-	position: absolute;
-	top: 0.5em;
-}
-.tentintuc > h2{
-	position: absolute;
-	top: -25%;
-	left: 15%;
-}
-.tintuc ul{
-	list-style-type: none;
-	padding-top: 5em;
-	margin-left: 5%;
-}
-.tintuc li{
-	width: 30%;
-	min-height: 300px;
-	margin-right: 2%;
-	float: left;
-	text-align: center;
-	background: #FFF;
-	border-radius: 0.5em;
-}
-.tintuc li img{
-	width: 100%;
-	height: 70%;
-}
-.tintuc li img:hover{
-	cursor: pointer;
-}
-.tintuc a:hover{
-	cursor: pointer;
-}
-.tintucbutton{
-	text-align: center;
-}
-.tintucbutton button{
-	margin-top: 3em;
-	width: 200px;
-	border: 0.5px;
-	height: 30px;
-}
-.tintucbutton button:hover{
-	background: #FFA000;
-}
-.tintucbutton button:hover a{
-	text-decoration: none;
-	color: #FFF;
-}
-/*right*/
-.right{
-	width: 28%;
-	min-height: 440px;
-	border-radius: 1em;
-	box-shadow: 0 0 2em #CCC;
-	margin-left: 2%;
-	float: left;
 }
 /*slide*/
 .mySlides {display: none}
@@ -222,13 +169,26 @@ a{
   animation-name: fade;
   animation-duration: 1.5s;
 }
+/*ket thuc slide*/
+/*right*/
+.right{
+	width: 25%;
+	min-height: 300px;
+	position: absolute;
+	top: 10px;
+	right: 40px;
+	border-radius: 0.5em;
+	background: #004963;
+	padding-bottom: 10px;
+}
+
 .timchuyendi{
 	width: 100%;
 	margin: auto;
-	border: 1px solid #FFA000;
+	border: 1px solid #f57812;
 	text-align: center;
 	border-radius: 0.5em 0.5em 0  0;
-	background: #FFA000;
+	background: #f57812;
 }
 .timchuyendi h4{
 	color: #FFF;
@@ -244,17 +204,18 @@ a{
 .diadiem i{
 	position: absolute;
 	top: 8px;
-	margin-left: 5px;
-	color: #FFA000;
+	margin-left: 10px;
+	color: #f57812;
 }
 .diadiem select{
-	width: 250px;
+	width: 300px;
 	height: 30px;
 	padding-left: 2em;
 	cursor: pointer;
-	color: #003;
+	color: #004963;
+	font-weight: bold;
 	border: none;
-	box-shadow: 0 3px #FFA000; 
+	box-shadow: 0 3px #F3AD45; 
 }
 .ngaydi{
 	width: 90%;
@@ -262,10 +223,11 @@ a{
 	margin-top: 2em;
 }
 .right label{
-	color: #000;
+	color: #FFF;
+	font-weight: bold;
 }
 .ngaydi #datepicker{
-	width:250px; 
+	width:300px; 
 }
 .ngaydi #datepicker > span:hover{
 	cursor: pointer;
@@ -277,14 +239,18 @@ a{
 }
 .tim button{
 	width: 150px;
-	background: #FFA000;
+	background: #F3AD45;
+	transition: all 1.8s ease-in-out;
+}
+.tim:hover button{
+	background: #f57812;
 }
 .tim i{
 	position: absolute;
 	color: #FFF;
 	padding-top: 8px;
 	padding-left: 4px;
-	background:#f48f41;
+	background:#f57812;
 	height: 100%;
 	width: 33px;
 }
@@ -295,17 +261,82 @@ a{
 	color: #FFF;
 	text-decoration: none;
 }
+/*tin tuc*/
+.tintuc{
+	width: 100%;
+	min-height: 450px;
+	margin-top: 1em;
+	position: relative;
+}
+.tentintuc{
+	background-color: #f57812;
+	border-radius: 0 30px 0 30px;
+	width: 30%;
+	text-align: center;
+	height: 3.5em;
+	color: #FFF;
+	position: absolute;
+	top: 0.5em;
+}
+.tentintuc > h2{
+	position: absolute;
+	top: -25%;
+	left: 15%;
+}
+.tintuc ul{
+	list-style-type: none;
+	padding-top: 5em;
+	margin-left: 3%;
+}
+.tintuc li{
+	width: 30%;
+	min-height: 300px;
+	margin-right: 3%;
+	float: left;
+	text-align: center;
+	background: #FFF;
+	border-radius: 0.5em;
+	background: rgb(245,245,245);
+	padding-bottom: 3px;
+}
+.tintuc li img{
+	width: 100%;
+	height: 70%;
+	border-radius: 50%;
+}
+.tintuc li img:hover{
+	cursor: pointer;
+}
+.tintuc a:hover{
+	cursor: pointer;
+}
+.tintucbutton{
+	text-align: center;
+}
+.tintucbutton button{
+	margin-top: 3em;
+	width: 200px;
+	border: 0.5px;
+	height: 30px;
+}
+.tintucbutton button:hover{
+	background: #F3AD45;
+}
+.tintucbutton button:hover a{
+	text-decoration: none;
+	color: #FFF;
+}
 /*footer*/
 .footer{
-	border-radius:  1em 1em 0 0;
-	box-shadow: 0 0 2em #CCC;
 	margin-top: 1em;
-	background: #FFA000;
+	background: rgb(0,64,87);
 	min-height: 170px;
+
 }
 .footer ul{
  	list-style-type: none; 
  	padding-top: 2em;
+ 	margin: 0;
 }
 .footer ul li{
 	width: 49%;
@@ -315,16 +346,13 @@ a{
 }
 /*datve*/
 .maindatve{
-	width: 90%;
-	margin: auto;
-	margin-top: 1em;
-	background: rgb(245,245,245);
+	width: 100%;
+	min-height: 400px;
 }
 .maindatve ul{
 	width: 100%;
 	list-style-type: none;
 	margin-top: 2em;
-	box-shadow: 0 0 2em #CCC;
 	border-radius: 1em;
 	height: 300px;
 }
@@ -332,7 +360,7 @@ a{
 	width: 33%;
 	float: left;
 	text-align: center;
-	color: #000;
+	color: #004963;
 	font-weight: 500;
 	font-size: 18px;
 	margin-top: 1em;
@@ -349,27 +377,26 @@ a{
 	position: absolute;
 	top: 8px;
 	margin-left: 5px;
-	color: #FFA000;
+	color:#f57812; 
 }
 .diadiemdatve select{
 	width: 300px;
 	height: 30px;
 	padding-left: 2em;
 	cursor: pointer;
-	color: #003;
+	color: #004963;
 	border: none;
-	box-shadow: 0 3px #FFA000; 
+	box-shadow: 0 3px #F3AD45; 
 }
 .timchuyendidatve{
-	width: 100%;
+	width: 40%;
 	margin: auto;
+	border-radius: 5% 30% 5% 30%;
 	border: 1px solid #CCC;
 	text-align: center;
-	margin-top: 3em;
-	border-radius: 0.5em;
-	box-shadow: 0 0 2em #CCC;
-	background: #FFA000;
-}
+	margin-top: 1em;
+	background:#f57812; 
+	}
 .timchuyendidatve h3{
 	color: #FFF;
 	font-weight: bold;
@@ -396,7 +423,7 @@ a{
 .chonloaixe{
 	margin-top: 2em;
 	padding-top: 1em;
-	border: 1px solid #FFA000;
+	border: 1px solid #F3AD45;
 	background: #FFF;
 	font-weight: bold;
 	width: 75%;
@@ -421,14 +448,11 @@ a{
 }
 /*chuyenxe*/
 .chuyenxemain{
-	width: 90%;
-	margin: auto;
-	margin-top: 2em;
+	width: 100%;
+	margin-top: 1em;
 	min-height: 300px;
-	border-radius: 0.5em;
-	box-shadow: 0 0 2em #CCC;
-	padding-top: 4em;
-	padding-bottom: 3em;
+	padding-top: 2em;
+	padding-bottom: 2em;
 }
 .chuyenxemain table{
 	width: 90%;
@@ -457,17 +481,16 @@ a{
 .chuyenxemain tr:nth-child(even) {
     background-color: #dddddd;
 }
-.chuyenxechon{
-	width: 90%;
+/* .chuyenxechon{
+	width: 40%;
 	color: #FFF;
 	text-align: center;
 	padding: 0.5em;
 	margin:auto;
-	border-radius: 0.5em;
-	box-shadow: 0 0 2em #CCC;
+	border-radius: 5% 30% 5% 30%;
 	margin-bottom: 1em;
-	background: #FFA000;
-}
+	background: #f57812;
+} */
 .chuyenxetim{
 	text-align: center;
 	position: relative;
@@ -497,7 +520,7 @@ a{
 	margin-top: 2em;
 	width: 90%;
 	margin: auto;
-	min-height: 800px;
+	min-height: 900px;
 	margin-top: 1em;
 }
 .chonveleft{
@@ -518,10 +541,10 @@ a{
 	width: 200px;
 }
 .chonvemain i{
-	color: #FFA000;
+	color: #F3AD45;
 }
 .chonvemain span{
-	color: #FFA000;
+	color: #F3AD45;
 }
 .chonveright{
 	width: 58%;
@@ -631,7 +654,7 @@ a{
 	background: rgb(245,245,245);
 }
 .trangtentintuc{
-	background-color: #FFA000;
+	background-color: #F3AD45;
 	border-radius: 30px;
 	width: 30%;
 	text-align: center;
@@ -680,7 +703,7 @@ a{
 	height: 30px;
 }
 .trangtintucbutton button:hover{
-	background: #FFA000;
+	background: #F3AD45;
 }
 .trangtintucbutton button:hover a{
 	text-decoration: none;
@@ -697,6 +720,29 @@ a{
 	position: relative;
 	padding: 1em;
 }
+/*buoc*/
+.buoc{
+	width: 100%;
+	padding-top: 3em;
+}
+.buoc ul{
+	list-style-type: none;
+	width: 80%;
+	margin: auto;
+}
+.buoc ul li{
+	width: 30%;
+	float: left;
+	height: 50px;
+	background: #f4f4f4;
+	margin-right: 3%;
+	text-align: center;
+	line-height: 50px;
+	font-size: 18px;
+	border-radius: 25% 50% 50% 25%;
+	margin-bottom: 3em;
+}
+
 @-webkit-keyframes fade {
   from {opacity: .4} 
   to {opacity: 1}

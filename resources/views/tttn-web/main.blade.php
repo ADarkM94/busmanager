@@ -16,6 +16,7 @@
 </head>
 <body>
 <div class="header">
+    <img src="images/logo.png" height="40">
     <ul>
         <li><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#register">Đăng ký</button></li>
         <li><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#login">Đăng nhập</button></li>

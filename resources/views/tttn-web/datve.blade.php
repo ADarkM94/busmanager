@@ -3,8 +3,14 @@
     Đặt vé
 @endsection
 @section('content')
+    <div class="buoc">
+        <ul>
+            <li style="background: #f57812; color: #FFF;" class="stay">Tìm Chuyến</li>
+            <li>Chọn Chuyến</li>
+            <li>Chi Tiết Vé</li>
+        </ul>
+    </div>
     <div class="maindatve">
-        <div class="timchuyendidatve"><h3>Tìm chuyến đi</h3></div>
         <ul>
             <li>
                 <div class="diadiemdatve">

@@ -9,19 +9,19 @@
 
                 <div class="mySlides fade1">
                     <div class="numbertext">1 / 3</div>
-                    <a href="#"><img src="images/1.jpg" style="height:400px; width: 100%;"></a>
+                    <a href="#"><img src="images/4.jpg" style="height:400px; width: 100%;"></a>
                     <div class="text">Địa điểm 1</div>
                 </div>
 
                 <div class="mySlides fade1">
                     <div class="numbertext">2 / 3</div>
-                    <a href="#"><img src="images/2.jpg" style="height:400px;width: 100%;"></a>
+                    <a href="#"><img src="images/1.jpg" style="height:400px;width: 100%;"></a>
                     <div class="text">Địa điểm 2</div>
                 </div>
 
                 <div class="mySlides fade1">
                     <div class="numbertext">3 / 3</div>
-                    <a href="#"><img src="images/3.jpg" style="height:400px;width: 100%;"></a>
+                    <a href="#"><img src="images/5s.jpg" style="height:400px;width: 100%;"></a>
                     <div class="text">Địa điểm 3</div>
                 </div>
 
