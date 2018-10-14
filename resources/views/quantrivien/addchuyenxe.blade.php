@@ -19,7 +19,6 @@
                 @isset($ttchuyenxe)
                     <?php
                     $ttchuyenxe = (array)$ttchuyenxe;
-                    $starttime = preg_split('/[\s]+/',$ttchuyenxe['Thời_gian_xuất_phát']);
                     ?>
                     <input type="hidden" name="ID" value="{{$ttchuyenxe['Mã']}}">
                 @endisset
@@ -36,14 +35,14 @@
                 <input type="text" list="xe" class="form-control" name="xe" value="{{isset($ttchuyenxe['Biển_số'])? $ttchuyenxe['Mã_xe']:''}}" placeholder="Chọn xe">
                 <br>
                 <label>Giờ khởi hành</label>
-                <input type="time" class="form-control"  name="starttime" value="{{isset($ttchuyenxe['Thời_gian_xuất_phát'])? $starttime[1]:''}}">
+                <input type="time" class="form-control"  name="starttime" value="{{isset($ttchuyenxe['Giờ_xuất_phát'])? $ttchuyenxe['Giờ_xuất_phát']:''}}">
                 <br>
                 <label>Ngày khởi hành</label>
-                <input type="date" class="form-control"  name="startdate" value="{{isset($ttchuyenxe['Thời_gian_xuất_phát'])? $starttime[0]:''}}">
+                <input type="date" class="form-control"  name="startdate" value="{{isset($ttchuyenxe['Ngày_xuất_phát'])? $ttchuyenxe['Ngày_xuất_phát']:''}}">
                 <br>
                 @isset($ttchuyenxe)
-                    <label>Tổng tiền vé</label>
-                    <input type="text" class="form-control"  name="tongtien" value="{{$ttchuyenxe['Tiền_vé']}}" readonly>
+                    <label>Tiền vé</label>
+                    <input type="text" class="form-control"  name="tien" value="{{$ttchuyenxe['Tiền_vé']}}" readonly>
                     <br>
                 @endisset
                 <div id="ticket"></div>
@@ -88,7 +87,7 @@
                         <div class="row">
                             <div class="col-lg-6" style="font-size: 1em; width: 50%">
                                 <label>Giá</label>
-                                <input type="number" min="0" class="form-control" name="giave" placeholder="Giá vé">
+                                <input type="number" min="0" class="form-control" name="giave" placeholder="Giá vé" readonly>
                             </div>
                             <div class="col-lg-6" style="width: 50%; text-align: left;">
                                 <label>Trạng thái</label>
