@@ -177,19 +177,7 @@ class AdminController extends Controller
     //Phần loại xe
     public function loaixe(){
         $busmodel = Loaixe::all();
-        foreach ($busmodel as $row){
-            $filepath = 'busmodel/'.$row['Sơ_đồ'].'.txt';
-            if(file_exists($filepath)) {
-                $file = fopen($filepath,'r');
-                $model[$row['Sơ_đồ']]=fread($file,filesize($filepath));
-                fclose($file);
-            }
-            else {
-                $model[$row['Sơ_đồ']]='';
-            }
-
-        }
-        return view('quantrivien.loaixe',compact('busmodel','model'));
+        return view('quantrivien.loaixe',compact('busmodel'));
     }
     public function addbusmodel(Request $request){
         $name = $request->name;
@@ -197,31 +185,23 @@ class AdminController extends Controller
         $col = $request->col;
         $employeeid = $request->employeeID;
         $soghe = $request->soghe;
-        $sodo = $request->sodo;
-        $noidung = $request->noidung;
+        $sodo = $request->noidung;
+        $loaighe =$request->loaighe;
         $created_at = date('Y-m-d h-i-s');
         $updated_at = date('Y-m-d h-i-s');
         if(!empty($request->ID)) {
-            if (DB::update("UPDATE `bus_model` SET `Tên_Loại`= ?,`Số_ghế`= ?,`Số_hàng`= ?,`Số_cột`= ?,`Sơ_đồ`= ?,`Mã_nhân_viên_chỉnh_sửa`= ?,`updated_at`= ? WHERE `Mã`= ?",
-                [$name, $soghe, $row, $col, $sodo, $employeeid, $updated_at, $request->ID]))
+            if (DB::update("UPDATE `bus_model` SET `Tên_Loại`= ?,`Loại_ghế`= ?,`Số_ghế`= ?,`Số_hàng`= ?,`Số_cột`= ?,`Sơ_đồ`= ?,`Mã_nhân_viên_chỉnh_sửa`= ?,`updated_at`= ? WHERE `Mã`= ?",
+                [$name, $loaighe, $soghe, $row, $col, $sodo, $employeeid, $updated_at, $request->ID]))
             {
-                $filepath = 'busmodel/' . $sodo . '.txt';
-                $file = fopen($filepath, 'w+');
-                fwrite($file, $noidung);
-                fclose($file);
                 return redirect()->back()->with('alert', 'Sửa thành công!');
             }
             else
                 return redirect()->back()->with('alert','Sửa thất bại!');
         }
         else {
-            if( DB::insert("INSERT INTO `bus_model`(`Tên_Loại`, `Số_ghế`, `Số_hàng`, `Số_cột`, `Sơ_đồ`, `Mã_nhân_viên_tạo`, `Mã_nhân_viên_chỉnh_sửa`, `created_at`, `updated_at`) VALUES (?,?,?,?,?,?,?,?,?)",
-                [$name,$soghe,$row,$col,$sodo,$employeeid,$employeeid,$created_at,$updated_at]))
+            if( DB::insert("INSERT INTO `bus_model`(`Tên_Loại`, `Loại_ghế`, `Số_ghế`, `Số_hàng`, `Số_cột`, `Sơ_đồ`, `Mã_nhân_viên_tạo`, `Mã_nhân_viên_chỉnh_sửa`, `created_at`, `updated_at`) VALUES (?,?,?,?,?,?,?,?,?,?)",
+                [$name,$loaighe,$soghe,$row,$col,$sodo,$employeeid,$employeeid,$created_at,$updated_at]))
             {
-                $filepath = 'busmodel/' . $sodo . '.txt';
-                $file = fopen($filepath, 'w+');
-                fwrite($file, $noidung);
-                fclose($file);
                 return redirect()->back()->with('alert','Thêm thành công!');
             }
             else

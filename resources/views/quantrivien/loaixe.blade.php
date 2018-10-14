@@ -101,7 +101,6 @@
         }
         option[3].classList.add('selected');
         option[3].getElementsByTagName('img')[0].setAttribute('src','{{asset("images/icons/bus-type-hover.png")}}');
-        var model = {!!json_encode($model)!!};
         $(function () {
             var obj = {
                 width: '100%',
@@ -287,11 +286,11 @@
             document.forms["ttmodel"]["name"].removeAttribute("readonly");
             document.forms["ttmodel"]["row"].removeAttribute("readonly");
             document.forms["ttmodel"]["col"].removeAttribute("readonly");
+            document.forms["ttmodel"]["loaighe"].removeAttribute("readonly");
             document.forms["ttmodel"]["apdung"].removeAttribute("disabled");
             ttsubmit.setAttribute("disabled","");
             document.getElementById("xnsodo").getElementsByTagName("span")[0].removeAttribute("disabled");
             document.getElementById("xnsodo").getElementsByTagName("span")[1].removeAttribute("disabled");
-            xacnhan = 1;
         }
         function change(ev) {
             if(ev.classList.contains('glyphicon-check')) {
@@ -304,7 +303,6 @@
             }
         }
         function changemodel() {
-            var id = document.forms["ttmodel"]["ID"].value;
             var row = document.forms["ttmodel"]["row"].value;
             var col = document.forms["ttmodel"]["col"].value;
             var name = document.forms["ttmodel"]["name"].value;
@@ -323,8 +321,9 @@
                 document.forms["ttmodel"]["name"].setAttribute("readonly","");
                 document.forms["ttmodel"]["row"].setAttribute("readonly","");
                 document.forms["ttmodel"]["col"].setAttribute("readonly","");
+                document.forms["ttmodel"]["loaighe"].setAttribute("readonly","");
                 document.forms["ttmodel"]["apdung"].setAttribute("disabled","");
-                xacnhan = 1;
+                xacnhan += 1;
             }
             else {
                 alert("Chưa điền đầy đủ thông tin của loại xe!");
@@ -355,7 +354,7 @@
             document.forms['ttmodel']['noidung'].value = str;
             document.forms['ttmodel']['soghe'].value = soghe;
             document.forms['ttmodel']['submit'].removeAttribute("disabled");
-            xacnhan = 2;
+            xacnhan += 1;
         }
         function huy() {
             location.assign(location.href);
