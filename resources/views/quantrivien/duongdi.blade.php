@@ -1,6 +1,6 @@
 @extends("quantrivien.main")
 @section("content")
-    <div class="content tramdung show">
+    <div class="content tramdung show row">
         <div class="col-lg-6">
             <div id="duongdi"></div>
             <a href="javascript:void(0)" onclick="window.open('{{url("admin/addtramdung")}}')" style="width: 2em; height: 2em; line-height: 2em; background: white; font-size: 1.5em; position: absolute; bottom: 1em; left: 2em; box-shadow: 0 0 5px black; border-radius: 50%;" title="Thêm Đường Đi">
@@ -50,31 +50,18 @@
                 scrollModel: {autoFit: true},
                 resizable: false,
                 roundCorners: false,
-                rowBorders: false,
+                rowBorders: true,
                 postRenderInterval: -1,
                 hwrap: true,
                 columnBorders: false,
                 selectionModel: { type: 'row', mode: 'single' },
-                numberCell: { show: false },
-                stripeRows: false,
+                numberCell: { show: true, title: 'STT', width: 50, align: 'center'},
+                stripeRows: true,
                 cellDblClick: function (event,ui) {
                     window.open("{{url('/admin/addtramdung')}}" + "/" + ui.rowData["Mã"]);
                 }
             };
             obj.colModel = [
-                {
-                    title: "ID",
-                    width: 100,
-                    dataIndx: "Mã",
-                    dataType: "string",
-                    editor: false,
-                    align: 'center',
-                    filter: {
-                        type: 'textbox',
-                        condition: 'contain',
-                        listeners: ['keyup']
-                    }
-                },
                 {
                     title: "Tên",
                     width: 200,

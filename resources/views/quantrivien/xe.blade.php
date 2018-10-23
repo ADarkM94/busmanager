@@ -1,14 +1,15 @@
 @extends("quantrivien.main")
 @section("content")
-    <div class="content xe show">
+    <div class="content xe row show" style="overflow: hidden; position: relative; padding: 3em 1em 1em;">
+        <h4 style="padding: .5em; position: absolute; top: 0; left: 0; width: 100%;">Bảng Xe</h4>
         <div id="bus"></div>
+        <a href="javascript:void(0)" onclick="window.open('{{url("admin/addxe")}}')" style="padding: .2em 1em; line-height: 2em; background: white; font-size: 1em; position: absolute; top: .2em; right: 9em; box-shadow: 0 0 5px black;" title="Thêm  Xe">
+            <i class="glyphicon glyphicon-plus"></i>Thêm
+        </a>
+        <a href="javascript:void(0)" onclick="refreshXE()" style="padding: .2em 1em; line-height: 2em; background: white; font-size: 1em; position: absolute; top: .2em; right: 2em; box-shadow: 0 0 5px black;" title="Làm Mới">
+            <i class="glyphicon glyphicon-refresh"></i>Refresh
+        </a>
     </div>
-    <a href="javascript:void(0)" onclick="window.open('{{url("admin/addxe")}}')" style="width: 2em; height: 2em; line-height: 2em; background: white; font-size: 1.5em; position: absolute; bottom: 1em; left: 2em; box-shadow: 0 0 5px black; border-radius: 50%;" title="Thêm  Xe">
-        <i class="glyphicon glyphicon-plus"></i>
-    </a>
-    <a href="javascript:void(0)" onclick="refreshXE()" style="width: 2em; height: 2em; line-height: 2em; background: white; font-size: 1.5em; position: absolute; bottom: 4em; left: 2em; box-shadow: 0 0 5px black; border-radius: 50%;" title="Làm Mới">
-        <i class="glyphicon glyphicon-refresh"></i>
-    </a>
 @endsection
 @section("excontent")
 @endsection
@@ -33,29 +34,46 @@
                 scrollModel: {autoFit: true},
                 resizable: false,
                 roundCorners: false,
-                rowBorders: false,
+                rowBorders: true,
                 postRenderInterval: -1,
-                hwrap: true,
                 columnBorders: false,
                 selectionModel: { type: 'row', mode: 'single' },
-                numberCell: { show: false },
-                stripeRows: false,
+                hoverMode: 'row',
+                numberCell: { show: true, title: 'STT', width: 50, align: 'center'},
+                stripeRows: true,
+                freezeCols: 1,
                 cellDblClick: function (event,ui) {
                     window.open("{{url('/admin/addxe')}}" + "/" + ui.rowData["Mã"]);
                 }
             };
             obj.colModel = [
                 {
-                    title: "ID",
+                    title: "Thao tác",
                     width: 100,
-                    dataIndx: "Mã",
-                    dataType: "string",
                     editor: false,
+                    dataIndx: "View",
                     align: 'center',
-                    filter: {
-                        type: 'textbox',
-                        condition: 'contain',
-                        listeners: ['keyup']
+                    render: function (ui) {
+                        var str = '';
+                        str += '<a title="Edit" id="idEditBus" ><i class="glyphicon glyphicon-edit  text-success" style="padding-right: 5px; cursor: pointer;"></i></a>';
+                        str += '<a title="Delete" id="idDelBus" ><i class="glyphicon glyphicon-remove  text-danger" style="padding-right: 5px; cursor: pointer;"></i></a>';
+                        return str;
+                    },
+                    postRender: function (ui) {
+                        var rowData = ui.rowData,
+                            $cell = this.getCell(ui);
+                        //add button
+                        $cell.find("a#idEditBus")
+                            .unbind("click")
+                            .bind("click", function (evt) {
+                                window.open("{{url('admin/addxe')}}"+"/"+rowData["Mã"]);
+                            });
+                        $cell.find("a#idDelBus")
+                            .unbind("click")
+                            .bind("click", function (evt) {
+                                if(confirm("Bạn chắc chắn muốn xóa?"))
+                                    location.assign("{{url('admin/delxe')}}"+"/"+rowData["Mã"]);
+                            });
                     }
                 },
                 {
@@ -191,34 +209,6 @@
                             str += d1[2] + '/' + d1[1] + '/' + d1[0];
                         }
                         return {text: str};
-                    }
-                },
-                {
-                    title: "Action",
-                    width: 100,
-                    editor: false,
-                    dataIndx: "View",
-                    render: function (ui) {
-                        var str = '';
-                        str += '<a title="Edit" id="idEditBus" ><i class="glyphicon glyphicon-edit  text-success" style="padding-right: 5px; cursor: pointer;"></i></a>';
-                        str += '<a title="Delete" id="idDelBus" ><i class="glyphicon glyphicon-remove  text-danger" style="padding-right: 5px; cursor: pointer;"></i></a>';
-                        return str;
-                    },
-                    postRender: function (ui) {
-                        var rowData = ui.rowData,
-                            $cell = this.getCell(ui);
-                        //add button
-                        $cell.find("a#idEditBus")
-                            .unbind("click")
-                            .bind("click", function (evt) {
-                                window.open("{{url('admin/addxe')}}"+"/"+rowData["Mã"]);
-                            });
-                        $cell.find("a#idDelBus")
-                            .unbind("click")
-                            .bind("click", function (evt) {
-                                if(confirm("Bạn chắc chắn muốn xóa?"))
-                                    location.assign("{{url('admin/delxe')}}"+"/"+rowData["Mã"]);
-                            });
                     }
                 }
             ];

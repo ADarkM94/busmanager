@@ -280,12 +280,10 @@ class AdminController extends Controller
 
     //Phần trạm dừng
     public function tramdung(){
-        $busstop = Tramdung::all();
-        $employees = Nhanvien::all();
-        foreach ($employees as $row){
-            $employee["{$row['Mã']}"] = $row["Họ_Tên"];
-        }
-        return view("quantrivien.tramdung",compact('busstop','employee'));
+        $busstop = DB::table('tram_dung')->join('employee','tram_dung.Mã_nhân_viên_tạo','=','employee.Mã')
+            ->join('employee as employee1','tram_dung.Mã_nhân_viên_chỉnh_sửa','=','employee1.Mã')
+            ->select('tram_dung.Mã','tram_dung.Tên','tram_dung.Tọa_độ','tram_dung.Mã_nhân_viên_tạo','tram_dung.Mã_nhân_viên_chỉnh_sửa','employee.Họ_Tên as Nhân_viên_tạo','employee1.Họ_Tên as Nhân_viên_chỉnh_sửa')->get();
+        return view("quantrivien.tramdung",compact('busstop'));
     }
     public function addtramdung($index = ""){
         if($index == ""){

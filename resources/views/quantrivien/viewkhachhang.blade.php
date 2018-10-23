@@ -1,12 +1,12 @@
 @extends('quantrivien.main')
 @section('content')
-    <div class="content khachhang show">
-        <h4>Thông tin khách hàng</h4>
+    <div class="content khachhang row show"  style="position: relative;">
+        <h4 style="clear: both; padding: .5em 1em; text-align: center; width: 100%;">Thông tin khách hàng</h4>
         <div class="col-lg-2"></div>
         <div class="col-lg-8">
             <form name="ttkhachhang">
                 <div class="row form-group">
-                    <div class="col-lg-6">
+                    <div class="col-lg-6" style="text-align: left;">
                         <label>Tên</label>
                         <input type="text" name="name" class="form-control" value="{{isset($ttkhachhang)? $ttkhachhang['Tên']:''}}" readonly="">
                         <br>
@@ -19,7 +19,7 @@
                         <label>Địa chỉ</label>
                         <input type="text" name="address" class="form-control" value="{{isset($ttkhachhang)? $ttkhachhang['Địa chỉ']:''}}" readonly="">
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-6" style="text-align: left;">
                         <label>Nickname</label>
                         <input type="text" name="nickname" class="form-control" value="{{isset($ttkhachhang)? $ttkhachhang['Nickname']:''}}" readonly="">
                         <br>
@@ -30,9 +30,10 @@
                         <input type="tel" name="phone" class="form-control" value="{{isset($ttkhachhang)? $ttkhachhang['Sđt']:''}}" readonly="">
                     </div>
                 </div>
-                <div class="row form-group">
-                    <h4>Các chuyến xe đã đi</h4>
-                    <div id="chuyendi" style="height: 200px;">
+                <div class="row form-group" style="text-align: left;">
+                    <h4 style=" display: block; text-align: center;">Các chuyến xe đã đi</h4>
+                    <br>
+                    <div id="chuyendi" style="height: 200px; padding-right: 0;">
                     </div>
                 </div>
             </form>
@@ -62,20 +63,19 @@
                 scrollModel: {autoFit: true},
                 resizable: false,
                 roundCorners: false,
-                rowBorders: false,
+                rowBorders: true,
                 postRenderInterval: -1,
-                hwrap: true,
                 columnBorders: false,
                 selectionModel: { type: 'row', mode: 'single' },
-                numberCell: { show: false },
-                stripeRows: false,
+                numberCell: { show: true, title: 'STT', width: 50, align: 'center'},
+                stripeRows: true,
                 /*cellDblClick: function (event,ui) {
                 }*/
             };
             obj.colModel = [
                 {
                     title: "Nơi đi",
-                    width: 100,
+                    width: 200,
                     dataIndx: "Nơi_đi",
                     dataType: "string",
                     editor: false,
@@ -101,7 +101,7 @@
                 },
                 {
                     title: "Ghế",
-                    width: 70,
+                    width: 100,
                     dataIndx: "Vị_trí_ghế",
                     dataType: "string",
                     editor: false,

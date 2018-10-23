@@ -1,6 +1,6 @@
 @extends('quantrivien.main')
 @section('content')
-    <div class="content loaixe show">
+    <div class="content loaixe row show">
         <div class="col-lg-6">
             <div class="col-lg-12">
                 <span>Loại xe</span>
@@ -110,30 +110,47 @@
                 collapsible: false,
                 showHeader: true,
                 filterModel: {on: true, mode: "AND", header: true},
-                scrollModel: {autoFit: true},
+                // scrollModel: {autoFit: true},
                 resizable: false,
                 roundCorners: false,
-                rowBorders: false,
+                rowBorders: true,
                 columnBorders: false,
                 postRenderInterval: -1,
-                selectionModel: { type: 'row', mode: 'single' },
-                numberCell: { show: false },
-                stripeRows: false,
+                hoverMode: 'row',
+                numberCell: { show: true, title: 'STT', width: 50, align: 'center'},
+                stripeRows: true,
+                freezeCols: 1,
                 /*cellDblClick: function (event,ui) {
                 }*/
             };
             obj.colModel = [
                 {
-                    title: "ID",
-                    width: 50,
-                    dataIndx: "Mã",
-                    dataType: "string",
+                    title: "Thao tác",
+                    width: 100,
                     editor: false,
+                    dataIndx: "View",
                     align: 'center',
-                    filter: {
-                        type: 'textbox',
-                        condition: 'contain',
-                        listeners: ['keyup']
+                    render: function (ui) {
+                        var str = '';
+                        str += '<a title="Edit" id="idEditBusModel" ><i class="glyphicon glyphicon-edit  text-success" style="padding-right: 5px; cursor: pointer;"></i></a>';
+                        str += '<a title="Delete" id="idDelBusModel" ><i class="glyphicon glyphicon-remove  text-danger" style="padding-right: 5px; cursor: pointer;"></i></a>';
+                        return str;
+                    },
+                    postRender: function (ui) {
+                        var rowData = ui.rowData,
+                            $cell = this.getCell(ui);
+                        //add button
+                        $cell.find("a#idEditBusModel")
+                            .unbind("click")
+                            .bind("click", function (evt) {
+                                editModel(rowData["Mã"],rowData["Tên_Loại"],rowData["Số_hàng"],rowData["Số_cột"],rowData["Loại_ghế"],rowData["Sơ_đồ"]);
+                            });
+                        $cell.find("a#idDelBusModel")
+                            .unbind("click")
+                            .bind("click", function (evt) {
+                                if(confirm("Bạn chắc chắn muốn xóa?"))
+                                    location.assign("{{url('admin/delloaixe')}}"+"/"+rowData["Mã"]);
+                            });
                     }
                 },
                 {
@@ -210,34 +227,6 @@
                             {'0':'Ghế ngồi'},
                             {'1':'Giường nằm'}
                         ]
-                    }
-                },
-                {
-                    title: "Action",
-                    width: 100,
-                    editor: false,
-                    dataIndx: "View",
-                    render: function (ui) {
-                        var str = '';
-                        str += '<a title="Edit" id="idEditBusModel" ><i class="glyphicon glyphicon-edit  text-success" style="padding-right: 5px; cursor: pointer;"></i></a>';
-                        str += '<a title="Delete" id="idDelBusModel" ><i class="glyphicon glyphicon-remove  text-danger" style="padding-right: 5px; cursor: pointer;"></i></a>';
-                        return str;
-                    },
-                    postRender: function (ui) {
-                        var rowData = ui.rowData,
-                            $cell = this.getCell(ui);
-                        //add button
-                        $cell.find("a#idEditBusModel")
-                            .unbind("click")
-                            .bind("click", function (evt) {
-                                editModel(rowData["Mã"],rowData["Tên_Loại"],rowData["Số_hàng"],rowData["Số_cột"],rowData["Loại_ghế"],rowData["Sơ_đồ"]);
-                            });
-                        $cell.find("a#idDelBusModel")
-                            .unbind("click")
-                            .bind("click", function (evt) {
-                                if(confirm("Bạn chắc chắn muốn xóa?"))
-                                    location.assign("{{url('admin/delloaixe')}}"+"/"+rowData["Mã"]);
-                            });
                     }
                 }
             ];

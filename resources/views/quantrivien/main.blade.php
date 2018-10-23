@@ -12,6 +12,7 @@
     <link href="{{asset('plugins/paramquery-3.3.4/pqgrid.bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{asset('plugins/paramquery-3.3.4/pqgrid.ui.min.css')}}" rel="stylesheet">
     <link href="{{asset('plugins/paramquery-3.3.4/themes/custom/pqgrid.css')}}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
     <script src="{{asset('js/jquery-3.3.1.min.js')}}"></script>
     <script src="{{asset('js/bootstrap.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('js/Chart.min.js')}}"></script>
@@ -24,39 +25,47 @@
 <div class="container-fluid">
     <div class="header">
         <div class="row">
-            <h3 class="col-lg-4">Quản trị viên</h3>
-            <h5 class="col-lg-4">Tên Hãng Xe Khách</h5>
+            <h3 class="col-lg-4"><a href="{{asset('admin/')}}">Quản trị viên</a></h3>
+            <h5 class="col-lg-4"><img src="{{asset('/images/icons/luggage.png')}}" height="30" alt="icon">AwesomeTravel</h5>
             <div class="col-lg-4 userzone">
-                <span><span class="glyphicon glyphicon-user"></span>Phan Anh Minh</span>
+                <span><span class="glyphicon glyphicon-user"></span>Phan Anh Minh
+                    <ul>
+                        <li>Item 1</li>
+                        <li>Item 1</li>
+                        <li>Item 1</li>
+                        <li>Item 1</li>
+                        <li>Item 1</li>
+                    </ul>
+                </span>
                 <span>Thoát</span>
             </div>
         </div>
-        <hr />
+        {{--<hr />--}}
     </div>
     <div class="noidung row">
         <div class="sidebar">
             <div class="menu">
                 <ul>
                     <a href="{{url('/admin/thongke')}}">
-                        <li class="option selected"><img src="{{asset('images/icons/report.png')}}" alt="icon">&nbsp;Thống kê</li>
+                        <li class="option selected"><img src="{{asset('images/icons/report.png')}}" alt="icon">&nbsp;&nbsp;Thống kê</li>
                     </a>
                     <a href="{{url('/admin/khachhang')}}">
-                        <li class="option"><img src="{{asset('images/icons/customer.png')}}" alt="icon">&nbsp;Khách hàng</li>
+                        <li class="option"><img src="{{asset('images/icons/customer.png')}}" alt="icon">&nbsp;&nbsp;Khách hàng</li>
                     </a>
                     <a href="{{url('/admin/chuyenxe')}}">
-                        <li class="option"><img src="{{asset('images/icons/chuyenxe.png')}}" alt="icon">&nbsp;Chuyến xe</li>
+                        <li class="option"><img src="{{asset('images/icons/chuyenxe.png')}}" alt="icon">&nbsp;&nbsp;Chuyến xe</li>
                     </a>
                     <a href="{{url('/admin/loaixe')}}">
-                        <li class="option"><img src="{{asset('images/icons/bus-type.png')}}" alt="icon">&nbsp;Loại xe</li>
+                        <li class="option"><img src="{{asset('images/icons/bus-type.png')}}" alt="icon">&nbsp;&nbsp;Loại xe</li>
                     </a>
                     <a href="{{url('/admin/lotrinh')}}">
-                        <li class="option"><img src="{{asset('images/icons/route.png')}}" alt="icon">&nbsp;Lộ trình</li>
+                        <li class="option"><img src="{{asset('images/icons/route.png')}}" alt="icon">&nbsp;&nbsp;Lộ trình</li>
                     </a>
                     <a href="{{url('/admin/nhanvien')}}">
-                        <li class="option"><img src="{{asset('images/icons/partnership.png')}}" alt="icon">&nbsp;Nhân viên</li>
+                        <li class="option"><img src="{{asset('images/icons/partnership.png')}}" alt="icon">&nbsp;&nbsp;Nhân viên</li>
                     </a>
                     <a href="{{url('/admin/xe')}}">
-                        <li class="option"><img src="{{asset('images/icons/bus.png')}}" alt="icon">&nbsp;Xe</li>
+                        <li class="option"><img src="{{asset('images/icons/bus.png')}}" alt="icon">&nbsp;&nbsp;Xe</li>
                     </a>
                     <a href="{{url('/admin/tramdung')}}">
                         <li class="option"><img src="{{asset('images/icons/parking.png')}}" alt="icon">&nbsp;Trạm dừng</li>

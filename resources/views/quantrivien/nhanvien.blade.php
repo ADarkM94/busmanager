@@ -1,14 +1,15 @@
 @extends('quantrivien.main')
 @section('content')
-    <div class="content nhanvien show">
+    <div class="content nhanvien row show" style="overflow: hidden; position: relative; padding: 3em 1em 1em;">
+        <h4 style="padding: .5em; position: absolute; top: 0; left: 0; width: 100%;">Bảng Nhân Viên</h4>
         <div id="employee"></div>
+        <a href="javascript:void(0)" onclick="window.open('{{url("admin/addnhanvien")}}')" style="padding: .2em 1em; line-height: 2em; background: white; font-size: 1em; position: absolute; top: .2em; right: 9em; box-shadow: 0 0 5px black;" title="Thêm Nhân Viên">
+            <i class="glyphicon glyphicon-plus"></i>Thêm
+        </a>
+        <a href="javascript:void(0)" onclick="refreshNV()" style="padding: .2em 1em; line-height: 2em; background: white; font-size: 1em; position: absolute; top: .2em; right: 2em; box-shadow: 0 0 5px black;" title="Làm Mới">
+            <i class="glyphicon glyphicon-refresh"></i>Refresh
+        </a>
     </div>
-    <a href="javascript:void(0)" onclick="window.open('{{url("admin/addnhanvien")}}')" style="width: 2em; height: 2em; line-height: 2em; background: white; font-size: 1.5em; position: absolute; bottom: 1em; left: 2em; box-shadow: 0 0 5px black; border-radius: 50%;" title="Thêm Nhân Viên">
-        <i class="glyphicon glyphicon-plus"></i>
-    </a>
-    <a href="javascript:void(0)" onclick="refreshNV()" style="width: 2em; height: 2em; line-height: 2em; background: white; font-size: 1.5em; position: absolute; bottom: 4em; left: 2em; box-shadow: 0 0 5px black; border-radius: 50%;" title="Làm Mới">
-        <i class="glyphicon glyphicon-refresh"></i>
-    </a>
 @endsection
 @section('excontent')
 @endsection
@@ -29,31 +30,49 @@
                 collapsible: false,
                 showHeader: true,
                 filterModel: {on: true, mode: "AND", header: true},
-                scrollModel: {autoFit: true},
+                // scrollModel: {autoFit: true},
                 resizable: false,
                 roundCorners: false,
-                rowBorders: false,
+                rowBorders: true,
                 columnBorders: false,
                 postRenderInterval: -1,
                 selectionModel: { type: 'row', mode: 'single' },
-                numberCell: { show: false },
-                stripeRows: false,
+                hoverMode: 'row',
+                numberCell: { show: true, title: 'STT', width: 50, align: 'center'},
+                stripeRows: true,
+                freezeCols: 1,
                 cellDblClick: function (event,ui) {
                     window.open("{{url('/admin/addnhanvien')}}" + "/" + ui.rowData["Mã"]);
                 }
             };
             obj.colModel = [
                 {
-                    title: "ID",
-                    width: 50,
-                    dataIndx: "Mã",
-                    dataType: "string",
+                    title: "Thao tác",
+                    width: 100,
                     editor: false,
+                    dataIndx: "View",
                     align: 'center',
-                    filter: {
-                        type: 'textbox',
-                        condition: 'contain',
-                        listeners: ['keyup']
+                    render: function (ui) {
+                        var str = '';
+                        str += '<a title="Edit" id="idEditEmployee" ><i class="glyphicon glyphicon-edit  text-success" style="padding-right: 5px; cursor: pointer;"></i></a>';
+                        str += '<a title="Delete" id="idDelEmployee" ><i class="glyphicon glyphicon-remove  text-danger" style="padding-right: 5px; cursor: pointer;"></i></a>';
+                        return str;
+                    },
+                    postRender: function (ui) {
+                        var rowData = ui.rowData,
+                            $cell = this.getCell(ui);
+                        //add button
+                        $cell.find("a#idEditEmployee")
+                            .unbind("click")
+                            .bind("click", function (evt) {
+                                window.open("{{url('admin/addnhanvien')}}"+"/"+rowData["Mã"]);
+                            });
+                        $cell.find("a#idDelEmployee")
+                            .unbind("click")
+                            .bind("click", function (evt) {
+                                if(confirm("Bạn chắc chắn muốn xóa?"))
+                                    location.assign("{{url('admin/delnhanvien')}}"+"/"+rowData["Mã"]);
+                            });
                     }
                 },
                 {
@@ -91,7 +110,7 @@
                     }
                 },
                 {
-                    title: "Name",
+                    title: "Tên",
                     width: 150,
                     dataIndx: "Họ_Tên",
                     dataType: "string",
@@ -175,7 +194,7 @@
                 },
                 {
                     title: "Tên đăng nhập",
-                    width: 100,
+                    width: 200,
                     dataIndx: "Username",
                     dataType: "string",
                     editor: false,
@@ -188,7 +207,7 @@
                 },
                 {
                     title: "Email",
-                    width: 200,
+                    width: 300,
                     dataIndx: "Email",
                     dataType: "string",
                     editor: false,
@@ -200,8 +219,8 @@
                     }
                 },
                 {
-                    title: "Phone",
-                    width: 100,
+                    title: "Số điện thoại",
+                    width: 200,
                     dataIndx: "Sđt",
                     dataType: "string",
                     editor: false,
@@ -291,34 +310,6 @@
                         condition: 'contain',
                         listeners: ['keyup']
                     }*/
-                },
-                {
-                    title: "Action",
-                    width: 100,
-                    editor: false,
-                    dataIndx: "View",
-                    render: function (ui) {
-                        var str = '';
-                        str += '<a title="Edit" id="idEditEmployee" ><i class="glyphicon glyphicon-edit  text-success" style="padding-right: 5px; cursor: pointer;"></i></a>';
-                        str += '<a title="Delete" id="idDelEmployee" ><i class="glyphicon glyphicon-remove  text-danger" style="padding-right: 5px; cursor: pointer;"></i></a>';
-                        return str;
-                    },
-                    postRender: function (ui) {
-                        var rowData = ui.rowData,
-                            $cell = this.getCell(ui);
-                        //add button
-                        $cell.find("a#idEditEmployee")
-                            .unbind("click")
-                            .bind("click", function (evt) {
-                                window.open("{{url('admin/addnhanvien')}}"+"/"+rowData["Mã"]);
-                            });
-                        $cell.find("a#idDelEmployee")
-                            .unbind("click")
-                            .bind("click", function (evt) {
-                                if(confirm("Bạn chắc chắn muốn xóa?"))
-                                    location.assign("{{url('admin/delnhanvien')}}"+"/"+rowData["Mã"]);
-                            });
-                    }
                 }
             ];
 

@@ -116,39 +116,28 @@
             scrollModel: {autoFit: true},
             resizable: false,
             roundCorners: false,
-            rowBorders: false,
+            rowBorders: true,
             columnBorders: false,
             postRenderInterval: -1,
             selectionModel: { type: 'row', mode: 'single' },
-            numberCell: { show: false },
-            stripeRows: false,
+            hoverMode: 'row',
+            numberCell: { show: true, title: 'STT', width: 50, align: 'center'},
+            stripeRows: true,
             /*cellDblClick: function (event,ui) {
                 window.open( + "/" + ui.rowData["Mã"]);
                 }*/
         };
         obj1.colModel = [
             {
-                title: "ID",
-                width: 50,
-                dataIndx: "Mã",
-                dataType: "string",
-                editor: false,
-                align: 'center',
-                filter: {
-                    type: 'textbox',
-                    condition: 'contain',
-                    listeners: ['keyup']
-                }
-            },
-            {
                 title: "Nơi đi",
-                width: 100,
+                width: 150,
                 dataIndx: "Nơi_đi",
                 dataType: "string",
                 editor: false,
                 align: 'center',
                 filter: {
                     type: 'textbox',
+                    attr: "placeholder='Tìm theo nơi đi'",
                     condition: 'contain',
                     listeners: ['keyup']
                 }
@@ -162,13 +151,14 @@
                 align: 'center',
                 filter: {
                     type: 'textbox',
+                    attr: "placeholder='Tìm theo nơi đến'",
                     condition: 'contain',
                     listeners: ['keyup']
                 }
             },
             {
                 title: "Các trạm dừng",
-                width: 100,
+                width: 150,
                 dataIndx: "Các_trạm_dừng_chân",
                 dataType: "string",
                 editor: false,
@@ -180,10 +170,11 @@
                 }
             },
             {
-                title: "Action",
+                title: "Thao tác",
                 width: 100,
                 editor: false,
                 dataIndx: "View",
+                align: "center",
                 render: function (ui) {
                     var str = '';
                     str += '<a title="Edit" id="idEditBusRoute" ><i class="glyphicon glyphicon-edit  text-success" style="padding-right: 5px; cursor: pointer;"></i></a>';
@@ -235,61 +226,38 @@
             scrollModel: {autoFit: true},
             resizable: false,
             roundCorners: false,
-            rowBorders: false,
+            rowBorders: true,
             columnBorders: false,
             postRenderInterval: -1,
             selectionModel: { type: 'row', mode: 'single' },
-            numberCell: { show: false },
-            stripeRows: false,
+            hoverMode: 'row',
+            numberCell: { show: true, title: 'STT', width: 50, align: 'center'},
+            stripeRows: true,
             /*cellDblClick: function (event,ui) {
                 window.open( + "/" + ui.rowData["Mã"]);
                 }*/
         };
         obj2.colModel = [
             {
-                title: "ID",
-                width: 50,
-                dataIndx: "Mã",
-                dataType: "string",
-                editor: false,
-                align: 'center',
-                filter: {
-                    type: 'textbox',
-                    condition: 'contain',
-                    listeners: ['keyup']
-                }
-            },
-            {
                 title: "Tên tỉnh",
-                width: 100,
+                width: 200,
                 dataIndx: "Tên",
                 dataType: "string",
                 editor: false,
                 align: 'center',
                 filter: {
                     type: 'textbox',
+                    attr: "placeholder='Tìm theo tên tỉnh'",
                     condition: 'contain',
                     listeners: ['keyup']
                 }
             },
             {
-                title: "Mã vùng biển số",
-                width: 150,
-                dataIndx: "Mã_vùng",
-                dataType: "string",
-                editor: false,
-                align: 'center',
-                filter: {
-                    type: 'textbox',
-                    condition: 'contain',
-                    listeners: ['keyup']
-                }
-            },
-            {
-                title: "Action",
+                title: "Thao tác",
                 width: 100,
                 editor: false,
                 dataIndx: "View",
+                align: 'center',
                 render: function (ui) {
                     var str = '';
                     str += '<a title="Edit" id="idEditProvince" ><i class="glyphicon glyphicon-edit  text-success" style="padding-right: 5px; cursor: pointer;"></i></a>';
