@@ -2,26 +2,30 @@
 @section('content')
     <div class="content lotrinh row show">
         <div class="col-lg-7" style="position: relative; height: 100%; font-size: 1em; padding: 3em 1em 1em;">
-            <h4 style="position: absolute; top: 0; left: 0; width: 100%;">Bảng Lộ trình</h4>
+            <h4 style="position: absolute; top: 0; left: 0; width: 100%; padding-left: 1em; text-align: left">Bảng Lộ trình</h4>
             <div id="busroute">
             </div>
-            <a href="javascript:void(0)" onclick="prepareAddLT()" data-toggle="modal" data-target="#addlotrinh" style="width: 2em; height: 2em; line-height: 2em; background: white; font-size: 1.5em; position: absolute; bottom: 1em; left: 2em; box-shadow: 0 0 5px black; border-radius: 50%;" title="Thêm Lộ Trình">
-                <i class="glyphicon glyphicon-plus"></i>
-            </a>
-            <a href="javascript:void(0)" onclick="getBusRoute(1)" style="width: 2em; height: 2em; line-height: 2em; background: white; font-size: 1.5em; position: absolute; bottom: 4em; left: 2em; box-shadow: 0 0 5px black; border-radius: 50%;" title="Làm Mới">
-                <i class="glyphicon glyphicon-refresh"></i>
-            </a>
+            <div class="nutthaotac">
+                <a href="javascript:void(0)" onclick="prepareAddLT()" data-toggle="modal" data-target="#addlotrinh" title="Thêm Lộ Trình">
+                    <i class="glyphicon glyphicon-plus"></i>Thêm
+                </a>
+                <a href="javascript:void(0)" onclick="getBusRoute(1)" title="Làm Mới">
+                    <i class="glyphicon glyphicon-refresh"></i>Reset
+                </a>
+            </div>
         </div>
-        <div class="col-lg-5" style="position: relative; height: 100%; font-size: 1em; padding: 3em 1em 1em;">
-            <h4 style="position: absolute; top: 0; left: 0; width: 100%;">Bảng Các tỉnh</h4>
+        <div class="col-lg-5" style="position: relative; height: 100%; font-size: 1em; padding: 3em 1em 1em; border-left: 2px solid #004964;">
+            <h4 style="position: absolute; top: 0; left: 0; width: 100%; padding-left: 1em; text-align: left">Bảng Các tỉnh</h4>
             <div id="province">
             </div>
-            <a href="javascript:void(0)" onclick="prepareAddT()" data-toggle="modal" data-target="#addtinh" style="width: 2em; height: 2em; line-height: 2em; background: white; font-size: 1.5em; position: absolute; bottom: 1em; left: 2em; box-shadow: 0 0 5px black; border-radius: 50%;" title="Thêm Tỉnh/Thành Phố">
-                <i class="glyphicon glyphicon-plus"></i>
-            </a>
-            <a href="javascript:void(0)" onclick="getBusRoute(2)" style="width: 2em; height: 2em; line-height: 2em; background: white; font-size: 1.5em; position: absolute; bottom: 4em; left: 2em; box-shadow: 0 0 5px black; border-radius: 50%;" title="Làm Mới">
-                <i class="glyphicon glyphicon-refresh"></i>
-            </a>
+            <div class="nutthaotac">
+                <a href="javascript:void(0)" onclick="prepareAddT()" data-toggle="modal" data-target="#addtinh" title="Thêm Tỉnh/Thành Phố">
+                    <i class="glyphicon glyphicon-plus"></i>Thêm
+                </a>
+                <a href="javascript:void(0)" onclick="getBusRoute(2)" title="Làm Mới">
+                    <i class="glyphicon glyphicon-refresh"></i>Reset
+                </a>
+            </div>
         </div>
     </div>
 @endsection
@@ -51,6 +55,18 @@
                                 <label>Nơi đến</label>
                                 <input type="text" class="form-control" list="diadiem" name="noiden" placeholder="Địa điểm đến">
                             </div>
+                            <div class="col-lg-12" style="text-align: left; padding-right: 1em;">
+                                <hr>
+                                <label>Thời gian di chuyển dự kiến:</label>
+                            </div>
+                            <div class="col-lg-6" style="width: 50%; text-align: left;">
+                                <label>Giờ</label>
+                                <input type="number" min="0" class="form-control" name="sogio" placeholder="Số giờ" value="0">
+                            </div>
+                            <div class="col-lg-6" style="width: 50%; text-align: left;">
+                                <label>Phút</label>
+                                <input type="number" min="0" max="60" class="form-control" name="sophut" placeholder="Số phút" value="0">
+                            </div>
                         </div>
                         <div class="row" style="padding: 1em 5em;">
                             Chọn các trạm dừng:
@@ -79,13 +95,9 @@
                     <form name="addprovince">
                         <input type="hidden" name="ID" value="">
                         <div class="row">
-                            <div class="col-lg-6" style="font-size: 1em; width: 50%">
+                            <div class="col-lg-12" style="font-size: 1em">
                                 <label>Tên gọi</label>
                                 <input type="text" class="form-control" name="name" placeholder="Tên tỉnh thành">
-                            </div>
-                            <div class="col-lg-6" style="width: 50%; text-align: left;">
-                                <label>Mã vùng</label>
-                                <input type="text" class="form-control" name="mavung" placeholder="Mã vùng biển số">
                             </div>
                         </div>
                     </form>
@@ -138,6 +150,7 @@
                 filter: {
                     type: 'textbox',
                     attr: "placeholder='Tìm theo nơi đi'",
+                    cls: 'filterstyle',
                     condition: 'contain',
                     listeners: ['keyup']
                 }
@@ -152,6 +165,7 @@
                 filter: {
                     type: 'textbox',
                     attr: "placeholder='Tìm theo nơi đến'",
+                    cls: 'filterstyle',
                     condition: 'contain',
                     listeners: ['keyup']
                 }
@@ -163,11 +177,11 @@
                 dataType: "string",
                 editor: false,
                 align: "center",
-                filter: {
+               /* filter: {
                     type: 'textbox',
                     condition: 'contain',
                     listeners: ['keyup']
-                }
+                }*/
             },
             {
                 title: "Thao tác",
@@ -248,6 +262,7 @@
                 filter: {
                     type: 'textbox',
                     attr: "placeholder='Tìm theo tên tỉnh'",
+                    cls: 'filterstyle',
                     condition: 'contain',
                     listeners: ['keyup']
                 }
@@ -272,7 +287,6 @@
                         .unbind("click")
                         .bind("click", function (evt) {
                             document.forms["addprovince"]["name"].value = rowData["Tên"];
-                            document.forms["addprovince"]["mavung"].value = rowData["Mã_vùng"];
                             document.forms["addprovince"]["ID"].value = rowData["Mã"];
                             document.getElementById("btnsubmit1").innerHTML="Sửa Thông Tin Tỉnh";
                             $("#addtinh").modal("show");
@@ -416,15 +430,13 @@
         function addTinh() {
             var id = document.forms["addprovince"]["ID"].value;
             var name = document.forms["addprovince"]["name"].value;
-            var mavung = document.forms["addprovince"]["mavung"].value;
             $.ajax({
                 url: '{{route("addprovince")}}',
                 type: 'POST',
                 data: {
                     _token: '{{csrf_token()}}',
                     ID: id,
-                    name: name,
-                    mavung: mavung
+                    name: name
                 },
                 success: function (data) {
                     if(data.result==1){

@@ -387,19 +387,18 @@ class AdminController extends Controller
     //Phần tỉnh
     public function addprovince(Request $request) {
         $name = $request->name;
-        $mavung = $request->mavung;
         $created_at = date('Y-m-d h-i-s');
         $updated_at = date('Y-m-d h-i-s');
         if($request->ID != ""){
-            if(DB::update("UPDATE `tinh` SET `Tên`= ?,`Mã_vùng`= ?,`updated_at`= ? WHERE `Mã`= ?",
-                [$name,$mavung,$updated_at,$request->ID]))
+            if(DB::update("UPDATE `tinh` SET `Tên`= ?,`updated_at`= ? WHERE `Mã`= ?",
+                [$name,$updated_at,$request->ID]))
                 return \response()->json(['result'=>'1']);
             else
                 return \response()->json(['result'=>'0']);
         }
         else {
-            if( DB::insert("INSERT INTO `tinh`(`Tên`, `Mã_vùng`, `created_at`, `updated_at`) VALUES (?,?,?,?)",
-                [$name,$mavung,$created_at,$updated_at]))
+            if( DB::insert("INSERT INTO `tinh`(`Tên`, `created_at`, `updated_at`) VALUES (?,?,?)",
+                [$name,$created_at,$updated_at]))
             {
                 return \response()->json(['result'=>'1']);
             }
@@ -474,7 +473,7 @@ class AdminController extends Controller
                 if(!DB::select("SELECT * FROM chuyen_xe WHERE Mã = ? AND Mã_xe = ?",[$request->ID,$idxe])) {
                     DB::delete('DELETE FROM ve WHERE Mã_chuyến_xe = ?', [$request->ID]);
                     $loaixes = DB::table('xe')->join('bus_model', 'xe.Mã_loại_xe', '=', 'bus_model.Mã')
-                        ->where('xe.Mã', '=', $idxe)->select('bus_model.Số_hàng', 'bus_model.Số_cột', 'bus_model.Sơ_đồ')
+                        ->where('xe.Mã', '=', $idxe)->select('bus_model.Số_hàng', 'bus_model.Số_cột', 'bus_model.Sơ_đồ','bus_model.Loại_ghế')
                         ->get();
                     foreach ($loaixes as $row) {
                         $loaixe = (array)$row;
@@ -482,16 +481,23 @@ class AdminController extends Controller
                     $sodo = $loaixe["Sơ_đồ"];
                     $row = intval($loaixe["Số_hàng"]);
                     $col = intval($loaixe["Số_cột"]);
+                    $loaighe = $loaixe["Loại_ghế"];
                     $trangthai = 0;
+                    $k = 1;
                     for ($i = 0; $i < $row; $i++) {
-                        $k = 1;
+//                        $k = 1;
                         for ($j = 0; $j < $col; $j++) {
                             if ($i * $col + $j == 0)
                                 continue;
                             if ($sodo[$i * $col + $j] == 1) {
-                                $vitri = ($i + 1) . '-' . ($k);
+                                $vitri = 'A-' . ($k);
                                 DB::insert("INSERT INTO `ve`(`Mã_chuyến_xe`, `Vị_trí_ghế`, `Trạng_thái`, `created_at`, `updated_at`) VALUES (?,?,?,?,?)",
                                     [$request->ID, $vitri, $trangthai, $created_at, $updated_at]);
+                                if($loaighe==1){
+                                    $vitri = 'B-' . ($k);
+                                    DB::insert("INSERT INTO `ve`(`Mã_chuyến_xe`, `Vị_trí_ghế`, `Trạng_thái`, `created_at`, `updated_at`) VALUES (?,?,?,?,?)",
+                                        [$request->ID, $vitri, $trangthai, $created_at, $updated_at]);
+                                }
                                 $k++;
                             }
                         }
@@ -524,7 +530,7 @@ class AdminController extends Controller
                     'updated_at' => $updated_at
                 ]);
                 $loaixes = DB::table('xe')->join('bus_model','xe.Mã_loại_xe','=','bus_model.Mã')
-                    ->where('xe.Mã','=',$idxe)->select('bus_model.Số_hàng','bus_model.Số_cột','bus_model.Sơ_đồ')
+                    ->where('xe.Mã','=',$idxe)->select('bus_model.Số_hàng','bus_model.Số_cột','bus_model.Sơ_đồ','bus_model.Loại_ghế')
                     ->get();
                 foreach ($loaixes as $row){
                     $loaixe = (array)$row;
@@ -532,16 +538,23 @@ class AdminController extends Controller
                 $sodo = $loaixe["Sơ_đồ"];
                 $row = intval($loaixe["Số_hàng"]);
                 $col  = intval($loaixe["Số_cột"]);
+                $loaighe = $loaixe["Loại_ghế"];
                 $trangthai = 0;
+                $k = 1;
                 for ($i = 0;$i<$row;$i++){
-                    $k = 1;
+//                    $k = 1;
                     for ($j = 0;$j<$col;$j++){
                         if($i*$col+$j == 0)
                             continue;
                         if($sodo[$i*$col+$j]==1){
-                            $vitri = ($i+1).'-'.($k);
+                            $vitri = 'A-'.($k);
                             DB::insert("INSERT INTO `ve`(`Mã_chuyến_xe`, `Vị_trí_ghế`, `Trạng_thái`, `created_at`, `updated_at`) VALUES (?,?,?,?,?)",
                                 [$id,$vitri,$trangthai,$created_at,$updated_at]);
+                            if($loaighe==1){
+                                $vitri = 'B-' . ($k);
+                                DB::insert("INSERT INTO `ve`(`Mã_chuyến_xe`, `Vị_trí_ghế`, `Trạng_thái`, `created_at`, `updated_at`) VALUES (?,?,?,?,?)",
+                                    [$id, $vitri, $trangthai, $created_at, $updated_at]);
+                            }
                             $k++;
                         }
                     }
@@ -549,8 +562,8 @@ class AdminController extends Controller
                 return redirect()->back()->with('alert','Thêm thành công!');
             }  catch (\Exception $e) {
                 /*return \response()->json(['result'=>'0']);*/
-                return redirect()->back()->with('alert','Thêm thất bại!');
-                /*die($e);*/
+                /*return redirect()->back()->with('alert','Thêm thất bại!');*/
+                die($e);
             }
         }
     }

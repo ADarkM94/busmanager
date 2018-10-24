@@ -25,8 +25,8 @@
 <div class="container-fluid">
     <div class="header">
         <div class="row">
-            <h3 class="col-lg-4"><a href="{{asset('admin/')}}">Quản trị viên</a></h3>
-            <h5 class="col-lg-4"><img src="{{asset('/images/icons/luggage.png')}}" height="30" alt="icon">AwesomeTravel</h5>
+            <h3 class="col-lg-4"><a href="{{asset('admin/')}}">AWE Admin</a></h3>
+            <h5 class="col-lg-4"><a href="{{url('/')}}" title="Chuyển về trang khách hàng"><img src="{{asset('/images/icons/luggage.png')}}" height="30" alt="icon">AwesomeTravel</a></h5>
             <div class="col-lg-4 userzone">
                 <span><span class="glyphicon glyphicon-user"></span>Phan Anh Minh
                     <ul>
@@ -80,14 +80,14 @@
                     <li class="option" onclick="change(this)">Nhập vé</li>
                 </ul>
             </span> -->
-            <span><a href="{{url('/')}}">Trang chủ</a></span>
+           {{-- <span><a href="{{url('/')}}">Trang chủ</a></span>--}}
             @yield('content')
         </div>
     </div>
 </div>
 @yield('excontent')
 <script>
-    document.getElementsByClassName("container-fluid")[0].style.paddingTop=document.getElementsByClassName("header")[0].clientHeight+30+"px";
+    document.getElementsByClassName("container-fluid")[0].style.paddingTop=document.getElementsByClassName("header")[0].clientHeight+15+"px";
     document.getElementsByClassName("container-fluid")[0].style.paddingBottom= "15px";
     function pqDatePicker(ui) {
         var $this = $(this);

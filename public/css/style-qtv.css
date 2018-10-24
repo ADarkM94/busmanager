@@ -22,10 +22,11 @@ a:hover, a:visited {
     left: 0;
     width: 100%;
     margin: 0;
+    border-top: 7.5px solid #004964;
 }
 .header h3 {
-    padding-left: 5em;
-    text-align: center;
+    padding-left: 2em;
+    text-align: left;
     font-size: 1.5em;
 }
 .row > * {
@@ -646,6 +647,38 @@ a:hover, a:visited {
 .thongke {
     padding: 0;
     margin: 0 -15px;
+}
+.nutthaotac {
+    font-size: 1em;
+    position: absolute;
+    top: .4em;
+    right: 2em;
+}
+.nutthaotac > a {
+    text-decoration: none;
+    display: inline-block;
+    padding: .1em 1em;
+    line-height: 2em;
+    background: white;
+    box-shadow: 2px 2px 5px black;
+    margin: 0 .1em;
+    color: #004964;
+    transition: .2s;
+    border-radius: 5px;
+}
+.nutthaotac > a:hover {
+    background: #004964;
+    color: white;
+}
+.nutthaotac > a:active {
+    transform: translate(0,1px);
+}
+/*table.pq-grid-header-table {
+    background: #004964;
+    color: white;
+}*/
+.filterstyle {
+    height: 2em;
 }
 @keyframes theanimation {
     0% { background: linear-gradient(to top right,#a2a2a2,#d2d2d2,#dddddd,#c2c2c2,#a2a2a2);}
