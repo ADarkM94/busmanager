@@ -10,6 +10,3 @@
         </div>
     </div>
 @endsection
-@section('script')
-    <script type="text/javascript" src="js/js.js"></script>
-@endsection

@@ -27,7 +27,123 @@ class Controller extends BaseController
 //    {
 //        $this->middleware('auth');
 //    }
+    public function Index(){
+        $tinh = DB::select("SELECT Tên FROM tinh");
+        return view('tttn-web.index',["tinh" => $tinh]);
+    }
+    public function Chuyenxe1(Request $request){
+        $Noidi = $request->Noidi;
+        $Noiden = $request->Noiden;
+        $Thoigian =  date('Y-m-d',strtotime($request->Ngaydi));
+        $Chuyenxe = DB::table("chuyen_xe")->join("lo_trinh","chuyen_xe.Mã_lộ_trình","=","lo_trinh.Mã")->join("xe","chuyen_xe.Mã_xe","=","xe.Mã")
+            ->join("bus_model","xe.Mã_loại_xe","=","bus_model.Mã")
+            ->where("Nơi_đi","=", $Noidi)
+            ->where("Nơi_đến","=",$Noiden)
+            ->where("Trạng_thái","=","0")
+            ->where("is_del","=",0)
+            ->where('Ngày_xuất_phát','=',$Thoigian)
+            ->select("Nơi_đi","Nơi_đến","Ngày_xuất_phát","Giờ_xuất_phát","chuyen_xe.Mã","Tiền_vé","Loại_ghế","Biển_số")
+            ->get();
+        return view('tttn-web.chuyenxe',["Chuyenxe" => $Chuyenxe]);
+    }
+    public function Chuyenxe2(Request $request){
+        $Noidi = $request->Noidi;
+        $Noiden = $request->Noiden;
+        $Giuong = $request->Giuong;
+        $Thoigian =  date('Y-m-d',strtotime($request->Ngaydi));
+        $Chuyenxe = DB::table("chuyen_xe")->join("lo_trinh","chuyen_xe.Mã_lộ_trình","=","lo_trinh.Mã")->join("xe","chuyen_xe.Mã_xe","=","xe.Mã")
+            ->join("bus_model","xe.Mã_loại_xe","=","bus_model.Mã")
+            ->where("Nơi_đi","=", $Noidi)
+            ->where("Nơi_đến","=",$Noiden)
+            ->where("Trạng_thái","=","0")
+            ->where("is_del","=",0)
+            ->where('Ngày_xuất_phát','=',$Thoigian)
+            ->where('bus_model.Loại_ghế','=',$Giuong)
+            ->select("Nơi_đi","Nơi_đến","Ngày_xuất_phát","Giờ_xuất_phát","chuyen_xe.Mã","Tiền_vé","Loại_ghế","Biển_số")
+            ->get();
+        return view('tttn-web.chuyenxe',["Chuyenxe" => $Chuyenxe]);
+    }
+    public function Datve() {
+          $tinh = DB::select("SELECT Tên FROM tinh");
+        return view('tttn-web.datve',["tinh" => $tinh]);
+    }
+    public function Chonve($id){
+        $chonve = DB::table("chuyen_xe")->join("lo_trinh","chuyen_xe.Mã_lộ_trình","=","lo_trinh.Mã")->join("xe","chuyen_xe.Mã_xe","=","xe.Mã")->join("bus_model","xe.Mã_loại_xe","=","bus_model.Mã")->where("chuyen_xe.Mã","=",$id)->select("Ngày_xuất_phát","Giờ_xuất_phát","Nơi_đến","Nơi_đi","Loại_ghế","Tiền_vé")->get();
+        $sodo = DB::table("chuyen_xe")->join("xe","chuyen_xe.Mã_xe","=","xe.Mã")->join("bus_model","xe.Mã_loại_xe","=","bus_model.Mã")->where("chuyen_xe.Mã","=",$id)->select("Sơ_đồ","Loại_ghế")->get();
+        $ve = DB::table("chuyen_xe")->join("ve","chuyen_xe.Mã","=","ve.Mã_chuyến_xe")->where("chuyen_xe.Mã","=",$id)->select("Vị_trí_ghế","ve.Trạng_thái","ve.Mã","ve.Mã_khách_hàng")->get();
+        return view('tttn-web.chonve',['chonve'=> $chonve,'ve'=>$ve,'sodo'=>$sodo,'id'=>$id]);
+    }
+    public function xulydatve(Request $request){
+            $ma = $request -> MA;
+            $makh = $request -> MAKH;
+            DB::update("UPDATE `ve` SET `Trạng_thái`= ?,`Mã_khách_hàng`= ? WHERE `Mã`= ?",
+                    [2,$makh,$ma]);
+            return \response()->json(['kq'=>1]);
+        }
+     
+    public function xulydatve2(Request $request){
+       
 
+            $ma = $request -> MA;
+            DB::update("UPDATE `ve` SET `Trạng_thái`= ?,`Mã_khách_hàng`= ? WHERE `Mã`= ?",
+                    [0,Null,$ma]);
+            return \response()->json(['kq'=>1]);
+
+    }
+    public function chondatve(Request $request){
+        $id = $request-> ID;
+        $mang = $request-> MANG;
+        $makh = $request -> MAKH;
+        $dodai = $request -> DODAI;
+        for($i=0;$i<$dodai;$i++){
+            if($mang[$i] != null){
+               DB::update("UPDATE `ve` SET `Trạng_thái`= ?,`Mã_khách_hàng`= ? WHERE `Mã`= ?",
+                    [1,$makh,$mang[$i]]); 
+            }
+        }
+        DB::table("ve")->where("Mã_khách_hàng","=","$makh")->where("Trạng_thái","=","2")->update(["Trạng_thái"=>1]);
+        return \response()->json(['id'=>$id,'makh'=>$makh]);
+    }
+    public function thongtinve($id,$makh){
+         $chonve = DB::table("chuyen_xe")->join("lo_trinh","chuyen_xe.Mã_lộ_trình","=","lo_trinh.Mã")->join("xe","chuyen_xe.Mã_xe","=","xe.Mã")->join("bus_model","xe.Mã_loại_xe","=","bus_model.Mã")->where("chuyen_xe.Mã","=",$id)->select("Ngày_xuất_phát","Giờ_xuất_phát","Nơi_đến","Nơi_đi","Loại_ghế","Tiền_vé")->get();
+         $vedadat = DB::table("ve")->where("Mã_chuyến_xe","=",$id)->where("Mã_khách_hàng","=",$makh)->select("Vị_trí_ghế")->get();
+        return view('tttn-web.thongtinve',["chonve" => $chonve,"vedadat"=>$vedadat]);
+    }
+    /*dangky*/
+    public function dangky(Request $request){
+        $sdt = $request->SDT;
+        $mk = $request->MK;
+        $kt = DB::select("SELECT * FROM customer WHERE Sđt = ? ",[$sdt]);
+        if(!$kt){
+            $account = new Khachhang;
+            $account["Sđt"] = $sdt;
+            $account["Password"] = md5($mk);
+            $account->save();
+            return \response()->json(['kq'=>1]);
+           
+        }
+        else{
+            return \response()->json(['kq'=>0]);
+        }
+    }
+    /*dangnhap*/
+    public function dangnhap(Request $request){
+        $dndt = $request->DNDT;
+        $dnmk = md5($request->DNMK);
+        $dnkt = DB::select("SELECT * FROM customer WHERE Sđt = ? AND Password = ?",[$dndt,$dnmk]);
+        if($dnkt){
+            $makh = $dnkt[0]->Mã;
+            $sdt = $dnkt[0]->Sđt;
+            $request->session()->put("makh", $makh);
+            $request->session()->put("sdt", $sdt);
+            return \response()->json(['kq'=>1,'sdt'=>$sdt]);
+        }
+        else{
+            return \response()->json(['kq'=>0]);
+        }
+
+    }
+    /***/
     public function checkConnection(){
         try {
 

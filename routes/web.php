@@ -15,25 +15,31 @@
     // return view('welcome');
 // });
 /* Bắt đầu phần Route cho trang khách hàng */
-Route::get('/', function () {
-	return view('tttn-web.index');
-});
 
-Route::get('/datve', function () {
-	return view('tttn-web.datve');
-});
+Route::get('/','Controller@Index')->name("home");
+
+Route::get('/datve','Controller@Datve');
 
 Route::get('/lienhe', function () {
     return view('tttn-web.lienhe');
 });
 
-Route::get('/chuyenxe', function () {
-    return view('tttn-web.chuyenxe');
-});
+Route::post('/chuyenxe', 'Controller@Chuyenxe1')->name('chuyenxe');
+Route::post('/chuyenxe1', 'Controller@Chuyenxe2')->name('chuyenxe1');
 
-Route::get('/chonve', function () {
-    return view('tttn-web.chonve');
-});
+Route::get('/chonve/{id}','Controller@Chonve')->name('chonve');
+
+Route::post('/xulydatve','Controller@xulydatve')->name('xulydatve');
+Route::post('/xulydatve2','Controller@xulydatve2')->name('xulydatve2');
+Route::post('/chondatve','Controller@chondatve')->name('chondatve');
+Route::get('/thongtinve/{id}/{makh}','Controller@thongtinve');
+Route::post('/dangky','Controller@dangky')->name('dangky');
+Route::post('/dangnhap','Controller@dangnhap')->name('dangnhap');
+Route::get('logout', function(){
+    Request::session()->flush();
+    $tinh = DB::select("SELECT Tên FROM tinh");
+    return redirect(route("home"));
+})->name('logout');
 
 Route::get('/gioithieu', function () {
     return view('tttn-web.gioithieu');

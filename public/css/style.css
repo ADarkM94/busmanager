@@ -429,12 +429,8 @@ a{
 	width: 75%;
 	margin-left: 3em;
 	border-radius: 1em;
-}
-.chonloaixe form{
 	text-align: left;
-	margin-left: 1em;
-	margin-top: 1em;
-	margin-bottom: 1em;
+	padding-left: 20%;
 }
 .chonloaixe input:hover{
 	cursor: pointer;
@@ -467,6 +463,8 @@ a{
     padding: 8px;
     text-align: center;
     position: relative;
+    background: #f57812;
+    color: #FFF;
 }
 .chuyenxemain td{
 	border: 1px solid #dddddd;
@@ -553,11 +551,15 @@ a{
 	box-shadow: 0 0 2em #CCC;
 	float: left;
 	margin-left: 2%;
+	padding-bottom: 2em;
 }
 .chonveright h3{
 	text-align: center;
 	color: #000;
 }
+/* .chonveright table{
+	background: rgb(0,64,87);
+} */
 .chonveright ul{
 	list-style-type: none;
 	margin-left: 1em;
@@ -568,12 +570,12 @@ a{
 	width: 30%;
 }
 .loaigheban{
-    background-color: #ddd;
+    background-color: red;
     padding: 15px;
     border-radius: 5px;
 }
 .loaighetrong{
-    background-color: blue;
+    background-color: #DDD;
     padding: 15px;
     border-radius: 5px;
 }
@@ -593,40 +595,52 @@ a{
 	font-weight: bold;
 }
 .ghe{
-	width: 20%;
-	height: 5em;
-	background: #DDD;
+	width: 15%;
+	height: 7em;
+	background: red;
 	border: none;
 	border-radius: 1em;
 	cursor: pointer;
 }
 .ghetaixe{
-	width: 20%;
-	height: 5em;
-	background:#F3AD45;
+	width: 15%;
+	height: 7em;
+	background-image: url('../images/ghetaixe.png');
+	background-repeat: no-repeat;
+	background-size: 100% auto;
+	/* background:#f57812; */
 	border: none;
 	border-radius: 1em;
+	box-shadow: 0 0 0.5em #CCC;
 }
 .ghetrong{
-	width: 20%;
-	height: 5em;
+	width: 10%;
+	height: 7em;
 	border: none;
 }
 .ghecontrong{
-	width: 20%;
-	height: 5em;
+	width: 15%;
+	height: 7em;
+	background: #DDD;
+	border: none;
+	border-radius: 1em;
+	cursor: pointer;
+}
+.ghecochon{
+	width: 15%;
+	height: 7em;
 	background: blue;
 	border: none;
 	border-radius: 1em;
-	  cursor: pointer;
+	cursor: pointer;
 }
 .ghedangchon{
-	width: 20%;
-	height: 5em;
+	width: 15%;
+	height: 7em;
 	background: green;
 	border: none;
 	border-radius: 1em;
-	  cursor: pointer;
+	cursor: pointer;
 }
 .content{
 	margin-top: 45px;
@@ -723,26 +737,123 @@ a{
 /*buoc*/
 .buoc{
 	width: 100%;
-	padding-top: 3em;
+	padding: 0em;
 }
 .buoc ul{
 	list-style-type: none;
 	width: 80%;
 	margin: auto;
+	padding: 3px;
 }
-.buoc ul li{
-	width: 30%;
+.buoc ul li:not([class~='stay']){
+	width: calc(70% / 3);
 	float: left;
 	height: 50px;
 	background: #f4f4f4;
-	margin-right: 3%;
+	margin: 5%;
 	text-align: center;
 	line-height: 50px;
 	font-size: 18px;
-	border-radius: 25% 50% 50% 25%;
 	margin-bottom: 3em;
+	position: relative;
 }
-
+.buoc ul li:not([class~='stay'])::before {
+	content: "";
+	position: absolute;
+	/*width: 50px;
+	height: 50px;*/
+	border-style: solid;
+	top: 0;
+	right: 100%;
+	border-width: 25px 0 25px 45px ;
+	border-color: #f4f4f4 #f4f4f4 #f4f4f4 transparent;
+}
+.buoc ul li:not([class~='stay'])::after {
+	content: "";
+	position: absolute;
+	/*width: 50px;
+	height: 50px;*/
+	border-style: solid;
+	top: 0;
+	left: 100%;
+	border-width: 25px 0 25px 45px ;
+	border-color: transparent transparent transparent #f4f4f4;
+}
+.stay{
+	width: calc(70% / 3);
+	float: left;
+	height: 50px;
+	background: #f57812; 
+	color: #FFF;
+	margin: 5%;
+	text-align: center;
+	line-height: 50px;
+	font-size: 18px;
+	margin-bottom: 3em;
+	position: relative;
+}
+.stay::before {
+	content: "";
+	position: absolute;
+	/*width: 50px;
+	height: 50px;*/
+	border-style: solid;
+	top: 0;
+	right: 100%;
+	border-width: 25px 0 25px 45px ;
+	border-color: #f57812 #f57812 #f57812 transparent;
+}
+.stay::after {
+	content: "";
+	position: absolute;
+	/*width: 50px;
+	height: 50px;*/
+	border-style: solid;
+	top: 0;
+	left: 100%;
+	border-width: 25px 0 25px 45px ;
+	border-color: transparent transparent transparent #f57812;
+}
+/*thongtinve*/
+.mainthongtinve{
+	width: 60%;
+	min-height: 450px;
+	margin: auto;
+	background: #FFF;
+	text-align: center;
+	border-radius: 0.5em;
+	box-shadow: 0 0 2em #CCC;
+	padding-top: 1em;
+}
+.mainthongtinve h3{
+	text-align: center;
+	color: #000;
+}
+.mainthongtinve button{
+	width: 200px;
+}
+.mainthongtinve i{
+	color: #F3AD45;
+}
+.mainthongtinve span{
+	color: #F3AD45;
+}
+.hienloi{
+	padding-top: 1em;
+	width: 95%;
+	margin: auto;
+	text-align: center;
+	color: red;
+}
+.hienloi .alert{
+	padding: 0.5em;
+	margin:0.3em;
+}
+/* .er{
+	background: #a94442;
+	color: red;
+	width: 100%;
+} */
 @-webkit-keyframes fade {
   from {opacity: .4} 
   to {opacity: 1}
