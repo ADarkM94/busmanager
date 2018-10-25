@@ -47,7 +47,7 @@
                                 <select class="form-control" name="trangthai">
                                     <option value="0">Waiting</option>
                                     <option value="1">Booked</option>
-                                    <option value="2">Compeleted</option>
+                                    <option value="2">Completed</option>
                                     <option value="3">Banned</option>
                                 </select>
                             </div>
@@ -137,6 +137,8 @@
                 align: 'center',
                 filter: {
                     type: 'textbox',
+                    attr: 'placeholder="Tìm theo Nơi đi"',
+                    cls: 'filterstyle',
                     condition: 'contain',
                     listeners: ['keyup']
                 }
@@ -150,6 +152,8 @@
                 align: 'center',
                 filter: {
                     type: 'textbox',
+                    attr: 'placeholder="Tìm theo Nơi đến"',
+                    cls: 'filterstyle',
                     condition: 'contain',
                     listeners: ['keyup']
                 }
@@ -163,6 +167,8 @@
                 align: "center",
                 filter: {
                     type: 'textbox',
+                    attr: 'placeholder="Tìm theo Nhân viên tạo"',
+                    cls: 'filterstyle',
                     condition: 'contain',
                     listeners: ['keyup']
                 }
@@ -176,6 +182,8 @@
                 align: "center",
                 filter: {
                     type: 'textbox',
+                    attr: 'placeholder="Tìm theo Tài xế"',
+                    cls: 'filterstyle',
                     condition: 'contain',
                     listeners: ['keyup']
                 }
@@ -189,6 +197,8 @@
                 align: "center",
                 filter: {
                     type: 'textbox',
+                    attr: 'placeholder="Tìm theo Biển số"',
+                    cls: 'filterstyle',
                     condition: 'contain',
                     listeners: ['keyup']
                 }
@@ -262,6 +272,8 @@
                 align: "center",
                 filter: {
                     type: 'textbox',
+                    attr: 'placeholder="Tìm theo Giờ xuất phát"',
+                    cls: 'filterstyle',
                     condition: 'contain',
                     listeners: ['keyup']
                 }
@@ -275,6 +287,8 @@
                 align: "center",
                 filter: {
                     type: 'textbox',
+                    attr: 'placeholder="Tìm theo Tiền vé"',
+                    cls: 'filterstyle',
                     condition: 'contain',
                     listeners: ['keyup']
                 }
@@ -329,6 +343,42 @@
                 }
             },
             {
+                title: "Trạng thái",
+                width: 100,
+                dataIndx: "Trạng_thái",
+                dataType: "string",
+                editor: false,
+                align: 'center',
+                render: function(ui){
+                    switch(ui.rowData["Trạng_thái"]){
+                        case 0:
+                            return '<small style="font-size: .8em;" class="btn btn-default">Waiting</small>';
+                            break;
+                        case 1:
+                            return '<small style="font-size: .8em;" class="btn btn-success">Booked</small>';
+                            break;
+                        case 2:
+                            return '<small style="font-size: .8em;" class="btn btn-warning">Completed</small>';
+                            break;
+                        case 3:
+                            return '<small style="font-size: .8em;" class="btn btn-danger">Banned</small>';
+                            break;
+                    }
+                },
+                filter: {
+                    type: 'select',
+                    condition: 'equal',
+                    options: [
+                        {'':'All'},
+                        {'0':'Waiting'},
+                        {'1':'Booked'},
+                        {'2':'Completed'},
+                        {'3':'Banned'}
+                    ],
+                    listeners: ['change']
+                }
+            },
+            {
                 title: "Mã chuyến xe",
                 width: 150,
                 dataIndx: "Mã_chuyến_xe",
@@ -337,6 +387,8 @@
                 align: 'center',
                 filter: {
                     type: 'textbox',
+                    attr: 'placeholder="Tìm theo Mã chuyến xe"',
+                    cls: 'filterstyle',
                     condition: 'contain',
                     listeners: ['keyup']
                 }
@@ -350,6 +402,8 @@
                 align: 'center',
                 filter: {
                     type: 'textbox',
+                    attr: 'placeholder="Tìm theo Nhân viên đặt"',
+                    cls: 'filterstyle',
                     condition: 'contain',
                     listeners: ['keyup']
                 }
@@ -363,6 +417,8 @@
                 align: 'center',
                 filter: {
                     type: 'textbox',
+                    attr: 'placeholder="Tìm theo Mã khách hàng"',
+                    cls: 'filterstyle',
                     condition: 'contain',
                     listeners: ['keyup']
                 }
@@ -376,6 +432,8 @@
                 align: "center",
                 filter: {
                     type: 'textbox',
+                    attr: 'placeholder="Tìm theo Vị trí ghế"',
+                    cls: 'filterstyle',
                     condition: 'contain',
                     listeners: ['keyup']
                 }
@@ -413,44 +471,10 @@
                 align: 'center',
                 filter: {
                     type: 'textbox',
+                    attr: 'placeholder="Tìm theo Giá vé"',
+                    cls: 'filterstyle',
                     condition: 'contain',
                     listeners: ['keyup']
-                }
-            },
-            {
-                title: "Trạng thái",
-                width: 100,
-                dataIndx: "Trạng_thái",
-                dataType: "string",
-                editor: false,
-                align: 'center',
-                render: function(ui){
-                  switch(ui.rowData["Trạng_thái"]){
-                      case 0:
-                          return 'Waiting';
-                          break;
-                      case 1:
-                          return 'Booked';
-                          break;
-                      case 2:
-                          return 'Completed';
-                          break;
-                      case 3:
-                          return 'Banned';
-                          break;
-                  }
-                },
-                filter: {
-                    type: 'select',
-                    condition: 'equal',
-                    options: [
-                        {'':'All'},
-                        {'0':'Waiting'},
-                        {'1':'Booked'},
-                        {'2':'Completed'},
-                        {'3':'Banned'}
-                    ],
-                    listeners: ['change']
                 }
             }
             /*{

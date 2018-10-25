@@ -120,6 +120,8 @@
                     align: 'center',
                     filter: {
                         type: 'textbox',
+                        attr: 'placeholder="Tìm theo Tên"',
+                        cls: 'filterstyle',
                         condition: 'contain',
                         listeners: ['keyup']
                     }
@@ -194,7 +196,7 @@
                         return {text: str};
                     }
                 },
-                {
+                /*{
                     title: "Tên đăng nhập",
                     width: 200,
                     dataIndx: "Username",
@@ -206,7 +208,7 @@
                         condition: 'contain',
                         listeners: ['keyup']
                     }
-                },
+                },*/
                 {
                     title: "Email",
                     width: 300,
@@ -216,6 +218,8 @@
                     align: 'center',
                     filter: {
                         type: 'textbox',
+                        attr: 'placeholder="Tìm theo Email"',
+                        cls: 'filterstyle',
                         condition: 'contain',
                         listeners: ['keyup']
                     }
@@ -229,45 +233,53 @@
                     align: 'center',
                     filter: {
                         type: 'textbox',
+                        attr: 'placeholder="Tìm theo Sđt"',
+                        cls: 'filterstyle',
                         condition: 'contain',
                         listeners: ['keyup']
                     }
                 },
                 {
                     title: "Địa chỉ",
-                    width: 100,
+                    width: 200,
                     dataIndx: "Địa_chỉ",
                     dataType: "string",
                     editor: false,
                     align: 'center',
                     filter: {
                         type: 'textbox',
+                        attr: 'placeholder="Tìm theo Địa chỉ"',
+                        cls: 'filterstyle',
                         condition: 'contain',
                         listeners: ['keyup']
                     }
                 },
                 {
                     title: "Chi nhánh",
-                    width: 100,
+                    width: 200,
                     dataIndx: "Chi_nhánh",
                     dataType: "string",
                     editor: false,
                     align: 'center',
                     filter: {
                         type: 'textbox',
+                        attr: 'placeholder="Tìm theo Chi nhánh"',
+                        cls: 'filterstyle',
                         condition: 'contain',
                         listeners: ['keyup']
                     }
                 },
                 {
                     title: "Bằng lái",
-                    width: 100,
+                    width: 150,
                     dataIndx: "Bằng_lái",
                     dataType: "string",
                     editor: false,
                     align: 'center',
                     filter: {
                         type: 'textbox',
+                        attr: 'placeholder="Tìm theo Bằng lái"',
+                        cls: 'filterstyle',
                         condition: 'contain',
                         listeners: ['keyup']
                     }

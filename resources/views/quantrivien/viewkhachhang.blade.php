@@ -82,6 +82,8 @@
                     align: 'center',
                     filter: {
                         type: 'textbox',
+                        attr: 'placeholder="Tìm theo Nơi đi"',
+                        cls: 'filterstyle',
                         condition: 'contain',
                         listeners: ['keyup']
                     }
@@ -95,6 +97,8 @@
                     align: 'center',
                     filter: {
                         type: 'textbox',
+                        attr: 'placeholder="Tìm theo Nơi đến"',
+                        cls: 'filterstyle',
                         condition: 'contain',
                         listeners: ['keyup']
                     }
@@ -108,6 +112,8 @@
                     align: "center",
                     filter: {
                         type: 'textbox',
+                        attr: 'placeholder="Tìm theo Ghế"',
+                        cls: 'filterstyle',
                         condition: 'contain',
                         listeners: ['keyup']
                     }
@@ -121,6 +127,8 @@
                     align: 'center',
                     filter: {
                         type: 'textbox',
+                        attr: 'placeholder="Tìm theo Giá vé"',
+                        cls: 'filterstyle',
                         condition: 'contain',
                         listeners: ['keyup']
                     }

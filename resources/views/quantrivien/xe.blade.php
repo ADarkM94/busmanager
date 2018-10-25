@@ -87,6 +87,8 @@
                     align: 'center',
                     filter: {
                         type: 'textbox',
+                        attr: 'placeholder="Tìm theo Biển số"',
+                        cls: 'filterstyle',
                         condition: 'contain',
                         listeners: ['keyup']
                     }

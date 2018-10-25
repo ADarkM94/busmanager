@@ -6,12 +6,12 @@
         }
     </style>
     <div class="content show row">
-        <div class="col-lg-3">
+        <div class="col-lg-2">
             @if(session('alert'))
                 {!! session('alert') !!}
             @endif
         </div>
-        <form class="col-lg-6" name="ttchuyenxe" action="{{route('addchuyenxexl')}}" method="post">
+        <form class="col-lg-8" name="ttchuyenxe" action="{{route('addchuyenxexl')}}" method="post">
             @csrf
             <fieldset>
                 <legend><?php echo isset($ttchuyenxe)? 'Sửa Thông Tin Chuyến Xe':'Thêm Chuyến Xe';?></legend>
@@ -22,27 +22,31 @@
                     ?>
                     <input type="hidden" name="ID" value="{{$ttchuyenxe['Mã']}}">
                 @endisset
-                <label>Mã Lộ trình</label>
-                {{-- <input type="hidden" name="idlotrinh" value="{{isset($ttchuyenxe['Nơi_đi'])? $ttchuyenxe['Mã_lộ_trình']:''}}">--}}
-                <input type="text" list="lotrinh" class="form-control"  name="lotrinh" value="{{isset($ttchuyenxe['Nơi_đi'])? $ttchuyenxe['Mã_lộ_trình']:''}}" placeholder="Lộ trình">
-                <br>
-                <label>Mã Tài xế</label>
-                {{-- <input type="hidden" name="idtaixe" value="{{isset($ttchuyenxe['Tài_xế'])? $ttchuyenxe['Mã_tài_xế']:''}}">--}}
-                <input type="text" list="taixe" class="form-control" name="taixe" value="{{isset($ttchuyenxe['Tài_xế'])? $ttchuyenxe['Mã_tài_xế']:''}}" placeholder="Tài xế">
-                <br>
-                <label>Mã Xe</label>
-                {{--<input type="hidden" name="idxe" value="{{isset($ttchuyenxe['Biển_số'])? $ttchuyenxe['Mã_xe']:''}}">--}}
-                <input type="text" list="xe" class="form-control" name="xe" value="{{isset($ttchuyenxe['Biển_số'])? $ttchuyenxe['Mã_xe']:''}}" placeholder="Chọn xe">
-                <br>
-                <label>Giờ khởi hành</label>
-                <input type="time" class="form-control"  name="starttime" value="{{isset($ttchuyenxe['Giờ_xuất_phát'])? $ttchuyenxe['Giờ_xuất_phát']:''}}">
-                <br>
-                <label>Ngày khởi hành</label>
-                <input type="date" class="form-control"  name="startdate" value="{{isset($ttchuyenxe['Ngày_xuất_phát'])? $ttchuyenxe['Ngày_xuất_phát']:''}}">
-                <br>
-                <label>Tiền vé</label>
-                <input type="number" min="0" class="form-control"  name="tien" value="{{isset($ttchuyenxe['Tiền_vé'])? $ttchuyenxe['Tiền_vé']:''}}">
-                <br>
+                <div class="col-lg-6">
+                    <label>Mã Lộ trình</label>
+                    {{-- <input type="hidden" name="idlotrinh" value="{{isset($ttchuyenxe['Nơi_đi'])? $ttchuyenxe['Mã_lộ_trình']:''}}">--}}
+                    <input type="text" list="lotrinh" class="form-control"  name="lotrinh" value="{{isset($ttchuyenxe['Nơi_đi'])? $ttchuyenxe['Mã_lộ_trình']:''}}" placeholder="Lộ trình">
+                    <br>
+                    <label>Mã Tài xế</label>
+                    {{-- <input type="hidden" name="idtaixe" value="{{isset($ttchuyenxe['Tài_xế'])? $ttchuyenxe['Mã_tài_xế']:''}}">--}}
+                    <input type="text" list="taixe" class="form-control" name="taixe" value="{{isset($ttchuyenxe['Tài_xế'])? $ttchuyenxe['Mã_tài_xế']:''}}" placeholder="Tài xế">
+                    <br>
+                    <label>Mã Xe</label>
+                    {{--<input type="hidden" name="idxe" value="{{isset($ttchuyenxe['Biển_số'])? $ttchuyenxe['Mã_xe']:''}}">--}}
+                    <input type="text" list="xe" class="form-control" name="xe" value="{{isset($ttchuyenxe['Biển_số'])? $ttchuyenxe['Mã_xe']:''}}" placeholder="Chọn xe">
+                    <br>
+                </div>
+                <div class="col-lg-6">
+                    <label>Giờ khởi hành</label>
+                    <input type="time" class="form-control"  name="starttime" value="{{isset($ttchuyenxe['Giờ_xuất_phát'])? $ttchuyenxe['Giờ_xuất_phát']:''}}">
+                    <br>
+                    <label>Ngày khởi hành</label>
+                    <input type="date" class="form-control"  name="startdate" value="{{isset($ttchuyenxe['Ngày_xuất_phát'])? $ttchuyenxe['Ngày_xuất_phát']:''}}">
+                    <br>
+                    <label>Tiền vé</label>
+                    <input type="number" min="0" class="form-control"  name="tien" value="{{isset($ttchuyenxe['Tiền_vé'])? $ttchuyenxe['Tiền_vé']:''}}">
+                    <br>
+                </div>
                 <div id="ticket"></div>
                 <br>
                 <div style="text-align: center">
@@ -51,7 +55,7 @@
                 </div>
             </fieldset>
         </form>
-        <div class="col-lg-3"></div>
+        <div class="col-lg-2"></div>
     </div>
 @endsection
 @section('excontent')
@@ -91,7 +95,7 @@
                                 <select class="form-control" name="trangthai">
                                     <option value="0">Waiting</option>
                                     <option value="1">Booked</option>
-                                    <option value="2">Compeleted</option>
+                                    <option value="2">Completed</option>
                                     <option value="3">Banned</option>
                                 </select>
                             </div>
@@ -124,138 +128,27 @@
                 collapsible: false,
                 showHeader: true,
                 filterModel: {on: true, mode: "AND", header: true},
-                scrollModel: {autoFit: true},
+                // scrollModel: {autoFit: true},
                 resizable: false,
                 roundCorners: false,
-                rowBorders: false,
+                rowBorders: true,
                 columnBorders: false,
                 postRenderInterval: -1,
                 selectionModel: { type: 'row', mode: 'single' },
-                numberCell: { show: false },
-                stripeRows: false,
+                hoverMode: 'row',
+                numberCell: { show: true, title: 'STT', width: 50, align: 'center'},
+                stripeRows: true,
+                freezeCols: 1,
                 /* cellDblClick: function (event,ui) {
                  }*/
             };
             obj.colModel = [
                 {
-                    title: "ID",
-                    width: 50,
-                    dataIndx: "Mã",
-                    dataType: "string",
-                    editor: false,
-                    align: 'center',
-                    filter: {
-                        type: 'textbox',
-                        condition: 'contain',
-                        listeners: ['keyup']
-                    }
-                },
-                {
-                    title: "Mã chuyến xe",
-                    width: 50,
-                    dataIndx: "Mã_chuyến_xe",
-                    dataType: "string",
-                    editor: false,
-                    align: 'center',
-                    filter: {
-                        type: 'textbox',
-                        condition: 'contain',
-                        listeners: ['keyup']
-                    }
-                },
-                {
-                    title: "Nhân viên đặt",
-                    width: 100,
-                    dataIndx: "Nhân_viên_đặt",
-                    dataType: "string",
-                    editor: false,
-                    align: 'center',
-                    filter: {
-                        type: 'textbox',
-                        condition: 'contain',
-                        listeners: ['keyup']
-                    }
-                },
-                {
-                    title: "Mã Khách Hàng",
-                    width: 150,
-                    dataIndx: "Mã_khách_hàng",
-                    dataType: "string",
-                    editor: false,
-                    align: 'center',
-                    filter: {
-                        type: 'textbox',
-                        condition: 'contain',
-                        listeners: ['keyup']
-                    }
-                },
-                {
-                    title: "Vị trí ghế",
-                    width: 100,
-                    dataIndx: "Vị_trí_ghế",
-                    dataType: "string",
-                    editor: false,
-                    align: "center",
-                    filter: {
-                        type: 'textbox',
-                        condition: 'contain',
-                        listeners: ['keyup']
-                    }
-                },
-                {
-                    title: "Giá",
-                    width: 100,
-                    dataIndx: "Tiền_vé",
-                    dataType: "string",
-                    editor: false,
-                    align: 'center',
-                    filter: {
-                        type: 'textbox',
-                        condition: 'contain',
-                        listeners: ['keyup']
-                    }
-                },
-                {
-                    title: "Trạng thái",
-                    width: 100,
-                    dataIndx: "Trạng_thái",
-                    dataType: "string",
-                    editor: false,
-                    align: 'center',
-                    render: function(ui){
-                        switch(ui.rowData["Trạng_thái"]){
-                            case 0:
-                                return 'Waiting';
-                                break;
-                            case 1:
-                                return 'Booked';
-                                break;
-                            case 2:
-                                return 'Completed';
-                                break;
-                            case 3:
-                                return 'Banned';
-                                break;
-                        }
-                    },
-                    filter: {
-                        type: 'select',
-                        condition: 'equal',
-                        options: [
-                            {'':'All'},
-                            {'0':'Waiting'},
-                            {'1':'Booked'},
-                            {'2':'Completed'},
-                            {'3':'Banned'}
-                        ],
-                        listeners: ['change']
-                    }
-                },
-                {
                     title: "Action",
                     width: 100,
                     editor: false,
                     dataIndx: "View",
+                    align: 'center',
                     render: function (ui) {
                         var str = '';
                         str += '<a title="Edit" id="idEditTicket" ><i class="glyphicon glyphicon-edit  text-success" style="padding-right: 5px; cursor: pointer;"></i></a>';
@@ -274,6 +167,117 @@
                                 $("#editve").modal('show');
                             });
                     }
+                },
+                {
+                    title: "Trạng thái",
+                    width: 100,
+                    dataIndx: "Trạng_thái",
+                    dataType: "string",
+                    editor: false,
+                    align: 'center',
+                    render: function(ui){
+                        switch(ui.rowData["Trạng_thái"]){
+                            case 0:
+                                return '<small style="font-size: .8em;" class="btn btn-default">Waiting</small>';
+                                break;
+                            case 1:
+                                return '<small style="font-size: .8em;" class="btn btn-success">Booked</small>';
+                                break;
+                            case 2:
+                                return '<small style="font-size: .8em;" class="btn btn-warning">Completed</small>';
+                                break;
+                            case 3:
+                                return '<small style="font-size: .8em;" class="btn btn-danger">Banned</small>';
+                                break;
+                        }
+                    },
+                    filter: {
+                        type: 'select',
+                        condition: 'equal',
+                        options: [
+                            {'':'All'},
+                            {'0':'Waiting'},
+                            {'1':'Booked'},
+                            {'2':'Completed'},
+                            {'3':'Banned'}
+                        ],
+                        listeners: ['change']
+                    }
+                },
+                {
+                    title: "Mã chuyến xe",
+                    width: 150,
+                    dataIndx: "Mã_chuyến_xe",
+                    dataType: "string",
+                    editor: false,
+                    align: 'center',
+                    filter: {
+                        type: 'textbox',
+                        attr: 'placeholder="Tìm theo Mã chuyến xe"',
+                        cls: 'filterstyle',
+                        condition: 'contain',
+                        listeners: ['keyup']
+                    }
+                },
+                {
+                    title: "Nhân viên đặt",
+                    width: 150,
+                    dataIndx: "Nhân_viên_đặt",
+                    dataType: "string",
+                    editor: false,
+                    align: 'center',
+                    filter: {
+                        type: 'textbox',
+                        attr: 'placeholder="Tìm theo Nhân viên đặt"',
+                        cls: 'filterstyle',
+                        condition: 'contain',
+                        listeners: ['keyup']
+                    }
+                },
+                {
+                    title: "Mã Khách Hàng",
+                    width: 150,
+                    dataIndx: "Mã_khách_hàng",
+                    dataType: "string",
+                    editor: false,
+                    align: 'center',
+                    filter: {
+                        type: 'textbox',
+                        attr: 'placeholder="Tìm theo Mã khách hàng"',
+                        cls: 'filterstyle',
+                        condition: 'contain',
+                        listeners: ['keyup']
+                    }
+                },
+                {
+                    title: "Vị trí ghế",
+                    width: 100,
+                    dataIndx: "Vị_trí_ghế",
+                    dataType: "string",
+                    editor: false,
+                    align: "center",
+                    filter: {
+                        type: 'textbox',
+                        attr: 'placeholder="Tìm theo Vị trí ghế"',
+                        cls: 'filterstyle',
+                        condition: 'contain',
+                        listeners: ['keyup']
+                    }
+                },
+                {
+                    title: "Giá",
+                    width: 200,
+                    dataIndx: "Tiền_vé",
+                    dataType: "string",
+                    editor: false,
+                    align: 'center',
+                    filter: {
+                        type: 'textbox',
+                        attr: 'placeholder="Tìm theo Giá vé"',
+                        cls: 'filterstyle',
+                        condition: 'contain',
+                        listeners: ['keyup']
+                    }
                 }
             ];
             $(function () {
@@ -283,7 +287,7 @@
                     sorting: "local",
                     sortDir: "down"
                 };
-                obj.pageModel = {type: 'local', rPP: 10, rPPOptions: [10, 20, 30, 50]};
+                // obj.pageModel = {type: 'local', rPP: 10, rPPOptions: [10, 20, 30, 50]};
                 var $grid = $("#ticket").pqGrid(obj);
                 $grid.pqGrid("refreshDataAndView");
             });
@@ -299,7 +303,7 @@
                             sorting: "local",
                             sortDir: "down"
                         };
-                        obj.pageModel = {type: 'local', rPP: 10, rPPOptions: [10, 20, 30, 50]};
+                        // obj.pageModel = {type: 'local', rPP: 10, rPPOptions: [10, 20, 30, 50]};
                         var $grid = $("#ticket").pqGrid(obj);
                         $grid.pqGrid("refreshDataAndView");
                     }

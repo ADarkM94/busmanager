@@ -162,6 +162,8 @@
                     align: 'center',
                     filter: {
                         type: 'textbox',
+                        attr: 'placeholder="Tìm theo Tên loại"',
+                        cls: 'filterstyle',
                         condition: 'contain',
                         listeners: ['keyup']
                     }
@@ -175,6 +177,8 @@
                     align: 'center',
                     filter: {
                         type: 'textbox',
+                        attr: 'placeholder="Tìm theo Số ghế"',
+                        cls: 'filterstyle',
                         condition: 'contain',
                         listeners: ['keyup']
                     }
@@ -188,6 +192,8 @@
                     align: 'center',
                     filter: {
                         type: 'textbox',
+                        attr: 'placeholder="Tìm theo Số hàng"',
+                        cls: 'filterstyle',
                         condition: 'contain',
                         listeners: ['keyup']
                     }
@@ -201,6 +207,8 @@
                     align: 'center',
                     filter: {
                         type: 'textbox',
+                        attr: 'placeholder="Tìm theo Số cột"',
+                        cls: 'filterstyle',
                         condition: 'contain',
                         listeners: ['keyup']
                     }

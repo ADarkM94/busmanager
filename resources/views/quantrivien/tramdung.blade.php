@@ -71,6 +71,8 @@
                     align: 'center',
                     filter: {
                         type: 'textbox',
+                        attr: 'placeholder="Tìm theo Tên"',
+                        cls: 'filterstyle',
                         condition: 'contain',
                         listeners: ['keyup']
                     }
@@ -96,6 +98,8 @@
                     align: 'center',
                     filter: {
                         type: 'textbox',
+                        attr: 'placeholder="Tìm theo Nhân viên tạo"',
+                        cls: 'filterstyle',
                         condition: 'contain',
                         listeners: ['keyup']
                     }
@@ -109,6 +113,8 @@
                     align: 'center',
                     filter: {
                         type: 'textbox',
+                        attr: 'placeholder="Tìm theo Nhân viên sửa"',
+                        cls: 'filterstyle',
                         condition: 'contain',
                         listeners: ['keyup']
                     }
