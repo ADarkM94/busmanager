@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TicketSuggestion extends Controller
 {
@@ -119,5 +120,13 @@ class TicketSuggestion extends Controller
         echo var_dump($similarmatrix).'<br>';
         echo var_dump($normmatrixFull).'<br>';
         echo var_dump($matrixFinal).'<br>';
+    }
+    public static function makeMatrix(){
+        $makhachhang = 10;
+        $machuyenxe = 1;
+        $malotrinh = 2;
+        $maloaixe = 6;
+        $matrix = DB::select(DB::raw("SELECT Vị_trí_ghế,COUNT(*) FROM ve,chuyen_xe,xe WHERE ve.Mã_chuyến_xe = chuyen_xe.Mã AND chuyen_xe.Mã_lộ_trình = {$malotrinh} AND chuyen_xe.Mã_xe = xe.Mã AND xe.Mã_loại_xe = {$maloaixe}  AND ve.Mã_khách_hàng = {$makhachhang} GROUP BY Vị_trí_ghế"));
+        echo print_r($matrix);
     }
 }
