@@ -100,3 +100,6 @@ Route::get('ticket', function (){
     ];
     App\Http\Controllers\TicketSuggestion::ticketSuggestion($matrix);
 });
+/* Route::get('test11', function(){
+	return response()->json(0);
+}); */
