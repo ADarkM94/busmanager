@@ -493,12 +493,23 @@ class AdminController extends Controller
                                 $vitri = 'A-' . ($k);
                                 DB::insert("INSERT INTO `ve`(`Mã_chuyến_xe`, `Vị_trí_ghế`, `Trạng_thái`, `created_at`, `updated_at`) VALUES (?,?,?,?,?)",
                                     [$request->ID, $vitri, $trangthai, $created_at, $updated_at]);
-                                if($loaighe==1){
+                                $k++;
+                            }
+                        }
+                    }
+                    if($loaighe==1){
+                        $k = 1;
+                        for ($i = 0; $i < $row; $i++) {
+//                        $k = 1;
+                            for ($j = 0; $j < $col; $j++) {
+                                if ($i * $col + $j == 0)
+                                    continue;
+                                if ($sodo[$i * $col + $j] == 1) {
                                     $vitri = 'B-' . ($k);
                                     DB::insert("INSERT INTO `ve`(`Mã_chuyến_xe`, `Vị_trí_ghế`, `Trạng_thái`, `created_at`, `updated_at`) VALUES (?,?,?,?,?)",
                                         [$request->ID, $vitri, $trangthai, $created_at, $updated_at]);
+                                    $k++;
                                 }
-                                $k++;
                             }
                         }
                     }
@@ -550,12 +561,23 @@ class AdminController extends Controller
                             $vitri = 'A-'.($k);
                             DB::insert("INSERT INTO `ve`(`Mã_chuyến_xe`, `Vị_trí_ghế`, `Trạng_thái`, `created_at`, `updated_at`) VALUES (?,?,?,?,?)",
                                 [$id,$vitri,$trangthai,$created_at,$updated_at]);
-                            if($loaighe==1){
+                            $k++;
+                        }
+                    }
+                }
+                if($loaighe==1){
+                    $k = 1;
+                    for ($i = 0; $i < $row; $i++) {
+//                        $k = 1;
+                        for ($j = 0; $j < $col; $j++) {
+                            if ($i * $col + $j == 0)
+                                continue;
+                            if ($sodo[$i * $col + $j] == 1) {
                                 $vitri = 'B-' . ($k);
                                 DB::insert("INSERT INTO `ve`(`Mã_chuyến_xe`, `Vị_trí_ghế`, `Trạng_thái`, `created_at`, `updated_at`) VALUES (?,?,?,?,?)",
-                                    [$id, $vitri, $trangthai, $created_at, $updated_at]);
+                                    [$request->ID, $vitri, $trangthai, $created_at, $updated_at]);
+                                $k++;
                             }
-                            $k++;
                         }
                     }
                 }
