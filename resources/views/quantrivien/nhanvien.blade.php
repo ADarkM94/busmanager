@@ -3,12 +3,14 @@
     <div class="content nhanvien row show" style="overflow: hidden; position: relative; padding: 3em 1em 1em;">
         <h4 style="padding: .5em; position: absolute; top: 0; left: 0; width: 100%;">Bảng Nhân Viên</h4>
         <div id="employee"></div>
-        <a href="javascript:void(0)" onclick="window.open('{{url("admin/addnhanvien")}}')" style="padding: .2em 1em; line-height: 2em; background: white; font-size: 1em; position: absolute; top: .2em; right: 9em; box-shadow: 0 0 5px black;" title="Thêm Nhân Viên">
-            <i class="glyphicon glyphicon-plus"></i>Thêm
-        </a>
-        <a href="javascript:void(0)" onclick="refreshNV()" style="padding: .2em 1em; line-height: 2em; background: white; font-size: 1em; position: absolute; top: .2em; right: 2em; box-shadow: 0 0 5px black;" title="Làm Mới">
-            <i class="glyphicon glyphicon-refresh"></i>Refresh
-        </a>
+        <div class="nutthaotac" style="padding-right: 0;">
+            <a href="javascript:void(0)" onclick="window.open('{{url("admin/addnhanvien")}}')" title="Thêm Nhân Viên">
+                <i class="glyphicon glyphicon-plus"></i>Thêm
+            </a>
+            <a href="javascript:void(0)" onclick="refreshNV()" title="Làm Mới">
+                <i class="glyphicon glyphicon-refresh"></i>Refresh
+            </a>
+        </div>
     </div>
 @endsection
 @section('excontent')

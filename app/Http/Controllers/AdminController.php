@@ -353,19 +353,20 @@ class AdminController extends Controller
         $noidi = $request->noidi;
         $noiden = $request->noiden;
         $employeeid = $request->employeeID;
+        $thoigiandi = $request->thoigiandi;
         $busstops = $request->busstops;
         $created_at = date('Y-m-d h-i-s');
         $updated_at = date('Y-m-d h-i-s');
         if($request->ID != ""){
-            if(DB::update("UPDATE `lo_trinh` SET `Nơi_đi`= ?,`Nơi_đến`= ?,`Các_trạm_dừng_chân`= ?,`Mã_nhân_viên_chỉnh_sửa`= ?,`updated_at`= ? WHERE `Mã`= ?",
-                [$noidi,$noiden,$busstops,$employeeid,$updated_at,$request->ID]))
+            if(DB::update("UPDATE `lo_trinh` SET `Nơi_đi`= ?,`Nơi_đến`= ?,`Thời_gian_đi_dự_kiến`= ?,`Các_trạm_dừng_chân`= ?,`Mã_nhân_viên_chỉnh_sửa`= ?,`updated_at`= ? WHERE `Mã`= ?",
+                [$noidi,$noiden,$thoigiandi,$busstops,$employeeid,$updated_at,$request->ID]))
                 return \response()->json(['result'=>'1']);
             else
                 return \response()->json(['result'=>'0']);
         }
         else {
-            if( DB::insert("INSERT INTO `lo_trinh`(`Nơi_đi`, `Nơi_đến`, `Các_trạm_dừng_chân`, `Mã_nhân_viên_tạo`, `Mã_nhân_viên_chỉnh_sửa`, `created_at`, `updated_at`) VALUES (?,?,?,?,?,?,?)",
-                [$noidi,$noiden,$busstops,$employeeid,$employeeid,$created_at,$updated_at]))
+            if( DB::insert("INSERT INTO `lo_trinh`(`Nơi_đi`, `Nơi_đến`, `Thời_gian_đi_dự_kiến`, `Các_trạm_dừng_chân`, `Mã_nhân_viên_tạo`, `Mã_nhân_viên_chỉnh_sửa`, `created_at`, `updated_at`) VALUES (?,?,?,?,?,?,?,?)",
+                [$noidi,$noiden,$thoigiandi,$busstops,$employeeid,$employeeid,$created_at,$updated_at]))
             {
                 return \response()->json(['result'=>'1']);
             }

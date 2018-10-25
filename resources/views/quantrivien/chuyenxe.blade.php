@@ -5,20 +5,24 @@
             <h4 style="position: absolute; top: 0; left: 0; width: 100%;">Bảng Chuyến Xe</h4>
             <div id="chuyenxe">
             </div>
-            <a href="javascript:void(0)" onclick="window.open('{{url("admin/addchuyenxe")}}')" style="padding: .2em 1em; line-height: 2em; background: white; font-size: 1em; position: absolute; top: .2em; right: 8em; box-shadow: 0 0 5px black;" title="Thêm Chuyến Xe">
-                <i class="glyphicon glyphicon-plus"></i>Thêm
-            </a>
-            <a href="javascript:void(0)" onclick="refresh(1)" style="padding: .2em 1em; line-height: 2em; background: white; font-size: 1em; position: absolute; top: .2em; right: 2em; box-shadow: 0 0 5px black;" title="Làm Mới">
-                <i class="glyphicon glyphicon-refresh"></i>Reset
-            </a>
+            <div class="nutthaotac">
+                <a href="javascript:void(0)" onclick="window.open('{{url("admin/addchuyenxe")}}')" title="Thêm Chuyến Xe">
+                    <i class="glyphicon glyphicon-plus"></i>Thêm
+                </a>
+                <a href="javascript:void(0)" onclick="refresh(1)" title="Làm Mới">
+                    <i class="glyphicon glyphicon-refresh"></i>Reset
+                </a>
+            </div>
         </div>
         <div style="height: 50%; width: 100%; position: relative; padding: 3em 1em 1em; border-top: 2px solid #004964;">
             <h4 style="position: absolute; top: 0; left: 0; width: 100%;">Bảng Vé Xe</h4>
             <div id="ticket">
             </div>
-            <a href="javascript:void(0)" onclick="refresh(2)" style="padding: .2em 1em; line-height: 2em; background: white; font-size: 1em; position: absolute; top: .2em; right: 2em; box-shadow: 0 0 5px black;" title="Làm Mới">
-                <i class="glyphicon glyphicon-refresh"></i>Reset
-            </a>
+            <div class="nutthaotac">
+                <a href="javascript:void(0)" onclick="refresh(2)" title="Làm Mới">
+                    <i class="glyphicon glyphicon-refresh"></i>Reset
+                </a>
+            </div>
         </div>
     </div>
 @endsection

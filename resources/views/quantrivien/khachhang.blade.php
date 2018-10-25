@@ -3,12 +3,14 @@
     <div class="content khachhang row show" style="overflow: hidden; position: relative; padding: 3em 1em 1em;">
         <h4 style="padding: .5em; position: absolute; top: 0; left: 0; width: 100%;">Bảng Khách Hàng</h4>
         <div id="customer"></div>
-        <a href="javascript:void(0)" onclick="window.open('{{url("admin/addkhachhang")}}')" style="padding: .2em 1em; line-height: 2em; background: white; font-size: 1em; position: absolute; top: .2em; right: 9em; box-shadow: 0 0 5px black;" title="Thêm Khách Hàng">
-            <i class="glyphicon glyphicon-plus"></i> Thêm
-        </a>
-        <a href="javascript:void(0)" onclick="refreshKH()" style="padding: .2em 1em; line-height: 2em; background: white; font-size: 1em; position: absolute; top: .2em; right: 2em; box-shadow: 0 0 5px black;" title="Làm Mới">
-            <i class="glyphicon glyphicon-refresh"></i>Refresh
-        </a>
+        <div class="nutthaotac" style="padding-right: 0;">
+            <a href="javascript:void(0)" onclick="window.open('{{url("admin/addkhachhang")}}')" title="Thêm Khách Hàng">
+                <i class="glyphicon glyphicon-plus"></i>Thêm
+            </a>
+            <a href="javascript:void(0)" onclick="refreshKH()" title="Làm Mới">
+                <i class="glyphicon glyphicon-refresh"></i>Refresh
+            </a>
+        </div>
     </div>
 @endsection
 @section('excontent')

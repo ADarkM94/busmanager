@@ -1,7 +1,7 @@
 @extends('quantrivien.main')
 @section('content')
     <div class="content lotrinh row show">
-        <div class="col-lg-7" style="position: relative; height: 100%; font-size: 1em; padding: 3em 1em 1em;">
+        <div class="col-lg-8" style="position: relative; height: 100%; font-size: 1em; padding: 3em 1em 1em;">
             <h4 style="position: absolute; top: 0; left: 0; width: 100%; padding-left: 1em; text-align: left">Bảng Lộ trình</h4>
             <div id="busroute">
             </div>
@@ -14,7 +14,7 @@
                 </a>
             </div>
         </div>
-        <div class="col-lg-5" style="position: relative; height: 100%; font-size: 1em; padding: 3em 1em 1em; border-left: 2px solid #004964;">
+        <div class="col-lg-4" style="position: relative; height: 100%; font-size: 1em; padding: 3em 1em 1em; border-left: 2px solid #004964;">
             <h4 style="position: absolute; top: 0; left: 0; width: 100%; padding-left: 1em; text-align: left">Bảng Các tỉnh</h4>
             <div id="province">
             </div>
@@ -43,7 +43,7 @@
                     <div class="modal-title">Thông Tin Lộ trình</div>
                 </div>
                 <div class="modal-body">
-                    <form name="addbusroute">
+                    <form name="addbusroute" oninput="minutes.value = sophut.value;hours.value = sogio.value;">
                         <input type="hidden" name="employeeID" value="1">
                         <input type="hidden" name="ID" value="">
                         <div class="row">
@@ -60,12 +60,14 @@
                                 <label>Thời gian di chuyển dự kiến:</label>
                             </div>
                             <div class="col-lg-6" style="width: 50%; text-align: left;">
-                                <label>Giờ</label>
-                                <input type="number" min="0" class="form-control" name="sogio" placeholder="Số giờ" value="0">
+                                <label>Giờ(0-50)</label>
+                                <input type="number" min="0" max="50" class="form-control" id="hours" value="0" readonly>
+                                <input type="range" min="0" max="50" class="form-control" name="sogio" value="0">
                             </div>
                             <div class="col-lg-6" style="width: 50%; text-align: left;">
-                                <label>Phút</label>
-                                <input type="number" min="0" max="60" class="form-control" name="sophut" placeholder="Số phút" value="0">
+                                <label>Phút(0-60)</label>
+                                <input type="number" min="0" max="59" class="form-control" id="minutes" value="0" readonly>
+                                <input type="range" min="0" max="59" class="form-control" name="sophut" value="0">
                             </div>
                         </div>
                         <div class="row" style="padding: 1em 5em;">
@@ -184,6 +186,24 @@
                 }*/
             },
             {
+                title: "Thời gian",
+                width: 150,
+                dataIndx: "Thời_gian_đi_dự_kiến",
+                dataType: "string",
+                editor: false,
+                align: "center",
+                render: function (ui) {
+                    var gio = Math.floor(ui.rowData["Thời_gian_đi_dự_kiến"]/3600000);
+                    var phut = Math.floor((ui.rowData["Thời_gian_đi_dự_kiến"] - gio*3600000)/60000);
+                    return gio+"giờ "+phut+"phút";
+                }
+                /* filter: {
+                     type: 'textbox',
+                     condition: 'contain',
+                     listeners: ['keyup']
+                 }*/
+            },
+            {
                 title: "Thao tác",
                 width: 100,
                 editor: false,
@@ -204,6 +224,11 @@
                         .bind("click", function (evt) {
                             document.forms["addbusroute"]["noidi"].value = rowData["Nơi_đi"];
                             document.forms["addbusroute"]["noiden"].value = rowData["Nơi_đến"];
+                            var thoigian = Math.floor(rowData["Thời_gian_đi_dự_kiến"]/1000);
+                            document.forms["addbusroute"]["sogio"].value = Math.floor(thoigian/3600);
+                            document.getElementById('hours').value = document.forms["addbusroute"]["sogio"].value;
+                            document.forms["addbusroute"]["sophut"].value = (thoigian - Math.floor(thoigian/3600)*3600)/60;
+                            document.getElementById('minutes').value = document.forms["addbusroute"]["sophut"].value;
                             var tramdungs =document.getElementsByClassName("busstops");
                             document.forms["addbusroute"]["ID"].value = rowData["Mã"];
                             var arr = rowData["Các_trạm_dừng_chân"].split(",");
@@ -318,7 +343,7 @@
                 sorting: "local",
                 sortDir: "down"
             };
-            obj2.pageModel = {type: 'local', rPP: 20, rPPOptions: [20, 30, 40, 50]};
+            // obj2.pageModel = {type: 'local', rPP: 20, rPPOptions: [20, 30, 40, 50]};
             var $grid2 = $("#province").pqGrid(obj2);
             $grid2.pqGrid("refreshDataAndView");
         });
@@ -350,7 +375,7 @@
                             sorting: "local",
                             sortDir: "down"
                         };
-                        obj2.pageModel = {type: 'local', rPP: 20, rPPOptions: [20, 30, 40, 50]};
+                        // obj2.pageModel = {type: 'local', rPP: 20, rPPOptions: [20, 30, 40, 50]};
                         var $grid2 = $("#province").pqGrid(obj2);
                         $grid2.pqGrid("refreshDataAndView");
                     }
@@ -369,6 +394,8 @@
             var employeeid = document.forms["addbusroute"]["employeeID"].value;
             var noidi = document.forms["addbusroute"]["noidi"].value;
             var noiden = document.forms["addbusroute"]["noiden"].value;
+            var thoigiandi = document.forms["addbusroute"]["sogio"].value*3600000
+            + document.forms["addbusroute"]["sophut"].value*60000;
             var tramdungs =document.getElementsByClassName("busstops");
             var busstops = [];
             var j =0;
@@ -388,6 +415,7 @@
                     employeeID: employeeid,
                     noidi: noidi,
                     noiden: noiden,
+                    thoigiandi: thoigiandi,
                     busstops: busstops
                 },
                 success: function (data) {
