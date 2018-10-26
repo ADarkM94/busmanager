@@ -14,8 +14,7 @@ a:hover, a:visited {
     background: #004964;
 }
 .header {
-    background: white;
-    color: #004964;
+    color: white;
     padding: .5em;
     position: fixed;
     top: 0;
@@ -23,11 +22,16 @@ a:hover, a:visited {
     width: 100%;
     margin: 0;
     border-top: 7.5px solid #004964;
+	border-bottom: 1px solid #FFA000;
+	background: #004964;
 }
 .header h3 {
     padding-left: 2em;
     text-align: left;
     font-size: 1.5em;
+}
+.header a {
+	color: white;
 }
 .row > * {
     display: inline-block;
@@ -59,6 +63,9 @@ a:hover, a:visited {
     background: white;
     border-radius: .5em;
     border: 1px solid #004964;
+}
+.userzone {
+	visibility: hidden;
 }
 .userzone > span:nth-child(1) {
     position: relative;
@@ -243,10 +250,10 @@ a:hover, a:visited {
 }
 .the {
     padding: 0;
-    border: 1px solid #004964;
+    border: 1px solid #FFA000;
     border-radius: 10px;
-    background: linear-gradient(to top right,#a2a2a2,#d2d2d2,#dddddd,#c2c2c2,#a2a2a2);
-    background: #f3f3f3;
+    /* background: linear-gradient(to top right,#a2a2a2,#d2d2d2,#dddddd,#c2c2c2,#a2a2a2); */
+    background: #FFA000;
 }
 .the a {
     display: block;
@@ -257,18 +264,19 @@ a:hover, a:visited {
 }
 .the a > div > div {
     font-size: 5em;
-    color: #004964;
+    /* color: #004964; */
+	color: rgb(255,200,0);
 }
 .the a > div > p {
     text-align: left;
     margin-bottom: .2em;
     color: white;
-    text-shadow: 0 0 3px lightblue, 0 0 6px darkblue;
+    /* text-shadow: 0 0 3px lightblue, 0 0 6px darkblue; */
 }
-.the:hover {
+/* .the:hover {
     animation: theanimation 1s ease-in-out;
     animation-iteration-count: infinite;
-}
+} */
 /*Xem và chỉnh sửa loại xe*/
 .loaixe > div {
     height: 100%;
