@@ -22,8 +22,9 @@ a:hover, a:visited {
     width: 100%;
     margin: 0;
     border-top: 7.5px solid #004964;
-	border-bottom: 1px solid #FFA000;
+	border-bottom: 1px solid #f57812;
 	background: #004964;
+	z-index: 99;
 }
 .header h3 {
     padding-left: 2em;
@@ -42,7 +43,7 @@ a:hover, a:visited {
 }
 .row > *:nth-child(3) {
     text-align: right;
-    padding-right: 3em;
+    padding-right: 1em;
 }
 .row > *:nth-child(3) > span {
     padding: .1em 1em;
@@ -65,28 +66,70 @@ a:hover, a:visited {
     border: 1px solid #004964;
 }
 .userzone {
-	visibility: hidden;
+	visibility: visible;
+	height: 100%;
 }
 .userzone > span:nth-child(1) {
     position: relative;
-    z-index: 99;
+	padding: 1em;
+	padding-left: 3.5em;
+	border-radius: 5px 5px 0 0;
+	background: #004964;
+	color: white;
+}
+.userzone > span:nth-child(1) > img {
+	position: absolute;
+	top: .375em;
+	left: .375em;
+	height: 2.5em;
+	width: 2.5em;
+	border-radius: 50%;
+	border: 1px solid #004964;
+	background: white;
+}
+.userzone > span:nth-child(1) > i {
+	/* vertical-align: middle; */
 }
 .userzone > span:nth-child(1) > ul{
     display: none;
     position: absolute;
-    top: 100%;
-    right: 0;
-    background: white;
+    top: calc(100%);
+    left: -1px;
+    background: #004964;
+	color: white;
     z-index: 99;
+	width: 100%;
+	border-radius: 0 0 5px 5px;
+	padding-left: 0;
+	box-sizing: content-box;
+	list-style-type: none;
+	text-align: left;
+	border: 1px solid white;
+	border-top: none;
+}
+.userzone > span:nth-child(1) > ul > li {
+	padding: .5em 1em;
+}
+.userzone > span:nth-child(1) > ul > li > i{
+    padding-right: 1em;
+}
+.userzone > span:nth-child(1) > ul > li:hover {
+	background: white;
+	color: #004964;
+}
+/* .userzone > span:nth-child(1):hover {
+	border: 1px solid white;
+	border-bottom: none;
 }
 .userzone > span:nth-child(1):hover > ul{
     display: block;
 }
-.header > hr {
-    border-color: #FFA000;
-    margin: 0;
-    margin-top: .5em;
+.userzone > span:nth-child(1):hover > ul > li {
+	padding: .5em 1em;
 }
+.userzone > span:nth-child(1):hover > ul > li > i{
+    padding-right: 1em;
+} */
 .noidung {
     height: 100%;
     margin: 0;
@@ -229,7 +272,7 @@ a:hover, a:visited {
     border-bottom: 1px solid #004964;
 }
 .selected {
-    background: #FFA000;
+    background: #f57812;
     color: white;
 }
 .show {
@@ -253,7 +296,7 @@ a:hover, a:visited {
     border: 1px solid #FFA000;
     border-radius: 10px;
     /* background: linear-gradient(to top right,#a2a2a2,#d2d2d2,#dddddd,#c2c2c2,#a2a2a2); */
-    background: #FFA000;
+    background: #f57812;
 }
 .the a {
     display: block;
@@ -264,8 +307,8 @@ a:hover, a:visited {
 }
 .the a > div > div {
     font-size: 5em;
-    /* color: #004964; */
-	color: rgb(255,200,0);
+    color: #004964;
+	/* color: rgb(255,200,0); */
 }
 .the a > div > p {
     text-align: left;
@@ -685,9 +728,30 @@ a:hover, a:visited {
     background: #004964;
     color: white;
 }*/
-.filterstyle {
-    height: 2em;
+.pq-grid-center {
+	background: white;
 }
+.pq-grid-header-table {
+}
+.pq-grid-title-row th {
+	background: #004964;
+	color: white;
+}
+.pq-grid-title-row th:hover {
+	background: white;
+	color: #004964;
+}
+.pq-grid-header-search-row td {
+	background: #004964;
+	color: white;
+}
+.pq-grid-header-search-row td:hover {
+	background: white;
+	color: #004964;
+}
+/* .filterstyle {
+    height: 2em;
+} */
 @keyframes theanimation {
     0% { background: linear-gradient(to top right,#a2a2a2,#d2d2d2,#dddddd,#c2c2c2,#a2a2a2);}
     10% { background: linear-gradient(to top right,#a2a2a2,#a2a2a2,#d2d2d2,#dddddd,#c2c2c2);}

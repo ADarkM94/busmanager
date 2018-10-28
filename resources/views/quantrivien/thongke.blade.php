@@ -59,10 +59,10 @@
         </div>
         <div>
             <div class="col-lg-6">
-                <canvas id="bieudo1"></canvas>
+                <canvas id="bieudo1" style="width: 100%; height: 100%;"></canvas>
             </div>
             <div class="col-lg-6">
-                <canvas id="bieudo2"></canvas>
+                <canvas id="bieudo2" style="width: 100%; height: 100%;"></canvas>
             </div>
         </div>
     </div>
@@ -92,77 +92,81 @@
         }
         option[0].classList.add('selected');
         option[0].getElementsByTagName('img')[0].setAttribute('src','{{asset("images/icons/report-hover.png")}}');
-        var buyerData = {
-            labels : ["January","February","March","April","May","June"],
-            datasets : [
-                {
-                    fillColor : "rgba(172,194,132,0.4)",
-                    strokeColor : "#ACC26D",
-                    pointColor : "#fff",
-                    pointStrokeColor : "#9DB86D",
-                    data : [203,156,99,251,305,247]
+		var bieudo1 = document.getElementById('bieudo1');
+		var bieudo2 = document.getElementById('bieudo2');
+		var myChart1 = new Chart(bieudo1, {
+    type: 'line',
+    data: {
+        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+        datasets: [{
+            label: '# of Votes',
+            data: [12, 19, 3, 5, 2, 3],
+            backgroundColor: 'rgba(255, 99, 132, 1)',
+            pointBackgroundColor: [
+                'rgba(0,73,100,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+			pointBorderColor: [
+                'rgba(0,73,100,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1,
+			borderColor: '#FFA000'
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
                 }
-            ]
-        };
-        var bieudo1 = document.getElementById('bieudo1').getContext('2d');
-        var bieudo2 = document.getElementById('bieudo2').getContext('2d');
-        new Chart(bieudo1).Line(buyerData);
-        new Chart(bieudo2).Bar(buyerData);
-        /*var lineChartData = {
-            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-            datasets: [{
-                label: 'My First dataset',
-                borderColor: 'red',
-                backgroundColor: 'red',
-                fill: false,
-                data: [
-                   10,20,15,50,20,30,26
-                ],
-                yAxisID: 'y-axis-1',
-            }, {
-                label: 'My Second dataset',
-                borderColor: 'blue',
-                backgroundColor: 'blue',
-                fill: false,
-                data: [
-                    5,30,21,56,20,10,5
-                ],
-                yAxisID: 'y-axis-2'
             }]
-        };
-
-        window.onload = function() {
-            var ctx = document.getElementById('bieudo2').getContext('2d');
-            window.myLine = Chart.Line(ctx, {
-                data: lineChartData,
-                options: {
-                    responsive: true,
-                    hoverMode: 'index',
-                    stacked: false,
-                    title: {
-                        display: true,
-                        text: 'Chart.js Line Chart - Multi Axis'
-                    },
-                    scales: {
-                        yAxes: [{
-                            type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
-                            display: true,
-                            position: 'left',
-                            id: 'y-axis-1',
-                        }, {
-                            type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
-                            display: true,
-                            position: 'right',
-                            id: 'y-axis-2',
-
-                            // grid line settings
-                            gridLines: {
-                                drawOnChartArea: false, // only want the grid lines for one axis to show up
-                            },
-                        }],
-                    }
+        }
+    }
+});
+var myChart2 = new Chart(bieudo2, {
+    type: 'bar',
+    data: {
+        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+        datasets: [{
+            label: '# of Votes',
+            data: [12, 19, 3, 5, 2, 3],
+            backgroundColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
                 }
-            });
-        };*/
+            }]
+        }
+    }
+});
     </script>
 @endsection

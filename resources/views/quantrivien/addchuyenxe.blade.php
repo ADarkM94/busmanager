@@ -22,6 +22,18 @@
                     ?>
                     <input type="hidden" name="ID" value="{{$ttchuyenxe['Mã']}}">
                 @endisset
+				<div class="row" style="padding-left: 1em; padding-right: 1em;">
+					<div class="col-lg-6">
+					<label>Trạng thái</label>
+					<select name="status" class="form-control">
+						<option value="0" {{(isset($ttchuyenxe['Trạng_thái'])&&$ttchuyenxe['Trạng_thái']==0)? 'selected':''}}>Waiting</option>
+						<option value="1" {{(isset($ttchuyenxe['Trạng_thái'])&&$ttchuyenxe['Trạng_thái']==1)? 'selected':''}}>Running</option>
+						<option value="2" {{(isset($ttchuyenxe['Trạng_thái'])&&$ttchuyenxe['Trạng_thái']==2)? 'selected':''}}>Completed</option>
+						<option value="3" {{(isset($ttchuyenxe['Trạng_thái'])&&$ttchuyenxe['Trạng_thái']==3)? 'selected':''}}>Locked</option>
+					</select>
+					</div>
+				</div>
+				<br>
                 <div class="col-lg-6">
                     <label>Mã Lộ trình</label>
                     {{-- <input type="hidden" name="idlotrinh" value="{{isset($ttchuyenxe['Nơi_đi'])? $ttchuyenxe['Mã_lộ_trình']:''}}">--}}
@@ -49,7 +61,7 @@
                 </div>
                 <div id="ticket"></div>
                 <br>
-                <div style="text-align: center">
+                <div style="text-align: center; clear: both;">
                     <input type="submit" class="btn btn-success" value="<?php echo isset($ttchuyenxe)? 'Sửa Thông Tin Chuyến Xe':'Thêm Chuyến Xe';?>">
                     <input type="button" onclick="location.assign('{{url('/admin/chuyenxe')}}')" class="btn btn-danger" value="Hủy">
                 </div>

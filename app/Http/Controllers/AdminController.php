@@ -425,7 +425,7 @@ class AdminController extends Controller
             ->join('bus_model','xe.Mã_loại_xe','=','bus_model.Mã')
             ->join('employee as employee1','chuyen_xe.Mã_tài_xế','=','employee1.Mã')
             ->where('chuyen_xe.is_del','=','0')
-            ->select('chuyen_xe.Mã','employee.Họ_Tên as Nhân_viên_tạo','employee1.Họ_Tên as Tài_xế','lo_trinh.Nơi_đi','lo_trinh.Nơi_đến','xe.Biển_số','chuyen_xe.Tiền_vé','bus_model.Loại_ghế','chuyen_xe.Ngày_xuất_phát','chuyen_xe.Giờ_xuất_phát')
+            ->select('chuyen_xe.Mã','employee.Họ_Tên as Nhân_viên_tạo','employee1.Họ_Tên as Tài_xế','lo_trinh.Nơi_đi','lo_trinh.Nơi_đến','xe.Biển_số','chuyen_xe.Tiền_vé','bus_model.Loại_ghế','chuyen_xe.Ngày_xuất_phát','chuyen_xe.Giờ_xuất_phát','chuyen_xe.Trạng_thái')
             ->get();
         $ticket = DB::table('ve')->join('chuyen_xe','ve.Mã_chuyến_xe','=','chuyen_xe.Mã')
             ->join('xe','xe.Mã','=','chuyen_xe.Mã_xe')
@@ -446,7 +446,7 @@ class AdminController extends Controller
                 ->join('lo_trinh','chuyen_xe.Mã_lộ_trình','=','lo_trinh.Mã')->join('xe','chuyen_xe.Mã_xe','=','xe.Mã')
                 ->join('employee as employee1','chuyen_xe.Mã_tài_xế','=','employee1.Mã')
                 ->where('chuyen_xe.Mã','=',$id)
-                ->select('chuyen_xe.Mã','chuyen_xe.Mã_nhân_viên_tạo','employee.Họ_Tên as Nhân_viên_tạo','chuyen_xe.Mã_tài_xế','employee1.Họ_Tên as Tài_xế','chuyen_xe.Mã_lộ_trình','lo_trinh.Nơi_đi','lo_trinh.Nơi_đến','chuyen_xe.Mã_xe','xe.Biển_số','chuyen_xe.Ngày_xuất_phát','chuyen_xe.Giờ_xuất_phát','chuyen_xe.Tiền_vé')
+                ->select('chuyen_xe.Mã','chuyen_xe.Mã_nhân_viên_tạo','employee.Họ_Tên as Nhân_viên_tạo','chuyen_xe.Mã_tài_xế','employee1.Họ_Tên as Tài_xế','chuyen_xe.Mã_lộ_trình','lo_trinh.Nơi_đi','lo_trinh.Nơi_đến','chuyen_xe.Mã_xe','xe.Biển_số','chuyen_xe.Ngày_xuất_phát','chuyen_xe.Giờ_xuất_phát','chuyen_xe.Tiền_vé','chuyen_xe.Trạng_thái')
                 ->get();
             $ticket = DB::table('ve')->join('chuyen_xe','ve.Mã_chuyến_xe','=','chuyen_xe.Mã')
                 ->join('xe','xe.Mã','=','chuyen_xe.Mã_xe')
@@ -467,6 +467,7 @@ class AdminController extends Controller
         $startdate = $request->startdate;
         $starttime = $request->starttime;
         $giave = $request->tien;
+		$status = $request->status;
         $created_at = date('Y-m-d h-i-s');
         $updated_at = date('Y-m-d h-i-s');
         if(isset($request->ID)){
@@ -514,12 +515,12 @@ class AdminController extends Controller
                             }
                         }
                     }
-                    DB::update("UPDATE `chuyen_xe` SET `Mã_lộ_trình`= ?,`Mã_tài_xế`= ?,`Mã_xe`= ?,`Tiền_vé`= ?,`Ngày_xuất_phát`= ?,`Giờ_xuất_phát`= ?,`updated_at`= ? WHERE `Mã`= ?",
-                        [$idlotrinh, $idtaixe, $idxe, $giave, $startdate, $starttime, $updated_at, $request->ID]);
+                    DB::update("UPDATE `chuyen_xe` SET `Mã_lộ_trình`= ?,`Mã_tài_xế`= ?,`Mã_xe`= ?,`Tiền_vé`= ?,`Ngày_xuất_phát`= ?,`Giờ_xuất_phát`= ?,`Trạng_thái`= ?,`updated_at`= ? WHERE `Mã`= ?",
+                        [$idlotrinh, $idtaixe, $idxe, $giave, $startdate, $starttime, $status, $updated_at, $request->ID]);
                 }
                 else{
-                    DB::update("UPDATE `chuyen_xe` SET `Mã_lộ_trình`= ?,`Mã_tài_xế`= ?,`Mã_xe`= ?,`Tiền_vé`= ?,`Ngày_xuất_phát`= ?,`Giờ_xuất_phát`= ?,`updated_at`= ? WHERE `Mã`= ?",
-                        [$idlotrinh, $idtaixe, $idxe, $giave, $startdate, $starttime, $updated_at, $request->ID]);
+                    DB::update("UPDATE `chuyen_xe` SET `Mã_lộ_trình`= ?,`Mã_tài_xế`= ?,`Mã_xe`= ?,`Tiền_vé`= ?,`Ngày_xuất_phát`= ?,`Giờ_xuất_phát`= ?,`Trạng_thái`= ?,`updated_at`= ? WHERE `Mã`= ?",
+                        [$idlotrinh, $idtaixe, $idxe, $giave, $startdate, $starttime, $status, $updated_at, $request->ID]);
                 }
             } catch (\Exception $e) {
                 return redirect()->back()->with('alert','Sửa thất bại!');
@@ -538,6 +539,7 @@ class AdminController extends Controller
                     'Tiền_vé' => $giave,
                     'Giờ_xuất_phát' => $starttime,
                     'Ngày_xuất_phát' => $startdate,
+					'Trạng_thái' => $status,
                     'created_at' => $created_at,
                     'updated_at' => $updated_at
                 ]);
@@ -611,7 +613,7 @@ class AdminController extends Controller
                 ->join('bus_model','xe.Mã_loại_xe','=','bus_model.Mã')
                 ->join('employee as employee1','chuyen_xe.Mã_tài_xế','=','employee1.Mã')
                 ->where('chuyen_xe.is_del','=','0')
-                ->select('chuyen_xe.Mã','employee.Họ_Tên as Nhân_viên_tạo','employee1.Họ_Tên as Tài_xế','lo_trinh.Nơi_đi','lo_trinh.Nơi_đến','xe.Biển_số','chuyen_xe.Tiền_vé','bus_model.Loại_ghế','chuyen_xe.Ngày_xuất_phát','chuyen_xe.Giờ_xuất_phát')
+                ->select('chuyen_xe.Mã','employee.Họ_Tên as Nhân_viên_tạo','employee1.Họ_Tên as Tài_xế','lo_trinh.Nơi_đi','lo_trinh.Nơi_đến','xe.Biển_số','chuyen_xe.Tiền_vé','bus_model.Loại_ghế','chuyen_xe.Ngày_xuất_phát','chuyen_xe.Giờ_xuất_phát','chuyen_xe.Trạng_thái')
                 ->get();
             return \response()->json(['msg'=>$chuyenxe]);
         }

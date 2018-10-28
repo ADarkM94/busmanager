@@ -128,6 +128,57 @@
                         });
                 }
             },
+			{
+                title: "Trạng thái",
+                width: 100,
+                dataIndx: "Trạng_thái",
+                dataType: "string",
+                editor: false,
+                align: 'center',
+                render: function(ui){
+                    switch(ui.rowData["Trạng_thái"]){
+                        case 0:
+                            return '<small style="font-size: .8em;" class="btn btn-default">Waiting</small>';
+                            break;
+                        case 1:
+                            return '<small style="font-size: .8em;" class="btn btn-success">Running</small>';
+                            break;
+                        case 2:
+                            return '<small style="font-size: .8em;" class="btn btn-warning">Completed</small>';
+                            break;
+                        case 3:
+                            return '<small style="font-size: .8em;" class="btn btn-danger">Locked</small>';
+                            break;
+                    }
+                },
+                filter: {
+                    type: 'select',
+                    condition: 'equal',
+                    options: [
+                        {'':'All'},
+                        {'0':'Waiting'},
+                        {'1':'Running'},
+                        {'2':'Completed'},
+                        {'3':'Locked'}
+                    ],
+                    listeners: ['change']
+                }
+            },
+			{
+                title: "Mã",
+                width: 130,
+                dataIndx: "Mã",
+                dataType: "string",
+                editor: false,
+                align: 'center',
+                filter: {
+                    type: 'textbox',
+                    attr: 'placeholder="Tìm theo Mã"',
+                    cls: 'filterstyle',
+                    condition: 'contain',
+                    listeners: ['keyup']
+                }
+            },
             {
                 title: "Nơi đi",
                 width: 150,
