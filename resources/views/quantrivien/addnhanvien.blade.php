@@ -81,7 +81,7 @@
         for (var i = 0; i < option.length; i++) {
             option[i].classList.remove('selected');
         }
-        option[5].classList.add('selected');
-        option[5].getElementsByTagName('img')[0].setAttribute('src','{{asset("images/icons/partnership-hover.png")}}');
+        option[6].classList.add('selected');
+        option[6].getElementsByTagName('img')[0].setAttribute('src','{{asset("images/icons/partnership-hover.png")}}');
     </script>
 @endsection

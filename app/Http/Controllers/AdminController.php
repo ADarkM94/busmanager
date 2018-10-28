@@ -427,12 +427,7 @@ class AdminController extends Controller
             ->where('chuyen_xe.is_del','=','0')
             ->select('chuyen_xe.Mã','employee.Họ_Tên as Nhân_viên_tạo','employee1.Họ_Tên as Tài_xế','lo_trinh.Nơi_đi','lo_trinh.Nơi_đến','xe.Biển_số','chuyen_xe.Tiền_vé','bus_model.Loại_ghế','chuyen_xe.Ngày_xuất_phát','chuyen_xe.Giờ_xuất_phát','chuyen_xe.Trạng_thái')
             ->get();
-        $ticket = DB::table('ve')->join('chuyen_xe','ve.Mã_chuyến_xe','=','chuyen_xe.Mã')
-            ->join('xe','xe.Mã','=','chuyen_xe.Mã_xe')
-            ->join('bus_model','bus_model.Mã','=','xe.Mã_loại_xe')
-            ->select('ve.Mã','ve.Mã_chuyến_xe','ve.Mã_nhân_viên_đặt','ve.Mã_khách_hàng','ve.Sđt_khách_hàng','ve.Vị_trí_ghế','ve.Trạng_thái','chuyen_xe.Tiền_vé','bus_model.Loại_ghế')
-            ->get();
-        return view("quantrivien.chuyenxe",compact('chuyenxe','ticket'));
+        return view("quantrivien.chuyenxe",compact('chuyenxe'));
     }
     public function addchuyenxe($id = "") {
         $lotrinhs = Lotrinh::all();
@@ -467,7 +462,7 @@ class AdminController extends Controller
         $startdate = $request->startdate;
         $starttime = $request->starttime;
         $giave = $request->tien;
-		$status = $request->status;
+        $status = $request->status;
         $created_at = date('Y-m-d h-i-s');
         $updated_at = date('Y-m-d h-i-s');
         if(isset($request->ID)){
@@ -539,7 +534,7 @@ class AdminController extends Controller
                     'Tiền_vé' => $giave,
                     'Giờ_xuất_phát' => $starttime,
                     'Ngày_xuất_phát' => $startdate,
-					'Trạng_thái' => $status,
+                    'Trạng_thái' => $status,
                     'created_at' => $created_at,
                     'updated_at' => $updated_at
                 ]);
@@ -605,6 +600,15 @@ class AdminController extends Controller
             }
             return redirect()->back();
         }
+    }
+    //Phần vé
+    public function ve () {
+        $ticket = DB::table('ve')->join('chuyen_xe','ve.Mã_chuyến_xe','=','chuyen_xe.Mã')
+            ->join('xe','xe.Mã','=','chuyen_xe.Mã_xe')
+            ->join('bus_model','bus_model.Mã','=','xe.Mã_loại_xe')
+            ->select('ve.Mã','ve.Mã_chuyến_xe','ve.Mã_nhân_viên_đặt','ve.Mã_khách_hàng','ve.Sđt_khách_hàng','ve.Vị_trí_ghế','ve.Trạng_thái','chuyen_xe.Tiền_vé','bus_model.Loại_ghế')
+            ->get();
+        return view('quantrivien.ve',['ticket'=>$ticket]);
     }
     public function ticket($index,$id = '') {
         if ($index==1&&$id==''){

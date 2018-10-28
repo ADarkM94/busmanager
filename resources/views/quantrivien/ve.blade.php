@@ -1,23 +1,53 @@
 @extends('quantrivien.main')
 @section('content')
-    <div class="content row show" style="overflow: hidden; position: relative; padding: 3em 1em 1em;">
-        <h4 style="padding: .5em; position: absolute; top: 0; left: 0; width: 100%;">Bảng Chuyến Xe</h4>
-        <div id="chuyenxe">
+    <div class="content row show" style="overflow: hidden; position: relative; padding: 3em 1em 1em">
+        <h4 style="padding: .5em; position: absolute; top: 0; left: 0; width: 100%;">Bảng Vé Xe</h4>
+        <div id="ticket">
         </div>
         <div class="nutthaotac">
-            <a href="javascript:void(0)" onclick="window.open('{{url("admin/addchuyenxe")}}')" title="Thêm Chuyến Xe">
-                <i class="glyphicon glyphicon-plus"></i>Thêm
-            </a>
-            <a href="javascript:void(0)" onclick="refresh(1)" title="Làm Mới">
+            <a href="javascript:void(0)" onclick="refresh(2)" title="Làm Mới">
                 <i class="glyphicon glyphicon-refresh"></i>Reset
             </a>
-            <a href="javascript:void(0)" onclick="showFull(this,'chuyenxe',obj,objlen)">
+            <a href="javascript:void(0)" onclick="showFull(this,'ticket',obj,objlen)">
                 <i class="glyphicon glyphicon-resize-full"></i>
             </a>
         </div>
     </div>
 @endsection
 @section('excontent')
+    <div id="editve" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" data-dismiss="modal">&times;</button>
+                    <div class="modal-title">Thông Tin Vé</div>
+                </div>
+                <div class="modal-body">
+                    <form name="editticket">
+                        <input type="hidden" name="ID" value="">
+                        <div class="row">
+                            <div class="col-lg-6" style="font-size: 1em; width: 50%">
+                                <label>Giá</label>
+                                <input type="number" min="0" class="form-control" name="giave" placeholder="Giá vé" readonly>
+                            </div>
+                            <div class="col-lg-6" style="width: 50%; text-align: left;">
+                                <label>Trạng thái</label>
+                                <select class="form-control" name="trangthai">
+                                    <option value="0">Waiting</option>
+                                    <option value="1">Booked</option>
+                                    <option value="2">Completed</option>
+                                    <option value="3">Banned</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer" style="text-align: center;">
+                    <button class="btn btn-success" id="btnsubmit" onclick="editVe()">Sửa Thông Tin Vé</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div id ="btnnotice">
         <div id="comment">
             Khi tạo chuyến xe, Vé sẽ được tự động tạo tương ứng với số ghế của loại xe dùng để chuyên chở trong chuyến xe!
@@ -30,8 +60,8 @@
         for (var i = 0; i < option.length; i++) {
             option[i].classList.remove('selected');
         }
-        option[2].classList.add('selected');
-        option[2].getElementsByTagName('img')[0].setAttribute('src','{{asset("images/icons/chuyenxe-hover.png")}}');
+        option[3].classList.add('selected');
+        option[3].getElementsByTagName('img')[0].setAttribute('src','{{asset("images/icons/bus-ticket-hover.png")}}');
         var obj = {
             width: '100%',
             height: '100%',
@@ -40,7 +70,7 @@
             collapsible: false,
             showHeader: true,
             filterModel: {on: true, mode: "AND", header: true},
-            /* scrollModel: {horizontal: true,autoFit: true}, */
+            // scrollModel: {autoFit: true},
             resizable: false,
             roundCorners: false,
             rowBorders: true,
@@ -52,8 +82,7 @@
             stripeRows: true,
             freezeCols: 1,
             /*cellDblClick: function (event,ui) {
-                window.open( + "/" + ui.rowData["Mã"]);
-                }*/
+            }*/
         };
         obj.colModel = [
             {
@@ -64,25 +93,20 @@
                 align: 'center',
                 render: function (ui) {
                     var str = '';
-                    str += '<a title="Edit" id="idEditChuyenXe" ><i class="glyphicon glyphicon-edit  text-success" style="padding-right: 5px; cursor: pointer;"></i></a>';
-                    str += '<a title="Delete" id="idDelChuyenXe" ><i class="glyphicon glyphicon-remove  text-danger" style="padding-right: 5px; cursor: pointer;"></i></a>';
+                    str += '<a title="Edit" id="idEditTicket" ><i class="glyphicon glyphicon-edit  text-success" style="padding-right: 5px; cursor: pointer;"></i></a>';
                     return str;
                 },
                 postRender: function (ui) {
                     var rowData = ui.rowData,
                         $cell = this.getCell(ui);
                     //add button
-                    $cell.find("a#idEditChuyenXe")
+                    $cell.find("a#idEditTicket")
                         .unbind("click")
                         .bind("click", function (evt) {
-                            window.open('{{url("/admin/addchuyenxe")}}/'+rowData['Mã']);
-                        });
-                    $cell.find("a#idDelChuyenXe")
-                        .unbind("click")
-                        .bind("click", function (evt) {
-                            if(confirm("Bạn chắc chắn muốn xóa?")){
-                                location.assign('{{url("/admin/delchuyenxe")}}/'+rowData['Mã']);
-                            }
+                            document.forms["editticket"]["ID"].value = rowData["Mã"];
+                            document.forms["editticket"]["giave"].value = rowData["Tiền_vé"];
+                            document.forms["editticket"]["trangthai"].value = rowData["Trạng_thái"];
+                            $("#editve").modal('show');
                         });
                 }
             },
@@ -99,13 +123,13 @@
                             return '<small style="font-size: .8em;" class="btn btn-default">Waiting</small>';
                             break;
                         case 1:
-                            return '<small style="font-size: .8em;" class="btn btn-success">Running</small>';
+                            return '<small style="font-size: .8em;" class="btn btn-success">Booked</small>';
                             break;
                         case 2:
                             return '<small style="font-size: .8em;" class="btn btn-warning">Completed</small>';
                             break;
                         case 3:
-                            return '<small style="font-size: .8em;" class="btn btn-danger">Locked</small>';
+                            return '<small style="font-size: .8em;" class="btn btn-danger">Banned</small>';
                             break;
                     }
                 },
@@ -115,98 +139,68 @@
                     options: [
                         {'':'All'},
                         {'0':'Waiting'},
-                        {'1':'Running'},
+                        {'1':'Booked'},
                         {'2':'Completed'},
-                        {'3':'Locked'}
+                        {'3':'Banned'}
                     ],
                     listeners: ['change']
                 }
             },
             {
-                title: "Mã",
-                width: 130,
-                dataIndx: "Mã",
+                title: "Mã chuyến xe",
+                width: 150,
+                dataIndx: "Mã_chuyến_xe",
                 dataType: "string",
                 editor: false,
                 align: 'center',
                 filter: {
                     type: 'textbox',
-                    attr: 'placeholder="Tìm theo Mã"',
+                    attr: 'placeholder="Tìm theo Mã chuyến xe"',
                     cls: 'filterstyle',
                     condition: 'contain',
                     listeners: ['keyup']
                 }
             },
             {
-                title: "Nơi đi",
+                title: "Nhân viên đặt",
                 width: 150,
-                dataIndx: "Nơi_đi",
+                dataIndx: "Nhân_viên_đặt",
                 dataType: "string",
                 editor: false,
                 align: 'center',
                 filter: {
                     type: 'textbox',
-                    attr: 'placeholder="Tìm theo Nơi đi"',
+                    attr: 'placeholder="Tìm theo Nhân viên đặt"',
                     cls: 'filterstyle',
                     condition: 'contain',
                     listeners: ['keyup']
                 }
             },
             {
-                title: "Nơi đến",
+                title: "Mã Khách Hàng",
                 width: 150,
-                dataIndx: "Nơi_đến",
+                dataIndx: "Mã_khách_hàng",
                 dataType: "string",
                 editor: false,
                 align: 'center',
                 filter: {
                     type: 'textbox',
-                    attr: 'placeholder="Tìm theo Nơi đến"',
+                    attr: 'placeholder="Tìm theo Mã khách hàng"',
                     cls: 'filterstyle',
                     condition: 'contain',
                     listeners: ['keyup']
                 }
             },
             {
-                title: "Nhân viên tạo",
-                width: 150,
-                dataIndx: "Nhân_viên_tạo",
-                dataType: "string",
-                editor: false,
-                align: "center",
-                filter: {
-                    type: 'textbox',
-                    attr: 'placeholder="Tìm theo Nhân viên tạo"',
-                    cls: 'filterstyle',
-                    condition: 'contain',
-                    listeners: ['keyup']
-                }
-            },
-            {
-                title: "Tài xế",
-                width: 150,
-                dataIndx: "Tài_xế",
-                dataType: "string",
-                editor: false,
-                align: "center",
-                filter: {
-                    type: 'textbox',
-                    attr: 'placeholder="Tìm theo Tài xế"',
-                    cls: 'filterstyle',
-                    condition: 'contain',
-                    listeners: ['keyup']
-                }
-            },
-            {
-                title: "Xe biển số",
+                title: "Vị trí ghế",
                 width: 100,
-                dataIndx: "Biển_số",
+                dataIndx: "Vị_trí_ghế",
                 dataType: "string",
                 editor: false,
                 align: "center",
                 filter: {
                     type: 'textbox',
-                    attr: 'placeholder="Tìm theo Biển số"',
+                    attr: 'placeholder="Tìm theo Vị trí ghế"',
                     cls: 'filterstyle',
                     condition: 'contain',
                     listeners: ['keyup']
@@ -237,71 +231,46 @@
                 }
             },
             {
-                title: "Ngày xuất phát",
+                title: "Giá",
                 width: 200,
-                dataIndx: "Ngày_xuất_phát",
-                dataType: "date",
-                editor: false,
-                align: 'center',
-                filter: {
-                    type: 'textbox', condition: 'between', init: pqDatePicker,
-                    listeners: [{
-                        'change': function (evt, ui) {
-                            if (ui.value != "") {
-                                var d1 = ui.value.split('/');
-                                ui.value = d1[2] + '/' + d1[0] + '/' + d1[1];
-                            }
-                            if (ui.value2 != "") {
-                                var d1 = ui.value2.split('/');
-                                ui.value2 = d1[2] + '/' + d1[0] + '/' + d1[1];
-                            }
-                            var $grid = $(this).closest(".pq-grid");
-                            $grid.pqGrid("filter", {
-                                oper: 'add',
-                                data: [ui]
-                            });
-                        }
-                    }]},
-                render: function(ui){
-                    var cellData = ui.cellData;
-                    var str = '';
-                    if (cellData != "") {
-                        var d1 = cellData.split('-');
-                        str += d1[2] + '/' + d1[1] + '/' + d1[0];
-                    }
-                    return {text: str};
-                }
-            },
-            {
-                title: "Giờ xuất phát",
-                width: 150,
-                dataIndx: "Giờ_xuất_phát",
-                dataType: "string",
-                editor: false,
-                align: "center",
-                filter: {
-                    type: 'textbox',
-                    attr: 'placeholder="Tìm theo Giờ xuất phát"',
-                    cls: 'filterstyle',
-                    condition: 'contain',
-                    listeners: ['keyup']
-                }
-            },
-            {
-                title: "Tiền vé",
-                width: 100,
                 dataIndx: "Tiền_vé",
                 dataType: "string",
                 editor: false,
-                align: "center",
+                align: 'center',
                 filter: {
                     type: 'textbox',
-                    attr: 'placeholder="Tìm theo Tiền vé"',
+                    attr: 'placeholder="Tìm theo Giá vé"',
                     cls: 'filterstyle',
                     condition: 'contain',
                     listeners: ['keyup']
                 }
             }
+            /*{
+                title: "Ẩn",
+                width: 100,
+                dataIndx: "is_hide",
+                dataType: "string",
+                editor: false,
+                align: 'center',
+                render: function(ui){
+                    if(ui.rowData["is_hide"]==1){
+                        return "<i class='glyphicon glyphicon-remove-circle' style='color: grey'></i>";
+                    }
+                    else {
+                        return "<i class='glyphicon glyphicon-ok-circle' style='color: lightgreen'></i>";
+                    }
+                },
+                filter: {
+                    type: 'select',
+                    condition: 'equal',
+                    options: [
+                        {'':'All'},
+                        {'0':'Show'},
+                        {'1':'Hide'},
+                    ],
+                    listeners: ['change']
+                }
+            },*/
         ];
         var objlen = 0;
         for(var i =0; i<obj.colModel.length;i++){
@@ -309,14 +278,14 @@
         }
         $(function () {
             obj.dataModel = {
-                data: {!! json_encode($chuyenxe) !!},
+                data: {!! json_encode($ticket) !!},
                 location: "local",
                 sorting: "local",
                 sortDir: "down"
             };
             obj.pageModel = {type: 'local', rPP: 50, rPPOptions: [50, 100, 150, 200]};
-            var $grid = $("#chuyenxe").pqGrid(obj);
-            if(objlen <= document.getElementById('chuyenxe').offsetWidth){
+            var $grid = $("#ticket").pqGrid(obj);
+            if(objlen <= document.getElementById('ticket').offsetWidth){
                 $grid.pqGrid('option','scrollModel',{autoFit: true}).pqGrid("refreshDataAndView");
             }
             else{
@@ -329,6 +298,8 @@
                 url:'{{asset("/admin/ticket")}}/'+index,
                 success:function(data){
                     if (index == 1) {
+                    }
+                    else if (index == 2) {
                         obj.dataModel = {
                             data: data.msg,
                             location: "local",
@@ -336,16 +307,33 @@
                             sortDir: "down"
                         };
                         obj.pageModel = {type: 'local', rPP: 50, rPPOptions: [50, 100, 150, 200]};
-                        var $grid = $("#chuyenxe").pqGrid(obj);
-                        if(objlen <= document.getElementById('chuyenxe').offsetWidth){
-                            $grid.pqGrid('option','scrollModel',{autoFit: true}).pqGrid("refreshDataAndView");
-                        }
-                        else{
-                            $grid.pqGrid('option','scrollModel',{horizontal: true,autoFit: false,flexContent: true}).pqGrid("refreshDataAndView");
-                        }
-                        $("#chuyenxe").pqGrid("reset",{filter : true});
+                        var $grid = $("#ticket").pqGrid(obj);
+                        $grid.pqGrid("refreshDataAndView");
+                        $("#ticket").pqGrid("reset",{filter : true});
                     }
-                    else if (index == 2) {
+                }
+            });
+        }
+        function editVe() {
+            var id = document.forms["editticket"]["ID"].value;
+            var trangthai = document.forms["editticket"]["trangthai"].value;
+            $.ajax({
+                url: '{{route("editticket")}}',
+                type: 'POST',
+                data: {
+                    _token: '{{csrf_token()}}',
+                    ID: id,
+                    trangthai: trangthai
+                },
+                success: function (data) {
+                    if(data.result==1){
+                        $("#editve").modal('hide');
+                        alert('Sửa thành công');
+                        refresh(1);
+                        refresh(2);
+                    }
+                    else {
+                        alert('Sửa thất bại');
                     }
                 }
             });

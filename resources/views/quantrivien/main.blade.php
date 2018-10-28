@@ -52,6 +52,9 @@
                     <a href="{{url('/admin/chuyenxe')}}">
                         <li class="option"><img src="{{asset('images/icons/chuyenxe.png')}}" alt="icon">&nbsp;&nbsp;Chuyến xe</li>
                     </a>
+					<a href="{{url('/admin/ve')}}">
+                        <li class="option"><img src="{{asset('images/icons/bus-ticket.png')}}" alt="icon">&nbsp;&nbsp;Vé xe</li>
+                    </a>
                     <a href="{{url('/admin/loaixe')}}">
                         <li class="option"><img src="{{asset('images/icons/bus-type.png')}}" alt="icon">&nbsp;&nbsp;Loại xe</li>
                     </a>

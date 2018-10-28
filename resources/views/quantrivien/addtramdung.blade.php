@@ -47,8 +47,8 @@
         for (var i = 0; i < option.length; i++) {
             option[i].classList.remove('selected');
         }
-        option[7].classList.add('selected');
-        option[7].getElementsByTagName('img')[0].setAttribute('src','{{asset("images/icons/customer-hover.png")}}');
+        option[8].classList.add('selected');
+        option[8].getElementsByTagName('img')[0].setAttribute('src','{{asset("images/icons/parking-hover.png")}}');
         function openmap(){
             var toado = document.forms["tramdung"]["toado"].value;
             var x,y;

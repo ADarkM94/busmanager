@@ -10,6 +10,9 @@
             <a href="javascript:void(0)" onclick="refreshKH()" title="Làm Mới">
                 <i class="glyphicon glyphicon-refresh"></i>Refresh
             </a>
+			<a href="javascript:void(0)" onclick="showFull(this,'customer',obj,objlen)">
+				<i class="glyphicon glyphicon-resize-full"></i>
+			</a>
         </div>
     </div>
 @endsection
@@ -67,8 +70,7 @@
         }
         option[1].classList.add('selected');
         option[1].getElementsByTagName('img')[0].setAttribute('src','{{asset("images/icons/customer-hover.png")}}');
-        $(function () {
-            var obj = {
+		var obj = {
                 width: '100%',
                 height: '100%',
                 showTop: false,
@@ -198,7 +200,7 @@
                     render: function(ui){
                         var cellData = ui.cellData;
                         var str = '';
-                        if (cellData != "") {
+                        if (cellData != null) {
                             var d1 = cellData.split('-');
                             str += d1[2] + '/' + d1[1] + '/' + d1[0];
                         }
@@ -234,19 +236,65 @@
                     }
                 }
             ];
-
+        var objlen = 0;
+        for(var i =0; i<obj.colModel.length;i++){
+            objlen+=obj.colModel[i].width;
+        }
+        $(function () {
             obj.dataModel = {
                 data: {!! json_encode($customer) !!},
                 location: "local",
                 sorting: "local",
                 sortDir: "down"
             };
-            obj.pageModel = {type: 'local', rPP: 20, rPPOptions: [20, 30, 40, 50]};
+            obj.pageModel = {type: 'local', rPP: 50, rPPOptions: [50, 100, 150, 200]};
             var $grid = $("#customer").pqGrid(obj);
-            $grid.pqGrid("refreshDataAndView");
+            if(objlen <= document.getElementById('customer').offsetWidth){
+                $grid.pqGrid('option','scrollModel',{autoFit: true}).pqGrid("refreshDataAndView");
+            }
+            else{
+                $grid.pqGrid('option','scrollModel',{horizontal: true,autoFit: false,flexContent: true}).pqGrid("refreshDataAndView");
+            }
         });
         function refreshKH(){
             $("#customer").pqGrid("reset",{filter : true});
+        }
+        function showFull(ev,id,obj,s){
+            if(ev.getElementsByTagName("i")[0].classList.contains("glyphicon-resize-full")){
+                ev.getElementsByTagName("i")[0].classList.remove("glyphicon-resize-full");
+                ev.getElementsByTagName("i")[0].classList.add("glyphicon-resize-small");
+                document.getElementById(id).style.position = "fixed";
+                document.getElementById(id).style.width = "100%";
+                document.getElementById(id).style.height = "100%";
+                document.getElementById(id).style.top = "0";
+                document.getElementById(id).style.left = "0";
+                document.getElementById(id).style.paddingTop = "3.45em";
+                document.getElementsByClassName("nutthaotac")[0].style.top = "calc(100% - 3em)";
+                var $grid = $("#"+id).pqGrid(obj);
+                if(s <= document.getElementById(id).offsetWidth){
+                    $grid.pqGrid('option','scrollModel',{autoFit: true}).pqGrid("refreshDataAndView");
+                }
+                else{
+                    $grid.pqGrid('option','scrollModel',{horizontal: true,autoFit: false,flexContent: true}).pqGrid("refreshDataAndView");
+                }
+            }
+            else{
+                ev.getElementsByTagName("i")[0].classList.remove("glyphicon-resize-small");
+                ev.getElementsByTagName("i")[0].classList.add("glyphicon-resize-full");
+                document.getElementById(id).style.position = "relative";
+                document.getElementById(id).style.width = "100%";
+                document.getElementById(id).style.height = "auto";
+                document.getElementById(id).style.paddingTop = "0";
+                document.getElementsByClassName("nutthaotac")[0].style.position = "absolute";
+                document.getElementsByClassName("nutthaotac")[0].style.top = ".4em";
+                var $grid = $("#"+id).pqGrid(obj);
+                if(s <= document.getElementById(id).offsetWidth){
+                    $grid.pqGrid('option','scrollModel',{autoFit: true}).pqGrid("refreshDataAndView");
+                }
+                else{
+                    $grid.pqGrid('option','scrollModel',{horizontal: true,autoFit: false,flexContent: true}).pqGrid("refreshDataAndView");
+                }
+            }
         }
     </script>
 @endsection

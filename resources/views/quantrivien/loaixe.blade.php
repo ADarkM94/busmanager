@@ -99,8 +99,8 @@
         for (var i = 0; i < option.length; i++) {
             option[i].classList.remove('selected');
         }
-        option[3].classList.add('selected');
-        option[3].getElementsByTagName('img')[0].setAttribute('src','{{asset("images/icons/bus-type-hover.png")}}');
+        option[4].classList.add('selected');
+        option[4].getElementsByTagName('img')[0].setAttribute('src','{{asset("images/icons/bus-type-hover.png")}}');
         $(function () {
             var obj = {
                 width: '100%',

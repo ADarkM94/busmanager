@@ -117,8 +117,8 @@
         for (var i = 0; i < option.length; i++) {
             option[i].classList.remove('selected');
         }
-        option[4].classList.add('selected');
-        option[4].getElementsByTagName('img')[0].setAttribute('src','{{asset("images/icons/route-hover.png")}}');
+        option[5].classList.add('selected');
+        option[5].getElementsByTagName('img')[0].setAttribute('src','{{asset("images/icons/route-hover.png")}}');
         var obj1 = {
             width: '100%',
             height: '100%',

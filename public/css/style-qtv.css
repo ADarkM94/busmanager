@@ -22,9 +22,9 @@ a:hover, a:visited {
     width: 100%;
     margin: 0;
     border-top: 7.5px solid #004964;
-	border-bottom: 1px solid #f57812;
-	background: #004964;
-	z-index: 99;
+    border-bottom: 1px solid #f57812;
+    background: #004964;
+    z-index: 99;
 }
 .header h3 {
     padding-left: 2em;
@@ -32,7 +32,7 @@ a:hover, a:visited {
     font-size: 1.5em;
 }
 .header a {
-	color: white;
+    color: white;
 }
 .row > * {
     display: inline-block;
@@ -66,29 +66,29 @@ a:hover, a:visited {
     border: 1px solid #004964;
 }
 .userzone {
-	visibility: visible;
-	height: 100%;
+    visibility: visible;
+    height: 100%;
 }
 .userzone > span:nth-child(1) {
     position: relative;
-	padding: 1em;
-	padding-left: 3.5em;
-	border-radius: 5px 5px 0 0;
-	background: #004964;
-	color: white;
+    padding: 1em;
+    padding-left: 3.5em;
+    border-radius: 5px 5px 0 0;
+    background: #004964;
+    color: white;
 }
 .userzone > span:nth-child(1) > img {
-	position: absolute;
-	top: .375em;
-	left: .375em;
-	height: 2.5em;
-	width: 2.5em;
-	border-radius: 50%;
-	border: 1px solid #004964;
-	background: white;
+    position: absolute;
+    top: .375em;
+    left: .375em;
+    height: 2.5em;
+    width: 2.5em;
+    border-radius: 50%;
+    border: 1px solid #004964;
+    background: white;
 }
 .userzone > span:nth-child(1) > i {
-	/* vertical-align: middle; */
+    /* vertical-align: middle; */
 }
 .userzone > span:nth-child(1) > ul{
     display: none;
@@ -96,26 +96,26 @@ a:hover, a:visited {
     top: calc(100%);
     left: -1px;
     background: #004964;
-	color: white;
+    color: white;
     z-index: 99;
-	width: 100%;
-	border-radius: 0 0 5px 5px;
-	padding-left: 0;
-	box-sizing: content-box;
-	list-style-type: none;
-	text-align: left;
-	border: 1px solid white;
-	border-top: none;
+    width: 100%;
+    border-radius: 0 0 5px 5px;
+    padding-left: 0;
+    box-sizing: content-box;
+    list-style-type: none;
+    text-align: left;
+    border: 1px solid white;
+    border-top: none;
 }
 .userzone > span:nth-child(1) > ul > li {
-	padding: .5em 1em;
+    padding: .5em 1em;
 }
 .userzone > span:nth-child(1) > ul > li > i{
     padding-right: 1em;
 }
 .userzone > span:nth-child(1) > ul > li:hover {
-	background: white;
-	color: #004964;
+    background: white;
+    color: #004964;
 }
 /* .userzone > span:nth-child(1):hover {
 	border: 1px solid white;
@@ -252,18 +252,21 @@ a:hover, a:visited {
     content: url("../images/icons/chuyenxe-hover.png");
 }
 .menu > ul > a:nth-child(4) > .option:hover > img {
-    content: url("../images/icons/bus-type-hover.png");
+    content: url("../images/icons/bus-ticket-hover.png");
 }
 .menu > ul > a:nth-child(5) > .option:hover > img {
-    content: url("../images/icons/route-hover.png");
+    content: url("../images/icons/bus-type-hover.png");
 }
 .menu > ul > a:nth-child(6) > .option:hover > img {
-    content: url("../images/icons/partnership-hover.png");
+    content: url("../images/icons/route-hover.png");
 }
 .menu > ul > a:nth-child(7) > .option:hover > img {
-    content: url("../images/icons/bus-hover.png");
+    content: url("../images/icons/partnership-hover.png");
 }
 .menu > ul > a:nth-child(8) > .option:hover > img {
+    content: url("../images/icons/bus-hover.png");
+}
+.menu > ul > a:nth-child(9) > .option:hover > img {
     content: url("../images/icons/parking-hover.png");
 }
 .option:not([class~='selected']):hover {
@@ -308,7 +311,7 @@ a:hover, a:visited {
 .the a > div > div {
     font-size: 5em;
     color: #004964;
-	/* color: rgb(255,200,0); */
+    /* color: rgb(255,200,0); */
 }
 .the a > div > p {
     text-align: left;
@@ -729,25 +732,25 @@ a:hover, a:visited {
     color: white;
 }*/
 .pq-grid-center {
-	background: white;
+    background: white;
 }
 .pq-grid-header-table {
 }
 .pq-grid-title-row th {
-	background: #004964;
-	color: white;
+    background: #004964;
+    color: white;
 }
 .pq-grid-title-row th:hover {
-	background: white;
-	color: #004964;
+    background: white;
+    color: #004964;
 }
 .pq-grid-header-search-row td {
-	background: #004964;
-	color: white;
+    background: #004964;
+    color: white;
 }
 .pq-grid-header-search-row td:hover {
-	background: white;
-	color: #004964;
+    background: white;
+    color: #004964;
 }
 /* .filterstyle {
     height: 2em;
