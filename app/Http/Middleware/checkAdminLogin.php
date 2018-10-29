@@ -15,6 +15,9 @@ class checkAdminLogin
      */
     public function handle($request, Closure $next)
     {
-        return $next($request);
+        if(session()->has('admin.islogin')){
+            return $next($request);
+        }
+        return redirect('/admin/login');
     }
 }

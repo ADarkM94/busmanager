@@ -24,7 +24,8 @@
 <body>
 <div class="container-fluid">
     <div class="login-form">
-        <form>
+        <form action="{{route('adminlogin')}}" method="post">
+            @csrf
             <fieldset>
                 <legend>Đăng nhập Admin</legend>
                 <label>Số điện thoại</label>
@@ -37,8 +38,6 @@
     </div>
 </div>
 <script>
-    document.getElementsByClassName("container-fluid")[0].style.paddingTop=document.getElementsByClassName("header")[0].clientHeight+30+"px";
-    document.getElementsByClassName("container-fluid")[0].style.paddingBottom= "15px";
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

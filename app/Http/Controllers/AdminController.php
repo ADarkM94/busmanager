@@ -39,6 +39,24 @@ class AdminController extends Controller
         echo bcrypt($request->password);
     }*/
 
+    public function checkLogin(Request $request){
+        $account = DB::table('employee')->where([['Sđt','=',$request->phone],['Password','=',md5($request->password)],['Loại_NV','=','QTV']])->get();
+        if(!empty($account[0])){
+            session(['admin.islogin' => 1]);
+            session(['admin.id' => $account[0]->Mã]);
+            session(['admin.name' => $account[0]->Họ_Tên]);
+            return redirect('/admin');
+        }
+        else{
+            return redirect()->back();
+        }
+    }
+
+    public  function logout(){
+        session()->forget('admin');
+        return redirect()->back();
+    }
+
     //Phần khách hàng
     public function khachhang(){
         $customer = Khachhang::all();

@@ -44,7 +44,7 @@
                 </div>
                 <div class="modal-body">
                     <form name="addbusroute" oninput="minutes.value = sophut.value;hours.value = sogio.value;">
-                        <input type="hidden" name="employeeID" value="1">
+                        <input type="hidden" name="employeeID" value="{{session('admin.id')}}">
                         <input type="hidden" name="ID" value="">
                         <div class="row">
                             <div class="col-lg-6" style="font-size: 1em; width: 50%">

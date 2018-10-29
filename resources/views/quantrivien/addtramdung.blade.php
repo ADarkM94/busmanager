@@ -21,7 +21,7 @@
                     ?>
                     <input type="hidden" name="ID" value="{{$tttramdung['Mã']}}">
                 @endif
-                <input type="hidden" name="employeeID" value="1">
+                <input type="hidden" name="employeeID" value="{{session('admin.id')}}">
                 <label>Tên trạm dừng</label>
                 <input type="text" class="form-control" name="name" value="{{isset($tttramdung['Tên'])? $tttramdung['Tên']:''}}" placeholder="Tên trạm dừng">
                 <br>

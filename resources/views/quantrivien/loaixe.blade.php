@@ -11,7 +11,7 @@
                 <span>Thông tin loại xe</span>
                 <form name="ttmodel" action="{{route('addbusmodel')}}" method="post" class="">
                     @csrf
-                    <input type="hidden" name="employeeID" value="1">
+                    <input type="hidden" name="employeeID" value="{{session('admin.id')}}">
                     <input type="hidden" name="ID" value="">
                     <input type="text" name="name" class="form-control" placeholder="Tên loại xe">
                     <input type="number" min="1" name="row" class="form-control" placeholder="Số hàng">

@@ -1,95 +1,109 @@
 <?php
 /* Bắt đầu phần Route cho trang quản trị hệ thống */
 
-Route::get('admin/', function () {
-    return view('quantrivien.thongke');
+Route::get('admin/login', function(){
+    if(session()->has('isadmin')){
+        return redirect('admin/');
+    }
+    else{
+        return view('quantrivien.login');
+    }
 });
 
-Route::get('admin/thongke', function () {
-    return view('quantrivien.thongke');
-});
+Route::post('admin/login', 'AdminController@checkLogin')->name('adminlogin');
+
+Route::middleware('admincheck')->group(function (){
+    Route::get('admin/logout', 'AdminController@logout')->name('adminlogout');
+    Route::get('admin/', function () {
+        return view('quantrivien.thongke');
+    });
+
+    Route::get('admin/thongke', function () {
+        return view('quantrivien.thongke');
+    });
 
 //Phần khách hàng
 
-Route::get('admin/khachhang', 'AdminController@khachhang');
+    Route::get('admin/khachhang', 'AdminController@khachhang');
 
-Route:: get('admin/addkhachhang/{index?}', 'AdminController@addkhachhang');
+    Route:: get('admin/addkhachhang/{index?}', 'AdminController@addkhachhang');
 
-Route::post('admin/addcustomer', 'AdminController@addcustomer')->name('addcustomer');
+    Route::post('admin/addcustomer', 'AdminController@addcustomer')->name('addcustomer');
 
-Route::get('admin/delkhachhang/{id}', 'AdminController@delcustomer');
+    Route::get('admin/delkhachhang/{id}', 'AdminController@delcustomer');
 
-Route::get('admin/viewkhachhang/{id?}', 'AdminController@viewkhachhang');
+    Route::get('admin/viewkhachhang/{id?}', 'AdminController@viewkhachhang');
 
 //Phần chuyến xe
 
-Route::get('admin/chuyenxe', 'AdminController@chuyenxe');
+    Route::get('admin/chuyenxe', 'AdminController@chuyenxe');
 
-Route::get('admin/addchuyenxe/{id?}', 'AdminController@addchuyenxe');
+    Route::get('admin/addchuyenxe/{id?}', 'AdminController@addchuyenxe');
 
-Route::post('admin/addchuyenxexl', 'AdminController@addchuyenxexl')->name('addchuyenxexl');
+    Route::post('admin/addchuyenxexl', 'AdminController@addchuyenxexl')->name('addchuyenxexl');
 
-Route::get('admin/delchuyenxe/{id?}', 'AdminController@delchuyenxe');
+    Route::get('admin/delchuyenxe/{id?}', 'AdminController@delchuyenxe');
 
 //Phần vé và reset chuyến xe
 
-Route::get('admin/ve', 'AdminController@ve');
+    Route::get('admin/ve', 'AdminController@ve');
 
-Route::get('admin/ticket/{index}/{id?}', 'AdminController@ticket');
+    Route::get('admin/ticket/{index}/{id?}', 'AdminController@ticket');
 
-Route::post('admin/editticket', 'AdminController@editticket')->name('editticket');
+    Route::post('admin/editticket', 'AdminController@editticket')->name('editticket');
 
 //Phần loại xe
 
-Route::get('admin/loaixe', 'AdminController@loaixe');
+    Route::get('admin/loaixe', 'AdminController@loaixe');
 
-Route::post('admin/addbusmodel', 'AdminController@addbusmodel')->name('addbusmodel');
+    Route::post('admin/addbusmodel', 'AdminController@addbusmodel')->name('addbusmodel');
 
-Route::get('admin/delloaixe/{id}', 'AdminController@delbusmodel');
+    Route::get('admin/delloaixe/{id}', 'AdminController@delbusmodel');
 
 //Phần nhân viên
 
-Route::get('admin/nhanvien', 'AdminController@nhanvien');
+    Route::get('admin/nhanvien', 'AdminController@nhanvien');
 
-Route:: get('admin/addnhanvien/{index?}', 'AdminController@addnhanvien');
+    Route:: get('admin/addnhanvien/{index?}', 'AdminController@addnhanvien');
 
-Route::post('admin/addemployee','AdminController@addemployee')->name('addemployee');
+    Route::post('admin/addemployee','AdminController@addemployee')->name('addemployee');
 
-Route::get('admin/delnhanvien/{id}','AdminController@delemployee');
+    Route::get('admin/delnhanvien/{id}','AdminController@delemployee');
 
 //Phần xe
 
-Route::get('admin/xe', 'AdminController@xe');
+    Route::get('admin/xe', 'AdminController@xe');
 
-Route:: get('admin/addxe/{index?}', 'AdminController@addxe');
+    Route:: get('admin/addxe/{index?}', 'AdminController@addxe');
 
-Route::post('admin/addbus','AdminController@addbus')->name('addbus');
+    Route::post('admin/addbus','AdminController@addbus')->name('addbus');
 
-Route::get('admin/delxe/{id}','AdminController@delbus');
+    Route::get('admin/delxe/{id}','AdminController@delbus');
 
 //Phần trạm dừng
 
-Route::get('admin/tramdung', 'AdminController@tramdung');
+    Route::get('admin/tramdung', 'AdminController@tramdung');
 
-Route:: get('admin/addtramdung/{index?}', 'AdminController@addtramdung');
+    Route:: get('admin/addtramdung/{index?}', 'AdminController@addtramdung');
 
-Route::post('admin/addbusstop','AdminController@addbusstop')->name('addbusstop');
+    Route::post('admin/addbusstop','AdminController@addbusstop')->name('addbusstop');
 
-Route::get('admin/deltramdung/{id}','AdminController@delbusstop');
+    Route::get('admin/deltramdung/{id}','AdminController@delbusstop');
 
 //Phần lộ trình
 
-Route::get('admin/lotrinh/{cm?}', 'AdminController@lotrinh');
+    Route::get('admin/lotrinh/{cm?}', 'AdminController@lotrinh');
 
-Route::post('admin/addbusroute', 'AdminController@addbusroute')->name('addbusroute');
+    Route::post('admin/addbusroute', 'AdminController@addbusroute')->name('addbusroute');
 
-Route::post('admin/delbusroute', 'AdminController@delbusroute')->name('delbusroute');
+    Route::post('admin/delbusroute', 'AdminController@delbusroute')->name('delbusroute');
 
 //Phần tỉnh
 
-Route:: post('admin/addprovince', 'AdminController@addprovince')->name('addprovince');
+    Route:: post('admin/addprovince', 'AdminController@addprovince')->name('addprovince');
 
-Route::post('admin/delprovince', 'AdminController@delprovince')->name('delprovince');
+    Route::post('admin/delprovince', 'AdminController@delprovince')->name('delprovince');
+});
 
 /* Kết thúc phần Route cho trang quản trị hệ thống */
 Route::get('ticket', function (){

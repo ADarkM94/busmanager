@@ -107,13 +107,13 @@ a:hover, a:visited {
     border: 1px solid white;
     border-top: none;
 }
-.userzone > span:nth-child(1) > ul > li {
+.userzone > span:nth-child(1) > ul li {
     padding: .5em 1em;
 }
-.userzone > span:nth-child(1) > ul > li > i{
+.userzone > span:nth-child(1) > ul li > i{
     padding-right: 1em;
 }
-.userzone > span:nth-child(1) > ul > li:hover {
+.userzone > span:nth-child(1) > ul li:hover {
     background: white;
     color: #004964;
 }

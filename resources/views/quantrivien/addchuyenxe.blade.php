@@ -15,7 +15,7 @@
             @csrf
             <fieldset>
                 <legend><?php echo isset($ttchuyenxe)? 'Sửa Thông Tin Chuyến Xe':'Thêm Chuyến Xe';?></legend>
-                <input type="hidden" name="employeeID" value="1">
+                <input type="hidden" name="employeeID" value="{{session('admin.id')}}">
                 @isset($ttchuyenxe)
                     <?php
                     $ttchuyenxe = (array)$ttchuyenxe;
