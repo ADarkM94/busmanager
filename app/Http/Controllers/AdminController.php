@@ -39,16 +39,25 @@ class AdminController extends Controller
         echo bcrypt($request->password);
     }*/
 
-    public function checkLogin(Request $request){
-        $account = DB::table('employee')->where([['Sđt','=',$request->phone],['Password','=',md5($request->password)],['Loại_NV','=','QTV']])->get();
-        if(!empty($account[0])){
+    public function checkLogin(Request $request)
+	{
+		$username = $request->username;
+		$password = $request->password;
+		if($username == null||$password == null)
+		{
+			return redirect()->back()->with(['alert' => 'Tên tài khoản hoặc mật khẩu không được để trống','username' => $username]);
+			// return response()->json(var_dump($errors);
+		}
+        $account = DB::table('employee')->where([['Username','=',$username],['Password','=',md5($password)],['Loại_NV','=','QTV']])->get();
+        if(!empty($account[0]))
+		{
             session(['admin.islogin' => 1]);
             session(['admin.id' => $account[0]->Mã]);
             session(['admin.name' => $account[0]->Họ_Tên]);
             return redirect('/admin');
         }
         else{
-            return redirect()->back();
+            return redirect()->back()->with(['alert' => 'Tài khoản hoặc mật khẩu không đúng','username' => $username]);
         }
     }
 

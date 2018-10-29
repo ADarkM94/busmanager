@@ -755,6 +755,21 @@ a:hover, a:visited {
 /* .filterstyle {
     height: 2em;
 } */
+.login-form {
+	width: 500px;
+	margin: auto;
+	margin-top: 100px;
+	opacity: 1;
+}
+.login-form .panel-heading {
+	background: #f57812;
+	color: white;
+	text-align: center;
+}
+.login-form .alert {
+	padding: .5em;
+	display: none;
+}
 @keyframes theanimation {
     0% { background: linear-gradient(to top right,#a2a2a2,#d2d2d2,#dddddd,#c2c2c2,#a2a2a2);}
     10% { background: linear-gradient(to top right,#a2a2a2,#a2a2a2,#d2d2d2,#dddddd,#c2c2c2);}
