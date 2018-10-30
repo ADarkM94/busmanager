@@ -76,9 +76,24 @@ class Controller extends BaseController
     public function xulydatve(Request $request){
             $ma = $request -> MA;
             $makh = $request -> MAKH;
-            DB::update("UPDATE `ve` SET `Trạng_thái`= ?,`Mã_khách_hàng`= ? WHERE `Mã`= ?",
-                    [2,$makh,$ma]);
-            return \response()->json(['kq'=>1]);
+            $kt = DB::table("ve")->where("Mã","=",$ma)->select("Trạng_thái")->get();
+            if($kt[0]->Trạng_thái == 0){
+                DB::update("UPDATE `ve` SET `Trạng_thái`= ?,`Mã_khách_hàng`= ? WHERE `Mã`= ?",
+                        [2,$makh,$ma]);
+                sleep(10);
+                $kt2 = DB::table("ve")->where("Mã","=",$ma)->select("Trạng_thái","Mã_khách_hàng","Mã")->get();
+                if($kt2[0]->Trạng_thái == 2 && $kt2[0]->Mã_khách_hàng == $makh){
+                    DB::update("UPDATE `ve` SET `Trạng_thái`= ?,`Mã_khách_hàng`= ? WHERE `Mã`= ?",
+                        [0,null,$ma]);
+                }
+                return \response()->json(['kq'=>0]);
+            }
+            else if($kt[0]->Trạng_thái == 1){
+                 return \response()->json(['kq'=>1]);
+            }
+            else if($kt[0]->Trạng_thái == 2){
+                 return \response()->json(['kq'=>2]);
+            }
         }
      
     public function xulydatve2(Request $request){

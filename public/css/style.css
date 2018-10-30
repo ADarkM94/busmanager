@@ -446,7 +446,7 @@ a{
 .chuyenxemain{
 	width: 100%;
 	margin-top: 1em;
-	min-height: 300px;
+	min-height: 400px;
 	padding-top: 2em;
 	padding-bottom: 2em;
 }
@@ -515,11 +515,8 @@ a{
 }
 /*chonvexe*/
 .chonvemain{
-	margin-top: 2em;
 	width: 90%;
 	margin: auto;
-	min-height: 900px;
-	margin-top: 1em;
 }
 .chonveleft{
 	width: 40%;
@@ -546,16 +543,16 @@ a{
 }
 .chonveright{
 	width: 58%;
-	min-height: 500px;
+	min-height: 400px;
 	border-radius: 0.5em;
 	box-shadow: 0 0 2em #CCC;
 	float: left;
 	margin-left: 2%;
-	padding-bottom: 2em;
 }
 .chonveright h3{
 	text-align: center;
 	color: #000;
+	margin: 5px;
 }
 /* .chonveright table{
 	background: rgb(0,64,87);
@@ -566,27 +563,100 @@ a{
 	margin-top: 2em;
 }
 .chonveright li{
-	float: left;
-	width: 30%;
+	margin-bottom: 4em;
 }
+/*loại ghế/giường*/
 .loaigheban{
-    background-color: red;
+    background-color: #CCC;
     padding: 15px;
     border-radius: 5px;
+    box-shadow: 0 0 0.2em #000;
 }
 .loaighetrong{
-    background-color: #DDD;
+    background-color: #FFF;
     padding: 15px;
     border-radius: 5px;
+    box-shadow: 0 0 0.2em #000;
 }
 .loaighechon{
     background-color: green;
     padding: 15px;
     border-radius: 5px;
+    box-shadow: 0 0 0.2em #000;
+}
+.loaighecochon{
+	background-color: #c3e9f4;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 0 0.2em #000;
+}
+.tengiuong{
+	width: 50px; 
+	float: left;
+	padding-top: 18%;
+}
+.tengiuong h3{
+	line-height: 80px;
 }
 /*ghe*/
+/*tầng ghế*/
+.chuygiuong{
+	float: left;
+	width: 30%;
+}
+.tang{
+	width: 40px;
+	float: left;
+	margin: auto;
+	margin-top: 6em;
+}
+/*chontang*/
+.duoi{
+	width: 40px;
+	height: 150px;
+	border: none;
+	border-radius: 5px;
+	color: #FFF;
+	background: #f57812;
+	margin-bottom: 20px;
+}
+.tren{
+	border: none;
+	width: 40px;
+	height: 150px;
+	border-radius: 5px;
+	color: #000;
+}
+.dexuat{
+	width: 100px;
+	height: 40px;
+	border: none;
+	border-radius: 5px;
+	color: #FFF;
+	background: #f57812;
+	margin-bottom: 20px;
+	cursor: pointer;
+}
+/*sodogiuong*/
+.sodogiuong{
+	width: 50%;
+	float: left;
+	margin-right: 30px;
+	padding: 0px;
+}
+/*sodoghe*/
+.sodoghe{
+	width: 55%;
+	float: left;
+	margin-right: 30px;
+	padding: 0px;
+}
+.tangtren{
+	display: none;
+}
+/**/
 .chonveright table{
-	width: 80%;
+	width: 100%;
 	margin: auto;
 	border-spacing: 0.5em;
 	border-collapse: separate;
@@ -594,58 +664,104 @@ a{
 	box-shadow: 0 0 2em #CCC;
 	font-weight: bold;
 }
+
+.bangve img{
+	width: 50%;
+	margin-left: 22%;
+	margin-top: 5px;
+}
+/*loại ghế*/
 .ghe{
-	width: 15%;
-	height: 7em;
-	background: red;
+	height: 2em;
+	background: #CCC;
 	border: none;
 	border-radius: 1em;
-	cursor: pointer;
+	box-shadow: 0 0 0.2em #000;
 }
 .ghetaixe{
-	width: 15%;
-	height: 7em;
-	background-image: url('../images/ghetaixe.png');
-	background-repeat: no-repeat;
-	background-size: 100% auto;
+	height: 3.6em;;
 	/* background:#f57812; */
 	border: none;
 	border-radius: 1em;
-	box-shadow: 0 0 0.5em #CCC;
+	box-shadow: 0 0 0.2em #000;
 }
 .ghetrong{
-	width: 10%;
-	height: 7em;
+	height: 2em;
 	border: none;
 }
 .ghecontrong{
-	width: 15%;
-	height: 7em;
-	background: #DDD;
+	height: 2em;
+	background: #FFF;
+	box-shadow: 0 0 0.2em #000;
 	border: none;
 	border-radius: 1em;
 	cursor: pointer;
 }
 .ghecochon{
-	width: 15%;
-	height: 7em;
-	background: blue;
+	height: 2em;
+	background: #c3e9f4;
 	border: none;
 	border-radius: 1em;
 	cursor: pointer;
 }
 .ghedangchon{
-	width: 15%;
-	height: 7em;
+	height: 2em;
 	background: green;
 	border: none;
 	border-radius: 1em;
 	cursor: pointer;
 }
+/*Tên ghế*/
 .content{
-	margin-top: 45px;
     text-align: center;
-    padding-bottom: 10px;
+    font-size: 10px;
+}
+/*giuong*/
+.giuong{
+	background: #CCC;
+	border: none;
+	border-radius: 1em;
+	box-shadow: 0 0 0.2em #000;
+}
+.giuongtaixe{
+	background-image: url(../images/ghetaixe2.png);
+	background-repeat: no-repeat;
+	background-size: 100%;
+	/* background:#f57812; */
+	border-radius: 1em;
+	box-shadow: 0 0 0.2em #000;
+	height: 4em;
+}
+.giuongtrong{
+	border: none;
+	height: 5em;
+	
+}
+.giuongcontrong{
+	background: #FFF;
+	box-shadow: 0 0 0.2em #000;
+	border: none;
+	border-radius: 1em;
+	cursor: pointer;
+	height: 5em;
+}
+.giuongcochon{
+	background: #c3e9f4;
+	border: none;
+	border-radius: 1em;
+	box-shadow: 0 0 0.2em #000;
+	cursor: pointer;
+	height: 5em;
+}
+.giuongdangchon{
+	background: green;
+	border: none;
+	border-radius: 1em;
+	cursor: pointer;
+	height: 5em;
+}
+.contentgiuong{
+    text-align: center;
 }
 /*tintuc*/
 .maintintuc{
@@ -743,18 +859,19 @@ a{
 	list-style-type: none;
 	width: 80%;
 	margin: auto;
-	padding: 3px;
 }
 .buoc ul li:not([class~='stay']){
 	width: calc(70% / 3);
 	float: left;
 	height: 50px;
 	background: #f4f4f4;
-	margin: 5%;
+	margin-left: 5%;
+	margin-right: 5%;
+	margin-top:1em;
 	text-align: center;
 	line-height: 50px;
 	font-size: 18px;
-	margin-bottom: 3em;
+	margin-bottom: 1em;
 	position: relative;
 }
 .buoc ul li:not([class~='stay'])::before {
@@ -785,11 +902,13 @@ a{
 	height: 50px;
 	background: #f57812; 
 	color: #FFF;
-	margin: 5%;
+	margin-left: 5%;
+	margin-right: 5%;
+	margin-top:1em; 
 	text-align: center;
 	line-height: 50px;
 	font-size: 18px;
-	margin-bottom: 3em;
+	margin-bottom: 1em;
 	position: relative;
 }
 .stay::before {
