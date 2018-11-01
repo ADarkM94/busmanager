@@ -106,17 +106,22 @@ Route::middleware('admincheck')->group(function (){
 });
 
 /* Kết thúc phần Route cho trang quản trị hệ thống */
-Route::get('ticket', function (){
-    /*$matrix = [
+/*Route::get('ticket', function (){
+    $matrix = [
         'user1'=>[3,2,5,5,'?',6],
         'user2'=>[3,'?',1,5,4,6],
         'user3'=>[3,2,1,5,'?',6],
         'user4'=>[3,7,'?',5,1,6],
         'user5'=>[3,2,8,5,'?',6]
     ];
-    App\Http\Controllers\TicketSuggestion::ticketSuggestion($matrix);*/
+    App\Http\Controllers\TicketSuggestion::ticketSuggestion($matrix);
     App\Http\Controllers\TicketSuggestion::makeMatrix();
-});
+});*/
+
+Route::get("ticket", "TicketSuggestion@makeMatrix");
+
+Route::post("ticket", "TicketSuggestion@makeMatrix")->name('ticketsuggestion');
+
 /* Route::get('test11', function(){
 	return response()->json(0);
 }); */

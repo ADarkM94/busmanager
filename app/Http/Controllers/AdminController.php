@@ -40,17 +40,17 @@ class AdminController extends Controller
     }*/
 
     public function checkLogin(Request $request)
-	{
-		$username = $request->username;
-		$password = $request->password;
-		if($username == null||$password == null)
-		{
-			return redirect()->back()->with(['alert' => 'Tên tài khoản hoặc mật khẩu không được để trống','username' => $username]);
-			// return response()->json(var_dump($errors);
-		}
+    {
+        $username = $request->username;
+        $password = $request->password;
+        if($username == null||$password == null)
+        {
+            return redirect()->back()->with(['alert' => 'Tên tài khoản hoặc mật khẩu không được để trống','username' => $username]);
+            // return response()->json(var_dump($errors);
+        }
         $account = DB::table('employee')->where([['Username','=',$username],['Password','=',md5($password)],['Loại_NV','=','QTV']])->get();
         if(!empty($account[0]))
-		{
+        {
             session(['admin.islogin' => 1]);
             session(['admin.id' => $account[0]->Mã]);
             session(['admin.name' => $account[0]->Họ_Tên]);
@@ -92,15 +92,14 @@ class AdminController extends Controller
         $brtday = $request->brtday;
         $gender = $request->gender;
         $address = $request->address;
-        $nickname = $request->nickname;
         $password = md5($request->password);
         $email = $request->email;
         $phone = $request->phone;
         $created_at = date('Y-m-d h-i-s');
         $updated_at = date('Y-m-d h-i-s');
         if(isset($request->ID)){
-            if(DB::update("UPDATE `customer` SET `Tên`= ?,`Ngày_sinh`= ?,`Giới tính`= ?,`Địa chỉ`= ?,`Nickname`= ?,`Password`= ?,`Email`= ?,`Sđt`= ?,`updated_at`= ? WHERE `Mã`= ?",
-                [$name,$brtday,$gender,$address,$nickname,$password,$email,$phone,$updated_at,$request->ID]))
+            if(DB::update("UPDATE `customer` SET `Tên`= ?,`Ngày_sinh`= ?,`Giới tính`= ?,`Địa chỉ`= ?,`Password`= ?,`Email`= ?,`Sđt`= ?,`updated_at`= ? WHERE `Mã`= ?",
+                [$name,$brtday,$gender,$address,$password,$email,$phone,$updated_at,$request->ID]))
                 return redirect()->back()->with('alert','Sửa thành công!');
             else
                 return redirect()->back()->with('alert','Sửa thất bại!');
@@ -108,8 +107,8 @@ class AdminController extends Controller
         else {
             if(!DB::select('select * from customer where Email = ? or Sđt = ? or Tên = ?',[$request->email,$request->phone,$request->name]))
             {
-                DB::insert("INSERT INTO `customer`(`Tên`, `Ngày_sinh`, `Giới tính`, `Địa chỉ`, `Nickname`, `Password`, `Email`, `Sđt`, `created_at`, `updated_at`) VALUES (?,?,?,?,?,?,?,?,?,?)",
-                    [$name,$brtday,$gender,$address,$nickname,$password,$email,$phone,$created_at,$updated_at]);
+                DB::insert("INSERT INTO `customer`(`Tên`, `Ngày_sinh`, `Giới tính`, `Địa chỉ`, `Password`, `Email`, `Sđt`, `created_at`, `updated_at`) VALUES (?,?,?,?,?,?,?,?,?)",
+                    [$name,$brtday,$gender,$address,$password,$email,$phone,$created_at,$updated_at]);
                 return redirect()->back()->with('alert','Thêm thành công!');
             }
             else
@@ -508,11 +507,15 @@ class AdminController extends Controller
                     $loaighe = $loaixe["Loại_ghế"];
                     $trangthai = 0;
                     $k = 1;
-                    for ($i = 0; $i < $row; $i++) {
+                    if($loaighe==1)
+                    {
+                        $row = ($row - 1)/2 + 1;
+                    }
+                    for ($i = 1; $i < $row; $i++) {
 //                        $k = 1;
                         for ($j = 0; $j < $col; $j++) {
-                            if ($i * $col + $j == 0)
-                                continue;
+                            /*if ($i * $col + $j == 0)
+                                continue;*/
                             if ($sodo[$i * $col + $j] == 1) {
                                 $vitri = 'A-' . ($k);
                                 DB::insert("INSERT INTO `ve`(`Mã_chuyến_xe`, `Vị_trí_ghế`, `Trạng_thái`, `created_at`, `updated_at`) VALUES (?,?,?,?,?)",
@@ -523,11 +526,11 @@ class AdminController extends Controller
                     }
                     if($loaighe==1){
                         $k = 1;
-                        for ($i = 0; $i < $row; $i++) {
+                        for ($i = $row; $i < intval($loaixe["Số_hàng"]); $i++) {
 //                        $k = 1;
                             for ($j = 0; $j < $col; $j++) {
-                                if ($i * $col + $j == 0)
-                                    continue;
+                                /*if ($i * $col + $j == 0)
+                                    continue;*/
                                 if ($sodo[$i * $col + $j] == 1) {
                                     $vitri = 'B-' . ($k);
                                     DB::insert("INSERT INTO `ve`(`Mã_chuyến_xe`, `Vị_trí_ghế`, `Trạng_thái`, `created_at`, `updated_at`) VALUES (?,?,?,?,?)",
@@ -577,11 +580,15 @@ class AdminController extends Controller
                 $loaighe = $loaixe["Loại_ghế"];
                 $trangthai = 0;
                 $k = 1;
+                if($loaighe==1)
+                {
+                    $row = ($row - 1)/2 + 1;
+                }
                 for ($i = 0;$i<$row;$i++){
 //                    $k = 1;
                     for ($j = 0;$j<$col;$j++){
-                        if($i*$col+$j == 0)
-                            continue;
+                        /*if($i*$col+$j == 0)
+                            continue;*/
                         if($sodo[$i*$col+$j]==1){
                             $vitri = 'A-'.($k);
                             DB::insert("INSERT INTO `ve`(`Mã_chuyến_xe`, `Vị_trí_ghế`, `Trạng_thái`, `created_at`, `updated_at`) VALUES (?,?,?,?,?)",
@@ -592,11 +599,11 @@ class AdminController extends Controller
                 }
                 if($loaighe==1){
                     $k = 1;
-                    for ($i = 0; $i < $row; $i++) {
+                    for ($i = $row; $i < intval($loaixe["Số_hàng"]); $i++) {
 //                        $k = 1;
                         for ($j = 0; $j < $col; $j++) {
-                            if ($i * $col + $j == 0)
-                                continue;
+                            /*if ($i * $col + $j == 0)
+                                continue;*/
                             if ($sodo[$i * $col + $j] == 1) {
                                 $vitri = 'B-' . ($k);
                                 DB::insert("INSERT INTO `ve`(`Mã_chuyến_xe`, `Vị_trí_ghế`, `Trạng_thái`, `created_at`, `updated_at`) VALUES (?,?,?,?,?)",

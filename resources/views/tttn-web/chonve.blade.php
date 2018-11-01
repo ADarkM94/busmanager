@@ -44,8 +44,8 @@
                     @for($i=0;$i<7;$i++)
                     <tr>
                        @for($j=0;$j<5;$j++)
-                             @if($i==0)
-                              
+                            @if($i==0)
+								@break
                             @elseif($sd[$i * 5 + $j]==1)
                                 @if($ve[$dem]->Trạng_thái == 1)
                                 <td class="giuong" title="Giường đã bán cho khách"><div class="contentgiuong">{{$ve[$dem]->Vị_trí_ghế}}</div></td>
@@ -55,17 +55,17 @@
                                 @elseif($ve[$dem]->Trạng_thái == 2)
                                     @if($ve[$dem]->Mã_khách_hàng == Session::get('makh'))
                                         <td class="giuongdangchon" title="Ghế Đang Chọn" data-ma={{$ve[$dem]->Mã}}></div><div class="contentgiuong">{{$ve[$dem]->Vị_trí_ghế}}</div></td>
-                                    
+
                                     @else
                                          <td class="giuongcochon" title="Đã Có Người Chọn" data-ma={{$ve[$dem]->Mã}}></div><div class="contentgiuong">{{$ve[$dem]->Vị_trí_ghế}}</div></td>
-                                    
+
                                     @endif
                                 @endif
                                   <?php  $dem++; ?>
                             @else
                                 <td class="giuongtrong"></td>
                             @endif
-                       @endfor 
+                       @endfor
                     </tr>
                     @endfor
                 </table>
@@ -77,7 +77,7 @@
                     <tr>
                        @for($j=0;$j<5;$j++)
                             @if($i ==0)
-                                
+
                             @elseif($sd[$i * 5 + $j]==1)
                                 @if($ve[$dem]->Trạng_thái == 1)
                                 <td class="giuong" title="Giường đã bán cho khách"></div><div class="contentgiuong">{{$ve[$dem]->Vị_trí_ghế}}</div></td>
@@ -87,17 +87,17 @@
                                 @elseif($ve[$dem]->Trạng_thái == 2)
                                     @if($ve[$dem]->Mã_khách_hàng == Session::get('makh'))
                                         <td class="giuongdangchon" title="Ghế Đang Chọn" data-ma={{$ve[$dem]->Mã}}></div><div class="contentgiuong">{{$ve[$dem]->Vị_trí_ghế}}</div></td>
-                                    
+
                                     @else
                                          <td class="giuongcochon" title="Đã Có Người Chọn" data-ma={{$ve[$dem]->Mã}}></div><div class="contentgiuong">{{$ve[$dem]->Vị_trí_ghế}}</div></td>
-                                    
+
                                     @endif
                                 @endif
                                   <?php  $dem++; ?>
                             @else
                                 <td class="giuongtrong"></td>
                             @endif
-                       @endfor 
+                       @endfor
                     </tr>
                     @endfor
             </table>
@@ -138,10 +138,10 @@
                                 @elseif($ve[$dem]->Trạng_thái == 2)
                                     @if($ve[$dem]->Mã_khách_hàng == Session::get('makh'))
                                         <td class="ghedangchon" title="Ghế Đang Chọn" data-ma={{$ve[$dem]->Mã}}><img src="../images/ghe.png"><div class="content">{{$ve[$dem]->Vị_trí_ghế}}</div></td>
-                                    
+
                                     @else
                                          <td class="ghecochon" title="Đã Có Người Chọn" data-ma={{$ve[$dem]->Mã}}><img src="../images/ghe.png"><div class="content">{{$ve[$dem]->Vị_trí_ghế}}</div></td>
-                                    
+
                                     @endif
                                 @endif
                                 <?php $dem++; ?>
@@ -287,27 +287,6 @@
                     }
              });
             });
-               /* $(".bangve").delegate(".giuongcontrong","click",function(){
-                ma = $(this).attr("data-ma");
-                bien = $(this);
-                makh = {{Session::get('makh')}};
-                $.ajax({
-                    url: '{{route("xulydatve")}}',
-                    type: 'POST',
-                    data: {
-                        _token: '{{csrf_token()}}',
-                        MA: ma,
-                        MAKH: makh
-                    },
-                    success: function (data) {
-                       if(data.kq == 1){
-                        bien.addClass("giuongdangchon");
-                        bien.removeClass("giuongcontrong");
-                        mang.push(ma);
-                       }
-                    }
-             });
-            });*/
                $(".bangve").delegate(".giuongdangchon","click",function(){
                 ma = $(this).attr("data-ma");
                 bien = $(this);
@@ -362,6 +341,22 @@
                 $(".tren").css({"background":"#CCC","color":"#000"});
                 $(".tangduoi").show();
                 $(".tangtren").hide();
+               });
+               $(".dexuat").click(function () {
+                   makh = '{{session('makh')}}';
+                   machuyenxe = '{{$chonve[0]->Mã}}';
+                  $.ajax({
+                      url: '{{route('ticketsuggestion')}}',
+                      data: {
+                          _token: '{{csrf_token()}}',
+                          idkhachhang: makh,
+                          idchuyenxe: machuyenxe
+                      },
+                      type: 'post',
+                      success: function (data) {
+                          alert('Trang web đề nghị cho bạn những ghế sau:\n'+data.kq[0].Vị_trí_ghế);
+                      }
+                  }) ;
                });
 });
     </script>

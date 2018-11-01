@@ -18,10 +18,11 @@
 <body>
 <div class="header">
     <img src="{{asset('images/logo.png')}}" height="40">
+    <?php $makh=Session::get('makh'); ?>
     @if(Session::has('makh'))
         <ul>
             <li><a  href="{{route('logout')}}" style="line-height: 40px;color: #FFF;">( Đăng xuất )</a></li>
-            <li style="color: #FFF;line-height: 40px;"><i class="fa fa-address-book-o" style="font-size:20px; margin-right: 3px;"></i>  <a style="color: #CCC;">{{Session::get('sdt')}}</a></li>
+            <li style="color: #FFF;line-height: 40px;"><i class="fa fa-address-book-o" style="font-size:20px; margin-right: 3px;"></i>  <a href="thongtin/{{$makh}}" style="color: #CCC; cursor: pointer;">{{Session::get('sdt')}}</a></li>
         </ul>
     @else
         <ul>
@@ -86,8 +87,8 @@
     </div>
 </main>
 @section('script')
-    <script type="text/javascript" src="js/js.js"></script>
-    <script type="text/javascript" src="js/date.js"></script>
+    <script type="text/javascript" src="{{asset('js/js.js')}}"></script>
+    <script type="text/javascript" src="{{asset('js/date.js')}}"></script>
     <script type="text/javascript">
         $(document).ready(function(){
             $(".dangky").click(function(){
@@ -168,7 +169,7 @@
                 }
             });
             $(".dongdangky").click(function(){
-                $(".").html("");
+                $(".loi").html("");
                 $(".loi2").html("");
                 $(".loi3").html("");
                 $(".loi4").html("");
@@ -221,8 +222,9 @@
                        }
                        else{
                         var sdt = data.sdt;
+                        var ma = data.ma;
                         $("#login").modal("hide");
-                        $(".header").html("<img src='{{asset("images/logo.png")}}' height='40'><ul><li><a  href='{{route("logout")}}' style='line-height: 40px;color: #FFF;'>( Đăng xuất )</a></li><li style='color: #FFF;line-height: 40px;'><i class='fa fa-address-book-o' style='font-size:20px; margin-right: 3px;'></i>  <a style='color: #CCC;'>"+sdt+"</a></li></ul>");
+                        $(".header").html("<img src='{{asset("images/logo.png")}}' height='40'><ul><li><a  href='{{route("logout")}}' style='line-height: 40px;color: #FFF;'>( Đăng xuất )</a></li><li style='color: #FFF;line-height: 40px;'><i class='fa fa-address-book-o' style='font-size:20px; margin-right: 3px;'></i>  <a href='thongtin/"+ma+"' style='color: #CCC; cursor: pointer;'>"+sdt+"</a></li></ul>");
                        }
                        
                      }

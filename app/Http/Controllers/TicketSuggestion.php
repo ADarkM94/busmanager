@@ -12,21 +12,13 @@ class TicketSuggestion extends Controller
     /**
      * @param $matrix
      */
-    public static function ticketSuggestion($matrix){
+    public static function ticketSuggestion($matrix,$machuyenxe,$makhachhang){
         $tbarr = [];
-        $normmatrix = $matrix;
+        $normmatrix = [];
         $similarmatrix = [];
         $sodem = 0;
         $sodem1 = 0;
         $keyarr = [];
-        foreach ($matrix as $key => $value){
-            $keyarr[$sodem] = $key;
-            $sodem++;
-        }
-        $sodem = 0;
-        foreach ($matrix as $key => $value){
-            $similarmatrix[$key] = [];
-        }
         foreach ($matrix as $row){
             $sohang = count($row);
             $num = $sohang;
@@ -43,16 +35,47 @@ class TicketSuggestion extends Controller
             $tbarr[$sodem]=round($s/$num,2);
             $sodem+=1;
         }
-//        die(var_dump($tbarr));
-        foreach ($normmatrix as $key => $value){
+        /* print_r($tbarr); */
+        $tmp = $matrix;
+        foreach ($tmp as $key => $value)
+        {
             $sohang = count($value);
-            for ($i=0;$i<$sohang;$i++){
-                if(is_numeric($value[$i])){
-                    $normmatrix[$key][$i]= intval($value[$i]) - $tbarr[$sodem1];
+            for ($i=0;$i<$sohang;$i++)
+            {
+                if(is_numeric($value[$i]))
+                {
+                    $tmp[$key][$i]= intval($value[$i]) - $tbarr[$sodem1];
                 }
             }
             $sodem1+=1;
         }
+        foreach ($tmp as $key => $value)
+        {
+            $sohang = count($value);
+            $hople = 0;
+            for ($i=0;$i<$sohang;$i++)
+            {
+                if(is_numeric($value[$i])&&$value[$i] != 0)
+                {
+                    $hople++;
+                }
+                if($hople >= 2)
+                {
+                    $normmatrix[$key] = $value;
+                    break;
+                }
+            }
+        }
+        $sodem = 0;
+        foreach ($normmatrix as $key => $value){
+            $keyarr[$sodem] = $key;
+            $sodem++;
+        }
+        foreach ($normmatrix as $key => $value){
+            $similarmatrix[$key] = [];
+        }
+//        return view('ticket', ['normmatrix' => $normmatrix,'matrix' => $matrix]);
+//		die(var_dump($normmatrix));
         foreach ($similarmatrix as $key => $value){
             $num = 0;
             foreach ($normmatrix as $row){
@@ -78,6 +101,8 @@ class TicketSuggestion extends Controller
                 $num++;
             }
         }
+//		return view('ticket', ['similarmatrix' => $similarmatrix,'matrix' => $matrix]);
+//        die(var_dump($similarmatrix));
         $normmatrixFull = $normmatrix;
         foreach ($normmatrix as $key => $value){
             $sohang = count($value);
@@ -115,18 +140,74 @@ class TicketSuggestion extends Controller
             }
             $sodem2++;
         }
-        echo var_dump($tbarr).'<br>';
-        echo var_dump($normmatrix).'<br>';
-        echo var_dump($similarmatrix).'<br>';
-        echo var_dump($normmatrixFull).'<br>';
-        echo var_dump($matrixFinal).'<br>';
+//        return view('ticket', ['similarmatrix' => $similarmatrix,'matrix' => $matrix,'normmatrix' => $normmatrix,'normmatrixFull' => $normmatrixFull,'matrixFinal' => $matrixFinal]);
+        $vedadat = DB::table('ve')->where('Mã_chuyến_xe','=',$machuyenxe)->select("Mã","Vị_trí_ghế","Trạng_thái")->get();
+        $sove = count($vedadat);
+        $bangdenghi = [];
+        if(isset($matrixFinal["{$makhachhang}"]))
+        {
+            $bangdenghi = $matrixFinal["{$makhachhang}"];
+        }
+        else
+        {
+            for ($i=0;$i<$sove;$i++)
+            {
+                $bangdenghi[$i] = 0;
+            }
+            foreach ($matrixFinal as $row)
+            {
+                for ($i=0;$i<$sove;$i++)
+                {
+                    if($row[$i] > $bangdenghi[$i])
+                    {
+                        $bangdenghi[$i] = $row[$i];
+                    }
+                }
+            }
+        }
+        for ($i=0;$i<$sove;$i++)
+        {
+            $vedadat[$i]->tanso = $bangdenghi[$i];
+        }
+        for ($i=0;$i<$sove-1;$i++)
+        {
+            for($j=$i+1;$j<$sove;$j++)
+            {
+                if($vedadat[$i]->tanso < $vedadat[$j]->tanso)
+                {
+//                    self::hoandoi($bangdenghi[$i],$bangdenghi[$j]);
+                    self::hoandoi($vedadat[$i]->Mã,$vedadat[$j]->Mã);
+                    self::hoandoi($vedadat[$i]->Trạng_thái,$vedadat[$j]->Trạng_thái);
+                    self::hoandoi($vedadat[$i]->Vị_trí_ghế,$vedadat[$j]->Vị_trí_ghế);
+                    self::hoandoi($vedadat[$i]->tanso,$vedadat[$j]->tanso);
+                }
+            }
+        }
+        $kq = [];
+        $demve = 0;
+        foreach ($vedadat as $row)
+        {
+            if($row->Trạng_thái == 0)
+            {
+                $kq[$demve] = $row;
+                $demve++;
+            }
+        }
+        return response()->json(['kq' => $kq]);
+//        echo var_dump($tbarr).'<br>';
+//        echo var_dump($normmatrix).'<br>';
+//        echo var_dump($similarmatrix).'<br>';
+//        echo var_dump($normmatrixFull).'<br>';
+//        echo var_dump($matrixFinal).'<br>';
     }
-    public static function makeMatrix(/*Request $request*/){
+    public static function makeMatrix(Request $request){
         $matrix = [];
-        $machuyenxe = 2;
-        $makhachhang = 10;
-//        $machuyenxe = $request->idchuyenxe;
-//        $makhachhang = $request->idkhachhang;
+//        $machuyenxe = 10;
+//        $makhachhang = 28;
+//		$makhachhang = 10;
+//		$machuyenxe = 23;
+        $machuyenxe = $request->idchuyenxe;
+        $makhachhang = $request->idkhachhang;
         $ttxe = DB::table('chuyen_xe')->join('xe','chuyen_xe.Mã_xe','=','xe.Mã')
             ->join('bus_model','xe.Mã_loại_xe','=','bus_model.Mã')
             ->where('chuyen_xe.Mã','=',$machuyenxe)
@@ -134,15 +215,20 @@ class TicketSuggestion extends Controller
         $malotrinh = $ttxe[0]->Mã_lộ_trình;
         $maloaixe = $ttxe[0]->Mã_loại_xe;
         $mtxve = DB::table('ve')->where('Mã_chuyến_xe','=',$machuyenxe)->select('Vị_trí_ghế')->get();
-        $mtxkhach = DB::select("SELECT Mã_khách_hàng,COUNT(*) FROM ve,chuyen_xe,xe WHERE ve.Mã_chuyến_xe = chuyen_xe.Mã AND chuyen_xe.Mã_lộ_trình = {$malotrinh} AND chuyen_xe.Mã_xe = xe.Mã AND xe.Mã_loại_xe = {$maloaixe} AND ve.Mã_khách_hàng != NULL GROUP BY Mã_khách_hàng ORDER BY COUNT(*) DESC");
+        $mtxkhach = DB::select(DB::raw("SELECT Mã_khách_hàng,COUNT(*) FROM ve,chuyen_xe,xe WHERE ve.Mã_chuyến_xe = chuyen_xe.Mã AND chuyen_xe.Mã_lộ_trình = {$malotrinh} AND chuyen_xe.Mã_xe = xe.Mã AND xe.Mã_loại_xe = {$maloaixe} AND ve.Mã_khách_hàng IS NOT NULL GROUP BY Mã_khách_hàng ORDER BY COUNT(*) DESC"));
         $vekh0 = DB::select(DB::raw("SELECT Vị_trí_ghế,COUNT(*) FROM ve,chuyen_xe,xe WHERE ve.Mã_chuyến_xe = chuyen_xe.Mã AND chuyen_xe.Mã_lộ_trình = {$malotrinh} AND chuyen_xe.Mã_xe = xe.Mã AND xe.Mã_loại_xe = {$maloaixe}  AND ve.Mã_khách_hàng = {$makhachhang} GROUP BY Vị_trí_ghế"));
         $dem = 0;
         $dem1 = 0;
         $tmp = [];
+        /* print_r($mtxkhach); */
         foreach ($mtxve as $ve)
         {
-            $tmp[$dem1] = '?';
             $lengthve = count($vekh0);
+            if($lengthve == 0)
+            {
+                break;
+            }
+            $tmp[$dem1] = '?';
             if($dem == $lengthve)
             {
                 $dem1++;
@@ -155,16 +241,19 @@ class TicketSuggestion extends Controller
             }
             $dem1++;
         }
-        $matrix["{$makhachhang}"] = $tmp;
+        if(count($vekh0) != 0)
+        {
+            $matrix["{$makhachhang}"] = $tmp;
+        }
         $customermax = 29;
         foreach ($mtxkhach as $row)
         {
             $makh = $row->Mã_khách_hàng;
-            if($makh == $makhachhang)
+            if($makh == $makhachhang/*||$makh == 20||$makh == 21||$makh == 8*/)
             {
                 continue;
             }
-            if($customermax <= 0)
+            if($customermax <= 0 || $row->{'COUNT(*)'} == 0)
             {
                 break;
             }
@@ -192,7 +281,13 @@ class TicketSuggestion extends Controller
             $customermax--;
         }
 //        $matrix = DB::select(DB::raw("SELECT Vị_trí_ghế,COUNT(*) FROM ve,chuyen_xe,xe WHERE ve.Mã_chuyến_xe = chuyen_xe.Mã AND chuyen_xe.Mã_lộ_trình = {$malotrinh} AND chuyen_xe.Mã_xe = xe.Mã AND xe.Mã_loại_xe = {$maloaixe}  AND ve.Mã_khách_hàng = {$makhachhang} GROUP BY Vị_trí_ghế"));
-        echo print_r($matrix);
-        self::ticketSuggestion($matrix);
+//        print_r($matrix);
+        return self::ticketSuggestion($matrix,$machuyenxe,$makhachhang);
+    }
+    public static function hoandoi(&$a,&$b)
+    {
+        $tmp = $a;
+        $a = $b;
+        $b = $tmp;
     }
 }

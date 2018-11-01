@@ -11,7 +11,7 @@
                 {!! session('alert') !!}
             @endif
         </div>
-        <form class="col-lg-6" action="{{route('addcustomer')}}" method="post">
+        <form name="ttkhachhang" class="col-lg-6" action="{{route('addcustomer')}}" method="post">
             @csrf
             <fieldset>
                 <legend><?php echo isset($ttkhachhang)? 'Sửa Thông Tin Người Dùng':'Thêm Người Dùng';?></legend>
@@ -49,7 +49,7 @@
                 <input type="tel" class="form-control"  name="phone" value="{{isset($ttkhachhang['Sđt'])? $ttkhachhang['Sđt']:''}}" placeholder="Số điện thoại" required>
                 <br>
                 <div style="text-align: center">
-                    <input type="submit" class="btn btn-success" value="<?php echo isset($ttkhachhang)? 'Sửa Thông Tin':'Thêm Người Dùng';?>">
+                    <input type="submit" name="submit" class="btn btn-success" value="<?php echo isset($ttkhachhang)? 'Sửa Thông Tin':'Thêm Người Dùng';?>">
                     <input type="button" onclick="location.assign('{{url('/admin/khachhang')}}')" class="btn btn-danger" value="Hủy">
                 </div>
             </fieldset>
@@ -67,5 +67,10 @@
         }
         option[1].classList.add('selected');
         option[1].getElementsByTagName('img')[0].setAttribute('src','{{asset("images/icons/customer-hover.png")}}');
+        document.forms["ttkhachhang"]["submit"].onclick = function (ev) {
+            ev.preventDefault();
+            var name = document.forms["ttkhachhang"]["name"].value;
+            var password = document.forms["ttkhachhang"]["password"].value;
+            var email = document.forms["ttkhachhang"]["email"].value;
+        };
     </script>
-@endsection
