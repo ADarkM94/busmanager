@@ -8,7 +8,26 @@
     <div class="content show row">
         <div class="col-lg-2">
             @if(session('alert'))
-                {!! session('alert') !!}
+                <div class="modal fade" id="alertmessage">
+					<div class="modal-dialog" style="width: 400px; margin-top: 200px;">
+						<div class="modal-content" style="text-align: center;">
+							<div class="modal-header">
+								<div class="modal-title">Thông báo</div>
+							</div>
+							<div class="modal-body alert alert-warning" style="text-align: center; margin-bottom: 0;">
+								{{session('alert')}}
+							</div>
+							<div class="modal-footer" style="text-align: center;">
+								<span class="btn btn-success" data-dismiss="modal">OK</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<script>
+					$(document).ready(function(){
+						$('#alertmessage').modal('show');
+					});
+				</script>
             @endif
         </div>
         <form class="col-lg-8" name="ttchuyenxe" action="{{route('addchuyenxexl')}}" method="post">

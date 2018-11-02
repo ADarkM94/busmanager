@@ -25,7 +25,8 @@ class AdminController extends Controller
 //        $this->middleware('auth:admin');
 //    }
 
-    public function test(){
+    public function test()
+	{
         echo "Thành công!";
     }
 
@@ -56,38 +57,48 @@ class AdminController extends Controller
             session(['admin.name' => $account[0]->Họ_Tên]);
             return redirect('/admin');
         }
-        else{
+        else
+		{
             return redirect()->back()->with(['alert' => 'Tài khoản hoặc mật khẩu không đúng','username' => $username]);
         }
     }
 
-    public  function logout(){
+    public  function logout()
+	{
         session()->forget('admin');
         return redirect()->back();
     }
 
     //Phần khách hàng
-    public function khachhang(){
+    public function khachhang()
+	{
         $customer = Khachhang::all();
         return view('quantrivien.khachhang', compact('customer'));
     }
 
-    public function addkhachhang($index=""){
-        if($index==""){
+    public function addkhachhang($index="")
+	{
+        if($index=="")
+		{
             return view("quantrivien.addkhachhang");
         }
-        try {
+        try 
+		{
             $ttkhachhangs = DB::select("SELECT * FROM customer WHERE Mã = ?",[$index]);
-            foreach ($ttkhachhangs as $row){
+            foreach ($ttkhachhangs as $row)
+			{
                 $ttkhachhang = $row;
             }
             return view("quantrivien.addkhachhang",["ttkhachhang" => $ttkhachhang]);
-        } catch (\Exception $e) {
+        } 
+		catch (\Exception $e) 
+		{
             die("Lỗi: ".$e);
         }
     }
 
-    public  function addcustomer(Request $request){
+    public  function addcustomer(Request $request)
+	{
         $name = $request->name;
         $brtday = $request->brtday;
         $gender = $request->gender;
@@ -97,14 +108,20 @@ class AdminController extends Controller
         $phone = $request->phone;
         $created_at = date('Y-m-d h-i-s');
         $updated_at = date('Y-m-d h-i-s');
-        if(isset($request->ID)){
+        if(isset($request->ID))
+		{
             if(DB::update("UPDATE `customer` SET `Tên`= ?,`Ngày_sinh`= ?,`Giới tính`= ?,`Địa chỉ`= ?,`Password`= ?,`Email`= ?,`Sđt`= ?,`updated_at`= ? WHERE `Mã`= ?",
                 [$name,$brtday,$gender,$address,$password,$email,$phone,$updated_at,$request->ID]))
-                return redirect()->back()->with('alert','Sửa thành công!');
+				{
+					return redirect()->back()->with('alert','Sửa thành công!');
+				}
             else
-                return redirect()->back()->with('alert','Sửa thất bại!');
+			{
+				return redirect()->back()->with('alert','Sửa thất bại!');
+			}
         }
-        else {
+        else 
+		{
             if(!DB::select('select * from customer where Email = ? or Sđt = ? or Tên = ?',[$request->email,$request->phone,$request->name]))
             {
                 DB::insert("INSERT INTO `customer`(`Tên`, `Ngày_sinh`, `Giới tính`, `Địa chỉ`, `Password`, `Email`, `Sđt`, `created_at`, `updated_at`) VALUES (?,?,?,?,?,?,?,?,?)",
@@ -112,23 +129,33 @@ class AdminController extends Controller
                 return redirect()->back()->with('alert','Thêm thành công!');
             }
             else
-                return redirect()->back()->with('alert','Thêm thất bại!');
+			{
+				return redirect()->back()->with('alert','Thêm thất bại!');
+			}      
         }
     }
 
-    public function delcustomer($id){
-        try {
+    public function delcustomer($id)
+	{
+        try 
+		{
             DB::delete('DELETE FROM customer WHERE Mã = ?',[$id]);
-        } catch (\Exception $e) {
+        } 
+		catch (\Exception $e) 
+		{
             die("Lỗi xóa dữ liệu :".$e);
         }
         return redirect()->back();
     }
-    public function viewkhachhang($id = ""){
+    public function viewkhachhang($id = "")
+	{
         if ($id == "")
-            return redirect(url('admin/khachhang'));
+		{
+			return redirect(url('admin/khachhang'));
+		}            
         $ttkhachhangs = DB::table('customer')->where('Mã','=',$id)->get();
-        foreach ($ttkhachhangs as $row){
+        foreach ($ttkhachhangs as $row)
+		{
             $ttkhachhang = (array)$row;
         }
         $ttchuyendi = DB::table('ve')->join('chuyen_xe','ve.Mã_chuyến_xe','=','chuyen_xe.Mã')

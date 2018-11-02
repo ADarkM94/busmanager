@@ -15,14 +15,11 @@
                         <br>
                         <label>Ngày sinh</label>
                         <input type="date" name="brtday" class="form-control" value="{{isset($ttkhachhang)? $ttkhachhang['Ngày_sinh']:''}}" readonly="">
-                        <br>
-                        <label>Địa chỉ</label>
-                        <input type="text" name="address" class="form-control" value="{{isset($ttkhachhang)? $ttkhachhang['Địa chỉ']:''}}" readonly="">
                     </div>
                     <div class="col-lg-6" style="text-align: left;">
-                        <label>Nickname</label>
-                        <input type="text" name="nickname" class="form-control" value="{{isset($ttkhachhang)? $ttkhachhang['Nickname']:''}}" readonly="">
-                        <br>
+                        <label>Địa chỉ</label>
+                        <input type="text" name="address" class="form-control" value="{{isset($ttkhachhang)? $ttkhachhang['Địa chỉ']:''}}" readonly="">
+						<br>
                         <label>Email</label>
                         <input type="email" name="email" class="form-control" value="{{isset($ttkhachhang)? $ttkhachhang['Email']:''}}" readonly="">
                         <br>

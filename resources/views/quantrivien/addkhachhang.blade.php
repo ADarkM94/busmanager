@@ -8,7 +8,26 @@
     <div class="content show row">
         <div class="col-lg-3">
             @if(session('alert'))
-                {!! session('alert') !!}
+                <div class="modal fade" id="alertmessage">
+					<div class="modal-dialog" style="width: 400px; margin-top: 200px;">
+						<div class="modal-content" style="text-align: center;">
+							<div class="modal-header">
+								<div class="modal-title">Thông báo</div>
+							</div>
+							<div class="modal-body alert alert-warning" style="text-align: center; margin-bottom: 0;">
+								{{session('alert')}}
+							</div>
+							<div class="modal-footer" style="text-align: center;">
+								<span class="btn btn-success" data-dismiss="modal">OK</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<script>
+					$(document).ready(function(){
+						$('#alertmessage').modal('show');
+					});
+				</script>
             @endif
         </div>
         <form name="ttkhachhang" class="col-lg-6" action="{{route('addcustomer')}}" method="post">
@@ -35,9 +54,6 @@
                 <br>
                 <label>Địa chỉ</label>
                 <input type="text" class="form-control"  name="address" value="{{isset($ttkhachhang['Địa chỉ'])? $ttkhachhang['Địa chỉ']:''}}" placeholder="Địa chỉ">
-                <br>
-                <label>Nickname</label>
-                <input type="text" class="form-control"  name="nickname" value="{{isset($ttkhachhang['Nickname'])? $ttkhachhang['Nickname']:''}}" placeholder="Bí danh">
                 <br>
                 <label>Password<i class="text text-danger">*</i></label>
                 <input type="password" class="form-control"  name="password" value="{{isset($ttkhachhang['Password'])? $ttkhachhang['Password']:''}}" <?php echo isset($ttkhachhang)? "disabled":"";?> placeholder="Mật khẩu" required>
@@ -67,10 +83,11 @@
         }
         option[1].classList.add('selected');
         option[1].getElementsByTagName('img')[0].setAttribute('src','{{asset("images/icons/customer-hover.png")}}');
-        document.forms["ttkhachhang"]["submit"].onclick = function (ev) {
+        /* document.forms["ttkhachhang"]["submit"].onclick = function (ev) {
             ev.preventDefault();
             var name = document.forms["ttkhachhang"]["name"].value;
             var password = document.forms["ttkhachhang"]["password"].value;
             var email = document.forms["ttkhachhang"]["email"].value;
-        };
+        }; */
     </script>
+@endsection
