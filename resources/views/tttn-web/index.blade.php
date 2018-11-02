@@ -9,19 +9,19 @@
 
                 <div class="mySlides fade1">
                     <div class="numbertext">1 / 3</div>
-                    <a href="#"><img src="images/4.jpg" style="height:400px; width: 100%;"></a>
+                    <a href="#"><img src="{{asset('images/4.jpg')}}" style="height:400px; width: 100%;"></a>
                     <div class="text">Địa điểm 1</div>
                 </div>
 
                 <div class="mySlides fade1">
                     <div class="numbertext">2 / 3</div>
-                    <a href="#"><img src="images/1.jpg" style="height:400px;width: 100%;"></a>
+                    <a href="#"><img src="{{asset('images/1.jpg')}}" style="height:400px;width: 100%;"></a>
                     <div class="text">Địa điểm 2</div>
                 </div>
 
                 <div class="mySlides fade1">
                     <div class="numbertext">3 / 3</div>
-                    <a href="#"><img src="images/5.jpg" style="height:400px;width: 100%;"></a>
+                    <a href="#"><img src="{{asset('images/5.jpg')}}" style="height:400px;width: 100%;"></a>
                     <div class="text">Địa điểm 3</div>
                 </div>
 
@@ -79,15 +79,15 @@
             <div class="tentintuc"><h2>Tin Tức Nổi Bật</h2></div>
             <ul>
                 <li>
-                    <img src="images/12.jpg">
+                    <img src="{{asset('images/12.jpg')}}">
                     <a><strong>CHUYỂN TUYẾN HẢI PHÒNG ↔ HỒ CHÍ MINH, VŨNG TÀU VỀ BẾN THƯỢNG LÝ - HẢI PHÒNG TỪ 22/11/2017</strong></a>
                 </li>
                 <li>
-                    <img src="images/12.jpg">
+                    <img src="{{asset('images/12.jpg')}}">
                     <a><strong>CHUYỂN TUYẾN HẢI PHÒNG ↔ HỒ CHÍ MINH, VŨNG TÀU VỀ BẾN THƯỢNG LÝ - HẢI PHÒNG TỪ 22/11/2017</strong></a>
                 </li>
                 <li>
-                    <img src="images/12.jpg">
+                    <img src="{{asset('images/12.jpg')}}">
                     <a><strong>CHUYỂN TUYẾN HẢI PHÒNG ↔ HỒ CHÍ MINH, VŨNG TÀU VỀ BẾN THƯỢNG LÝ - HẢI PHÒNG TỪ 22/11/2017</strong></a>
                 </li>
             </ul>
