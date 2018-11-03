@@ -345,16 +345,22 @@
                $(".dexuat").click(function () {
                    makh = '{{session('makh')}}';
                    machuyenxe = '{{$chonve[0]->Mã}}';
+				   /* tuoimin = 24;
+				   tuoimax = 30; */
                   $.ajax({
                       url: '{{route('ticketsuggestion')}}',
                       data: {
                           _token: '{{csrf_token()}}',
                           idkhachhang: makh,
-                          idchuyenxe: machuyenxe
+                          idchuyenxe: machuyenxe,
+						  /* tuoimin: tuoimin,
+						  tuoimax: tuoimax,
+						  gioitinh: 2 */
                       },
                       type: 'post',
                       success: function (data) {
                           alert('Trang web đề nghị cho bạn những ghế sau:\n'+data.kq[0].Vị_trí_ghế);
+						  /* alert(data); */
                       }
                   }) ;
                });

@@ -144,7 +144,7 @@ class TicketSuggestion extends Controller
         $vedadat = DB::table('ve')->where('Mã_chuyến_xe','=',$machuyenxe)->select("Mã","Vị_trí_ghế","Trạng_thái")->get();
         $sove = count($vedadat);
         $bangdenghi = [];
-        if(isset($matrixFinal["{$makhachhang}"]))
+        if($makhachhang != null&&isset($matrixFinal["{$makhachhang}"]))
         {
             $bangdenghi = $matrixFinal["{$makhachhang}"];
         }
@@ -207,7 +207,33 @@ class TicketSuggestion extends Controller
 //		$makhachhang = 10;
 //		$machuyenxe = 23;
         $machuyenxe = $request->idchuyenxe;
-        $makhachhang = $request->idkhachhang;
+        $makhachhang = isset($request->idkhachhang)? $request->idkhachhang:null;
+		$namcuoi = isset($request->tuoimin)? date('Y-m-d',strtotime('12/31/'.(intval(date('Y'))-intval($request->tuoimin)))):null;
+		$namdau = isset($request->tuoimax)? date('Y-m-d',strtotime('01/01/'.(intval(date('Y'))-intval($request->tuoimax)))):null;
+		$gioitinh = isset($request->gioitinh)? $request->gioitinh:null;
+		if($makhachhang!=null)
+		{
+			$ttkh = DB::table('customer')->where('Mã','=',$makhachhang)->select('Giới tính','Ngày_sinh')->get();
+			$gioitinh = $ttkh[0]->{'Giới tính'};
+			$tuoi = intval(date('Y')) - intval(date('Y',strtotime($ttkh[0]->{'Ngày_sinh'})));
+			if($tuoi >= 14&&$tuoi <= 36)
+			{
+				$namdau = date('Y-m-d',strtotime('01/01/1982'));
+				$namcuoi = date('Y-m-d',strtotime('12/31/2004'));
+			}
+			elseif($tuoi > 36)
+			{
+				$namdau = date('Y-m-d',strtotime('01/01/1970'));
+				$namcuoi = date('Y-m-d',strtotime('12/31/1981'));
+			}
+			elseif($tuoi < 14)
+			{
+				$namdau = date('Y-m-d',strtotime('01/01/2005'));
+				$namcuoi = date('Y-m-d');
+			}
+			// return response()->json($tuoi);
+		}
+		// return response()->json($namcuoi);
         $ttxe = DB::table('chuyen_xe')->join('xe','chuyen_xe.Mã_xe','=','xe.Mã')
             ->join('bus_model','xe.Mã_loại_xe','=','bus_model.Mã')
             ->where('chuyen_xe.Mã','=',$machuyenxe)
@@ -215,41 +241,46 @@ class TicketSuggestion extends Controller
         $malotrinh = $ttxe[0]->Mã_lộ_trình;
         $maloaixe = $ttxe[0]->Mã_loại_xe;
         $mtxve = DB::table('ve')->where('Mã_chuyến_xe','=',$machuyenxe)->select('Vị_trí_ghế')->get();
-        $mtxkhach = DB::select(DB::raw("SELECT Mã_khách_hàng,COUNT(*) FROM ve,chuyen_xe,xe WHERE ve.Mã_chuyến_xe = chuyen_xe.Mã AND chuyen_xe.Mã_lộ_trình = {$malotrinh} AND chuyen_xe.Mã_xe = xe.Mã AND xe.Mã_loại_xe = {$maloaixe} AND ve.Mã_khách_hàng IS NOT NULL GROUP BY Mã_khách_hàng ORDER BY COUNT(*) DESC"));
-        $vekh0 = DB::select(DB::raw("SELECT Vị_trí_ghế,COUNT(*) FROM ve,chuyen_xe,xe WHERE ve.Mã_chuyến_xe = chuyen_xe.Mã AND chuyen_xe.Mã_lộ_trình = {$malotrinh} AND chuyen_xe.Mã_xe = xe.Mã AND xe.Mã_loại_xe = {$maloaixe}  AND ve.Mã_khách_hàng = {$makhachhang} GROUP BY Vị_trí_ghế"));
-        $dem = 0;
-        $dem1 = 0;
-        $tmp = [];
-        /* print_r($mtxkhach); */
-        foreach ($mtxve as $ve)
-        {
-            $lengthve = count($vekh0);
-            if($lengthve == 0)
-            {
-                break;
-            }
-            $tmp[$dem1] = '?';
-            if($dem == $lengthve)
-            {
-                $dem1++;
-                continue;
-            }
-            if($ve->Vị_trí_ghế == $vekh0[$dem]->Vị_trí_ghế)
-            {
-                $tmp[$dem1] = $vekh0[$dem]->{'COUNT(*)'};
-                $dem++;
-            }
-            $dem1++;
-        }
-        if(count($vekh0) != 0)
-        {
-            $matrix["{$makhachhang}"] = $tmp;
-        }
-        $customermax = 29;
+        $mtxkhach = DB::select(DB::raw("SELECT Mã_khách_hàng,COUNT(*) FROM ve,chuyen_xe,xe,customer WHERE ve.Mã_chuyến_xe = chuyen_xe.Mã AND chuyen_xe.Mã_lộ_trình = {$malotrinh} AND chuyen_xe.Mã_xe = xe.Mã AND xe.Mã_loại_xe = {$maloaixe} AND ve.Mã_khách_hàng IS NOT NULL AND ve.Mã_khách_hàng = customer.Mã AND customer.`Giới tính` = '{$gioitinh}' AND customer.Ngày_sinh BETWEEN '{$namdau}' AND '{$namcuoi}' GROUP BY Mã_khách_hàng ORDER BY COUNT(*) DESC"));
+        // return response()->json(var_dump($mtxkhach));
+		$customermax = 30;
+		if($makhachhang!=null)
+		{
+			$vekh0 = DB::select(DB::raw("SELECT Vị_trí_ghế,COUNT(*) FROM ve,chuyen_xe,xe WHERE ve.Mã_chuyến_xe = chuyen_xe.Mã AND chuyen_xe.Mã_lộ_trình = {$malotrinh} AND chuyen_xe.Mã_xe = xe.Mã AND xe.Mã_loại_xe = {$maloaixe}  AND ve.Mã_khách_hàng = {$makhachhang} GROUP BY Vị_trí_ghế"));
+			$dem = 0;
+			$dem1 = 0;
+			$tmp = [];
+			/* print_r($mtxkhach); */
+			foreach ($mtxve as $ve)
+			{
+				$lengthve = count($vekh0);
+				if($lengthve == 0)
+				{
+					break;
+				}
+				$tmp[$dem1] = '?';
+				if($dem == $lengthve)
+				{
+					$dem1++;
+					continue;
+				}
+				if($ve->Vị_trí_ghế == $vekh0[$dem]->Vị_trí_ghế)
+				{
+					$tmp[$dem1] = $vekh0[$dem]->{'COUNT(*)'};
+					$dem++;
+				}
+				$dem1++;
+			}
+			if(count($vekh0) != 0)
+			{
+				$matrix["{$makhachhang}"] = $tmp;
+				$customermax = 29;
+			}
+		}
         foreach ($mtxkhach as $row)
         {
             $makh = $row->Mã_khách_hàng;
-            if($makh == $makhachhang/*||$makh == 20||$makh == 21||$makh == 8*/)
+            if($makh == $makhachhang)
             {
                 continue;
             }
