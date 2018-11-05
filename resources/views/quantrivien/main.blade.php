@@ -241,6 +241,13 @@
 				{
 					alert('Tải thông tin thất bại!');
 				}
+			},
+			timeout: 10000,
+			error: function(xhr){
+				if(xhr.statusText=="timeout")
+				{
+					alert('Vui lòng kiểm tra kết nối!');
+				}
 			}
 		});
 	}
