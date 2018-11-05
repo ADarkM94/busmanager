@@ -32,6 +32,7 @@
             </div>
             <div class="searchresult">
                 <div class="chuyenxe">
+					<div class="loading"></div>
                     <ul>
                         <li>Chuyến xe # <i class="glyphicon glyphicon-ban-circle" style="color: gray;"></i></li>
                         <li>Chuyến xe # <i class="glyphicon glyphicon-ok-circle" style="color: green;"></i></li>
@@ -83,6 +84,7 @@
                     </div>
                 </form>
                 <div class="kqtimkh">
+					<div class="loading"></div>
                     <ul>
                         <li>Khách hàng # <span class="glyphicon glyphicon-plus" style="color: gray;"></span></li>
                         <li>Khách hàng # <span class="glyphicon glyphicon-plus" style="color: gray;"></span></li>

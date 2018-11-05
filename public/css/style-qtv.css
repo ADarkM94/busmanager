@@ -279,7 +279,7 @@ a:hover, a:visited {
     color: white;
 }
 .show {
-    display: inline-block;
+    display: block;
 }
 .thongke > div:nth-child(1) {
     height: 40%;
@@ -769,6 +769,140 @@ a:hover, a:visited {
 .login-form .alert {
 	padding: .5em;
 	display: none;
+}
+.loading {
+	position: absolute;
+	width: 100%;
+	height: calc(100% - 2em);
+	background: rgba(80,80,80,.5);
+	z-index: 99;
+	display: block;
+}
+.loading::before {
+	content: "";
+	width: 50px;
+	height: 50px;
+	border: 10px solid white;
+	border-left: 10px solid #f57812;
+	border-radius: 50%;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+	animation: loading 1s;
+	animation-iteration-count: infinite;
+}
+.loading::after {
+	content: "Searching...";
+	padding: 1px;
+	width: 72px;
+	overflow: hidden;
+	position: absolute;
+	letter-spacing: 1px;
+	top: 50%;
+	left: 50%;
+	border-radius: 5px;
+	transform: translate(-50%,120%);
+	background: grey;
+	color: white;
+	animation: loadingc 3s;
+	animation-iteration-count: infinite;
+}
+#userinfo .loading {
+	width: calc(100% - 2em);
+	display: none;
+}
+#userinfo .loading::after {
+	content: "Đangtải...";
+	padding: 1px;
+	width: 59px;
+	overflow: hidden;
+	position: absolute;
+	letter-spacing: 1px;
+	top: 50%;
+	left: 50%;
+	border-radius: 5px;
+	transform: translate(-50%,120%);
+	background: grey;
+	color: white;
+	animation: loadingcuserinfo 3s;
+	animation-iteration-count: infinite;
+}
+#userinfo .modal-dialog {
+	width: 500px;
+}
+#userinfo .modal-header {
+	background: #004964;
+}
+#userinfo .close {
+	font-size: 2em;
+	color: white;
+	opacity: 1;
+}
+#userinfo .close:hover {
+	color: red;
+}
+#userinfo .modal-title {
+	text-align: center;
+	text-decoration: bold;
+	font-size: 1.5em;
+	color: white;
+}
+#userinfo .modal-body {
+	position: relative;
+}
+#userinfo .row * {
+	margin-bottom: .5em;
+	text-align: left;
+}
+#userinfo .form-group {
+	border: 5px solid transparent;
+	outline: 1px solid transparent;
+	border-right: none;
+}
+#userinfo .form-group:hover {
+	border-left-color: #004964;
+	outline-color: #004964;
+}
+#userinfo .modal-footer {
+	text-align: center;
+}
+@keyframes loading {
+	0% { transform: translate(-50%,-50%) rotateZ(0deg);}
+	5% { transform: translate(-50%,-50%) rotateZ(18deg);}
+	10% { transform: translate(-50%,-50%) rotateZ(36deg);}
+	15% { transform: translate(-50%,-50%) rotateZ(54deg);}
+	20% { transform: translate(-50%,-50%) rotateZ(72deg);}
+	25% { transform: translate(-50%,-50%) rotateZ(90deg);}
+	30% { transform: translate(-50%,-50%) rotateZ(108deg);}
+	35% { transform: translate(-50%,-50%) rotateZ(126deg);}
+	40% { transform: translate(-50%,-50%) rotateZ(144deg);}
+	45% { transform: translate(-50%,-50%) rotateZ(162deg);}
+	50% { transform: translate(-50%,-50%) rotateZ(180deg);}
+	55% { transform: translate(-50%,-50%) rotateZ(198deg);}
+	60% { transform: translate(-50%,-50%) rotateZ(216deg);}
+	65% { transform: translate(-50%,-50%) rotateZ(234deg);}
+	70% { transform: translate(-50%,-50%) rotateZ(252deg);}
+	75% { transform: translate(-50%,-50%) rotateZ(270deg);}
+	80% { transform: translate(-50%,-50%) rotateZ(288deg);}
+	85% { transform: translate(-50%,-50%) rotateZ(306deg);}
+	90% { transform: translate(-50%,-50%) rotateZ(324deg);}
+	95% { transform: translate(-50%,-50%) rotateZ(342deg);}
+	100% { transform: translate(-50%,-50%) rotateZ(360deg);}
+}
+@keyframes loadingc {
+	0% { width: 72px;}
+	25% { width: 76px;}
+	50% { width: 80px;}
+	75% { width: 84px;}
+	100% { width: 72px;}
+}
+@keyframes loadingcuserinfo {
+	0% { width: 59px;}
+	25% { width: 63px;}
+	50% { width: 67px;}
+	75% { width: 71px;}
+	100% { width: 59px;}
 }
 @keyframes theanimation {
     0% { background: linear-gradient(to top right,#a2a2a2,#d2d2d2,#dddddd,#c2c2c2,#a2a2a2);}

@@ -69,6 +69,8 @@ Route::middleware('admincheck')->group(function (){
     Route::post('admin/addemployee','AdminController@addemployee')->name('addemployee');
 
     Route::get('admin/delnhanvien/{id}','AdminController@delemployee');
+	
+	Route::post('admin/userinfo','AdminController@userinfo')->name('userinfo');
 
 //Phần xe
 

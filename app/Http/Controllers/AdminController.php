@@ -226,6 +226,16 @@ class AdminController extends Controller
         }
         return redirect()->back();
     }
+	public function userinfo(Request $request)
+	{
+		$id = $request->id;
+		$ttnhanvien = DB::table('employee')->where('Mã','=',$id)->get();
+		if($ttnhanvien)
+		{
+			return response()->json(['kq' => 1,'userinfo' => $ttnhanvien]);
+		}
+		return response()->json(['kq' => 0]);
+	}
 
     //Phần loại xe
     public function loaixe(){

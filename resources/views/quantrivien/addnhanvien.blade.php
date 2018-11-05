@@ -52,10 +52,11 @@
                 <input type="radio" class="form-inline" name="gender" value="1" <?php if(isset($ttnhanvien)&&$ttnhanvien['Giới_tính']=='1') echo "checked";?>> Nam
                 <input type="radio" class="form-inline" name="gender" value="2" <?php if(isset($ttnhanvien)&&$ttnhanvien['Giới_tính']=='2') echo "checked";?>> Nữ
                 <br>
+				<br>
                 <label>Địa chỉ</label>
                 <input type="text" class="form-control"  name="address" value="{{isset($ttnhanvien['Địa_chỉ'])? $ttnhanvien['Địa_chỉ']:''}}" placeholder="Địa chỉ">
                 <br>
-                <label>Nickname</label>
+                <label>Username</label>
                 <input type="text" class="form-control"  name="username" value="{{isset($ttnhanvien['Username'])? $ttnhanvien['Username']:''}}" placeholder="Bí danh">
                 <br>
                 <label>Password<i class="text text-danger">*</i></label>
@@ -68,7 +69,7 @@
                 <input type="tel" class="form-control"  name="phone" value="{{isset($ttnhanvien['Sđt'])? $ttnhanvien['Sđt']:''}}" placeholder="Số điện thoại" required>
                 <br>
                 <label>Loại Nhân viên</label>
-                <select class="form-inline" name="typenv">
+                <select class="form-control" name="typenv">
                     <option value="QTV" <?php if(isset($ttnhanvien)&&$ttnhanvien['Loại_NV']=='QTV') echo "selected";?>>Quản trị viên</option>
                     <option value="QLDV" <?php if(isset($ttnhanvien)&&$ttnhanvien['Loại_NV']=='QLDV') echo "selected";?>>Quản lý đặt vé</option>
                     <option value="TX" <?php if(isset($ttnhanvien)&&$ttnhanvien['Loại_NV']=='TX') echo "selected";?>>Tài xế</option>
