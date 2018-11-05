@@ -193,8 +193,8 @@
                 editor: false,
                 align: "center",
                 render: function (ui) {
-                    var gio = Math.floor(ui.rowData["Thời_gian_đi_dự_kiến"]/3600000);
-                    var phut = Math.floor((ui.rowData["Thời_gian_đi_dự_kiến"] - gio*3600000)/60000);
+                    var gio = Math.floor(ui.rowData["Thời_gian_đi_dự_kiến"]/3600);
+                    var phut = Math.floor((ui.rowData["Thời_gian_đi_dự_kiến"] - gio*3600)/60);
                     return gio+"giờ "+phut+"phút";
                 }
                 /* filter: {
@@ -224,7 +224,7 @@
                         .bind("click", function (evt) {
                             document.forms["addbusroute"]["noidi"].value = rowData["Nơi_đi"];
                             document.forms["addbusroute"]["noiden"].value = rowData["Nơi_đến"];
-                            var thoigian = Math.floor(rowData["Thời_gian_đi_dự_kiến"]/1000);
+                            var thoigian = rowData["Thời_gian_đi_dự_kiến"];
                             document.forms["addbusroute"]["sogio"].value = Math.floor(thoigian/3600);
                             document.getElementById('hours').value = document.forms["addbusroute"]["sogio"].value;
                             document.forms["addbusroute"]["sophut"].value = (thoigian - Math.floor(thoigian/3600)*3600)/60;
@@ -394,8 +394,8 @@
             var employeeid = document.forms["addbusroute"]["employeeID"].value;
             var noidi = document.forms["addbusroute"]["noidi"].value;
             var noiden = document.forms["addbusroute"]["noiden"].value;
-            var thoigiandi = document.forms["addbusroute"]["sogio"].value*3600000
-            + document.forms["addbusroute"]["sophut"].value*60000;
+            var thoigiandi = document.forms["addbusroute"]["sogio"].value*3600
+            + document.forms["addbusroute"]["sophut"].value*60;
             var tramdungs =document.getElementsByClassName("busstops");
             var busstops = [];
             var j =0;
