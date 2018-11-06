@@ -295,15 +295,17 @@ a:hover, a:visited {
 	position: absolute;
 	width: 100%;
 	height: calc(100% - 2em);
-	background: rgba(80,80,80,.5);
+	/* background: rgba(80,80,80,.5); */
+	background: white;
 	z-index: 99;
-	display: block;
+	display: none;
 }
 .loading::before {
 	content: "";
 	width: 50px;
 	height: 50px;
-	border: 10px solid white;
+	/* border: 10px solid white; */
+	border: 10px solid #004964;
 	border-left: 10px solid #f57812;
 	border-radius: 50%;
 	position: absolute;
@@ -330,7 +332,8 @@ a:hover, a:visited {
 	animation-iteration-count: infinite;
 }
 .searchresult > div > ul {
-	padding-left: 3em;
+	padding-left: 0em;
+	text-align: center;
 }
 .ttdatve {
 	padding: 1em 2em;
@@ -448,10 +451,10 @@ a:hover, a:visited {
 	text-align: center;
 	color: #008cff;
 }
-#ttchuyenxe > div > div {
+form[name='ttchuyenxe'] > div > div {
 	text-align: left;
 }
-#ttchuyenxe + span {
+form[name='ttchuyenxe'] + span {
 	display: inline-block;
 	padding: .5em 2em;
 	color: #008cff;
@@ -459,7 +462,7 @@ a:hover, a:visited {
 	border: 1px solid #008cff;
 	border-radius: 5px;
 }
-#ttchuyenxe ~ label {
+form[name='ttchuyenxe'] ~ label {
 	display: inline-block;
 	left: 50%;
 	transform: translate(-50%,0);
@@ -603,6 +606,21 @@ a:hover, a:visited {
 #modaldadat .modal-footer > div > div > span:active {
 	transform: translate(0,0);
 	box-shadow: none;
+}
+#kqsearchtinh {
+	position: absolute; 
+	top: 100%; 
+	right: 0; 
+	list-style-type: none;
+	z-index: 99; 
+	width: 100%;
+	padding-left: 20px;
+	text-align: left;
+	background: white;
+	overflow: auto;
+	max-height: 100px;
+	border: 1px solid grey;
+	display: none;
 }
 @keyframes loading {
 	0% { transform: translate(-50%,-50%) rotateZ(0deg);}

@@ -9,8 +9,9 @@ Route::get('/qldv/giamsat', function() {
     return view('quanlydatve.giamsat');
 });
 
-Route::get('/qldv/datve', function() {
-    return view('quanlydatve.datve');
-});
+Route::get('/qldv/datve','TicketBookingManager@trangdatve');
 
+Route::post('/qldv/searchroute','TicketBookingManager@searchroute')->name('searchroute');
+
+/* Route::post('/qldv/searchtinh', 'TicketBookingManager@searchtinh')->name('searchtinh'); */
 /* Kết thúc phần Route cho trang quản lý đặt vé */
