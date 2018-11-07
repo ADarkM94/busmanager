@@ -443,6 +443,9 @@ a:hover, a:visited {
     background: #555;
 }
 /* Modal Settings */
+#modaldatve .modal-dialog {
+	width: 800px;
+}
 #modaldatve .modal-content {
 	padding-left: 1em;
 	padding-right: 1em;
@@ -451,72 +454,27 @@ a:hover, a:visited {
 	text-align: center;
 	color: #008cff;
 }
-form[name='ttchuyenxe'] > div > div {
-	text-align: left;
-}
-form[name='ttchuyenxe'] + span {
-	display: inline-block;
-	padding: .5em 2em;
-	color: #008cff;
-	background: white;
-	border: 1px solid #008cff;
-	border-radius: 5px;
-}
-form[name='ttchuyenxe'] ~ label {
-	display: inline-block;
-	left: 50%;
-	transform: translate(-50%,0);
-}
-.sodoxe {
-	min-height: 40%;
-	overflow: auto;
-}
-.sodoxe .row {
-}
-.sodoxe .row > div {
-	height: 3em;
-	border-radius: 5px;
-	padding: .5em;
+#modaldatve .modal-footer {
 	text-align: center;
 }
-.sodoxe .row > div > div {
+#modaldatve .sodoxe {
+	height: 26.5em;
+	width: 100%;
+	overflow: hidden;
+	position: relative;
+}
+#modaldatve .sodoxe .loading {
 	width: 100%;
 	height: 100%;
-	border: 1px solid grey;
-	border-radius: 5px;
-	color: green;
-	cursor: pointer;
-	transition: .3s ease-in-out;
+	top: 0;
+	left: 0;
+	display: block;
 }
-.sodoxe .row > div > div:hover {
-	color: red;
-	transform: translate(0,-3px);
-	box-shadow: 0 3px 5px grey;
-}
-.sodoxe .row > div > div:active {
-	color: red;
-	transform: translate(0,0);
-	box-shadow: none;
-}
-.sodoxe ~ span {
-	position: relative;
-	display: inline-block;
-	padding: .5em 1em;
+#modaldatve .col-lg-8 > span {
+	padding: .2em 1em;
 	background: #008cff;
 	color: white;
 	border-radius: 5px;
-	left: 50%;
-	transform: translate(-50%,0);
-	transition: .3s ease-in-out;
-	cursor: pointer;
-}
-.sodoxe ~ span:hover {
-	transform: translate(-50%,0) translate(0,-3px);
-	box-shadow: 0 3px 5px grey;
-}
-.sodoxe ~ span:active {
-	transform: translate(-50%,0) translate(0,0);
-	box-shadow: none;
 }
 #modaldadat .modal-dialog {
 	width: 300px;

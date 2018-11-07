@@ -122,81 +122,42 @@
                     <button class="close" data-dismiss="modal">&times;</button>
                     <div class="modal-title">Chuyến xe #</div>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body row">
+					<div class="col-lg-4">
                     <form name="ttchuyenxe">
-                        <div class="row form-group">
-                            <div class="col-lg-6">
-                                <label>Nơi đi</label>
-                                <input type="text" name="noidi" class="form-control" placeholder="Điểm đi" readonly="">
-                            </div>
-                            <div class="col-lg-6">
-                                <label>Nơi đến</label>
-                                <input type="text" name="noiden" class="form-control" placeholder="Điểm đến" readonly="">
-                            </div>
+                        <div class="form-group">
+                            <label>Nơi đi</label>
+                            <input type="text" name="noidi" class="form-control" placeholder="Điểm đi" readonly="">
                         </div>
-                        <div class="row form-group">
-                            <div class="col-lg-6">
-                                <label>Thời gian đi</label>
-                                <input type="text" name="thoigiandi" class="form-control" placeholder="Thời gian đi" readonly="">
-                            </div>
-                            <div class="col-lg-6">
-                                <label>Thời gian đến dự kiến</label>
-                                <input type="text" name="thoigianden" class="form-control" placeholder="Thời gian đến dự kiến" readonly="">
-                            </div>
+                        <div class="form-group">
+                            <label>Nơi đến</label>
+                            <input type="text" name="noiden" class="form-control" placeholder="Điểm đến" readonly="">
                         </div>
+                        <div class="form-group">
+                            <label>Thời gian đi</label>
+                            <input type="text" name="thoigiandi" class="form-control" placeholder="Thời gian đi" readonly="">
+                        </div>
+                        <div class="form-group">
+                            <label>Thời gian đến dự kiến</label>
+                            <input type="text" name="thoigianden" class="form-control" placeholder="Thời gian đến dự kiến" readonly="">
+                        </div> 
+						<div class="form-group">
+                            <label>Vé chọn</label>
+                            <input type="text" name="vechon" class="form-control" placeholder="Vé đã chọn" readonly="">
+                        </div>   
                     </form>
-                    <span>Sơ đồ xe</span>
-                    <label class="checkbox-inline"><input type="checkbox" name="multi">Chọn nhiều chỗ</label>
-                    <div class="sodoxe">
-                        <div class="col-lg-4"></div>
-                        <div class="col-lg-4">
-                            <div class="row">
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                            </div>
-                            <br>
-                            <div class="row">
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                            </div>
-                            <br>
-                            <div class="row">
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                            </div>
-                            <br>
-                            <div class="row">
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                            </div>
-                            <br>
-                            <div class="row">
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                            </div>
-                            <br>
-                            <div class="row">
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                                <div class="col-lg-3"><div class="glyphicon glyphicon-check"></div></div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4"></div>
-                    </div>
-                    <br>
-                    <span>Chọn</span>
+					</div>
+                    <div class="col-lg-8">
+						<span>Sơ đồ xe</span>
+						<div class="sodoxe">
+							<div class="loading"></div>
+							<div></div>
+						</div>
+					</div>
                 </div>
+				<div class="modal-footer">
+					<button class="btn btn-success">Chọn</button>
+				</div>
             </div>
         </div>
     </div>
@@ -291,8 +252,8 @@
 			$('#kqsearchtinh').css('display','none');
 		} */
 		var date = new Date; 
-		document.forms['searchchuyenxe']['ngaydi'].min = date.getFullYear()+'-'+(date.getMonth()+1)+'-'+(date.getDate()<10? ('0'+date.getDate()):date.getDate());
-		document.forms['searchchuyenxe']['ngaydi'].defaultValue = date.getFullYear()+'-'+(date.getMonth()+1)+'-'+(date.getDate()<10? ('0'+date.getDate()):date.getDate());
+		document.forms['searchchuyenxe']['ngaydi'].min = date.getFullYear()+'-'+((date.getMonth()+1)<10? ('0'+(date.getMonth()+1)):(date.getMonth()+1))+'-'+(date.getDate()<10? ('0'+date.getDate()):date.getDate());
+		document.forms['searchchuyenxe']['ngaydi'].defaultValue = date.getFullYear()+'-'+((date.getMonth()+1)<10? ('0'+(date.getMonth()+1)):(date.getMonth()+1))+'-'+(date.getDate()<10? ('0'+date.getDate()):date.getDate());
 		document.getElementById('timchuyenxe').onclick = function(){
 			var noidi = document.forms['searchchuyenxe']['noidi'];
 			var noiden = document.forms['searchchuyenxe']['noiden'];
@@ -404,11 +365,22 @@
 			var thoigiandi = document.forms['ttchuyenxe']['thoigiandi'];
 			var thoigianden = document.forms['ttchuyenxe']['thoigianden'];
 			var chuyenxe = document.getElementById('modaldatve').getElementsByClassName('modal-title')[0];
+			var sodoxe = document.getElementById('modaldatve').getElementsByClassName('sodoxe')[0];
+			var loading = document.getElementById('modaldatve').getElementsByClassName('loading')[0];
 			noidi.value = ev.getAttribute('data-noidi');
 			noiden.value = ev.getAttribute('data-noiden');
 			thoigiandi.value = ev.getAttribute('data-thoigiandi');
 			thoigianden.value = ev.getAttribute('data-thoigianden');
+			// var loaighe = ev.getAttribute('data-loaighe');
+			// var sohang = ev.getAttribute('data-sohang');
+			// var socot = ev.getAttribute('data-socot');
+			// var sodoxe = ev.getAttribute('data-sodoxe');
 			chuyenxe.innerHTML = "Chuyến Xe #"+ev.getAttribute('data-ma');
+			loading.classList.add('show');
+			$.ajax({
+				url: '',
+				type: 'post',
+			});
 			$('#modaldatve').modal('show');
 		}
     </script>
