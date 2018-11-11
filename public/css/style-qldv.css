@@ -20,9 +20,9 @@ a:hover, a:visited {
     left: 0;
     width: 100%;
     margin: 0;
-    border-top: 7.5px solid #004964;
-    border-bottom: 1px solid #f57812;
-    background: #004964;
+    border-top: 7.5px solid #001A24;
+    border-bottom: 1px solid white;
+    background: #001A24;
     z-index: 99;
 }
 .header h3 {
@@ -76,8 +76,9 @@ a:hover, a:visited {
     padding: 1em;
     padding-left: 3.5em;
     border-radius: 5px 5px 0 0;
-    background: #004964;
+    background: #001A24;
     color: white;
+	border: 1px solid #001A24;
 }
 .userzone > span:nth-child(1) > img {
     position: absolute;
@@ -86,7 +87,7 @@ a:hover, a:visited {
     height: 2.5em;
     width: 2.5em;
     border-radius: 50%;
-    border: 1px solid #004964;
+    border: 1px solid #001A24;
     background: white;
 }
 .userzone > span:nth-child(1) > i {
@@ -97,7 +98,7 @@ a:hover, a:visited {
     position: absolute;
     top: calc(100%);
     left: -1px;
-    background: #004964;
+    background: #001A24;
     color: white;
     z-index: 99;
     width: 100%;
@@ -132,7 +133,7 @@ a:hover, a:visited {
 	top: 0;
 	left: 1.5em;
 	transform: translate(0,-50%);
-	background: #008cff;
+	background: #001A24;
 	color: white;
 	border-radius: 5px;
 	padding: .2em 1em;
@@ -181,10 +182,11 @@ a:hover, a:visited {
 	display: none;
 	width: 100%;
 	height: 100%;
-	border: 1px solid #f57812;
-	border-radius: 5px;
+	border: .5em solid transparent;
+	border-radius: 5px 0 0 0;
 	overflow: auto;
 	border-top: .5em solid #f57812;
+	border-left: .5em solid #f57812;
 }
 .chuyenxe {
 	width: 100%;
@@ -192,6 +194,7 @@ a:hover, a:visited {
 	border: 1px solid gray;
 	border-radius: 5px;
 	padding: 1.5em 0 .5em;
+	background: white;
 }
 .chuyenxe > ul {
 	width: 100%;
@@ -206,7 +209,7 @@ a:hover, a:visited {
 	margin: .5em 0;
 	position: relative;
 	padding: .2em 1em;
-	background: #008cff;
+	background: #004964;
 	color: white;
 	float: left;
 	clear: both;
@@ -229,7 +232,7 @@ a:hover, a:visited {
 .searchroute {
 	max-height: 60%;
 	width: 100%;
-	padding: .5em 1em;
+	padding: 1em 2em;
 	margin: .5em 0;
 	border: 1px solid #008cff;
 	border-radius: 10px;
@@ -240,6 +243,9 @@ a:hover, a:visited {
 	color: #004964;
 	margin: .5em 0;
 	display: block;
+	font-size: 110%;
+	border-bottom: 1px solid #004964;
+	padding-bottom: .5em;
 }
 .searchroute > span:nth-child(3) {
 	border: 1px solid #004964;
@@ -268,16 +274,16 @@ a:hover, a:visited {
 }
 .selecttype > span {
 	padding: .1em .4em;
-	border-radius: 10px;
+	border-radius: 5px;
 	color: white;
-	background: #008cff;
+	background: #004964;
 	position: absolute;
-	bottom: 100%;
+	bottom: calc(100% + .2em);
 	left: .5em;
 	transform: translate(0,50%);
 }
 .searchresult {
-	height: 40%;
+	height: 35%;
 	width: 100%;
 	padding: .5em 1em;
 	margin: .5em 0;
@@ -290,6 +296,7 @@ a:hover, a:visited {
 .searchresult > div {
 	border: none;
 	position: relative;
+	background: white;
 }
 .loading {
 	position: absolute;
@@ -342,16 +349,23 @@ a:hover, a:visited {
 	background: white;
 }
 .ttdatve > span:nth-child(1) {
-	color: #008cff;
+	color: #004964;
+	display: block;
+	border-bottom: 1px solid #004964;
+	margin: .5em 0;
+	padding-bottom: .5em;
+	font-size: 110%;
 }
 .ttdatve > span:not(:nth-child(1)) {
 	display: inline-block;
-	padding: .2em 1em;
-	background: #008cff;
+	padding: .5em 1em;
+	background: #004964;
 	color: white;
-	margin: .5em 0;
-	border-radius: 10px;
+	margin: .2em 0;
 	cursor: pointer;
+}
+.ttdatve > span:nth-child(3) {
+	margin-top: 1em;
 }
 .searchcustomer {
 	min-height: 60%;
@@ -364,23 +378,34 @@ a:hover, a:visited {
 .searchcustomer > span {
 	display: block;
 	text-align: center;
-	padding: .1em .4em;
-	background: #008cff;
-	color: white;
-	margin-bottom: 1em;
-	overflow: auto;
+	padding: .5em 1em;
+	color: #004964;
+	margin-bottom: .5em;
+	border-bottom: 1px solid #004964;
+	font-size: 110%;
 }
 .searchcustomer > form > div {
 	position: relative;
+	margin-bottom: 10px;
 }
 .searchcustomer > form > div > span {
 	position: absolute;
 	top: 50%;
 	right: .1em;
 	font-size: 1.5em;
-	color: #008cff;
+	color: #004964;
 	transform: translate(0,-50%) rotateY(180deg);
 	cursor: pointer;
+}
+.searchcustomer .kh-filter {
+	border-radius: 5px;
+	background: #004964;
+	color: white;
+	padding: 5px 10px;
+}
+.searchcustomer .kh-filter > input {
+	margin-right: 5px;
+	vertical-align: top;
 }
 .kqtimkh {
 	height: 300px;
@@ -401,7 +426,7 @@ a:hover, a:visited {
 	margin: .5em 0;
 	position: relative;
 	padding: .2em 1em;
-	background: #008cff;
+	background: #004964;
 	color: white;
 	float: left;
 	clear: both;
@@ -468,13 +493,74 @@ a:hover, a:visited {
 	height: 100%;
 	top: 0;
 	left: 0;
-	display: block;
+	display: none;
 }
 #modaldatve .col-lg-8 > span {
-	padding: .2em 1em;
-	background: #008cff;
+	padding: .5em 1em;
+	background: #004964;
 	color: white;
 	border-radius: 5px;
+	position: absolute;
+	bottom: calc(100% - 2em);
+	left: 0;
+	z-index: 100;
+}
+#modaldatve div.table-responsive {
+	overflow: auto;
+	width: 100%;
+	height: 100%;
+}
+#modaldatve table.sodoghe {
+	border-collapse: separate;
+	border-spacing: 5px;
+	display: block;
+	padding: 1em 5em;
+}
+#modaldatve table.sodoghe td[data-mave] {
+	border: 1px solid #004964;
+	width: 50px;
+	height: 70px;
+	cursor: pointer;
+}
+#modaldatve table.sodoghe td.vedadat {
+	background: grey;
+	color: white;
+	cursor: no-drop;
+}
+#modaldatve table.sodoghe td.vedanggiu {
+	background: yellow;
+	color: white;
+	cursor: no-drop;
+}
+#modaldatve table.sodoghe td.vedangchon {
+	background: #004964;
+	color: white;
+}
+#modaldatve table.sodogiuong {
+	border-collapse: separate;
+	border-spacing: 5px;
+	display: block;
+	padding: 1em 5em;
+}
+#modaldatve table.sodogiuong td[data-mave] {
+	border: 1px solid #004964;
+	width: 50px;
+	height: 70px;
+	cursor: pointer;
+}
+#modaldatve table.sodogiuong td.vedadat {
+	background: grey;
+	color: white;
+	cursor: no-drop;
+}
+#modaldatve table.sodogiuong td.vedanggiu {
+	background: yellow;
+	color: white;
+	cursor: no-drop;
+}
+#modaldatve table.sodogiuong td.vedangchon {
+	background: #004964;
+	color: white;
 }
 #modaldadat .modal-dialog {
 	width: 300px;

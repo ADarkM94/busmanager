@@ -9,19 +9,19 @@
 
                 <div class="mySlides fade1">
                     <div class="numbertext">1 / 3</div>
-                    <a href="#"><img src="{{asset('images/4.jpg')}}" style="height:400px; width: 100%;"></a>
+                    <a href="#"><img src="images/4.jpg" style="height:400px; width: 100%;"></a>
                     <div class="text">Địa điểm 1</div>
                 </div>
 
                 <div class="mySlides fade1">
                     <div class="numbertext">2 / 3</div>
-                    <a href="#"><img src="{{asset('images/1.jpg')}}" style="height:400px;width: 100%;"></a>
+                    <a href="#"><img src="images/1.jpg" style="height:400px;width: 100%;"></a>
                     <div class="text">Địa điểm 2</div>
                 </div>
 
                 <div class="mySlides fade1">
                     <div class="numbertext">3 / 3</div>
-                    <a href="#"><img src="{{asset('images/5.jpg')}}" style="height:400px;width: 100%;"></a>
+                    <a href="#"><img src="images/5.jpg" style="height:400px;width: 100%;"></a>
                     <div class="text">Địa điểm 3</div>
                 </div>
 
@@ -42,21 +42,21 @@
             <form name="timve" action="{{route('chuyenxe')}}" method="POST">
             <input type="hidden" name="_token" value="{{csrf_token()}}">
             <div class="diadiem">
-                <label>Chọn Nơi Khởi Hành </label>
-                <div class="the">
-                    <i class="fa fa-bus"></i>
+                <label>Chọn Nơi Khởi Hành: </label>
+                <div class="input-group" style="box-shadow: 0 3px #F3AD45;">
+                     <span class="input-group-addon"><i class="fa fa-bus"></i></span>
                      <select name="Noidi">
-                        @foreach($tinh as $t)
-                        <option>{{$t->Tên}}</option>
-                         @endforeach
-                    </select>
+                      @foreach($tinh as $t)
+                      <option>{{$t->Tên}}</option>
+                       @endforeach
+                    </select>    
                 </div>
             </div>
             <div class="diadiem">
                 <label>Chọn Nơi Đến </label>
-                <div class="the">
-                    <i class="fa fa-bus"></i>
-                     <select name="Noiden">
+                <div class="input-group" style="box-shadow: 0 3px #F3AD45;">
+                     <span class="input-group-addon"><i class="fa fa-bus"></i></span>
+                      <select name="Noiden">
                         @foreach($tinh as $t)
                         <option>{{$t->Tên}}</option>
                          @endforeach
@@ -65,8 +65,14 @@
             </div>
             <div class="ngaydi">
                 <label>Chọn ngày đi: </label>
-                <div id="datepicker" class="input-group date" data-date-format="dd-mm-yyyy"> <input class="form-control" readonly="" type="text" name="Ngaydi"> <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                </div>
+                    <div class="form-group" style="box-shadow: 0 3px #F3AD45;">
+                        <div class='input-group date'>
+                            <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar" style="color: #f57812;"></span>
+                            </span>
+                            <input type='date' class="form-control" name="Ngaydi" id="txtdate" />
+                        </div>
+                     </div>
                 <div class="tim">
                     <i class="fa fa-ticket icon-flat bg-btn-actived"></i>
                     <button type="button" class="btn" onclick="document.forms['timve'].submit();"><a href="javascript:void(0)" >Tìm vé</a></button>
@@ -79,15 +85,15 @@
             <div class="tentintuc"><h2>Tin Tức Nổi Bật</h2></div>
             <ul>
                 <li>
-                    <img src="{{asset('images/12.jpg')}}">
+                    <img src="images/12.jpg">
                     <a><strong>CHUYỂN TUYẾN HẢI PHÒNG ↔ HỒ CHÍ MINH, VŨNG TÀU VỀ BẾN THƯỢNG LÝ - HẢI PHÒNG TỪ 22/11/2017</strong></a>
                 </li>
                 <li>
-                    <img src="{{asset('images/12.jpg')}}">
+                    <img src="images/12.jpg">
                     <a><strong>CHUYỂN TUYẾN HẢI PHÒNG ↔ HỒ CHÍ MINH, VŨNG TÀU VỀ BẾN THƯỢNG LÝ - HẢI PHÒNG TỪ 22/11/2017</strong></a>
                 </li>
                 <li>
-                    <img src="{{asset('images/12.jpg')}}">
+                    <img src="images/12.jpg">
                     <a><strong>CHUYỂN TUYẾN HẢI PHÒNG ↔ HỒ CHÍ MINH, VŨNG TÀU VỀ BẾN THƯỢNG LÝ - HẢI PHÒNG TỪ 22/11/2017</strong></a>
                 </li>
             </ul>
@@ -97,4 +103,17 @@
         </div>
     </div>
 @endsection
-
+@section('script')
+    <script type="text/javascript" src="{{asset('js/js.js')}}"></script>
+    <script type="text/javascript">
+        function chonngay(){
+            var d = new Date();
+            var ngay = d.getDate()<10? ('0'+d.getDate()):d.getDate();
+            var thang = (d.getMonth() + 1) <10? ('0'+d.getMonth()+1):d.getMonth()+1;
+            var nam = d.getFullYear();
+            document.getElementById("txtdate").min=nam+"-"+thang+"-"+ngay;
+            document.getElementById("txtdate").value= nam+"-"+thang+"-"+ngay;
+        }
+        chonngay();
+    </script>
+@endsection

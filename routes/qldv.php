@@ -11,7 +11,13 @@ Route::get('/qldv/giamsat', function() {
 
 Route::get('/qldv/datve','TicketBookingManager@trangdatve');
 
-Route::post('/qldv/searchroute','TicketBookingManager@searchroute')->name('searchroute');
+Route::post('/qldv/searchroute','TicketBookingManager@searchroute')->name('qldv-searchroute');
+
+Route::post('/qldv/routedetails','TicketBookingManager@routedetails')->name('qldv-routedetails');
+
+Route::post('/qldv/chonve','TicketBookingManager@qldv_chonve')->name('qldv-chonve');
+
+Route::post('/qldv/huychonve','TicketBookingManager@qldv_huychonve')->name('qldv-huychonve');
 
 // Route::get('/qldv/ticket/{idve}','TicketBookingManager@ticketinfo');
 

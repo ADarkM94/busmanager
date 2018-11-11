@@ -3,91 +3,103 @@
     Liên hệ
 @endsection
 @section('content')
-    <div class="doithongtin">
-        <div class="popup">
-            <div class="tabledoithongtin">
-                <div class="tendoithongtin">
-                    <h3>Đổi Thông Tin</h3>
-                </div>
-                <div class="hienloi">
-                <div class="dnloi"></div>
-                <div class="dnloi2"></div>
+    <div class="modal fade" id="doithongtin" role="dialog">
+        <div class="modal-dialog" style="width: 500px;">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Đổi Thông Tin</h4>
+        </div>
+        <div class="modal-body">
+            <div class="hienloi">
+            <div class="dnloi"></div>
+            <div class="dnloi2"></div>
+            <div class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                 <input type="text" class="form-control dttname"  placeholder="Họ và tên">
             </div>
-                
-                    <table>
-                        <tr>
-                            <td>Tên</td>
-                            <td><input type="text" size="25" class="dttname"></td>
-                        </tr>
-                        <tr>
-                            <td>Ngày Sinh</td>
-                           <td>
-                               <input type="date" class="dttngaysinh">
-                           </td>
-                        </tr>
-                        <tr>
-                            <td>Giới Tính</td>
-                            <td>
-                                <input type="radio" name="txtgioitinh" value="1" checked>Nam
-                                <input type="radio" name="txtgioitinh" value="0">Nữ
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Địa chỉ</td>
-                            <td><textarea cols="27" rows="3"  class="dttdiachi"></textarea></td>
-                        </tr>
-                        <tr>
-                            <td>Email</td>
-                            <td><input type="text"  size="25" class="dttemail"></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td><button class="capnhat" style="margin-right: 10px;width: 70px;background: #f57812;color: #FFF; border: none;height: 30px;">Cập nhật</button><button class="colsedoithongtin" style="margin-right: 10px;width: 70px;background: #f57812;color: #FFF; border: none;height: 30px;">Thoát</button></td>
-                        </tr>
-                    </table>
-               
+            <br>
+            <div class="input-group">
+                <span class="input-group-addon"><span class="glyphicon glyphicon-hourglass"></span></span>
+                 <input type="date" class="form-control dttngaysinh">
             </div>
+            <br>
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-transgender-alt"></i></span>
+                 <label class="checkbox-inline">
+                        <input type="radio" name="txtgioitinh" value="1" checked>Nam
+                </label>
+                <label class="checkbox-inline">
+                        <input type="radio" name="txtgioitinh" value="2">Nữ
+                </label>
+            </div>
+            <br>
+             <div class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+                 <textarea class="form-control dttdiachi"></textarea>
+            </div>
+            <br>
+             <div class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                <input  type="text" class="form-control dttemail" placeholder="Email">
+             </div>
+            <br>
+        </div>
+        <div class="modal-footer">
+            <button class=" btn btn-success capnhat">Cập nhật</button>
+          <button type="button" class="btn btn-danger colsedoithongtin" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
         </div>
     </div>
-    <div class="doimatkhau">
-        <div class="popupdoimatkhau">
-            <div class="tabledoimatkhau">
-                <div class="tendoimatkhau">
-                    <h3>Đổi Mật Khẩu</h3>
-                </div>
-                <div class="hienloi">
-                <div class="dmkloi"></div>
-                <div class="dmkloi2"></div>
-                <div class="dmkloi3"></div>
-                <div class="dmkloi4"></div>
-                <div class="thanhcong"></div>
-            </div>
-               
-                    <table>
-                        <tr>
-                            <td>Mật khẩu cũ</td>
-                            <td><input type="password" size="25" class="mkcu"></td>
-                        </tr>
-                        <tr>
-                            <td>Mật khẩu mới</td>
-                            <td><input type="password" size="25" class="mkmoi"></td>
-                        </tr>
-                        <tr>
-                            <td>Xác nhận Mật khẩu</td>
-                            <td><input type="password" size="25" class="remkmoi"></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td><button class="capnhatmk" style="margin-right: 10px;width: 70px;background: #f57812;color: #FFF; border: none;height: 30px;">Cập nhật</button><button class="closedoimatkhau" style="margin-right: 10px;width: 70px;background: #f57812;color: #FFF; border: none;height: 30px;">Thoát</button></td>
-                        </tr>
-                    </table>
-                            </div>
+    <div  class="modal fade" id="doimatkhau" role="dialog">
+         <div class="modal-dialog" style="width: 500px;">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Đổi Mật Khẩu</h4>
         </div>
+        <div class="modal-body">
+            <div class="hienloi">
+            <div class="dmkloi"></div>
+            <div class="dmkloi2"></div>
+            <div class="dmkloi3"></div>
+            <div class="dmkloi4"></div>
+            <div class="thanhcong"></div>
+             <div class="input-group">
+                <span class="input-group-addon"> <span class="glyphicon glyphicon-briefcase"></span></span>
+                <input type="password" class="form-control mkcu"  placeholder="Mật khẩu cũ !">
+            </div>
+            <br>
+            <div class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                <input type="password" class="form-control mkmoi"  placeholder="Mật khẩu mới !">
+            </div>
+            <br>
+            <div class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-repeat"></i></span>
+                <input type="password" class="form-control remkmoi"  placeholder="Xác nhận Mật khẩu !">
+            </div>
+            <br>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-success capnhatmk" >Cập nhật</button>
+          <button type="button" class="btn btn-danger closedoimatkhau" data-dismiss="modal">Close</button>
+        </div>
+      </div>       
+     </div>
+     </div>
     </div>
+    <div class="thongtinkhach1">
     <div class="mainthongtinkhach">
-        <div class="tenthongtinkhach"><h4>THÔNG TIN CÁ NHÂN</h4></div>
+        <div class="tenthongtinkhach"><h3>THÔNG TIN CÁ NHÂN</h3></div>
         @foreach($thongtinkhach as $t)
-        <table>
+        <table style="margin: 1em; margin-left: 4em;">
             <tr>
                 <td><strong>Số điện thoại: </strong></td>
                 <td>{{$t->Sđt}}</td>
@@ -136,13 +148,37 @@
                     <td><span>Thông tin chưa cập nhật !</span></td>
                 @endif
             </tr>
-            <tr>
-                <td><button class="buttondoithongtin">Đổi thông tin</button></td>
-                <td><button class="buttondoimatkhau">Đổi mật khẩu</button></td>
+            <tr style="border: none;">
+                <td><button type="button" class="btn btn btn-warning btn-lg buttondoithongtin" data-toggle="modal" data-target="#doithongtin">Đổi thông tin</button></td>
+                <td><button class="btn btn btn-warning btn-lg buttondoimatkhau" data-toggle="modal" data-target="#doimatkhau">Đổi mật khẩu</button></td>
             </tr>
         </table>
         @endforeach
     </div>
+    <div class="lichsudi">
+        <div class="tenthongtinkhach"><h3>Lịch Sử Đã Đặt</h3></div>
+             <table>
+            <tr>
+                <th>Tuyến</th>
+                <th>Giờ Xuất Bến</th>
+                <th>Thời Gian Đến</th>
+                <th>Loại Xe</th>
+                <th>Chổ Ngồi</th>
+                <th>Giá</th>
+            </tr>
+            @foreach($lichsudi as $t)
+                <tr>
+                    <td><span>{{$t->Nơi_đi}} -> {{$t->Nơi_đến}}</span></td>
+                    <td><span>{{$t->Ngày_xuất_phát}} : {{$t->Giờ_xuất_phát}}</span></td>
+                    <td><span>{{$t->Thời_gian_đến_dự_kiến}}</span></td>
+                    <td><span>{{($t->Loại_ghế==1)? 'Giường Nằm':'Ghế Ngồi'}}</span></td>
+                     <td><span>{{$t->Vị_trí_ghế}}</span></td>
+                    <td><span>{{($t->Tiền_vé)/1000}}.000 VNĐ</span></td>
+                </tr>
+                @endforeach
+        </table>
+    </div>
+</div>
 @endsection
 @section('script')
     <script type="text/javascript">
@@ -152,14 +188,12 @@
                 var diachikh = $(".diachikh").html();
                 var emailkh = $(".emailkh").html();
                 var ngaysinh = $(".ngaysinhkh").html();
-                $(".doithongtin").fadeIn();
                 $(".dttname").val(tenkh);
                  $(".dttdiachi").val(diachikh);
                   $(".dttemail").val(emailkh);
                   $(".dttngaysinh").val(ngaysinh);
             });
             $(".colsedoithongtin").click(function(){
-                $(".doithongtin").fadeOut();
                 $(".dnloi").html("");
                 $(".dnloi2").html("");
             });
@@ -170,14 +204,21 @@
                 var name = $(".dttname").val();
                 var gioitinh = document.getElementsByName("txtgioitinh");
                  for (var i = 0; i < gioitinh.length; i++){
-                    if (gioitinh[i].checked === true){
+                    if (gioitinh[i].checked == true){
                        gt = gioitinh[i].value;
                     }
                 }
                 var ngaysinh = $(".dttngaysinh").val();
                 var diachi = $(".dttdiachi").val();
                 var email = $(".dttemail").val();
-                var ma = {{$thongtinkhach[0]->Mã}};
+                var ma = {{$thongtinkhach[0]->Mã}}
+                if(email.search(bieuthuc2)==-1){
+                     $(".dnloi2").html("<div class='alert alert-danger'><strong>Email bạn nhập không hợp lệ !</strong></div>");
+                     kt = false;
+                 }
+                  else{
+                    $(".dnloi").html("");
+                   }
                  if(name.search(bieuthuc)==-1){
                      $(".dnloi").html("<div class='alert alert-danger'><strong>Tên bạn nhập không hợp lệ !</strong></div>");
                      kt = false;
@@ -185,13 +226,7 @@
                   else{
                     $(".dnloi").html("");
                    }
-                 if(email.search(bieuthuc2)==-1){
-                     $(".dnloi2").html("<div class='alert alert-danger'><strong>Email bạn nhập không hợp lệ !</strong></div>");
-                     kt = false;
-                 }
-                  else{
-                    $(".dnloi").html("");
-                   }
+                 
                  if(kt==true){
                         $.ajax({
                             url: '{{route("capnhattt")}}',
@@ -210,15 +245,15 @@
                                     $(".doithongtin").fadeOut();
                                     location.assign("{{asset('thongtin')}}/"+ma);
                                }
+                               else{
+                                    $(".dnloi2").html("<div class='alert alert-danger'><strong>Email bạn nhập đã có người đăng ký !</strong></div>");
+                               }
                             }
                      });
                     }
                
             });
                      /*doi mat khau*/
-            $(".buttondoimatkhau").click(function(){
-                $(".doimatkhau").fadeIn();
-            });
             $(".closedoimatkhau").click(function(){
                 $(".doimatkhau").fadeOut();
                 $(".dmkloi").html("");
@@ -295,6 +330,9 @@
                             success: function (data) {
                                if(data.kq==1){
                                    $(".thanhcong").html("<div class='alert alert-success'><strong>Bạn đổi mật khẩu thành công !</trong></div>");
+                                   $(".mkcu").val("");
+                                    $(".mkmoi").val("");
+                                    $(".remkmoi").val("");
                                }
                                else{
                                 $(".dmkloi").html("<div class='alert alert-danger'><strong>Bạn nhập mật khẩu không đúng !</strong></div>");

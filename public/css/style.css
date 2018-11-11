@@ -196,38 +196,56 @@ a{
 .diadiem{
 	width: 90%;
 	margin: auto;
-	margin-top: 2em;
+	margin-top: 1.5em;
 }
 .the{
 	position: relative;
 }
 .diadiem i{
-	position: absolute;
+	/* position: absolute;
 	top: 8px;
-	margin-left: 10px;
+	margin-left: 10px; */
 	color: #f57812;
 }
-.diadiem select{
-	width: 300px;
-	height: 30px;
-	padding-left: 2em;
+.diadiem span{
 	cursor: pointer;
-	color: #004963;
-	font-weight: bold;
+	background: #FFF;
 	border: none;
-	box-shadow: 0 3px #F3AD45; 
+	border-radius: 0;
+
+	/* box-shadow: 0 3px #F3AD45;  */
+}
+.diadiem select{
+	cursor: pointer;
+	width: 100%;
+	padding-left: 5px;
+	height: 40px;
+	border: none;
+	/* box-shadow: 0 3px #F3AD45;  */
 }
 .ngaydi{
 	width: 90%;
 	margin: auto;
-	margin-top: 2em;
+	margin-top: 1.5em;
 }
 .right label{
 	color: #FFF;
 	font-weight: bold;
 }
+.right input{
+	border: none;
+	border-radius: 0;
+}
 .ngaydi #datepicker{
 	width:300px; 
+}
+.ngaydi span{
+	cursor: pointer;
+	background: #FFF;
+	border: none;
+	border-radius: 0;
+
+	/* box-shadow: 0 3px #F3AD45;  */
 }
 .ngaydi #datepicker > span:hover{
 	cursor: pointer;
@@ -519,12 +537,14 @@ a{
 	margin: auto;
 }
 .chonveleft{
-	width: 40%;
+	width: 33%;
 	min-height: 300px;
 	border-radius: 0.5em;
 	box-shadow: 0 0 2em #CCC;
 	float: left;
-	text-align: center;
+	padding-left: 2em;
+	padding-bottom: 1.5em;
+	text-align: left;
 	font-weight: bold;
 	font-size: 18px;
 }
@@ -534,6 +554,7 @@ a{
 }
 .chonveleft button{
 	width: 200px;
+	margin-left:calc(50% - 100px - 1em);
 }
 .chonvemain i{
 	color: #F3AD45;
@@ -542,8 +563,8 @@ a{
 	color: #F3AD45;
 }
 .chonveright{
-	width: 58%;
-	min-height: 400px;
+	width: 65%;
+	min-height: 500px;
 	border-radius: 0.5em;
 	box-shadow: 0 0 2em #CCC;
 	float: left;
@@ -560,55 +581,71 @@ a{
 .chonveright ul{
 	list-style-type: none;
 	margin-left: 1em;
-	margin-top: 2em;
+	margin-top: 1em;
 }
 .chonveright li{
-	margin-bottom: 4em;
+	display: inline-block;
+	margin-left: 2em;
+	
 }
+.chonveright table{
+	width: 46%;
+	margin: auto;
+	border-spacing: 0.5em;
+	border-collapse: separate;
+	border-radius: 1em;
+	box-shadow: 0 0 2em #CCC;
+	font-weight: bold;
+	transform: translate(-50%,-50%) rotateZ(-90deg);
+	transform-origin: center;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+}
+.chonveright td{
+	transform: rotate(90deg);
+}
+
 /*loại ghế/giường*/
 .loaigheban{
     background-color: #CCC;
-    padding: 15px;
+    padding: 5px 10px;
     border-radius: 5px;
     box-shadow: 0 0 0.2em #000;
 }
 .loaighetrong{
     background-color: #FFF;
-    padding: 15px;
+    padding: 5px 10px;
     border-radius: 5px;
     box-shadow: 0 0 0.2em #000;
 }
 .loaighechon{
     background-color: green;
-    padding: 15px;
+    padding: 5px 10px;
     border-radius: 5px;
     box-shadow: 0 0 0.2em #000;
 }
 .loaighecochon{
 	background-color: #c3e9f4;
-    padding: 15px;
+    padding: 5px 10px;
     border-radius: 5px;
     box-shadow: 0 0 0.2em #000;
 }
 .tengiuong{
-	width: 50px; 
-	float: left;
-	padding-top: 18%;
+	width: 100%;
 }
-.tengiuong h3{
-	line-height: 80px;
-}
+
 /*ghe*/
 /*tầng ghế*/
 .chuygiuong{
-	float: left;
-	width: 30%;
+	width: 100%;
 }
 .tang{
 	width: 40px;
-	float: left;
+	position: absolute;
 	margin: auto;
-	margin-top: 6em;
+	top:0;
+	left: 3em;
 }
 /*chontang*/
 .duoi{
@@ -639,31 +676,30 @@ a{
 }
 /*sodogiuong*/
 .sodogiuong{
-	width: 50%;
-	float: left;
+	width: 100%;
 	margin-right: 30px;
+	height: 300px;
+	margin-top: 4em;
 	padding: 0px;
+	position: relative;
+}
+.sodogiuong table{
+	height: 600px;
+	left: 60%;
+	
 }
 /*sodoghe*/
 .sodoghe{
-	width: 55%;
-	float: left;
-	margin-right: 30px;
+	width: 100%;
+	height: 300px;	
+	margin-top: 4em;
 	padding: 0px;
+	position: relative;
 }
 .tangtren{
 	display: none;
 }
 /**/
-.chonveright table{
-	width: 100%;
-	margin: auto;
-	border-spacing: 0.5em;
-	border-collapse: separate;
-	border-radius: 1em;
-	box-shadow: 0 0 2em #CCC;
-	font-weight: bold;
-}
 
 .bangve img{
 	width: 50%;
@@ -968,11 +1004,16 @@ a{
 	padding: 0.5em;
 	margin:0.3em;
 }
+
 /*thong tin khach*/
+.thongtinkhach1{
+	width: 100%;
+}
 .mainthongtinkhach{
 	width: 40%;
 	min-height: 465px;
-	margin: auto;
+	float: left;
+	margin-left: 1%;
 	margin-top: 1em;
 	box-shadow: 0 0 2em #CCC;
 	border-radius: 1em;
@@ -980,101 +1021,96 @@ a{
 .tenthongtinkhach{
 	width: 100%;
 	margin: auto;
+	height: 50px;
 	border: 1px solid #f57812;
 	text-align: center;
 	background: #f57812;
 	border-radius:  1em 1em 0 0;
 }
-.tenthongtinkhach h4{
+.tenthongtinkhach h3{
 	color: #FFF;
+	line-height: 15px;
 
 }
 .mainthongtinkhach td{
 	padding: 17.5px;
 	padding-right: 40px;
 }
+.mainthongtinkhach tr{
+	border-bottom: 1px solid #DDD;
+}
+.mainthongtinkhach tr:hover{
+	border-right: 1px solid #DDD;
+	cursor: pointer;
+}
 .mainthongtinkhach span{
 	color: #CCC;
 }
 .mainthongtinkhach button{
-	width: 100px;
 	background: #f57812;
 	color: #FFF;
-	border: none;
-	border-radius: 0.3em;
-	height: 30px;
+	border:none;
 }
-/*popup doi thong tin*/
-.doithongtin{
+
+.buttondoithongtin :hover{
+	background: #ff3300;
+}
+.buttondoimatkhau :hover{
+	background: #ff3300;
+}
+/*lich su di*/
+.lichsudi{
+	width: 56%;
+	min-height: 485px;
+	box-shadow: 0 0 2em #CCC;
+	border-radius: 1em;
+	float: left;
+	margin-left: 2%;
+	margin-top: 1em;
+}
+
+.lichsudi table{
 	width: 100%;
-	height: 100%;
-	background: rgba(64,64,64,0.2);
-	position: absolute;
-	display: none;
-}
-.popup{
-	position: absolute;
-	z-index: 20;
-	top: 10%;
-	left: 30%;
-}
-.tabledoithongtin{
-	background: #FFF;
-	border-radius: 5px;
-	box-shadow: 0 0 1px #888;
-}
-.tendoithongtin{
-	width: 100%;
-	height: 40px;
-	background: #f57812;
-	margin-bottom: 20px;
+	margin: auto;
+	margin-top: 5px;
 	text-align: center;
+	font-family: arial, sans-serif;
+    border-collapse: collapse;
 }
-.tendoithongtin h3{
-	color: #FFF;
-	line-height: 40px;
+.lichsudi th{
+	border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+    text-align: center;
+    position: relative;
+    background: #f57812;
+    color: #FFF;
 }
-.tabledoithongtin table{
-	width: 500px;
+.lichsudi td{
+	border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+    text-align: center;
+    position: relative;
 }
-.tabledoithongtin td{
-	padding: 10px;
-}
-/*doi mat khau*/
-.doimatkhau{
-	width: 100%;
-	height: 100%;
-	background: rgba(64,64,64,0.2);
-	position: absolute;
-	display: none;
-}
-.popupdoimatkhau{
-	position: absolute;
-	z-index: 20;
-	top: 10%;
-	left: 30%;
-}
-.tabledoimatkhau{
-	background: #FFF;
-	border-radius: 5px;
-	box-shadow: 0 0 1px #888;
-}
-.tendoimatkhau{
-	width: 100%;
+.lichsudi tr{
 	height: 40px;
+}
+.lichsudi tr:nth-child(even) {
+    background-color: #dddddd;
+}
+/*chon loai de xuat*/
+.dexuatbt{
 	background: #f57812;
-	margin-bottom: 20px;
-	text-align: center;
 }
-.tendoimatkhau h3{
-	color: #FFF;
-	line-height: 40px;
-}
-.tabledoimatkhau table{
-	width: 500px;
-}
-.tabledoimatkhau td{
-	padding: 10px;
+.text1{
+	position: absolute;
+	z-index: 0.8;
+	top:30%;
+	left: 0%;
+	width: 100%;
+	height: 15px;
+	display: none;
 }
 /* .er{
 	background: #a94442;

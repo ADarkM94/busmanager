@@ -51,8 +51,14 @@
             <li>
                 <div class="ngaydidatve">
                     <label>Chọn Thời Gian đi </label>
-                    <div id="datepicker" class="input-group date" data-date-format="dd-mm-yyyy"> <input class="form-control" readonly="" type="text" name="Ngaydi"> <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                    </div>
+                    <div class="form-group" style="width: 350px;">
+                        <div class='input-group date' style="box-shadow: 0 3px #F3AD45; ">
+                            <span class="input-group-addon" style="background: #FFF; border: none;">
+                            <span class="glyphicon glyphicon-calendar" style="color: #f57812;"></span>
+                            </span>
+                            <input type='date' class="form-control" style="border: none;" name="Ngaydi" id="txtdate" />
+                        </div>
+                     </div>
                     <div class="tim">
                         <i class="fa fa-ticket icon-flat bg-btn-actived"></i>
                          <button type="button" class="btn" onclick="document.forms['timve'].submit();"><a href="javascript:void(0)" >Tìm vé</a></button>
@@ -63,4 +69,17 @@
         </form>
 
     </div>
+@endsection
+@section('script')
+    <script type="text/javascript">
+        function chonngay(){
+            var d = new Date();
+            var ngay = d.getDate()<10? ('0'+d.getDate()):d.getDate();
+            var thang = d.getMonth() + 1 <10? ('0'+d.getMonth()+1):d.getMonth()+1;
+            var nam = d.getFullYear();
+            document.getElementById("txtdate").min=nam+"-"+thang+"-"+ngay;
+            document.getElementById("txtdate").value= nam+"-"+thang+"-"+ngay;
+        }
+        chonngay();
+    </script>
 @endsection

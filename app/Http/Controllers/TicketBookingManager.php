@@ -42,6 +42,58 @@ class TicketBookingManager extends Controller
 		}
 		return response()->json(['kq' => 1,'data' => $chuyenxe]);
 	}
+	public function routedetails(Request $request)
+	{
+		$machuyenxe = $request->idchuyenxe;
+		sleep(1);
+		try
+		{
+			$loaixe = DB::table('chuyen_xe')->join('xe','chuyen_xe.Mã_xe','=','xe.Mã')->join('bus_model','xe.Mã_loại_xe','bus_model.Mã')->where('chuyen_xe.Mã','=',$machuyenxe)->select('bus_model.Loại_ghế','bus_model.Sơ_đồ','bus_model.Số_cột','bus_model.Số_hàng')->get();
+			$ve = DB::table('ve')->where('Mã_chuyến_xe','=',$machuyenxe)->orderBy('Mã','asc')->get();
+			return response()->json(['kq' => 1,'loaixe' => $loaixe,'ve' => $ve]);
+		} catch(\Exception $e)
+		{
+			return response()->json(['kq' => 0,'error' => $e]);
+		}
+	}
+	public function qldv_chonve(Request $request)
+	{
+		$mave = $request->idve;
+		if(DB::select("SELECT * FROM ve WHERE Mã = ? AND Trạng_thái != 0",[$mave]))
+		{
+			return response()->json(['kq' => 0]);
+		}
+		else
+		{
+			try
+			{
+				DB::update("UPDATE `ve` SET `Trạng_thái` = 2 WHERE `Mã` = ? AND `Trạng_thái` = 0",[$mave]);
+				return response()->json(['kq' => 1]);
+			} catch(\Exception $e)
+			{
+				return response()->json(['kq' => 0]);
+			}
+		}
+	}
+	public function qldv_huychonve(Request $request)
+	{
+		$maves = $request->idves;
+		for($i=0;$i<count($maves);$i++)
+		{
+			if($maves[$i] != null)
+			{
+				try
+				{
+					DB::update("UPDATE `ve` SET `Trạng_thái` = 0 WHERE `Mã` = ? AND `Trạng_thái` = 2",[$maves[$i]]);
+					return response()->json(['kq' => 1]);
+				} catch(\Exception $e)
+				{
+					return response()->json(['kq' => 0]);
+				}
+			}
+		}
+		return response()->json(['kq' => 0]);
+	}
 	// public function ticketinfo(/*Request $request*/$idve)
 	// {
 		// $idve = $request->idve; //Gửi lên idve
@@ -60,7 +112,7 @@ class TicketBookingManager extends Controller
 	// {
 		// $phone = $request->phone; //Gửi lên phone
 		// $idve = $request->idve; //Gửi lên idve
-		// $ttkh = DB::table('khachhang')->where('Sđt','=',$phone)->get();
+		// $ttkh = DB::table('customer')->where('Sđt','=',$phone)->get();
 		// if(count($ttkh) != 0)
 		// {
 			// $updated_at = date('Y-m-d h-i-s');
@@ -85,14 +137,14 @@ class TicketBookingManager extends Controller
 		// $gioitinh = $request->gender; //Gửi lên gender
 		// $ngaysinh = $request->ngaysinh; //Gửi lên ngaysinh
 		// $idve = $request->idve; //Gửi lên idve
-		// $ttkh = DB::table('khachhang')->where('Sđt','=',$phone)->get();
+		// $ttkh = DB::table('customer')->where('Sđt','=',$phone)->get();
 		// if(count($ttkh) == 0)
 		// {
 			// $created_at = date('Y-m-d h-i-s');
 			// $updated_at = date('Y-m-d h-i-s');
 			// if(DB::insert("INSERT INTO `customer`(`Tên`, `Ngày_sinh`, `Giới tính`, `Sđt`, `Password`, `created_at`, `updated_at`) VALUES (?,?,?,?,?,?,?)",[$name,$ngaysinh,$gioitinh,$phone,md5($phone),$created_at,$updated_at]))
 			// {
-				// $tmp = DB::table('khachhang')->where('Sđt','=',$phone)->get();
+				// $tmp = DB::table('customer')->where('Sđt','=',$phone)->get();
 				// $idkh = $tmp[0]->Mã;
 				// if(DB::update("UPDATE `ve` SET `Mã_khách_hàng` = ?, `Trạng_thái` = ? WHERE `Mã` = ? AND `Trạng_thái` = ?",[$idkh,1,$idve,0]))
 				// {

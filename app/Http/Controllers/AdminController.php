@@ -232,7 +232,7 @@ class AdminController extends Controller
 		$ttnhanvien = DB::table('employee')->where('Mã','=',$id)->get();
 		if($ttnhanvien)
 		{
-			// sleep(10);
+			sleep(3);
 			return response()->json(['kq' => 1,'userinfo' => $ttnhanvien]);
 		}
 		return response()->json(['kq' => 0]);

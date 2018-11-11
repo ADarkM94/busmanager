@@ -16,6 +16,7 @@
                 <th>Mã chuyến</th>
                 <th>Tuyến</th>
                 <th>Giờ Xuất Bến</th>
+                <th>Thời Gian Đến</th>
                 <th>Loại Xe</th>
                 <th>Giá</th>
                 <th>Đặt Mua</th>
@@ -25,6 +26,7 @@
                     <td>{{$t->Mã}}</td>
                     <td><span>{{$t->Nơi_đi}} -> {{$t->Nơi_đến}}</span></td>
                     <td><span>{{$t->Ngày_xuất_phát}} : {{$t->Giờ_xuất_phát}}</span></td>
+                    <td><span>{{$t->Thời_gian_đến_dự_kiến}}</span></td>
                     <td><span>{{($t->Loại_ghế==1)? 'Giường Nằm':'Ghế Ngồi'}}</span></td>
                     <td><span>{{($t->Tiền_vé)/1000}}.000 VNĐ</span></td>
                     <td><div class="chuyenxetim">

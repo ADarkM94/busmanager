@@ -140,6 +140,10 @@ class TicketSuggestion extends Controller
             }
             $sodem2++;
         }
+		if(empty($matrixFinal))
+		{
+			return response()->json(['kq' => 0]);
+		}
 //        return view('ticket', ['similarmatrix' => $similarmatrix,'matrix' => $matrix,'normmatrix' => $normmatrix,'normmatrixFull' => $normmatrixFull,'matrixFinal' => $matrixFinal]);
         $vedadat = DB::table('ve')->where('Mã_chuyến_xe','=',$machuyenxe)->select("Mã","Vị_trí_ghế","Trạng_thái")->get();
         $sove = count($vedadat);

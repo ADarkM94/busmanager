@@ -22,7 +22,7 @@
     @if(Session::has('makh'))
         <ul>
             <li><a  href="{{route('logout')}}" style="line-height: 40px;color: #FFF;">( Đăng xuất )</a></li>
-            <li style="color: #FFF;line-height: 40px;"><i class="fa fa-address-book-o" style="font-size:20px; margin-right: 3px;"></i>  <a href="thongtin/{{$makh}}" style="color: #CCC; cursor: pointer;">{{Session::get('sdt')}}</a></li>
+            <li style="color: #FFF;line-height: 40px;"><i class="fa fa-address-book-o" style="font-size:20px; margin-right: 3px;"></i>  <a href="{{asset("thongtin/{$makh}")}}" style="color: #CCC; cursor: pointer;">{{Session::get('sdt')}}</a></li>
         </ul>
     @else
         <ul>
@@ -86,15 +86,26 @@
         </ul>
     </div>
 </main>
-@section('script')
-    <script type="text/javascript" src="{{asset('js/js.js')}}"></script>
-    <script type="text/javascript" src="{{asset('js/date.js')}}"></script>
+@yield('excontent')
+    <!-- <script type="text/javascript">
+        function myfunction(){
+          alert("ticketsuggestionaasa");
+        }
+    </script> -->
     <script type="text/javascript">
         $(document).ready(function(){
             $(".dangky").click(function(){
                 var sdt=$(".dienthoai").val();
                 var bieuthuc = /^(0[3578]|09)[0-9]{8}$/;
+                var bieuthuc2 = /[a-zA-Z][^#&<>\"~;$^%{}?]{1,50}$/;
                 var truyen = true;
+                var gioitinh = document.getElementsByName("txtgioitinh2");
+                 for (var i = 0; i < gioitinh.length; i++){
+                    if (gioitinh[i].checked == true){
+                       gt = gioitinh[i].value;
+                    }
+                }
+                var ngaysinh = $(".txtngaysinh").val();
                 /*dien thoai*/
                 if(sdt!=""){
                    if(sdt.search(bieuthuc)==-1){
@@ -109,6 +120,15 @@
                     $(".loi").html("<div class='alert alert-danger'><strong>Số điện thoại không được để trống !</strong></div>");
                     truyen = false;
                 }
+                /*ten*/
+                var name = $(".txtname").val();
+                if(name.search(bieuthuc2)==-1){
+                     $(".loi6").html("<div class='alert alert-danger'><strong>Tên bạn nhập không hợp lệ !</strong></div>");
+                     truyen = false;
+                 }
+                  else{
+                    $(".loi6").html("");
+                   }
                 /*mat khau */
                 var mk = $(".matkhau").val();
                 var rmk = $(".rematkhau").val();
@@ -154,7 +174,10 @@
                         data: {
                         _token: '{{csrf_token()}}',
                         SDT: sdt,
-                        MK: mk
+                        MK: mk,
+                        NGAYSINH: ngaysinh,
+                        GT:gt,
+                        NAME: name
                         },
                     success: function (data) {
                        if(data.kq==0){
@@ -238,7 +261,6 @@
             });
         });
     </script>
-@endsection
 @extends('tttn-web.login')
 @extends('tttn-web.register')
 @yield('script')
