@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 07, 2018 lúc 05:12 PM
+-- Thời gian đã tạo: Th10 13, 2018 lúc 04:01 PM
 -- Phiên bản máy phục vụ: 10.1.32-MariaDB
 -- Phiên bản PHP: 7.2.5
 
@@ -133,6 +133,7 @@ INSERT INTO `chuyen_xe` (`Mã`, `Mã_nhân_viên_tạo`, `Mã_lộ_trình`, `Mã
 CREATE TABLE `customer` (
   `Mã` int(11) NOT NULL,
   `Tên` varchar(255) DEFAULT NULL,
+  `Tên_không_dấu` varchar(255) NOT NULL,
   `Ngày_sinh` date DEFAULT NULL,
   `Giới tính` set('0','1','2') DEFAULT NULL,
   `Địa chỉ` tinytext,
@@ -147,29 +148,29 @@ CREATE TABLE `customer` (
 -- Đang đổ dữ liệu cho bảng `customer`
 --
 
-INSERT INTO `customer` (`Mã`, `Tên`, `Ngày_sinh`, `Giới tính`, `Địa chỉ`, `Password`, `Email`, `Sđt`, `created_at`, `updated_at`) VALUES
-(7, 'Nguyễn Đặng Sỹ Luân', '1995-12-09', '1', NULL, 'd41d8cd98f00b204e9800998ecf8427e', 'syluanit@gmail.com', '0963219951', '2018-10-24 08:40:26', '2018-11-02 03:11:17'),
-(8, 'Dương Kim', '1994-08-12', '1', NULL, '52c69e3a57331081823331c4e69d3f2e', 'duongkim@gmail.com', '0322336512', '2018-10-24 08:42:46', '2018-10-24 08:42:46'),
-(9, 'Dương Lan', '1992-05-12', '2', NULL, '52c69e3a57331081823331c4e69d3f2e', 'duonglan@gmail.com', '0969315468', '2018-10-24 08:44:33', '2018-10-24 08:44:33'),
-(10, 'Dương Anh', '1995-01-22', '1', NULL, '52c69e3a57331081823331c4e69d3f2e', 'duonganh@gmail.com', '0523459876', '2018-10-24 08:45:33', '2018-10-24 08:45:33'),
-(11, 'Dương Chi', '1996-12-25', '2', NULL, '52c69e3a57331081823331c4e69d3f2e', 'duongchi@gmail.com', '0882283553', '2018-10-24 08:46:21', '2018-10-24 08:46:21'),
-(12, 'Dương Cao', '1993-09-15', '1', NULL, '52c69e3a57331081823331c4e69d3f2e', 'duongcao@gmail.com', '0835535793', '2018-10-24 08:47:13', '2018-10-24 08:47:13'),
-(13, 'Dương Khang', '1997-07-13', '1', NULL, '83d634317da9e6facbb206b52937abc3', 'duongkhang@gmail.com', '0743345786', '2018-10-24 08:47:57', '2018-10-24 08:47:57'),
-(14, 'Dương Tuyết', '1995-05-14', '2', NULL, '83d634317da9e6facbb206b52937abc3', 'duongtuyet@gmail.com', '0983383747', '2018-10-24 08:49:11', '2018-10-24 08:49:11'),
-(15, 'Dương Mai', '1993-02-19', '2', NULL, '83d634317da9e6facbb206b52937abc3', 'duongmai@gmail.com', '0312435678', '2018-10-24 08:50:08', '2018-10-24 08:50:08'),
-(16, 'Dương Nam', '1996-12-17', '1', NULL, '83d634317da9e6facbb206b52937abc3', 'duongnam@gmail.com', '0786456732', '2018-10-24 08:51:06', '2018-10-24 08:51:06'),
-(17, 'Dương Dương', '1994-11-16', '1', NULL, '83d634317da9e6facbb206b52937abc3', 'duongduong@gmail.com', '0969235481', '2018-10-24 08:51:47', '2018-10-24 08:51:47'),
-(18, 'Dương Nhất', '1989-09-09', '1', NULL, '83d634317da9e6facbb206b52937abc3', 'duongnhat@gmail.com', '0343546576', '2018-10-24 08:53:15', '2018-10-24 08:53:15'),
-(19, 'Dương Thanh', '1995-08-25', '2', NULL, '83d634317da9e6facbb206b52937abc3', 'duongthanh@gmail.com', '0321345678', '2018-10-24 08:53:59', '2018-10-24 08:53:59'),
-(20, 'Dương Nguyệt', '1997-04-14', '2', NULL, '83d634317da9e6facbb206b52937abc3', 'duongnguyet@gmail.com', '0945454556', '2018-10-24 08:54:42', '2018-10-24 08:54:42'),
-(21, 'Dương Ngọc', '1993-03-15', '2', NULL, '83d634317da9e6facbb206b52937abc3', 'duongngoc@gmail.com', '0312123456', '2018-10-24 08:55:26', '2018-10-24 08:55:26'),
-(22, 'Dương Như', '1997-02-11', '2', NULL, '83d634317da9e6facbb206b52937abc3', 'duongnhu@gmail.com', '0964328764', '2018-10-24 08:56:46', '2018-10-24 08:56:46'),
-(23, 'Hoàng Anh', '1994-04-15', '2', NULL, '83d634317da9e6facbb206b52937abc3', 'hoanganh@gmail.com', '0945345645', '2018-10-24 08:58:08', '2018-10-24 08:58:08'),
-(24, 'Hoàng Lan', '1991-11-11', '2', NULL, '83d634317da9e6facbb206b52937abc3', 'hoanglan@gmail.com', '0393777037', '2018-10-24 08:58:53', '2018-10-24 08:58:53'),
-(25, 'Hoàng Văn Hoàng', '1991-08-14', '1', NULL, '83d634317da9e6facbb206b52937abc3', 'vanhoang@gmail.com', '0838384858', '2018-10-24 08:59:43', '2018-10-24 08:59:43'),
-(26, 'Hoàng Minh', '1992-02-12', '1', NULL, '83d634317da9e6facbb206b52937abc3', 'hoangminh@gmail.com', '0932323445', '2018-10-24 09:00:35', '2018-10-24 09:00:35'),
-(27, 'Hoàng Kim', '1995-02-12', '1', NULL, '83d634317da9e6facbb206b52937abc3', 'hoangkim@gmail.com', '0556765434', '2018-10-24 09:01:34', '2018-10-24 09:01:34'),
-(28, 'Phan Anh Minh', '1994-04-10', '1', '11111111111111111', '96e79218965eb72c92a549dd5a330112', 'phananhminh@gmail.com', '0986645434', '2018-10-25 16:36:29', '2018-10-25 16:36:29');
+INSERT INTO `customer` (`Mã`, `Tên`, `Tên_không_dấu`, `Ngày_sinh`, `Giới tính`, `Địa chỉ`, `Password`, `Email`, `Sđt`, `created_at`, `updated_at`) VALUES
+(7, 'Nguyễn Đặng Sỹ Luân', 'Nguyen Dang Sy Luan', '1995-12-09', '1', NULL, 'd41d8cd98f00b204e9800998ecf8427e', 'syluanit@gmail.com', '0963219951', '2018-10-24 08:40:26', '2018-11-02 03:11:17'),
+(8, 'Dương Kim', 'Duong Kim', '1994-08-12', '1', NULL, '52c69e3a57331081823331c4e69d3f2e', 'duongkim@gmail.com', '0322336512', '2018-10-24 08:42:46', '2018-10-24 08:42:46'),
+(9, 'Dương Lan', 'Duong Lan', '1992-05-12', '2', NULL, '52c69e3a57331081823331c4e69d3f2e', 'duonglan@gmail.com', '0969315468', '2018-10-24 08:44:33', '2018-10-24 08:44:33'),
+(10, 'Dương Anh', 'Duong Anh', '1995-01-22', '1', NULL, '52c69e3a57331081823331c4e69d3f2e', 'duonganh@gmail.com', '0523459876', '2018-10-24 08:45:33', '2018-10-24 08:45:33'),
+(11, 'Dương Chi', 'Duong Chi', '1996-12-25', '2', NULL, '52c69e3a57331081823331c4e69d3f2e', 'duongchi@gmail.com', '0882283553', '2018-10-24 08:46:21', '2018-10-24 08:46:21'),
+(12, 'Dương Cao', 'Duong Cao', '1993-09-15', '1', NULL, '52c69e3a57331081823331c4e69d3f2e', 'duongcao@gmail.com', '0835535793', '2018-10-24 08:47:13', '2018-10-24 08:47:13'),
+(13, 'Dương Khang', 'Duong Khang', '1997-07-13', '1', NULL, '83d634317da9e6facbb206b52937abc3', 'duongkhang@gmail.com', '0743345786', '2018-10-24 08:47:57', '2018-10-24 08:47:57'),
+(14, 'Dương Tuyết', 'Duong Tuyet', '1995-05-14', '2', NULL, '83d634317da9e6facbb206b52937abc3', 'duongtuyet@gmail.com', '0983383747', '2018-10-24 08:49:11', '2018-10-24 08:49:11'),
+(15, 'Dương Mai', 'Duong Mai', '1993-02-19', '2', NULL, '83d634317da9e6facbb206b52937abc3', 'duongmai@gmail.com', '0312435678', '2018-10-24 08:50:08', '2018-10-24 08:50:08'),
+(16, 'Dương Nam', 'Duong Nam', '1996-12-17', '1', NULL, '83d634317da9e6facbb206b52937abc3', 'duongnam@gmail.com', '0786456732', '2018-10-24 08:51:06', '2018-10-24 08:51:06'),
+(17, 'Dương Dương', 'Duong Duong', '1994-11-16', '1', NULL, '83d634317da9e6facbb206b52937abc3', 'duongduong@gmail.com', '0969235481', '2018-10-24 08:51:47', '2018-10-24 08:51:47'),
+(18, 'Dương Nhất', 'Duong Nhat', '1989-09-09', '1', NULL, '83d634317da9e6facbb206b52937abc3', 'duongnhat@gmail.com', '0343546576', '2018-10-24 08:53:15', '2018-10-24 08:53:15'),
+(19, 'Dương Thanh', 'Duong Thanh', '1995-08-25', '2', NULL, '83d634317da9e6facbb206b52937abc3', 'duongthanh@gmail.com', '0321345678', '2018-10-24 08:53:59', '2018-10-24 08:53:59'),
+(20, 'Dương Nguyệt', 'Duong Nguyet', '1997-04-14', '2', NULL, '83d634317da9e6facbb206b52937abc3', 'duongnguyet@gmail.com', '0945454556', '2018-10-24 08:54:42', '2018-10-24 08:54:42'),
+(21, 'Dương Ngọc', 'Duong Ngoc', '1993-03-15', '2', NULL, '83d634317da9e6facbb206b52937abc3', 'duongngoc@gmail.com', '0312123456', '2018-10-24 08:55:26', '2018-10-24 08:55:26'),
+(22, 'Dương Như', 'Duong Nhu', '1997-02-11', '2', NULL, '83d634317da9e6facbb206b52937abc3', 'duongnhu@gmail.com', '0964328764', '2018-10-24 08:56:46', '2018-10-24 08:56:46'),
+(23, 'Hoàng Anh', 'Hoang Anh', '1994-04-15', '2', NULL, '83d634317da9e6facbb206b52937abc3', 'hoanganh@gmail.com', '0945345645', '2018-10-24 08:58:08', '2018-10-24 08:58:08'),
+(24, 'Hoàng Lan', 'Hoang Lan', '1991-11-11', '2', NULL, '83d634317da9e6facbb206b52937abc3', 'hoanglan@gmail.com', '0393777037', '2018-10-24 08:58:53', '2018-10-24 08:58:53'),
+(25, 'Hoàng Văn Hoàng', 'Hoang Van Hoang', '1991-08-14', '1', NULL, '83d634317da9e6facbb206b52937abc3', 'vanhoang@gmail.com', '0838384858', '2018-10-24 08:59:43', '2018-10-24 08:59:43'),
+(26, 'Hoàng Minh', 'Hoang Minh', '1992-02-12', '1', NULL, '83d634317da9e6facbb206b52937abc3', 'hoangminh@gmail.com', '0932323445', '2018-10-24 09:00:35', '2018-10-24 09:00:35'),
+(27, 'Hoàng Kim', 'Hoang Kim', '1995-02-12', '1', NULL, '83d634317da9e6facbb206b52937abc3', 'hoangkim@gmail.com', '0556765434', '2018-10-24 09:01:34', '2018-10-24 09:01:34'),
+(28, 'Phan Anh Minh', 'Phan Anh Minh', '1994-04-10', '1', '11111111111111111', 'd41d8cd98f00b204e9800998ecf8427e', 'phananhminh@gmail.com', '0986645434', '2018-10-25 16:36:29', '2018-11-13 02:17:55');
 
 -- --------------------------------------------------------
 
@@ -201,7 +202,7 @@ CREATE TABLE `employee` (
   `Username` varchar(255) DEFAULT NULL,
   `Password` varchar(255) NOT NULL,
   `Email` varchar(255) NOT NULL,
-  `Loại_NV` set('QTV','BV','TX') NOT NULL,
+  `Loại_NV` set('QTV','QLDV','TX') NOT NULL,
   `Chi_nhánh` varchar(255) DEFAULT NULL,
   `Bằng_lái` varchar(255) DEFAULT NULL,
   `Sđt` varchar(255) NOT NULL,
@@ -218,7 +219,8 @@ INSERT INTO `employee` (`Mã`, `Họ_Tên`, `Ngày_sinh`, `Giới_tính`, `Đị
 (1, 'Phan Anh Minh', '1994-04-10', '1', 'Quảng Ngãi', 'admin', '25f9e794323b453885f5181f1b624d0b', 'phananhminh51202164@gmail.com', 'QTV', NULL, NULL, '01646881949', '2018-09-01', '2018-09-28 20:02:37', '2018-09-28 20:02:37'),
 (3, 'Phan Anh Test', '1993-05-11', '1', 'Quảng Ngãi', 'usertest', '25f9e794323b453885f5181f1b624d0b', 'test@email.com', 'TX', 'Hồ Chí Minh', '12345678', '123456788', '2018-10-08', '2018-10-10 09:11:31', '2018-10-10 09:11:31'),
 (4, 'Phan Anh Test2', '1994-04-10', '1', '506/19/15 3/2 street', 'usertest1', '25f9e794323b453885f5181f1b624d0b', 'test2@gmail.com', 'TX', 'Ho Chi Minh City', '8886534', '123456787', '2001-03-20', '2018-10-24 07:48:20', '2018-10-24 07:48:20'),
-(5, 'Văn Hoang', '1988-01-10', '1', '402/33 Xô Viết Nghệ TĨnh', 'usertest2', '21218cca77804d2ba1922c33e0151105', 'vanhoang@gmail.com', 'TX', 'HCMC', '123321', '0909321123', '2018-10-31', '2018-10-31 07:46:15', '2018-10-31 07:46:15');
+(5, 'Văn Hoang', '1988-01-10', '1', '402/33 Xô Viết Nghệ TĨnh', 'usertest2', '21218cca77804d2ba1922c33e0151105', 'vanhoang@gmail.com', 'TX', 'HCMC', '123321', '0909321123', '2018-10-31', '2018-10-31 07:46:15', '2018-10-31 07:46:15'),
+(6, 'Phan Anh Lộc', '1995-09-11', '0', '506/19/15 3/2 street', 'qldv_anhloc', '96e79218965eb72c92a549dd5a330112', 'anhminh@email.com', 'QLDV', 'Ho Chi Minh City', NULL, '0987435212', '2015-03-10', '2018-11-13 02:24:40', '2018-11-13 02:24:40');
 
 -- --------------------------------------------------------
 
@@ -2634,7 +2636,7 @@ ALTER TABLE `duong_di`
 -- AUTO_INCREMENT cho bảng `employee`
 --
 ALTER TABLE `employee`
-  MODIFY `Mã` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `Mã` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT cho bảng `lo_trinh`

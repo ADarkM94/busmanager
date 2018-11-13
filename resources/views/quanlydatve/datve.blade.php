@@ -1,5 +1,10 @@
 @extends('quanlydatve.main')
 @section('content')
+	<script>
+		// $(function(){
+          // $('i[onload]').trigger('onload');
+        // });
+	</script>
     <div class="content datve show row">
         <div class="col-lg-4">
             <div class="searchroute">
@@ -42,18 +47,48 @@
         <div class="col-lg-4">
             <div class="ttdatve">
                 <span>Thông tin đặt vé</span>
-                <form class="form-vertical">
-                    <input type="text" name="hoten" class="form-control" placeholder="Họ tên">
+                <form name="frm-ttdatve" class="form-vertical">
+					<input type="hidden" name="idchuyenxe">
+					<input type="hidden" name="idkhachhang">
+					<input type="hidden" name="idnhanvien" value="6"> <!--Sẽ thay bằng session mã nhân viên sau-->
+                    <div class="input-group">
+						<label class="input-group-addon">Họ tên&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+						<input type="text" name="hoten" class="form-control" placeholder="Họ tên">
+					</div>	
                     <br>
-                    <input type="text" name="sodienthoai" class="form-control" placeholder="Số điện thoại">
+					<div class="input-group">
+						<label class="input-group-addon">Di động&nbsp;&nbsp;&nbsp;&nbsp;</label>
+						<input type="text" name="sodienthoai" class="form-control" placeholder="Số điện thoại">
+					</div>
                     <br>
-                    <input type="text" name="cmnd" class="form-control" placeholder="CMND">
+					<div class="input-group">
+						<label class="input-group-addon">Giới tính&nbsp;&nbsp;</label>
+						<select name="gender" class="form-control">
+							<option value="0">Không xác định</option>
+							<option value="1">Nam</option>
+							<option value="2">Nữ</option>
+						</select>
+					</div>
+					<br>
+					<div class="input-group">
+						<label class="input-group-addon">Ngày sinh</label>
+						<input type="date" name="brtday" class="form-control">
+					</div>
                     <br>
-                    <input type="text" name="noidonkhach" class="form-control" placeholder="Nơi đón khách">
+					<div class="input-group">
+						<label class="input-group-addon">Đã chọn&nbsp;&nbsp;&nbsp;</label>
+						<input type="text" name="vedachon" class="form-control" placeholder="Các vị trí ghế đã chọn" readonly>
+					</div>
                     <br>
-                    <input type="text" name="noidi" class="form-control" list="diadiem" placeholder="Nơi đi">
+					<div class="input-group">
+						<label class="input-group-addon">Nơi đi&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+						<input type="text" name="noidi" class="form-control" placeholder="Nơi đi" readonly>
+					</div>
                     <br>
-                    <input type="text" name="noiden" class="form-control" list="diadiem" placeholder="Nơi đến">
+					<div class="input-group">
+						<label class="input-group-addon">Nơi đến&nbsp;&nbsp;&nbsp;</label>
+						<input type="text" name="noiden" class="form-control" placeholder="Nơi đến" readonly>
+					</div>
                 </form>
                 <span data-toggle="modal" data-target="#modaldadat">Vé đã đặt</span>
                 <br>
@@ -102,6 +137,7 @@
                 <div class="modal-body row">
 					<div class="col-lg-4">
                     <form name="ttchuyenxe">
+						<input type="hidden" name="idchuyenxe">
                         <div class="form-group">
                             <label>Nơi đi</label>
                             <input type="text" name="noidi" class="form-control" placeholder="Điểm đi" readonly="">
@@ -133,7 +169,8 @@
 					</div>
                 </div>
 				<div class="modal-footer">
-					<button class="btn btn-success">Chọn</button>
+					<button class="btn btn-success" id="chonchuyenxe">Chọn Vé</button>
+					<button class="btn btn-danger" id="huychonchuyenxe">Hủy Vé</button>
 				</div>
             </div>
         </div>
@@ -348,11 +385,8 @@
 			noiden.value = ev.getAttribute('data-noiden');
 			thoigiandi.value = ev.getAttribute('data-thoigiandi');
 			thoigianden.value = ev.getAttribute('data-thoigianden');
-			// var loaighe = ev.getAttribute('data-loaighe');
-			// var sohang = ev.getAttribute('data-sohang');
-			// var socot = ev.getAttribute('data-socot');
-			// var sodoxe = ev.getAttribute('data-sodoxe');
 			chuyenxe.innerHTML = "Chuyến Xe #"+ev.getAttribute('data-ma');
+			document.forms['ttchuyenxe']['idchuyenxe'].value = ev.getAttribute('data-ma');
 			loading.classList.add('show');
 			$.ajax({
 				url: '{{route("qldv-routedetails")}}',
@@ -364,7 +398,9 @@
 				success: function(data){
 					if(data.kq == 1)
 					{
+						idnhanvien = 6; //Sẽ thay thế bằng session mã nhân viên đặt vé
 						str = "";
+						vedachon = "";
 						sohang = data.loaixe[0].Số_hàng;
 						socot = data.loaixe[0].Số_cột;
 						loaighe = data.loaixe[0].Loại_ghế;
@@ -384,19 +420,46 @@
 									{
 										if(ve[demve].Trạng_thái == 0)
 										{
-											str+="<td class='vecontrong' onclick='chonve(this)' data-mave='"+ve[demve].Mã+"' data-vitri='"+ve[demve].Vị_trí_ghế+"'>"+ve[demve].Vị_trí_ghế+"</td>";
+											var title = "Vị trí ghế: "+ve[demve].Vị_trí_ghế+"<br>";
+											title += "Khách đặt: "+(ve[demve].Tên==null? 'Chưa có':ve[demve].Tên)+"<br>";
+											// title += "Ngày sinh: "+(ve[demve].Ngày_sinh==null? 'Chưa có':ve[demve].Ngày_sinh)+"<br>";
+											// title += "Giới tính: "+(ve[demve].Giới_tính==null? 'Chưa có':(ve[demve].Giới_tính==0? 'Không xác định':(ve[demve].Giới_tính==1? 'Nam':'Nữ')))+"<br>";
+											title += "Số điện thoại: "+(ve[demve].Sđt==null? 'Chưa có':ve[demve].Sđt)+"<br>";				
+											title += "Nhân viên đặt: "+(ve[demve].Họ_Tên==null? 'Chưa có':ve[demve].Họ_Tên)+"<br>";							
+											str+="<td class='vecontrong' onclick='chonve(this)' data-mave='"+ve[demve].Mã+"' data-vitri='"+ve[demve].Vị_trí_ghế+"'>"+ve[demve].Vị_trí_ghế+"<div class='tooltip-info'>"+title+"</div></td>";
 										}
 										else if(ve[demve].Trạng_thái == 1)
 										{
-											str+="<td class='vedadat' data-mave='"+ve[demve].Mã+"' data-vitri='"+ve[demve].Vị_trí_ghế+"'>"+ve[demve].Vị_trí_ghế+"</td>";
+											var title = "Vị trí ghế: "+ve[demve].Vị_trí_ghế+"<br>";
+											title += "Khách đặt: "+(ve[demve].Tên==null? 'Chưa có':ve[demve].Tên)+"<br>";
+											title += "Số điện thoại: "+(ve[demve].Sđt==null? 'Chưa có':ve[demve].Sđt)+"<br>";				
+											title += "Nhân viên đặt: "+(ve[demve].Họ_Tên==null? 'Chưa có':ve[demve].Họ_Tên)+"<br>";	
+											str+="<td class='vedadat' data-mave='"+ve[demve].Mã+"' data-vitri='"+ve[demve].Vị_trí_ghế+"'>"+ve[demve].Vị_trí_ghế+"<div class='tooltip-info'>"+title+"</div></td>";
 										}
 										else if(ve[demve].Trạng_thái == 2&&ve[demve].Mã_khách_hàng != null)
 										{
-											str+="<td class='vedanggiu' data-mave='"+ve[demve].Mã+"' data-vitri='"+ve[demve].Vị_trí_ghế+"'>"+ve[demve].Vị_trí_ghế+"</td>";
+											var title = "Vị trí ghế: "+ve[demve].Vị_trí_ghế+"<br>";
+											title += "Khách đặt: "+(ve[demve].Tên==null? 'Chưa có':ve[demve].Tên)+"<br>";
+											title += "Số điện thoại: "+(ve[demve].Sđt==null? 'Chưa có':ve[demve].Sđt)+"<br>";				
+											title += "Nhân viên đặt: "+(ve[demve].Họ_Tên==null? 'Chưa có':ve[demve].Họ_Tên)+"<br>";		
+											str+="<td class='vedanggiu' data-mave='"+ve[demve].Mã+"' data-vitri='"+ve[demve].Vị_trí_ghế+"'>"+ve[demve].Vị_trí_ghế+"<br><i onload='showTime(this)'>"+ve[demve].Thời_gian_còn+"</i><div class='tooltip-info'>"+title+"</div></td>";
 										}
-										else if(ve[demve].Trạng_thái == 2&&ve[demve].Mã_khách_hàng == null)
+										else if(ve[demve].Trạng_thái == 2&&ve[demve].Mã_khách_hàng == null&&ve[demve].Mã_nhân_viên_đặt == idnhanvien)
 										{
-											str+="<td class='vecontrong vedangchon' onclick='chonve(this)' data-mave='"+ve[demve].Mã+"' data-vitri='"+ve[demve].Vị_trí_ghế+"'>"+ve[demve].Vị_trí_ghế+"</td>";
+											vedachon += (ve[demve].Vị_trí_ghế+",");
+											var title = "Vị trí ghế: "+ve[demve].Vị_trí_ghế+"<br>";
+											title += "Khách đặt: "+(ve[demve].Tên==null? 'Chưa có':ve[demve].Tên)+"<br>";
+											title += "Số điện thoại: "+(ve[demve].Sđt==null? 'Chưa có':ve[demve].Sđt)+"<br>";				
+											title += "Nhân viên đặt: "+(ve[demve].Họ_Tên==null? 'Chưa có':ve[demve].Họ_Tên)+"<br>";		
+											str+="<td class='vecontrong vedangchon' onclick='chonve(this)' data-mave='"+ve[demve].Mã+"' data-vitri='"+ve[demve].Vị_trí_ghế+"'>"+ve[demve].Vị_trí_ghế+"<div class='tooltip-info'>"+title+"</div></td>";
+										}
+										else if(ve[demve].Trạng_thái == 2&&ve[demve].Mã_khách_hàng == null&&ve[demve].Mã_nhân_viên_đặt != idnhanvien)
+										{
+											var title = "Vị trí ghế: "+ve[demve].Vị_trí_ghế+"<br>";
+											title += "Khách đặt: "+(ve[demve].Tên==null? 'Chưa có':ve[demve].Tên)+"<br>";
+											title += "Số điện thoại: "+(ve[demve].Sđt==null? 'Chưa có':ve[demve].Sđt)+"<br>";				
+											title += "Nhân viên đặt: "+(ve[demve].Họ_Tên==null? 'Chưa có':ve[demve].Họ_Tên)+"<br>";	
+											str+="<td class='vedadat' data-mave='"+ve[demve].Mã+"' data-vitri='"+ve[demve].Vị_trí_ghế+"'>"+ve[demve].Vị_trí_ghế+"<div class='tooltip-info'>"+title+"</div></td>";
 										}
 										demve++;
 									}
@@ -423,19 +486,44 @@
 									{
 										if(ve[demve].Trạng_thái == 0)
 										{
-											str+="<td class='vecontrong' onclick='chonve(this)' data-mave='"+ve[demve].Mã+"' data-vitri='"+ve[demve].Vị_trí_ghế+"'>"+ve[demve].Vị_trí_ghế+"</td>";
+											var title = "Vị trí ghế: "+ve[demve].Vị_trí_ghế+"<br>";
+											title += "Khách đặt: "+(ve[demve].Tên==null? 'Chưa có':ve[demve].Tên)+"<br>";
+											title += "Số điện thoại: "+(ve[demve].Sđt==null? 'Chưa có':ve[demve].Sđt)+"<br>";				
+											title += "Nhân viên đặt: "+(ve[demve].Họ_Tên==null? 'Chưa có':ve[demve].Họ_Tên)+"<br>";	
+											str+="<td class='vecontrong' onclick='chonve(this)' data-mave='"+ve[demve].Mã+"' data-vitri='"+ve[demve].Vị_trí_ghế+"'>"+ve[demve].Vị_trí_ghế+"<div class='tooltip-info'>"+title+"</div></td>";
 										}
 										else if(ve[demve].Trạng_thái == 1)
 										{
-											str+="<td class='vedadat' data-mave='"+ve[demve].Mã+"' data-vitri='"+ve[demve].Vị_trí_ghế+"'>"+ve[demve].Vị_trí_ghế+"</td>";
+											var title = "Vị trí ghế: "+ve[demve].Vị_trí_ghế+"<br>";
+											title += "Khách đặt: "+(ve[demve].Tên==null? 'Chưa có':ve[demve].Tên)+"<br>";
+											title += "Số điện thoại: "+(ve[demve].Sđt==null? 'Chưa có':ve[demve].Sđt)+"<br>";				
+											title += "Nhân viên đặt: "+(ve[demve].Họ_Tên==null? 'Chưa có':ve[demve].Họ_Tên)+"<br>";	
+											str+="<td class='vedadat' data-mave='"+ve[demve].Mã+"' data-vitri='"+ve[demve].Vị_trí_ghế+"'>"+ve[demve].Vị_trí_ghế+"<div class='tooltip-info'>"+title+"</div></td>";
 										}
 										else if(ve[demve].Trạng_thái == 2&&ve[demve].Mã_khách_hàng != null)
 										{
-											str+="<td class='vedanggiu' data-mave='"+ve[demve].Mã+"' data-vitri='"+ve[demve].Vị_trí_ghế+"'>"+ve[demve].Vị_trí_ghế+"</td>";
+											var title = "Vị trí ghế: "+ve[demve].Vị_trí_ghế+"<br>";
+											title += "Khách đặt: "+(ve[demve].Tên==null? 'Chưa có':ve[demve].Tên)+"<br>";
+											title += "Số điện thoại: "+(ve[demve].Sđt==null? 'Chưa có':ve[demve].Sđt)+"<br>";				
+											title += "Nhân viên đặt: "+(ve[demve].Họ_Tên==null? 'Chưa có':ve[demve].Họ_Tên)+"<br>";	
+											str+="<td class='vedanggiu' data-mave='"+ve[demve].Mã+"' data-vitri='"+ve[demve].Vị_trí_ghế+"'>"+ve[demve].Vị_trí_ghế+"<br><i onload='showTime(this)'>"+ve[demve].Thời_gian_còn+"</i><div class='tooltip-info'>"+title+"</div></td>";
 										}
-										else if(ve[demve].Trạng_thái == 2&&ve[demve].Mã_khách_hàng == null)
+										else if(ve[demve].Trạng_thái == 2&&ve[demve].Mã_khách_hàng == null&&ve[demve].Mã_nhân_viên_đặt == idnhanvien)
 										{
-											str+="<td class='vecontrong vedangchon' onclick='chonve(this)' data-mave='"+ve[demve].Mã+"' data-vitri='"+ve[demve].Vị_trí_ghế+"'>"+ve[demve].Vị_trí_ghế+"</td>";
+											vedachon += (ve[demve].Vị_trí_ghế+",");
+											var title = "Vị trí ghế: "+ve[demve].Vị_trí_ghế+"<br>";
+											title += "Khách đặt: "+(ve[demve].Tên==null? 'Chưa có':ve[demve].Tên)+"<br>";
+											title += "Số điện thoại: "+(ve[demve].Sđt==null? 'Chưa có':ve[demve].Sđt)+"<br>";				
+											title += "Nhân viên đặt: "+(ve[demve].Họ_Tên==null? 'Chưa có':ve[demve].Họ_Tên)+"<br>";	
+											str+="<td class='vecontrong vedangchon' onclick='chonve(this)' data-mave='"+ve[demve].Mã+"' data-vitri='"+ve[demve].Vị_trí_ghế+"'>"+ve[demve].Vị_trí_ghế+"<div class='tooltip-info'>"+title+"</div></td>";
+										}
+										else if(ve[demve].Trạng_thái == 2&&ve[demve].Mã_khách_hàng == null&&ve[demve].Mã_nhân_viên_đặt != idnhanvien)
+										{
+											var title = "Vị trí ghế: "+ve[demve].Vị_trí_ghế+"<br>";
+											title += "Khách đặt: "+(ve[demve].Tên==null? 'Chưa có':ve[demve].Tên)+"<br>";
+											title += "Số điện thoại: "+(ve[demve].Sđt==null? 'Chưa có':ve[demve].Sđt)+"<br>";				
+											title += "Nhân viên đặt: "+(ve[demve].Họ_Tên==null? 'Chưa có':ve[demve].Họ_Tên)+"<br>";	
+											str+="<td class='vedadat' data-mave='"+ve[demve].Mã+"' data-vitri='"+ve[demve].Vị_trí_ghế+"'>"+ve[demve].Vị_trí_ghế+"<div class='tooltip-info'>"+title+"</div></td>";
 										}
 										demve++;
 									}
@@ -459,19 +547,44 @@
 									{
 										if(ve[demve].Trạng_thái == 0)
 										{
-											str+="<td class='vecontrong' onclick='chonve(this)' data-mave='"+ve[demve].Mã+"' data-vitri='"+ve[demve].Vị_trí_ghế+"'>"+ve[demve].Vị_trí_ghế+"</td>";
+											var title = "Vị trí ghế: "+ve[demve].Vị_trí_ghế+"<br>";
+											title += "Khách đặt: "+(ve[demve].Tên==null? 'Chưa có':ve[demve].Tên)+"<br>";
+											title += "Số điện thoại: "+(ve[demve].Sđt==null? 'Chưa có':ve[demve].Sđt)+"<br>";				
+											title += "Nhân viên đặt: "+(ve[demve].Họ_Tên==null? 'Chưa có':ve[demve].Họ_Tên)+"<br>";	
+											str+="<td class='vecontrong' onclick='chonve(this)' data-mave='"+ve[demve].Mã+"' data-vitri='"+ve[demve].Vị_trí_ghế+"'>"+ve[demve].Vị_trí_ghế+"<div class='tooltip-info'>"+title+"</div></td>";
 										}
 										else if(ve[demve].Trạng_thái == 1)
 										{
-											str+="<td class='vedadat' data-mave='"+ve[demve].Mã+"' data-vitri='"+ve[demve].Vị_trí_ghế+"'>"+ve[demve].Vị_trí_ghế+"</td>";
+											var title = "Vị trí ghế: "+ve[demve].Vị_trí_ghế+"<br>";
+											title += "Khách đặt: "+(ve[demve].Tên==null? 'Chưa có':ve[demve].Tên)+"<br>";
+											title += "Số điện thoại: "+(ve[demve].Sđt==null? 'Chưa có':ve[demve].Sđt)+"<br>";				
+											title += "Nhân viên đặt: "+(ve[demve].Họ_Tên==null? 'Chưa có':ve[demve].Họ_Tên)+"<br>";	
+											str+="<td class='vedadat' data-mave='"+ve[demve].Mã+"' data-vitri='"+ve[demve].Vị_trí_ghế+"'>"+ve[demve].Vị_trí_ghế+"<div class='tooltip-info'>"+title+"</div></td>";
 										}
 										else if(ve[demve].Trạng_thái == 2&&ve[demve].Mã_khách_hàng != null)
 										{
-											str+="<td class='vedanggiu' data-mave='"+ve[demve].Mã+"' data-vitri='"+ve[demve].Vị_trí_ghế+"'>"+ve[demve].Vị_trí_ghế+"</td>";
+											var title = "Vị trí ghế: "+ve[demve].Vị_trí_ghế+"<br>";
+											title += "Khách đặt: "+(ve[demve].Tên==null? 'Chưa có':ve[demve].Tên)+"<br>";
+											title += "Số điện thoại: "+(ve[demve].Sđt==null? 'Chưa có':ve[demve].Sđt)+"<br>";				
+											title += "Nhân viên đặt: "+(ve[demve].Họ_Tên==null? 'Chưa có':ve[demve].Họ_Tên)+"<br>";	
+											str+="<td class='vedanggiu' data-mave='"+ve[demve].Mã+"' data-vitri='"+ve[demve].Vị_trí_ghế+"'>"+ve[demve].Vị_trí_ghế+"<br><i onload='showTime(this)'>"+ve[demve].Thời_gian_còn+"</i><div class='tooltip-info'>"+title+"</div></td>";
 										}
-										else if(ve[demve].Trạng_thái == 2&&ve[demve].Mã_khách_hàng == null)
+										else if(ve[demve].Trạng_thái == 2&&ve[demve].Mã_khách_hàng == null&&ve[demve].Mã_nhân_viên_đặt == idnhanvien)
 										{
-											str+="<td class='vecontrong vedangchon' onclick='chonve(this)' data-mave='"+ve[demve].Mã+"' data-vitri='"+ve[demve].Vị_trí_ghế+"'>"+ve[demve].Vị_trí_ghế+"</td>";
+											vedachon += (ve[demve].Vị_trí_ghế+",");
+											var title = "Vị trí ghế: "+ve[demve].Vị_trí_ghế+"<br>";
+											title += "Khách đặt: "+(ve[demve].Tên==null? 'Chưa có':ve[demve].Tên)+"<br>";
+											title += "Số điện thoại: "+(ve[demve].Sđt==null? 'Chưa có':ve[demve].Sđt)+"<br>";				
+											title += "Nhân viên đặt: "+(ve[demve].Họ_Tên==null? 'Chưa có':ve[demve].Họ_Tên)+"<br>";	
+											str+="<td class='vecontrong vedangchon' onclick='chonve(this)' data-mave='"+ve[demve].Mã+"' data-vitri='"+ve[demve].Vị_trí_ghế+"'>"+ve[demve].Vị_trí_ghế+"<div class='tooltip-info'>"+title+"</div></td>";
+										}
+										else if(ve[demve].Trạng_thái == 2&&ve[demve].Mã_khách_hàng == null&&ve[demve].Mã_nhân_viên_đặt != idnhanvien)
+										{
+											var title = "Vị trí ghế: "+ve[demve].Vị_trí_ghế+"<br>";
+											title += "Khách đặt: "+(ve[demve].Tên==null? 'Chưa có':ve[demve].Tên)+"<br>";
+											title += "Số điện thoại: "+(ve[demve].Sđt==null? 'Chưa có':ve[demve].Sđt)+"<br>";				
+											title += "Nhân viên đặt: "+(ve[demve].Họ_Tên==null? 'Chưa có':ve[demve].Họ_Tên)+"<br>";	
+											str+="<td class='vedadat' data-mave='"+ve[demve].Mã+"' data-vitri='"+ve[demve].Vị_trí_ghế+"'>"+ve[demve].Vị_trí_ghế+"<div class='tooltip-info'>"+title+"</div></td>";
 										}
 										demve++;
 									}
@@ -485,6 +598,8 @@
 							str+="</table>";
 						}
 						sodoxe.getElementsByTagName('div')[1].innerHTML = str;
+						document.forms['ttchuyenxe']['vechon'].value = vedachon;
+						$('i[onload]').trigger('onload');
 					}
 					else if(data.kq == 0)
 					{
@@ -521,7 +636,7 @@
 			document.getElementById('timkh').click();
 		};
 		$("#modaldatve").on("hidden.bs.modal", function(){ //Bắt sự kiện modal đặt vé tắt
-			alert('catcha');
+			//Code Sự kiện tắt modal đặt vé
 		});
 		function chonve(ev)
 		{
@@ -532,11 +647,17 @@
 					type: 'post',
 					data: {
 						_token: '{{csrf_token()}}',
-						idves: [ev.getAttribute("data-mave")]
+						idnhanvien: 6, //Sẽ thay thế bằng session mã nhân viên đặt vé
+						idve: ev.getAttribute("data-mave")
 					},
 					success: function(data){
 						if(data.kq == 1)
 						{
+							var title = "Vị trí ghế: "+data.ttghe[0].Vị_trí_ghế+"<br>";
+							title += "Khách đặt: "+(data.ttghe[0].Tên==null? 'Chưa có':data.ttghe[0].Tên)+"<br>";
+							title += "Số điện thoại: "+(data.ttghe[0].Sđt==null? 'Chưa có':data.ttghe[0].Sđt)+"<br>";				
+							title += "Nhân viên đặt: "+(data.ttghe[0].Họ_Tên==null? 'Chưa có':data.ttghe[0].Họ_Tên)+"<br>";	
+							ev.getElementsByClassName("tooltip-info")[0].innerHTML = title;
 							ev.classList.remove("vedangchon");
 							document.forms["ttchuyenxe"]["vechon"].value = document.forms["ttchuyenxe"]["vechon"].value.replace(ev.getAttribute("data-vitri")+",","");
 						}
@@ -555,6 +676,7 @@
 					type: 'post',
 					data: {
 						_token: '{{csrf_token()}}',
+						idnhanvien: 6, //Sẽ thay thế bằng session mã nhân viên đặt
 						idve: ev.getAttribute("data-mave")
 					},
 					success: function(data){
@@ -564,6 +686,11 @@
 						}
 						else if(data.kq == 1)
 						{
+							var title = "Vị trí ghế: "+data.ttghe[0].Vị_trí_ghế+"<br>";
+							title += "Khách đặt: "+(data.ttghe[0].Tên==null? 'Chưa có':data.ttghe[0].Tên)+"<br>";
+							title += "Số điện thoại: "+(data.ttghe[0].Sđt==null? 'Chưa có':data.ttghe[0].Sđt)+"<br>";				
+							title += "Nhân viên đặt: "+(data.ttghe[0].Họ_Tên==null? 'Chưa có':data.ttghe[0].Họ_Tên)+"<br>";	
+							ev.getElementsByClassName("tooltip-info")[0].innerHTML = title;
 							document.forms["ttchuyenxe"]["vechon"].value+=(ev.getAttribute("data-vitri")+",");
 						}
 					},
@@ -574,5 +701,63 @@
 				});
 			}
 		}
+		function showTime(ev) //Hàm chạy đồng hồ đếm ngược
+		{
+			if(ev.innerHTML.valueOf() > 0)
+			{
+				ev.innerHTML = ev.innerHTML.valueOf() - 1;
+				setTimeout(showTime,1000,ev);
+			}
+			else if(ev.innerHTML.valueOf() == 0)
+			{
+				ev.style.display = "none";
+			}
+		}
+		document.getElementById("chonchuyenxe").onclick = function(ev){
+			var idchuyenxe = document.forms["frm-ttdatve"]["idchuyenxe"];
+			// var idkhachhang = document.forms["frm-ttdatve"]["idkhachhang"];
+			// var idnhanvien = document.forms["frm-ttdatve"]["idnhanvien"];
+			// var hoten = document.forms["frm-ttdatve"]["hoten"];
+			// var sodienthoai = document.forms["frm-ttdatve"]["sodienthoai"];
+			// var gioitinh = document.forms["frm-ttdatve"]["gender"];
+			// var ngaysinh = document.forms["frm-ttdatve"]["brtday"];
+			var vedachon = document.forms["frm-ttdatve"]["vedachon"];
+			var noidi = document.forms["frm-ttdatve"]["noidi"];
+			var noiden = document.forms["frm-ttdatve"]["noiden"];
+			idchuyenxe.value = document.forms['ttchuyenxe']['idchuyenxe'].value;
+			vedachon.value = document.forms['ttchuyenxe']['vechon'].value;
+			noidi.value = document.forms['ttchuyenxe']['noidi'].value;
+			noiden.value = document.forms['ttchuyenxe']['noiden'].value;
+			$("#modaldatve").modal("hide");
+		};
+		document.getElementById("huychonchuyenxe").onclick = function(ev){
+			var idchuyenxe = document.forms['ttchuyenxe']['idchuyenxe'].value;
+			var vedachon = document.forms['ttchuyenxe']['vechon'].value!=""? document.forms['ttchuyenxe']['vechon'].value.slice(0,document.forms['ttchuyenxe']['vechon'].value.length - 1).split(","):null;
+			// alert(vedachon.length+" "+vedachon);
+			if(vedachon != null)
+			{
+				$.ajax({
+					url: '{{route("qldv-huychonchuyenxe")}}',
+					type: 'post',
+					data: {
+						_token: '{{csrf_token()}}',
+						idnhanvien: 6, //Sẽ thay thế bằng session mã nhân viên đặt vé
+						idchuyenxe: idchuyenxe,
+						vitrive: vedachon
+					},
+					success: function(data){
+						if(data.kq == 1)
+						{
+							alert("Đã hủy thành công!");
+						}
+					},
+					timeout: 10000,
+					error: function(xhr){
+					
+					}
+				});
+			}
+			$("#modaldatve").modal("hide");
+		};
     </script>
 @endsection

@@ -514,13 +514,47 @@ a:hover, a:visited {
 	border-collapse: separate;
 	border-spacing: 5px;
 	display: block;
-	padding: 1em 5em;
+	padding: 5em 5em 1em;
 }
 #modaldatve table.sodoghe td[data-mave] {
 	border: 1px solid #004964;
 	width: 50px;
 	height: 70px;
 	cursor: pointer;
+	position: relative;
+}
+#modaldatve table.sodoghe td[data-mave] .tooltip-info {
+	visibility: hidden;
+    min-width: 200px;
+	display: block;
+    background-color: #555;
+    color: #fff;
+    text-align: left;
+    padding: 5px 0 5px 5px;
+    border-radius: 6px;
+	z-index: 99;
+    /* Position the tooltip text */
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translate(-50%,0);
+    /* Fade in tooltip */
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+#modaldatve table.sodoghe td[data-mave] .tooltip-info::after {
+	content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+#modaldatve table.sodoghe td[data-mave]:hover .tooltip-info {
+	visibility: visible;
+    opacity: 1;
 }
 #modaldatve table.sodoghe td.vedadat {
 	background: grey;
@@ -540,13 +574,47 @@ a:hover, a:visited {
 	border-collapse: separate;
 	border-spacing: 5px;
 	display: block;
-	padding: 1em 5em;
+	padding: 5em 5em 1em;
 }
 #modaldatve table.sodogiuong td[data-mave] {
 	border: 1px solid #004964;
 	width: 50px;
 	height: 70px;
 	cursor: pointer;
+	position: relative;
+}
+#modaldatve table.sodogiuong td[data-mave] .tooltip-info {
+	visibility: hidden;
+    min-width: 200px;
+	display: block;
+    background-color: #555;
+    color: #fff;
+    text-align: left;
+    padding: 5px 0 5px 5px;
+    border-radius: 6px;
+	z-index: 99;
+    /* Position the tooltip text */
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translate(-50%,0);
+    /* Fade in tooltip */
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+#modaldatve table.sodogiuong td[data-mave] .tooltip-info::after {
+	content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+#modaldatve table.sodogiuong td[data-mave]:hover .tooltip-info {
+	visibility: visible;
+    opacity: 1;
 }
 #modaldatve table.sodogiuong td.vedadat {
 	background: grey;

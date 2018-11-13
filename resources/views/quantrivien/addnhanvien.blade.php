@@ -56,8 +56,8 @@
                 <label>Địa chỉ</label>
                 <input type="text" class="form-control"  name="address" value="{{isset($ttnhanvien['Địa_chỉ'])? $ttnhanvien['Địa_chỉ']:''}}" placeholder="Địa chỉ">
                 <br>
-                <label>Username</label>
-                <input type="text" class="form-control"  name="username" value="{{isset($ttnhanvien['Username'])? $ttnhanvien['Username']:''}}" placeholder="Bí danh">
+                <label>Username<i class="text text-danger">*</i></label>
+                <input type="text" class="form-control"  name="username" value="{{isset($ttnhanvien['Username'])? $ttnhanvien['Username']:''}}" placeholder="Tên đăng nhập" required>
                 <br>
                 <label>Password<i class="text text-danger">*</i></label>
                 <input type="password" class="form-control"  name="password" value="{{isset($ttnhanvien['Password'])? $ttnhanvien['Password']:''}}" <?php echo isset($ttnhanvien)? "disabled":"";?> placeholder="Mật khẩu" required>

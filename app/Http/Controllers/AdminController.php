@@ -100,6 +100,7 @@ class AdminController extends Controller
     public  function addcustomer(Request $request)
 	{
         $name = $request->name;
+		$tenkhongdau = FunctionBase::convertAlias($name);
         $brtday = $request->brtday;
         $gender = $request->gender;
         $address = $request->address;
@@ -110,8 +111,8 @@ class AdminController extends Controller
         $updated_at = date('Y-m-d h-i-s');
         if(isset($request->ID))
 		{
-            if(DB::update("UPDATE `customer` SET `Tên`= ?,`Ngày_sinh`= ?,`Giới tính`= ?,`Địa chỉ`= ?,`Password`= ?,`Email`= ?,`Sđt`= ?,`updated_at`= ? WHERE `Mã`= ?",
-                [$name,$brtday,$gender,$address,$password,$email,$phone,$updated_at,$request->ID]))
+            if(DB::update("UPDATE `customer` SET `Tên`= ?,`Tên_không_dấu`= ?,`Ngày_sinh`= ?,`Giới tính`= ?,`Địa chỉ`= ?,`Password`= ?,`Email`= ?,`Sđt`= ?,`updated_at`= ? WHERE `Mã`= ?",
+                [$name,$tenkhongdau,$brtday,$gender,$address,$password,$email,$phone,$updated_at,$request->ID]))
 				{
 					return redirect()->back()->with('alert','Sửa thành công!');
 				}
@@ -124,8 +125,8 @@ class AdminController extends Controller
 		{
             if(!DB::select('select * from customer where Email = ? or Sđt = ? or Tên = ?',[$request->email,$request->phone,$request->name]))
             {
-                DB::insert("INSERT INTO `customer`(`Tên`, `Ngày_sinh`, `Giới tính`, `Địa chỉ`, `Password`, `Email`, `Sđt`, `created_at`, `updated_at`) VALUES (?,?,?,?,?,?,?,?,?)",
-                    [$name,$brtday,$gender,$address,$password,$email,$phone,$created_at,$updated_at]);
+                DB::insert("INSERT INTO `customer`(`Tên`, `Tên_không_dấu`, `Ngày_sinh`, `Giới tính`, `Địa chỉ`, `Password`, `Email`, `Sđt`, `created_at`, `updated_at`) VALUES (?,?,?,?,?,?,?,?,?,?)",
+                    [$name,$tenkhongdau,$brtday,$gender,$address,$password,$email,$phone,$created_at,$updated_at]);
                 return redirect()->back()->with('alert','Thêm thành công!');
             }
             else

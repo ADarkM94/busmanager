@@ -45,11 +45,23 @@ class TicketBookingManager extends Controller
 	public function routedetails(Request $request)
 	{
 		$machuyenxe = $request->idchuyenxe;
-		sleep(1);
+		sleep(0);
 		try
 		{
 			$loaixe = DB::table('chuyen_xe')->join('xe','chuyen_xe.Mã_xe','=','xe.Mã')->join('bus_model','xe.Mã_loại_xe','bus_model.Mã')->where('chuyen_xe.Mã','=',$machuyenxe)->select('bus_model.Loại_ghế','bus_model.Sơ_đồ','bus_model.Số_cột','bus_model.Số_hàng')->get();
-			$ve = DB::table('ve')->where('Mã_chuyến_xe','=',$machuyenxe)->orderBy('Mã','asc')->get();
+			$ve = DB::table('ve')->leftJoin('customer','ve.Mã_khách_hàng','=','customer.Mã')->leftJoin('employee','ve.Mã_nhân_viên_đặt','=','employee.Mã')->where('ve.Mã_chuyến_xe','=',$machuyenxe)->select('ve.Mã','ve.Mã_khách_hàng','ve.Mã_chuyến_xe','ve.Trạng_thái','ve.Thời_điểm_chọn','ve.Vị_trí_ghế','customer.Tên','customer.Ngày_sinh','customer.Giới tính as Giới_tính','customer.Sđt','customer.Địa chỉ','ve.Mã_nhân_viên_đặt','employee.Họ_Tên')->orderBy('ve.Mã','asc')->get();
+			foreach($ve as $key => $value)
+			{
+				if($ve[$key]->Thời_điểm_chọn != null)
+				{
+					$thoigiancon = 600 - intval(strtotime(date("Y-m-d H:i:s"))) + intval(strtotime($ve[$key]->Thời_điểm_chọn));
+					$ve[$key]->Thời_gian_còn = $thoigiancon;
+				}
+				else
+				{
+					$ve[$key]->Thời_gian_còn = null;
+				}
+			}
 			return response()->json(['kq' => 1,'loaixe' => $loaixe,'ve' => $ve]);
 		} catch(\Exception $e)
 		{
@@ -59,6 +71,7 @@ class TicketBookingManager extends Controller
 	public function qldv_chonve(Request $request)
 	{
 		$mave = $request->idve;
+		$manhanvien = $request->idnhanvien;
 		if(DB::select("SELECT * FROM ve WHERE Mã = ? AND Trạng_thái != 0",[$mave]))
 		{
 			return response()->json(['kq' => 0]);
@@ -67,8 +80,10 @@ class TicketBookingManager extends Controller
 		{
 			try
 			{
-				DB::update("UPDATE `ve` SET `Trạng_thái` = 2 WHERE `Mã` = ? AND `Trạng_thái` = 0",[$mave]);
-				return response()->json(['kq' => 1]);
+				DB::update("UPDATE `ve` SET `Trạng_thái` = 2, `Mã_nhân_viên_đặt` = ? WHERE `Mã` = ? AND `Trạng_thái` = 0",[$manhanvien,$mave]);
+				// sleep(.1);
+				$ve = DB::table('ve')->leftJoin('customer','ve.Mã_khách_hàng','=','customer.Mã')->leftJoin('employee','ve.Mã_nhân_viên_đặt','=','employee.Mã')->where('ve.Mã','=',$mave)->select('ve.Vị_trí_ghế','customer.Tên','customer.Sđt','employee.Họ_Tên')->get();
+				return response()->json(['kq' => 1,'ttghe' => $ve]);
 			} catch(\Exception $e)
 			{
 				return response()->json(['kq' => 0]);
@@ -77,22 +92,34 @@ class TicketBookingManager extends Controller
 	}
 	public function qldv_huychonve(Request $request)
 	{
-		$maves = $request->idves;
-		for($i=0;$i<count($maves);$i++)
+		$mave = $request->idve;
+		try
 		{
-			if($maves[$i] != null)
+			DB::update("UPDATE `ve` SET `Trạng_thái` = 0, `Mã_nhân_viên_đặt` = NULL WHERE `Mã` = ? AND `Trạng_thái` = 2",[$mave]);
+			// sleep(.1);
+			$ve = DB::table('ve')->leftJoin('customer','ve.Mã_khách_hàng','=','customer.Mã')->leftJoin('employee','ve.Mã_nhân_viên_đặt','=','employee.Mã')->where('ve.Mã','=',$mave)->select('ve.Vị_trí_ghế','customer.Tên','customer.Sđt','employee.Họ_Tên')->get();
+			return response()->json(['kq' => 1,'ttghe' => $ve]);
+		} catch(\Exception $e)
+		{
+			return response()->json(['kq' => 0]);
+		}
+	}
+	public function qldv_huychonchuyenxe(Request $request)
+	{
+		$vitrive = $request->vitrive;
+		$machuyenxe = $request->idchuyenxe;
+		for($i=0;$i<count($vitrive);$i++)
+		{
+			try
 			{
-				try
-				{
-					DB::update("UPDATE `ve` SET `Trạng_thái` = 0 WHERE `Mã` = ? AND `Trạng_thái` = 2",[$maves[$i]]);
-					return response()->json(['kq' => 1]);
-				} catch(\Exception $e)
-				{
-					return response()->json(['kq' => 0]);
-				}
+				DB::update("UPDATE `ve` SET `Trạng_thái` = 0, `Mã_nhân_viên_đặt` = NULL WHERE `Mã_chuyến_xe` = ? AND `Trạng_thái` = 2 AND `Vị_trí_ghế` = ?",[$machuyenxe,$vitrive[$i]]);
+				// sleep(.1);
+			} catch(\Exception $e)
+			{
+				return response()->json(['kq' => 0]);
 			}
 		}
-		return response()->json(['kq' => 0]);
+		return response()->json(['kq' => 1]);
 	}
 	// public function ticketinfo(/*Request $request*/$idve)
 	// {

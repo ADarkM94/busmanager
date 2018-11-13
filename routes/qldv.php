@@ -19,6 +19,8 @@ Route::post('/qldv/chonve','TicketBookingManager@qldv_chonve')->name('qldv-chonv
 
 Route::post('/qldv/huychonve','TicketBookingManager@qldv_huychonve')->name('qldv-huychonve');
 
+Route::post('/qldv/huychonchuyenxe','TicketBookingManager@qldv_huychonchuyenxe')->name('qldv-huychonchuyenxe');
+
 // Route::get('/qldv/ticket/{idve}','TicketBookingManager@ticketinfo');
 
 /* Route::post('/qldv/searchtinh', 'TicketBookingManager@searchtinh')->name('searchtinh'); */

@@ -81,7 +81,7 @@
             },
             {
                 title: "Loại NV",
-                width: 100,
+                width: 150,
                 dataIndx: "Loại_NV",
                 dataType: "string",
                 editor: false,
@@ -130,7 +130,7 @@
             },
             {
                 title: "Giới tính",
-                width: 100,
+                width: 150,
                 dataIndx: "Giới_tính",
                 dataType: "string",
                 editor: false,
@@ -198,7 +198,7 @@
                     return {text: str};
                 }
             },
-            /*{
+            {
                 title: "Tên đăng nhập",
                 width: 200,
                 dataIndx: "Username",
@@ -210,7 +210,7 @@
                     condition: 'contain',
                     listeners: ['keyup']
                 }
-            },*/
+            },
             {
                 title: "Email",
                 width: 300,
