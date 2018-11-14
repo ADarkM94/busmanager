@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 13, 2018 lúc 04:01 PM
+-- Thời gian đã tạo: Th10 14, 2018 lúc 10:53 PM
 -- Phiên bản máy phục vụ: 10.1.32-MariaDB
 -- Phiên bản PHP: 7.2.5
 
@@ -170,7 +170,7 @@ INSERT INTO `customer` (`Mã`, `Tên`, `Tên_không_dấu`, `Ngày_sinh`, `Giớ
 (25, 'Hoàng Văn Hoàng', 'Hoang Van Hoang', '1991-08-14', '1', NULL, '83d634317da9e6facbb206b52937abc3', 'vanhoang@gmail.com', '0838384858', '2018-10-24 08:59:43', '2018-10-24 08:59:43'),
 (26, 'Hoàng Minh', 'Hoang Minh', '1992-02-12', '1', NULL, '83d634317da9e6facbb206b52937abc3', 'hoangminh@gmail.com', '0932323445', '2018-10-24 09:00:35', '2018-10-24 09:00:35'),
 (27, 'Hoàng Kim', 'Hoang Kim', '1995-02-12', '1', NULL, '83d634317da9e6facbb206b52937abc3', 'hoangkim@gmail.com', '0556765434', '2018-10-24 09:01:34', '2018-10-24 09:01:34'),
-(28, 'Phan Anh Minh', 'Phan Anh Minh', '1994-04-10', '1', '11111111111111111', 'd41d8cd98f00b204e9800998ecf8427e', 'phananhminh@gmail.com', '0986645434', '2018-10-25 16:36:29', '2018-11-13 02:17:55');
+(28, 'Phan Anh Minh', 'Phan Anh Minh', '1994-04-10', '1', NULL, '96e79218965eb72c92a549dd5a330112', 'phananhminh@gmail.com', '0986645434', '2018-10-25 16:36:29', '2018-11-13 02:17:55');
 
 -- --------------------------------------------------------
 
@@ -253,6 +253,24 @@ INSERT INTO `lo_trinh` (`Mã`, `Mã_nhân_viên_tạo`, `Mã_nhân_viên_chỉnh
 (6, 1, 1, 'TP.Hồ Chí Minh', 'Đà Lạt', '1,3', 7200, '2018-10-24 07:30:12', '2018-10-24 07:30:12'),
 (7, 1, 1, 'TP.Hồ Chí Minh', 'Bến Tre', '1', 0, '2018-10-31 07:41:50', '2018-10-31 07:41:50'),
 (8, 1, 1, 'TP.Hồ Chí Minh', 'Tây Ninh', '3', 0, '2018-10-31 07:42:54', '2018-10-31 07:42:54');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `news`
+--
+
+CREATE TABLE `news` (
+  `news_id` int(10) UNSIGNED NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `image` varchar(255) NOT NULL,
+  `introduce` text NOT NULL,
+  `content` longtext NOT NULL,
+  `id_admin_created` int(10) NOT NULL,
+  `id_admin_changed` int(10) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -2565,6 +2583,12 @@ ALTER TABLE `lo_trinh`
   ADD KEY `Mã_nhân_viên_tạo` (`Mã_nhân_viên_tạo`);
 
 --
+-- Chỉ mục cho bảng `news`
+--
+ALTER TABLE `news`
+  ADD PRIMARY KEY (`news_id`);
+
+--
 -- Chỉ mục cho bảng `thong_ke`
 --
 ALTER TABLE `thong_ke`
@@ -2643,6 +2667,12 @@ ALTER TABLE `employee`
 --
 ALTER TABLE `lo_trinh`
   MODIFY `Mã` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT cho bảng `news`
+--
+ALTER TABLE `news`
+  MODIFY `news_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT cho bảng `thong_ke`

@@ -21,6 +21,10 @@ Route::post('/qldv/huychonve','TicketBookingManager@qldv_huychonve')->name('qldv
 
 Route::post('/qldv/huychonchuyenxe','TicketBookingManager@qldv_huychonchuyenxe')->name('qldv-huychonchuyenxe');
 
+Route::post('/qldv/searchcustomer','TicketBookingManager@qldv_searchcustomer')->name('qldv-searchcustomer');
+
+Route::post('/qldv/infokhachhang','TicketBookingManager@qldv_infokhachhang')->name('qldv-infokh');
+
 // Route::get('/qldv/ticket/{idve}','TicketBookingManager@ticketinfo');
 
 /* Route::post('/qldv/searchtinh', 'TicketBookingManager@searchtinh')->name('searchtinh'); */

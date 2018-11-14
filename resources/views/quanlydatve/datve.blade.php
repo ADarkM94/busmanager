@@ -106,7 +106,7 @@
 					<div>
 						<label>Tìm theo:</label>
 						<label class="kh-filter"><input type="checkbox" onclick="if(document.getElementById('kh-filter0').checked == true){ document.getElementById('kh-filter1').checked = true; document.getElementById('kh-filter2').checked = true; document.getElementById('kh-filter1').disabled = true; document.getElementById('kh-filter2').disabled = true;} else { document.getElementById('kh-filter1').disabled = false; document.getElementById('kh-filter2').disabled = false;}" id="kh-filter0" value="0">Tất cả</label>
-						<label class="kh-filter"><input type="checkbox" id="kh-filter1" value="1">Tên</label>
+						<label class="kh-filter"><input type="checkbox" id="kh-filter1" value="1" checked>Tên</label>
 						<label class="kh-filter"><input type="checkbox" id="kh-filter2" value="2">Sđt</label>
 					</div>
                 </form>
@@ -217,6 +217,49 @@
             </div>
         </div>
     </div>
+	<div id="modalttkhachhang" class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Thông tin khách hàng</h4>
+				</div>
+				<div class="modal-body">
+					<div class="loading"></div>
+					<form name="frm-ttkhachhang">
+						<input type="hidden" name="id">
+						<div class="form-group">
+							<label>Tên</label>
+							<input type="text" name="name" class="form-control" readonly>
+						</div>
+						<div class="form-group">
+							<label>Giới tính</label>
+							<input type="text" name="gender" class="form-control" readonly>
+						</div>
+						<div class="form-group">
+							<label>Ngày sinh</label>
+							<input type="text" name="brtday" class="form-control" readonly>
+						</div>
+						<div class="form-group">
+							<label>Số điện thoại</label>
+							<input type="text" name="phone" class="form-control" readonly>
+						</div>
+						<div class="form-group">
+							<label>Email</label>
+							<input type="text" name="email" class="form-control" readonly>
+						</div>
+						<div class="form-group">
+							<label>Địa chỉ</label>
+							<input type="text" name="address" class="form-control" readonly>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-success">Lấy Thông Tin</button>
+				</div>
+			</div>
+		</div>
+	</div>
 @endsection
 @section('script')
     <script>
@@ -620,7 +663,8 @@
 		}
 		document.getElementById('timkh').onclick = function(){ //Bắt sự kiện tìm kiếm khách hàng
 			var searchkh = document.forms['timkhachhang']['searchkh'];
-			var loading = document.getElementsByClassName('kqtimkh')[0].getElementsByClassName('loading')[0];
+			var kqtimkh = document.getElementsByClassName('kqtimkh')[0];
+			var loading = kqtimkh.getElementsByClassName('loading')[0];
 			if(searchkh.value == '')
 			{
 				alert('Dữ liệu chưa nhập');
@@ -629,12 +673,153 @@
 			else
 			{
 				loading.classList.add('show');
+				var filter;
+				if(document.getElementById("kh-filter0").checked == true||(document.getElementById("kh-filter1").checked == true&&document.getElementById("kh-filter2").checked == true))
+				{
+					filter = 0;
+				}
+				else if(document.getElementById("kh-filter1").checked == true)
+				{
+					filter = 1;
+				}
+				else if(document.getElementById("kh-filter2").checked == true)
+				{
+					filter = 2;
+				}
+				$.ajax({
+					url: '{{route("qldv-searchcustomer")}}',
+					type: 'post',
+					data: {
+						_token: '{{csrf_token()}}',
+						filtermode: filter,
+						datasearch: searchkh.value
+					},
+					success: function(data){
+						if(data.kq == 1)
+						{
+							var str = "";
+							if(data.data.length == 0)
+							{
+								str += "Không tìm thấy khách hàng phù hợp..."
+							}
+							else
+							{
+								for(var i=0;i<data.data.length;i++)
+								{
+									str += "<li data-ma='"+data.data[i].Mã+"' onclick='showInfoKH(this)'>"+data.data[i].Tên+" - "+data.data[i].Sđt+" <span onclick='chooseKH(event,this,"+data.data[i].Mã+")' class='glyphicon glyphicon-plus'></span></li>";
+								}
+							}
+							kqtimkh.getElementsByTagName("ul")[0].innerHTML = str;
+							loading.classList.remove("show");
+						}
+					},
+					timeout: 10000,
+					error: function(xhr){
+						
+					}
+				});
 			}
 		};
 		document.forms['timkhachhang'].onsubmit = function(ev){
 			ev.preventDefault();
 			document.getElementById('timkh').click();
 		};
+		function showInfoKH(ev)
+		{
+			var loading = document.getElementById("modalttkhachhang").getElementsByClassName("loading")[0];
+			var idkhachhang = ev.getAttribute("data-ma");
+			var id = document.forms["frm-ttkhachhang"]["id"];
+			var name = document.forms["frm-ttkhachhang"]["name"];
+			var brtday = document.forms["frm-ttkhachhang"]["brtday"];
+			var gender = document.forms["frm-ttkhachhang"]["gender"];
+			var phone = document.forms["frm-ttkhachhang"]["phone"];
+			var email = document.forms["frm-ttkhachhang"]["email"];
+			var address = document.forms["frm-ttkhachhang"]["address"];
+			loading.classList.add("show");
+			$.ajax({
+				url: '{{route("qldv-infokh")}}',
+				type: 'post',
+				data: {
+					_token: '{{csrf_token()}}',
+					idkhachhang: idkhachhang
+				},
+				success: function(data){
+					if(data.kq == 1)
+					{
+						id.value = data.data[0].Mã;
+						name.value = data.data[0].Tên;
+						brtday.value = data.data[0].Ngày_sinh_hiển_thị;
+						gender.value = data.data[0].Giới_tính==0? "Không xác định":(data.data[0].Giới_tính==1? "Nam":"Nữ");
+						phone.value = data.data[0].Sđt;
+						address.value = data.data[0].Địa_chỉ!=null&&data.data[0].Địa_chỉ!=""? data.data[0].Địa_chỉ:"Chưa có thông tin";
+						email.value = data.data[0].Email!=null&&data.data[0].Email!=""? data.data[0].Email:"Chưa có thông tin";
+						loading.classList.remove("show");
+					}
+				},
+				timeout: 10000,
+				error: function(xhr){
+					
+				}
+			});
+			$("#modalttkhachhang").modal("show");
+		}
+		function chooseKH(ev,target,id)
+		{
+			ev.stopPropagation();
+			var idkhachhang = document.forms["frm-ttdatve"]["idkhachhang"];
+			var hoten = document.forms["frm-ttdatve"]["hoten"];
+			var sodienthoai = document.forms["frm-ttdatve"]["sodienthoai"];
+			var gioitinh = document.forms["frm-ttdatve"]["gender"];
+			var ngaysinh = document.forms["frm-ttdatve"]["brtday"];
+			if(target.classList.contains("uncheckkh"))
+			{
+				idkhachhang.value = "";
+				hoten.value = "";
+				sodienthoai.value = "";
+				gioitinh.value = 0;
+				ngaysinh.value = "";
+				hoten.removeAttribute("readonly");
+				sodienthoai.removeAttribute("readonly");
+				gioitinh.removeAttribute("disabled");
+				ngaysinh.removeAttribute("readonly");
+				target.classList.remove("uncheckkh");
+			}
+			else
+			{
+				var children = target.parentNode.parentNode.getElementsByTagName("span");
+				for(var i=0;i<children.length;i++)
+				{
+					children[i].classList.remove("uncheckkh");
+				}
+				$.ajax({
+					url: '{{route("qldv-infokh")}}',
+					type: 'post',
+					data: {
+						_token: '{{csrf_token()}}',
+						idkhachhang: id
+					},
+					success: function(data){
+						if(data.kq == 1)
+						{
+							idkhachhang.value = data.data[0].Mã;
+							hoten.value = data.data[0].Tên;
+							sodienthoai.value = data.data[0].Sđt;
+							gioitinh.value = data.data[0].Giới_tính;
+							ngaysinh.value = data.data[0].Ngày_sinh;
+							hoten.setAttribute("readonly","");
+							sodienthoai.setAttribute("readonly","");
+							gioitinh.setAttribute("disabled","");
+							ngaysinh.setAttribute("readonly","");
+							target.classList.add("uncheckkh");
+						}
+					},
+					timeout: 10000,
+					error: function(xhr){
+				
+					}
+				});
+			}			
+		}
 		$("#modaldatve").on("hidden.bs.modal", function(){ //Bắt sự kiện modal đặt vé tắt
 			//Code Sự kiện tắt modal đặt vé
 		});
@@ -724,11 +909,18 @@
 			var vedachon = document.forms["frm-ttdatve"]["vedachon"];
 			var noidi = document.forms["frm-ttdatve"]["noidi"];
 			var noiden = document.forms["frm-ttdatve"]["noiden"];
-			idchuyenxe.value = document.forms['ttchuyenxe']['idchuyenxe'].value;
-			vedachon.value = document.forms['ttchuyenxe']['vechon'].value;
-			noidi.value = document.forms['ttchuyenxe']['noidi'].value;
-			noiden.value = document.forms['ttchuyenxe']['noiden'].value;
-			$("#modaldatve").modal("hide");
+			if(vedachon.value=="")
+			{
+				alert("Chưa chọn vé!");
+			}
+			else
+			{
+				idchuyenxe.value = document.forms['ttchuyenxe']['idchuyenxe'].value;
+				vedachon.value = document.forms['ttchuyenxe']['vechon'].value;
+				noidi.value = document.forms['ttchuyenxe']['noidi'].value;
+				noiden.value = document.forms['ttchuyenxe']['noiden'].value;
+				$("#modaldatve").modal("hide");
+			}
 		};
 		document.getElementById("huychonchuyenxe").onclick = function(ev){
 			var idchuyenxe = document.forms['ttchuyenxe']['idchuyenxe'].value;

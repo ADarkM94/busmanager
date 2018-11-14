@@ -624,7 +624,7 @@ class AdminController extends Controller
                 {
                     $row = ($row - 1)/2 + 1;
                 }
-                for ($i = 0;$i<$row;$i++){
+                for ($i = 1;$i<$row;$i++){
 //                    $k = 1;
                     for ($j = 0;$j<$col;$j++){
                         /*if($i*$col+$j == 0)

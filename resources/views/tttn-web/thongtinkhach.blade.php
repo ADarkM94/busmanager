@@ -71,6 +71,7 @@
             <div class="dmkloi3"></div>
             <div class="dmkloi4"></div>
             <div class="thanhcong"></div>
+            </div>
              <div class="input-group">
                 <span class="input-group-addon"> <span class="glyphicon glyphicon-briefcase"></span></span>
                 <input type="password" class="form-control mkcu"  placeholder="Mật khẩu cũ !">

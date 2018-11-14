@@ -121,6 +121,45 @@ class TicketBookingManager extends Controller
 		}
 		return response()->json(['kq' => 1]);
 	}
+	public function qldv_searchcustomer(Request $request) //Tìm khách hàng
+	{
+		$datasearch = $request->datasearch;
+		$filtermode = $request->filtermode;
+		$khongdau = strtolower(FunctionBase::convertAlias($datasearch));
+		if($filtermode == 0)
+		{
+			$kq = DB::select(DB::raw("SELECT Mã,Tên,Sđt FROM customer WHERE BINARY LOWER(Tên_không_dấu) LIKE '%{$khongdau}%' OR Sđt LIKE BINARY '%{$khongdau}%'"));
+			return response()->json(['kq' => 1,'data' => $kq]);
+		}
+		else if($filtermode == 1)
+		{
+			$kq = DB::select(DB::raw("SELECT Mã,Tên,Sđt FROM customer WHERE BINARY LOWER(Tên_không_dấu) LIKE '%{$khongdau}%'"));
+			return response()->json(['kq' => 1,'data' => $kq]);
+		}
+		else if($filtermode == 2)
+		{
+			$kq = DB::select(DB::raw("SELECT Mã,Tên,Sđt FROM customer WHERE Sđt LIKE BINARY '%{$khongdau}%'"));
+			return response()->json(['kq' => 1,'data' => $kq]);
+		}
+		return response()->json(['kq' => 0]);
+	}
+	public function qldv_infokhachhang(Request $request) //Xuất ra thông tin khách hàng đã đăng ký
+	{
+		$idkhachhang = $request->idkhachhang;
+		try
+		{
+			$kq = DB::table('customer')->where('Mã','=',$idkhachhang)->select("Mã","Tên","Ngày_sinh","Giới tính as Giới_tính","Sđt","Email","Địa chỉ as Địa_chỉ")->get();
+			if(!empty($kq))
+			{
+				$kq[0]->Ngày_sinh_hiển_thị = date("d-m-Y",strtotime($kq[0]->Ngày_sinh));
+			}
+			return response()->json(['kq' => 1,'data' => $kq]);
+		}
+		catch (\Exception $e)
+		{
+			return response()->json(['kq' => 0]);
+		}
+	}
 	// public function ticketinfo(/*Request $request*/$idve)
 	// {
 		// $idve = $request->idve; //Gửi lên idve

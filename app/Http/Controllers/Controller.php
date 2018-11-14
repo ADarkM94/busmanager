@@ -91,7 +91,7 @@ class Controller extends BaseController
                 $time = 600 - $time;
              }
              else{
-                $time = 0;
+                $time = null;
              }
             $ve[$key]->TG = $time;
         }
@@ -100,14 +100,14 @@ class Controller extends BaseController
     public function xulydatve(Request $request){
             $ma = $request -> MA;
             $makh = $request -> MAKH;
-            $kt = DB::table("ve")->where("Mã","=",$ma)->select("Trạng_thái")->get();
+            $kt = DB::table("ve")->where("Mã","=",$ma)->select("Trạng_thái","Thời_điểm_chọn")->get();
             if($kt[0]->Trạng_thái == 0){
                 $time = date("Y-m-d H:i:s");
                 DB::update("UPDATE `ve` SET `Trạng_thái`= ?,`Mã_khách_hàng`= ?, `Thời_điểm_chọn`= ? WHERE `Mã`= ?",
                         [2,$makh,$time,$ma]);
                 sleep(600);
                 $kt2 = DB::table("ve")->where("Mã","=",$ma)->select("Trạng_thái","Mã_khách_hàng","Mã","Thời_điểm_chọn")->get();
-                if($kt2[0]->Trạng_thái == 2 && $kt2[0]->Mã_khách_hàng == $makh && $kt2[0]->Thời_điểm_chọn == $time){
+                if($kt2[0]->Trạng_thái == 2  && $kt2[0]->Thời_điểm_chọn == $time){
                     DB::update("UPDATE `ve` SET `Trạng_thái`= ?,`Mã_khách_hàng`= ?, `Thời_điểm_chọn`=? WHERE `Mã`= ?",
                         [0,null,null,$ma]);
                 }
@@ -117,7 +117,18 @@ class Controller extends BaseController
                  return \response()->json(['kq'=>1]);
             }
             else if($kt[0]->Trạng_thái == 2){
-                 return \response()->json(['kq'=>2]);
+                $tmp = date("Y-m-d H:i:s");
+                $tmp = strtotime($tmp);
+                $time = $kt[0]->Thời_điểm_chọn;
+                $time = strtotime($time);
+                $time = $tmp - $time;
+                if($time < 600){
+                $time = 600 - $time;
+                }
+                else{
+                 $time = null;
+                }
+                 return \response()->json(['kq'=>2,'TGC'=>$time]);
             }
         }
      
@@ -157,12 +168,14 @@ class Controller extends BaseController
         $ngaysinh = $request->NGAYSINH;
         $gt = $request->GT;
         $name = $request->NAME;
+        $namekd = FunctionBase::convertAlias($name);
         $kt = DB::select("SELECT * FROM customer WHERE Sđt = ? ",[$sdt]);
         if(!$kt){
             $account = new Khachhang;
             $account["Sđt"] = $sdt;
             $account["Password"] = md5($mk);
             $account["Tên"] = $name;
+            $account["Tên_không_dấu"] =$namekd;
             $account["Ngày_sinh"] = $ngaysinh;
             $account["Giới tính"] = $gt;
             $account->save();
@@ -194,13 +207,14 @@ class Controller extends BaseController
     public function capnhattt(Request $request){
         $ma = $request->MA;
         $name = $request->NAME;
+        $namekd = FunctionBase::convertAlias($name);
         $ngaysinh = $request->NGAYSINH;
         $gt = $request->GT;
         $diachi = $request->DIACHI;
         $email = $request->EMAIL;
         $kt = DB::select("SELECT * FROM customer WHERE EMAIL = ? AND Mã != ?",[$email,$ma]);
         if(!$kt){
-            DB::update("UPDATE `customer` SET `Tên`= ?, `Giới tính`= ?, `Ngày_sinh`= ?, `Địa chỉ`= ?, `Email`= ? WHERE `Mã`= ?",[$name,$gt,$ngaysinh,$diachi,$email,$ma]); 
+            DB::update("UPDATE `customer` SET `Tên`= ?, `Tên_không_dấu`= ?, `Giới tính`= ?, `Ngày_sinh`= ?, `Địa chỉ`= ?, `Email`= ? WHERE `Mã`= ?",[$name,$namekd,$gt,$ngaysinh,$diachi,$email,$ma]); 
             return \response()->json(['kq'=>1]);
         }
         else{

@@ -142,16 +142,16 @@
                                     <div class="content">{{$ve[$dem]->Vị_trí_ghế}}</div></td>
                                 @elseif($ve[$dem]->Trạng_thái ==0)
                                     <td class="ghecontrong" title="Ghế trống" data-ma={{$ve[$dem]->Mã}}><img src="../images/ghe.png">
-                                      <input class="text1" type="text" readonly="readonly">
+                                      <p class="text1" type="text"></p>
                                         <div class="content">{{$ve[$dem]->Vị_trí_ghế}}</div></td>
                                 @elseif($ve[$dem]->Trạng_thái == 2)
                                     @if($ve[$dem]->Mã_khách_hàng == Session::get('makh'))
                                         <td class="ghedangchon" title="Ghế Đang Chọn" onload="demnguoc2({{$ve[$dem]->Mã}},{{$ve[$dem]->TG}})" data-ma={{$ve[$dem]->Mã}}><img src="../images/ghe.png">
-                                           <input class="text1" type="text"  readonly="readonly"><div class="content">{{$ve[$dem]->Vị_trí_ghế}}</div></td>
+                                           <p class="text1" type="text"  ></p><div class="content">{{$ve[$dem]->Vị_trí_ghế}}</div></td>
 
                                     @else
                                          <td class="ghecochon" title="Đã Có Người Chọn" onload="demnguoc1({{$ve[$dem]->Mã}},{{$ve[$dem]->TG}})" data-ma={{$ve[$dem]->Mã}}><img src="../images/ghe.png">
-                                           <input class="text1"  type="text"  readonly="readonly"><div class="content">{{$ve[$dem]->Vị_trí_ghế}}</div></td>
+                                           <p class="text1"  type="text"  ></p><div class="content">{{$ve[$dem]->Vị_trí_ghế}}</div></td>
 
                                     @endif
                                 @endif
@@ -260,7 +260,7 @@
         function demnguoc(ma,thoigian){
             thoigian = thoigian -1;
             if(thoigian !=-1){
-             $("td[data-ma='"+ma+"'] .text1").val(thoigian + "s");
+             $("td[data-ma='"+ma+"'] .text1").html(thoigian + "s");
               setTimeout("demnguoc("+ma+","+thoigian+")",1000);
             }
             else{
@@ -269,11 +269,11 @@
             }
         }
         function demnguoc1(ma,thoigian){
-           $("td[data-ma='"+ma+"'] .text1").show();
+           /*$("td[data-ma='"+ma+"'] .text1").show();*/
           ma = $("td[data-ma='"+ma+"']").attr("data-ma");
             thoigian = thoigian -1;
             if(thoigian !=-1){
-             $("td[data-ma='"+ma+"'] .text1").val(thoigian + "s");
+             $("td[data-ma='"+ma+"'] .text1").html(thoigian + "s");
               setTimeout("demnguoc1("+ma+","+thoigian+")",1000);
             }
             else{
@@ -284,11 +284,11 @@
             }
         }
          function demnguoc2(ma,thoigian){
-          $("td[data-ma='"+ma+"'] .text1").show();
+          /*$("td[data-ma='"+ma+"'] .text1").show();*/
           ma = $("td[data-ma='"+ma+"']").attr("data-ma");
             thoigian = thoigian -1;
             if(thoigian !=-1){
-             $("td[data-ma='"+ma+"'] .text1").val(thoigian + "s");
+             $("td[data-ma='"+ma+"'] .text1").html(thoigian + "s");
               setTimeout("demnguoc1("+ma+","+thoigian+")",1000);
             }
             else{
@@ -327,7 +327,6 @@
                        else if(data.kq==1){
                         bien.addClass("ghe");
                         bien.removeClass("ghedangchon");
-                        demnguoc(ma,200);
                         for (i=0; i < mang.length; i++) {
                            if(mang[i]==ma){
                                 mang[i]=null;
@@ -337,9 +336,10 @@
                         alert("Xin lổi - Ghế này đã có người mua !")
                        }
                        else if(data.kq == 2){
+                        time= data.TGC;
                         bien.addClass("ghecochon");
                         bien.removeClass("ghedangchon");
-                        demnguoc(ma,200);
+                        demnguoc(ma,time);
                         for (i=0; i < mang.length; i++) {
                            if(mang[i]==ma){
                                 mang[i]=null;
@@ -409,6 +409,7 @@
           $(".bangve").delegate(".ghedangchon","click",function(){
                 ma = $(this).attr("data-ma");
                 bien = $(this);
+
                 $.ajax({
                     url: '{{route("xulydatve2")}}',
                     type: 'POST',
@@ -420,6 +421,7 @@
                        if(data.kq == 1){
                         bien.addClass("ghecontrong");
                         bien.removeClass("ghedangchon");
+                         /*$("td[data-ma='"+ma+"']").off('click',demnguoc);*/
                         $("td[data-ma='"+ma+"'] .text1").hide();
                        for (i=0; i < mang.length; i++) {
                            if(mang[i]==ma){
@@ -427,6 +429,7 @@
                                 break;
                            }
                        }
+                       location.reload();
                        }
                     }
              });
