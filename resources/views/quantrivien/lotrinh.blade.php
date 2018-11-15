@@ -326,6 +326,14 @@
                 }
             }
         ];
+		var objlen1 = 0;
+        for(var i =0; i<obj1.colModel.length;i++){
+            objlen1+=obj1.colModel[i].width;
+        }
+		var objlen2 = 0;
+        for(var i =0; i<obj2.colModel.length;i++){
+            objlen2+=obj2.colModel[i].width;
+        }
         $(function () {
 
             obj1.dataModel = {
@@ -336,7 +344,12 @@
             };
             obj1.pageModel = {type: 'local', rPP: 20, rPPOptions: [20, 30, 40, 50]};
             var $grid1 = $("#busroute").pqGrid(obj1);
-            $grid1.pqGrid("refreshDataAndView");
+			if(objlen1 <= document.getElementById('busroute').offsetWidth){
+                $grid1.pqGrid('option','scrollModel',{autoFit: true}).pqGrid("refreshDataAndView");
+            }
+            else{
+                $grid1.pqGrid('option','scrollModel',{horizontal: true,autoFit: false,flexContent: true}).pqGrid("refreshDataAndView");
+            }
             obj2.dataModel = {
                 data: {!! json_encode($province) !!},
                 location: "local",
@@ -345,7 +358,12 @@
             };
             // obj2.pageModel = {type: 'local', rPP: 20, rPPOptions: [20, 30, 40, 50]};
             var $grid2 = $("#province").pqGrid(obj2);
-            $grid2.pqGrid("refreshDataAndView");
+            if(objlen2 <= document.getElementById('province').offsetWidth){
+                $grid2.pqGrid('option','scrollModel',{autoFit: true}).pqGrid("refreshDataAndView");
+            }
+            else{
+                $grid2.pqGrid('option','scrollModel',{horizontal: true,autoFit: false,flexContent: true}).pqGrid("refreshDataAndView");
+            }
         });
         function getBusRoute(index) {
             $.ajax({
@@ -361,7 +379,12 @@
                         };
                         obj1.pageModel = {type: 'local', rPP: 20, rPPOptions: [20, 30, 40, 50]};
                         var $grid1 = $("#busroute").pqGrid(obj1);
-                        $grid1.pqGrid("refreshDataAndView");
+                        if(objlen1 <= document.getElementById('busroute').offsetWidth){
+							$grid1.pqGrid('option','scrollModel',{autoFit: true}).pqGrid("refreshDataAndView");
+						}
+						else{
+							$grid1.pqGrid('option','scrollModel',{horizontal: true,autoFit: false,flexContent: true}).pqGrid("refreshDataAndView");
+						}
                     }
                     else if (index == 2) {
                         var diadiem = document.getElementById('diadiem');
@@ -377,7 +400,12 @@
                         };
                         // obj2.pageModel = {type: 'local', rPP: 20, rPPOptions: [20, 30, 40, 50]};
                         var $grid2 = $("#province").pqGrid(obj2);
-                        $grid2.pqGrid("refreshDataAndView");
+                        if(objlen2 <= document.getElementById('province').offsetWidth){
+							$grid2.pqGrid('option','scrollModel',{autoFit: true}).pqGrid("refreshDataAndView");
+						}
+						else{
+							$grid2.pqGrid('option','scrollModel',{horizontal: true,autoFit: false,flexContent: true}).pqGrid("refreshDataAndView");
+						}
                     }
                 }
             });

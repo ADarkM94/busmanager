@@ -5,7 +5,7 @@
             text-align: left;
         }
     </style>
-    <div class="content show row">
+    <div class="content show row" id="addtramdung">
         <div class="col-lg-3">
             @if(session('alert'))
                 <div class="modal fade" id="alertmessage">

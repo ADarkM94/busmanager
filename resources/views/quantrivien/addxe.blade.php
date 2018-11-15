@@ -5,7 +5,7 @@
             text-align: left;
         }
     </style>
-    <div class="content show row">
+    <div class="content show row" id="addxe">
         <div class="col-lg-3">
             @if(session('alert'))
                 <div class="modal fade" id="alertmessage">
@@ -30,7 +30,7 @@
 				</script>
             @endif
         </div>
-        <form class="col-lg-6" action="{{route('addbus')}}" method="post">
+        <form name="ttxe" class="col-lg-6" action="{{route('addbus')}}" method="post">
             @csrf
             <fieldset>
                 <legend><?php echo isset($ttxe)? 'Sửa Thông Tin Xe':'Thêm Xe';?></legend>

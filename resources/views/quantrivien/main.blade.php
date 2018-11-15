@@ -28,7 +28,7 @@
             <h3 class="col-lg-4"><a href="{{asset('admin/')}}">AWE Admin</a></h3>
             <h5 class="col-lg-4"><a href="{{url('/')}}" title="Chuyển về trang khách hàng"><img src="{{asset('/images/icons/luggage.png')}}" height="30" alt="icon">AwesomeTravel</a></h5>
             <div class="col-lg-4 userzone">
-                <span onclick="showMenu(this)"><img src="{{asset('images/icons/bus.png')}}" alt="icon">{{session('admin.name','AdminTest')}}&nbsp;<i class="glyphicon glyphicon-menu-down" ></i>
+                <span onclick="showMenu(this)"><img src="{{asset('images/icons/user.png')}}" alt="icon">{{session('admin.name','AdminTest')}}&nbsp;<i class="glyphicon glyphicon-menu-down" ></i>
                     <ul>
                         <li onclick="showUserInfo({{session('admin.id')}})"><i class="glyphicon glyphicon-info-sign"></i>Thông tin</li>
                         <a href="{{route('adminlogout')}}">

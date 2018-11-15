@@ -274,7 +274,7 @@ class TicketBookingManager extends Controller
 		$ttnhanvien = DB::table('employee')->where('Mã','=',$id)->get();
 		if($ttnhanvien)
 		{
-			sleep(3);
+			sleep(1);
 			return response()->json(['kq' => 1,'userinfo' => $ttnhanvien]);
 		}
 		return response()->json(['kq' => 0]);

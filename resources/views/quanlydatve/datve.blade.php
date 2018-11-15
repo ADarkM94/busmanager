@@ -45,7 +45,7 @@
                 <form name="frm-ttdatve" class="form-vertical">
 					<input type="hidden" name="idchuyenxe">
 					<input type="hidden" name="idkhachhang">
-					<input type="hidden" name="idnhanvien" value="6"> <!--Sẽ thay bằng session mã nhân viên sau-->
+					<input type="hidden" name="idnhanvien" value="{{session('qldv.id')}}"> <!--Sẽ thay bằng session mã nhân viên sau-->
                     <div class="input-group">
 						<label class="input-group-addon">Họ tên&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
 						<input type="text" name="hoten" class="form-control" placeholder="Họ tên">
@@ -434,7 +434,7 @@
 				success: function(data){
 					if(data.kq == 1)
 					{
-						idnhanvien = 6; //Sẽ thay thế bằng session mã nhân viên đặt vé
+						idnhanvien = "{{session('qldv.id')}}"; //Sẽ thay thế bằng session mã nhân viên đặt vé
 						str = "";
 						vedachon = "";
 						sohang = data.loaixe[0].Số_hàng;
@@ -871,7 +871,7 @@
 					type: 'post',
 					data: {
 						_token: '{{csrf_token()}}',
-						idnhanvien: 6, //Sẽ thay thế bằng session mã nhân viên đặt vé
+						idnhanvien: "{{session('qldv.id')}}", //Sẽ thay thế bằng session mã nhân viên đặt vé
 						idve: ev.getAttribute("data-mave")
 					},
 					success: function(data){
@@ -900,7 +900,7 @@
 					type: 'post',
 					data: {
 						_token: '{{csrf_token()}}',
-						idnhanvien: 6, //Sẽ thay thế bằng session mã nhân viên đặt
+						idnhanvien: "{{session('qldv.id')}}", //Sẽ thay thế bằng session mã nhân viên đặt
 						idve: ev.getAttribute("data-mave")
 					},
 					success: function(data){
@@ -1038,7 +1038,7 @@
 					type: 'post',
 					data: {
 						_token: '{{csrf_token()}}',
-						idnhanvien: 6, //Sẽ thay thế bằng session mã nhân viên đặt vé
+						idnhanvien: "{{session('qldv.id')}}", //Sẽ thay thế bằng session mã nhân viên đặt vé
 						idchuyenxe: idchuyenxe,
 						vitrive: vedachon
 					},

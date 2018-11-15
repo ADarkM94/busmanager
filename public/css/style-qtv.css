@@ -886,6 +886,76 @@ a:hover, a:visited {
 #userinfo .modal-footer {
 	text-align: center;
 }
+#addkhachhang {
+	background: transparent;
+	border: 1px solid transparent;
+}
+#addkhachhang form[name="ttkhachhang"] {
+	padding: 2em;
+	background: white;
+}
+#addkhachhang form[name="ttkhachhang"] legend {
+	padding: 1em;
+	background: #004964;
+	color: white;
+	text-align: center;
+}
+#addchuyenxe {
+	background: transparent;
+	border: 1px solid transparent;
+}
+#addchuyenxe form[name="ttchuyenxe"] {
+	padding: 2em;
+	background: white;
+}
+#addchuyenxe form[name="ttchuyenxe"] legend {
+	padding: 1em;
+	background: #004964;
+	color: white;
+	text-align: center;
+}
+#addnhanvien {
+	background: transparent;
+	border: 1px solid transparent;
+}
+#addnhanvien form[name="ttnhanvien"] {
+	padding: 2em;
+	background: white;
+}
+#addnhanvien form[name="ttnhanvien"] legend {
+	padding: 1em;
+	background: #004964;
+	color: white;
+	text-align: center;
+}
+#addtramdung {
+	background: transparent;
+	border: 1px solid transparent;
+}
+#addtramdung form[name="tramdung"] {
+	padding: 2em;
+	background: white;
+}
+#addtramdung form[name="tramdung"] legend {
+	padding: 1em;
+	background: #004964;
+	color: white;
+	text-align: center;
+}
+#addxe {
+	background: transparent;
+	border: 1px solid transparent;
+}
+#addxe form[name="ttxe"] {
+	padding: 2em;
+	background: white;
+}
+#addxe form[name="ttxe"] legend {
+	padding: 1em;
+	background: #004964;
+	color: white;
+	text-align: center;
+}
 @keyframes loading {
 	0% { transform: translate(-50%,-50%) rotateZ(0deg);}
 	5% { transform: translate(-50%,-50%) rotateZ(18deg);}

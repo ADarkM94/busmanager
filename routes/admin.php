@@ -2,7 +2,7 @@
 /* Bắt đầu phần Route cho trang quản trị hệ thống */
 
 Route::get('admin/login', function(){
-    if(session()->has('isadmin')){
+    if(session()->has('admin')){
         return redirect('admin/');
     }
     else{

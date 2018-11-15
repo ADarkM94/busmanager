@@ -5,7 +5,7 @@
             text-align: left;
         }
     </style>
-    <div class="content show row">
+    <div class="content show row" id="addchuyenxe">
         <div class="col-lg-2">
             @if(session('alert'))
                 <div class="modal fade" id="alertmessage">
