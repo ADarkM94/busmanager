@@ -1,10 +1,5 @@
 @extends('quanlydatve.main')
 @section('content')
-	<script>
-		// $(function(){
-          // $('i[onload]').trigger('onload');
-        // });
-	</script>
     <div class="content datve show row">
         <div class="col-lg-4">
             <div class="searchroute">
@@ -46,7 +41,7 @@
         </div>
         <div class="col-lg-4">
             <div class="ttdatve">
-                <span>Thông tin đặt vé</span>
+                <span>Thông tin đặt vé<i></i></span>
                 <form name="frm-ttdatve" class="form-vertical">
 					<input type="hidden" name="idchuyenxe">
 					<input type="hidden" name="idkhachhang">
@@ -90,9 +85,10 @@
 						<input type="text" name="noiden" class="form-control" placeholder="Nơi đến" readonly>
 					</div>
                 </form>
-                <span data-toggle="modal" data-target="#modaldadat">Vé đã đặt</span>
-                <br>
-                <span data-toggle="modal" data-target="#modaldatve">Đặt vé</span>
+                <span>Vé đã đặt</span>
+				<span onclick="registerAccount()">Tạo tài khoản</span>
+				<br>
+                <span onclick="bookTicket()">Đặt vé</span>
             </div>
         </div>
         <div class="col-lg-4">
@@ -131,7 +127,6 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button class="close" data-dismiss="modal">&times;</button>
                     <div class="modal-title">Chuyến xe #</div>
                 </div>
                 <div class="modal-body row">
@@ -169,8 +164,8 @@
 					</div>
                 </div>
 				<div class="modal-footer">
-					<button class="btn btn-success" id="chonchuyenxe">Chọn Vé</button>
-					<button class="btn btn-danger" id="huychonchuyenxe">Hủy Vé</button>
+					<button class="btn btn-success" id="chonchuyenxe">Chọn chuyến xe</button>
+					<button class="btn btn-danger" id="huychonchuyenxe">Hoàn tác</button>
 				</div>
             </div>
         </div>
@@ -179,40 +174,19 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button class="close" data-dismiss="modal">&times;</button>
-                    <div class="modal-title">Vé đặt</div>
+                    <div class="modal-title">Đã đặt thành công</div>
                 </div>
                 <div class="modal-body">
                     <ul>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
-                        <li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li>
+                        <!--li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li-->
                     </ul>
                 </div>
                 <div class="modal-footer">
-                    <div class="col-lg-12">
+                    <div class="form-group">
                         <label>Tổng tiền</label>
                         <input type="text" name="tongtien" class="form-control" placeholder="Tổng tiền" readonly="">
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <span>Xác nhận</span>
-                        </div>
-                        <div class="col-lg-6">
-                            <span>Hoàn tác</span>
-                        </div>
-                    </div>
+					</div>
+                    <button class="btn btn-success" onclick="refreshPage()">OK</button>
                 </div>
             </div>
         </div>
@@ -239,6 +213,7 @@
 						<div class="form-group">
 							<label>Ngày sinh</label>
 							<input type="text" name="brtday" class="form-control" readonly>
+							<input type="hidden" name="hd-brtday">
 						</div>
 						<div class="form-group">
 							<label>Số điện thoại</label>
@@ -255,7 +230,20 @@
 					</form>
 				</div>
 				<div class="modal-footer">
-					<button class="btn btn-success">Lấy Thông Tin</button>
+					<button class="btn btn-success" onclick="chooseKH_1()">Lấy Thông Tin</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="modalalert" class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Thông báo</h4>
+				</div>
+				<div class="modal-body">
+					Nội dung thông báo...
 				</div>
 			</div>
 		</div>
@@ -334,7 +322,8 @@
 				{
 					ngaydi.style.borderColor = 'red';
 				}
-				alert('Dữ liệu không đủ!');
+				$("#modalalert .modal-body").html("Dữ liệu không đủ!");
+				$("#modalalert").modal("show");
 			}
 			else
 			{
@@ -353,23 +342,27 @@
 				}
 				if(checknoidi == 0&&checknoiden == 0)
 				{
-					alert('Nơi đi và Nơi đến không đúng!');
+					$("#modalalert .modal-body").html("Nơi đi và Nơi đến không đúng!");
+					$("#modalalert").modal("show");
 					noidi.style.borderColor = 'red';
 					noiden.style.borderColor = 'red';
 				}
 				else if(checknoidi == 0)
 				{
-					alert('Nơi đi không đúng!');
+					$("#modalalert .modal-body").html("Nơi đi không đúng!");
+					$("#modalalert").modal("show");
 					noidi.style.borderColor = 'red';
 				}
 				else if(checknoiden == 0)
 				{
-					alert('Nơi đến không đúng!');
+					$("#modalalert .modal-body").html("Nơi đến không đúng!");
+					$("#modalalert").modal("show");
 					noiden.style.borderColor = 'red';
 				}
 				else if(noidi.value == noiden.value)
 				{
-					alert('Nơi đi và Nơi đến không được trùng!');
+					$("#modalalert .modal-body").html("Nơi đi và Nơi đến không được trùng!");
+					$("#modalalert").modal("show");
 				}
 				else
 				{
@@ -392,7 +385,7 @@
 								var sothutu = 1;
 								for(var i=0;i<data.data.length;i++)
 								{
-									searchresult.nextElementSibling.innerHTML += '<li data-ma=\"'+data.data[i].Mã+'\" data-noidi=\"'+data.data[i].Nơi_đi+'\" data-noiden=\"'+data.data[i].Nơi_đến+'\" data-thoigiandi=\"'+(data.data[i].Ngày_xuất_phát+' '+data.data[i].Giờ_xuất_phát)+'\" data-thoigianden=\"'+(data.data[i].Ngày_đến+' '+data.data[i].Giờ_đến)+'\" onclick=\"showChuyenXe(this)\">#'+sothutu+' Chuyến xe '+data.data[i].Giờ_xuất_phát+' - '+data.data[i].Giờ_đến+'<i class="glyphicon glyphicon-ban-circle" style="color: gray;"></i></li>'
+									searchresult.nextElementSibling.innerHTML += '<li data-ma=\"'+data.data[i].Mã+'\" data-noidi=\"'+data.data[i].Nơi_đi+'\" data-noiden=\"'+data.data[i].Nơi_đến+'\" data-thoigiandi=\"'+(data.data[i].Ngày_xuất_phát+' '+data.data[i].Giờ_xuất_phát)+'\" data-thoigianden=\"'+(data.data[i].Ngày_đến+' '+data.data[i].Giờ_đến)+'\" onclick=\"showChuyenXe(this)\">#'+data.data[i].Mã+' Chuyến xe '+data.data[i].Giờ_xuất_phát+' - '+data.data[i].Giờ_đến+'<i class="glyphicon glyphicon-ban-circle" style="color: gray;"></i></li>'
 									sothutu++;
 								}
 								searchresult.classList.remove('show'); 
@@ -469,7 +462,7 @@
 											// title += "Giới tính: "+(ve[demve].Giới_tính==null? 'Chưa có':(ve[demve].Giới_tính==0? 'Không xác định':(ve[demve].Giới_tính==1? 'Nam':'Nữ')))+"<br>";
 											title += "Số điện thoại: "+(ve[demve].Sđt==null? 'Chưa có':ve[demve].Sđt)+"<br>";				
 											title += "Nhân viên đặt: "+(ve[demve].Họ_Tên==null? 'Chưa có':ve[demve].Họ_Tên)+"<br>";							
-											str+="<td class='vecontrong' onclick='chonve(this)' data-mave='"+ve[demve].Mã+"' data-vitri='"+ve[demve].Vị_trí_ghế+"'>"+ve[demve].Vị_trí_ghế+"<div class='tooltip-info'>"+title+"</div></td>";
+											str+="<td class='vecontrong' onclick='chonve(this)' data-mave='"+ve[demve].Mã+"' data-vitri='"+ve[demve].Vị_trí_ghế+"'>"+ve[demve].Vị_trí_ghế+"<br><i style='display: none;'></i><div class='tooltip-info'>"+title+"</div></td>";
 										}
 										else if(ve[demve].Trạng_thái == 1)
 										{
@@ -477,7 +470,7 @@
 											title += "Khách đặt: "+(ve[demve].Tên==null? 'Chưa có':ve[demve].Tên)+"<br>";
 											title += "Số điện thoại: "+(ve[demve].Sđt==null? 'Chưa có':ve[demve].Sđt)+"<br>";				
 											title += "Nhân viên đặt: "+(ve[demve].Họ_Tên==null? 'Chưa có':ve[demve].Họ_Tên)+"<br>";	
-											str+="<td class='vedadat' data-mave='"+ve[demve].Mã+"' data-vitri='"+ve[demve].Vị_trí_ghế+"'>"+ve[demve].Vị_trí_ghế+"<div class='tooltip-info'>"+title+"</div></td>";
+											str+="<td class='vedadat' data-mave='"+ve[demve].Mã+"' data-vitri='"+ve[demve].Vị_trí_ghế+"'>"+ve[demve].Vị_trí_ghế+"<br><i style='display: none;'></i><div class='tooltip-info'>"+title+"</div></td>";
 										}
 										else if(ve[demve].Trạng_thái == 2&&ve[demve].Mã_khách_hàng != null)
 										{
@@ -494,7 +487,7 @@
 											title += "Khách đặt: "+(ve[demve].Tên==null? 'Chưa có':ve[demve].Tên)+"<br>";
 											title += "Số điện thoại: "+(ve[demve].Sđt==null? 'Chưa có':ve[demve].Sđt)+"<br>";				
 											title += "Nhân viên đặt: "+(ve[demve].Họ_Tên==null? 'Chưa có':ve[demve].Họ_Tên)+"<br>";		
-											str+="<td class='vecontrong vedangchon' onclick='chonve(this)' data-mave='"+ve[demve].Mã+"' data-vitri='"+ve[demve].Vị_trí_ghế+"'>"+ve[demve].Vị_trí_ghế+"<div class='tooltip-info'>"+title+"</div></td>";
+											str+="<td class='vecontrong vedangchon' onclick='chonve(this)' data-mave='"+ve[demve].Mã+"' data-vitri='"+ve[demve].Vị_trí_ghế+"'>"+ve[demve].Vị_trí_ghế+"<br><i style='display: none;'></i><div class='tooltip-info'>"+title+"</div></td>";
 										}
 										else if(ve[demve].Trạng_thái == 2&&ve[demve].Mã_khách_hàng == null&&ve[demve].Mã_nhân_viên_đặt != idnhanvien)
 										{
@@ -502,7 +495,7 @@
 											title += "Khách đặt: "+(ve[demve].Tên==null? 'Chưa có':ve[demve].Tên)+"<br>";
 											title += "Số điện thoại: "+(ve[demve].Sđt==null? 'Chưa có':ve[demve].Sđt)+"<br>";				
 											title += "Nhân viên đặt: "+(ve[demve].Họ_Tên==null? 'Chưa có':ve[demve].Họ_Tên)+"<br>";	
-											str+="<td class='vedadat' data-mave='"+ve[demve].Mã+"' data-vitri='"+ve[demve].Vị_trí_ghế+"'>"+ve[demve].Vị_trí_ghế+"<div class='tooltip-info'>"+title+"</div></td>";
+											str+="<td class='vedadat' data-mave='"+ve[demve].Mã+"' data-vitri='"+ve[demve].Vị_trí_ghế+"'>"+ve[demve].Vị_trí_ghế+"<br><i style='display: none;'></i><div class='tooltip-info'>"+title+"</div></td>";
 										}
 										demve++;
 									}
@@ -533,7 +526,7 @@
 											title += "Khách đặt: "+(ve[demve].Tên==null? 'Chưa có':ve[demve].Tên)+"<br>";
 											title += "Số điện thoại: "+(ve[demve].Sđt==null? 'Chưa có':ve[demve].Sđt)+"<br>";				
 											title += "Nhân viên đặt: "+(ve[demve].Họ_Tên==null? 'Chưa có':ve[demve].Họ_Tên)+"<br>";	
-											str+="<td class='vecontrong' onclick='chonve(this)' data-mave='"+ve[demve].Mã+"' data-vitri='"+ve[demve].Vị_trí_ghế+"'>"+ve[demve].Vị_trí_ghế+"<div class='tooltip-info'>"+title+"</div></td>";
+											str+="<td class='vecontrong' onclick='chonve(this)' data-mave='"+ve[demve].Mã+"' data-vitri='"+ve[demve].Vị_trí_ghế+"'>"+ve[demve].Vị_trí_ghế+"<br><i style='display: none;'></i><div class='tooltip-info'>"+title+"</div></td>";
 										}
 										else if(ve[demve].Trạng_thái == 1)
 										{
@@ -541,7 +534,7 @@
 											title += "Khách đặt: "+(ve[demve].Tên==null? 'Chưa có':ve[demve].Tên)+"<br>";
 											title += "Số điện thoại: "+(ve[demve].Sđt==null? 'Chưa có':ve[demve].Sđt)+"<br>";				
 											title += "Nhân viên đặt: "+(ve[demve].Họ_Tên==null? 'Chưa có':ve[demve].Họ_Tên)+"<br>";	
-											str+="<td class='vedadat' data-mave='"+ve[demve].Mã+"' data-vitri='"+ve[demve].Vị_trí_ghế+"'>"+ve[demve].Vị_trí_ghế+"<div class='tooltip-info'>"+title+"</div></td>";
+											str+="<td class='vedadat' data-mave='"+ve[demve].Mã+"' data-vitri='"+ve[demve].Vị_trí_ghế+"'>"+ve[demve].Vị_trí_ghế+"<br><i style='display: none;'></i><div class='tooltip-info'>"+title+"</div></td>";
 										}
 										else if(ve[demve].Trạng_thái == 2&&ve[demve].Mã_khách_hàng != null)
 										{
@@ -558,7 +551,7 @@
 											title += "Khách đặt: "+(ve[demve].Tên==null? 'Chưa có':ve[demve].Tên)+"<br>";
 											title += "Số điện thoại: "+(ve[demve].Sđt==null? 'Chưa có':ve[demve].Sđt)+"<br>";				
 											title += "Nhân viên đặt: "+(ve[demve].Họ_Tên==null? 'Chưa có':ve[demve].Họ_Tên)+"<br>";	
-											str+="<td class='vecontrong vedangchon' onclick='chonve(this)' data-mave='"+ve[demve].Mã+"' data-vitri='"+ve[demve].Vị_trí_ghế+"'>"+ve[demve].Vị_trí_ghế+"<div class='tooltip-info'>"+title+"</div></td>";
+											str+="<td class='vecontrong vedangchon' onclick='chonve(this)' data-mave='"+ve[demve].Mã+"' data-vitri='"+ve[demve].Vị_trí_ghế+"'>"+ve[demve].Vị_trí_ghế+"<br><i style='display: none;'></i><div class='tooltip-info'>"+title+"</div></td>";
 										}
 										else if(ve[demve].Trạng_thái == 2&&ve[demve].Mã_khách_hàng == null&&ve[demve].Mã_nhân_viên_đặt != idnhanvien)
 										{
@@ -566,7 +559,7 @@
 											title += "Khách đặt: "+(ve[demve].Tên==null? 'Chưa có':ve[demve].Tên)+"<br>";
 											title += "Số điện thoại: "+(ve[demve].Sđt==null? 'Chưa có':ve[demve].Sđt)+"<br>";				
 											title += "Nhân viên đặt: "+(ve[demve].Họ_Tên==null? 'Chưa có':ve[demve].Họ_Tên)+"<br>";	
-											str+="<td class='vedadat' data-mave='"+ve[demve].Mã+"' data-vitri='"+ve[demve].Vị_trí_ghế+"'>"+ve[demve].Vị_trí_ghế+"<div class='tooltip-info'>"+title+"</div></td>";
+											str+="<td class='vedadat' data-mave='"+ve[demve].Mã+"' data-vitri='"+ve[demve].Vị_trí_ghế+"'>"+ve[demve].Vị_trí_ghế+"<br><i style='display: none;'></i><div class='tooltip-info'>"+title+"</div></td>";
 										}
 										demve++;
 									}
@@ -594,7 +587,7 @@
 											title += "Khách đặt: "+(ve[demve].Tên==null? 'Chưa có':ve[demve].Tên)+"<br>";
 											title += "Số điện thoại: "+(ve[demve].Sđt==null? 'Chưa có':ve[demve].Sđt)+"<br>";				
 											title += "Nhân viên đặt: "+(ve[demve].Họ_Tên==null? 'Chưa có':ve[demve].Họ_Tên)+"<br>";	
-											str+="<td class='vecontrong' onclick='chonve(this)' data-mave='"+ve[demve].Mã+"' data-vitri='"+ve[demve].Vị_trí_ghế+"'>"+ve[demve].Vị_trí_ghế+"<div class='tooltip-info'>"+title+"</div></td>";
+											str+="<td class='vecontrong' onclick='chonve(this)' data-mave='"+ve[demve].Mã+"' data-vitri='"+ve[demve].Vị_trí_ghế+"'>"+ve[demve].Vị_trí_ghế+"<br><i style='display: none;'></i><div class='tooltip-info'>"+title+"</div></td>";
 										}
 										else if(ve[demve].Trạng_thái == 1)
 										{
@@ -602,7 +595,7 @@
 											title += "Khách đặt: "+(ve[demve].Tên==null? 'Chưa có':ve[demve].Tên)+"<br>";
 											title += "Số điện thoại: "+(ve[demve].Sđt==null? 'Chưa có':ve[demve].Sđt)+"<br>";				
 											title += "Nhân viên đặt: "+(ve[demve].Họ_Tên==null? 'Chưa có':ve[demve].Họ_Tên)+"<br>";	
-											str+="<td class='vedadat' data-mave='"+ve[demve].Mã+"' data-vitri='"+ve[demve].Vị_trí_ghế+"'>"+ve[demve].Vị_trí_ghế+"<div class='tooltip-info'>"+title+"</div></td>";
+											str+="<td class='vedadat' data-mave='"+ve[demve].Mã+"' data-vitri='"+ve[demve].Vị_trí_ghế+"'>"+ve[demve].Vị_trí_ghế+"<br><i style='display: none;'></i><div class='tooltip-info'>"+title+"</div></td>";
 										}
 										else if(ve[demve].Trạng_thái == 2&&ve[demve].Mã_khách_hàng != null)
 										{
@@ -619,7 +612,7 @@
 											title += "Khách đặt: "+(ve[demve].Tên==null? 'Chưa có':ve[demve].Tên)+"<br>";
 											title += "Số điện thoại: "+(ve[demve].Sđt==null? 'Chưa có':ve[demve].Sđt)+"<br>";				
 											title += "Nhân viên đặt: "+(ve[demve].Họ_Tên==null? 'Chưa có':ve[demve].Họ_Tên)+"<br>";	
-											str+="<td class='vecontrong vedangchon' onclick='chonve(this)' data-mave='"+ve[demve].Mã+"' data-vitri='"+ve[demve].Vị_trí_ghế+"'>"+ve[demve].Vị_trí_ghế+"<div class='tooltip-info'>"+title+"</div></td>";
+											str+="<td class='vecontrong vedangchon' onclick='chonve(this)' data-mave='"+ve[demve].Mã+"' data-vitri='"+ve[demve].Vị_trí_ghế+"'>"+ve[demve].Vị_trí_ghế+"<br><i style='display: none;'></i><div class='tooltip-info'>"+title+"</div></td>";
 										}
 										else if(ve[demve].Trạng_thái == 2&&ve[demve].Mã_khách_hàng == null&&ve[demve].Mã_nhân_viên_đặt != idnhanvien)
 										{
@@ -627,7 +620,7 @@
 											title += "Khách đặt: "+(ve[demve].Tên==null? 'Chưa có':ve[demve].Tên)+"<br>";
 											title += "Số điện thoại: "+(ve[demve].Sđt==null? 'Chưa có':ve[demve].Sđt)+"<br>";				
 											title += "Nhân viên đặt: "+(ve[demve].Họ_Tên==null? 'Chưa có':ve[demve].Họ_Tên)+"<br>";	
-											str+="<td class='vedadat' data-mave='"+ve[demve].Mã+"' data-vitri='"+ve[demve].Vị_trí_ghế+"'>"+ve[demve].Vị_trí_ghế+"<div class='tooltip-info'>"+title+"</div></td>";
+											str+="<td class='vedadat' data-mave='"+ve[demve].Mã+"' data-vitri='"+ve[demve].Vị_trí_ghế+"'>"+ve[demve].Vị_trí_ghế+"<br><i style='display: none;'></i><div class='tooltip-info'>"+title+"</div></td>";
 										}
 										demve++;
 									}
@@ -646,7 +639,8 @@
 					}
 					else if(data.kq == 0)
 					{
-						alert('Thất bại');
+						$("#modalalert .modal-body").html("Thất bại");
+						$("#modalalert").modal("show");
 					}
 					loading.classList.remove('show');
 				},
@@ -659,15 +653,17 @@
 					loading.classList.remove('show');
 				}
 			});
-			$('#modaldatve').modal('show');
+			$('#modaldatve').modal({backdrop: "static"});
 		}
 		document.getElementById('timkh').onclick = function(){ //Bắt sự kiện tìm kiếm khách hàng
 			var searchkh = document.forms['timkhachhang']['searchkh'];
 			var kqtimkh = document.getElementsByClassName('kqtimkh')[0];
 			var loading = kqtimkh.getElementsByClassName('loading')[0];
+			searchkh.style.borderColor = "#ccc";
 			if(searchkh.value == '')
 			{
-				alert('Dữ liệu chưa nhập');
+				$("#modalalert .modal-body").html("Dữ liệu chưa nhập!");
+				$("#modalalert").modal("show");
 				searchkh.style.borderColor = 'red';
 			}
 			else
@@ -731,6 +727,7 @@
 			var id = document.forms["frm-ttkhachhang"]["id"];
 			var name = document.forms["frm-ttkhachhang"]["name"];
 			var brtday = document.forms["frm-ttkhachhang"]["brtday"];
+			var hd_brtday = document.forms["frm-ttkhachhang"]["hd-brtday"];
 			var gender = document.forms["frm-ttkhachhang"]["gender"];
 			var phone = document.forms["frm-ttkhachhang"]["phone"];
 			var email = document.forms["frm-ttkhachhang"]["email"];
@@ -749,6 +746,7 @@
 						id.value = data.data[0].Mã;
 						name.value = data.data[0].Tên;
 						brtday.value = data.data[0].Ngày_sinh_hiển_thị;
+						hd_brtday.value = data.data[0].Ngày_sinh;
 						gender.value = data.data[0].Giới_tính==0? "Không xác định":(data.data[0].Giới_tính==1? "Nam":"Nữ");
 						phone.value = data.data[0].Sđt;
 						address.value = data.data[0].Địa_chỉ!=null&&data.data[0].Địa_chỉ!=""? data.data[0].Địa_chỉ:"Chưa có thông tin";
@@ -806,6 +804,10 @@
 							sodienthoai.value = data.data[0].Sđt;
 							gioitinh.value = data.data[0].Giới_tính;
 							ngaysinh.value = data.data[0].Ngày_sinh;
+							hoten.style.borderColor = "#ccc";
+							sodienthoai.style.borderColor = "#ccc";
+							gioitinh.style.borderColor = "#ccc";
+							ngaysinh.style.borderColor = "#ccc";
 							hoten.setAttribute("readonly","");
 							sodienthoai.setAttribute("readonly","");
 							gioitinh.setAttribute("disabled","");
@@ -820,9 +822,46 @@
 				});
 			}			
 		}
-		$("#modaldatve").on("hidden.bs.modal", function(){ //Bắt sự kiện modal đặt vé tắt
-			//Code Sự kiện tắt modal đặt vé
-		});
+		function chooseKH_1()
+		{
+			var id = document.forms["frm-ttkhachhang"]["id"];
+			var name = document.forms["frm-ttkhachhang"]["name"];
+			var brtday = document.forms["frm-ttkhachhang"]["brtday"];
+			var hd_brtday = document.forms["frm-ttkhachhang"]["hd-brtday"];
+			var gender = document.forms["frm-ttkhachhang"]["gender"];
+			var phone = document.forms["frm-ttkhachhang"]["phone"];
+			var email = document.forms["frm-ttkhachhang"]["email"];
+			var address = document.forms["frm-ttkhachhang"]["address"];
+			var idkhachhang = document.forms["frm-ttdatve"]["idkhachhang"];
+			var hoten = document.forms["frm-ttdatve"]["hoten"];
+			var sodienthoai = document.forms["frm-ttdatve"]["sodienthoai"];
+			var gioitinh = document.forms["frm-ttdatve"]["gender"];
+			var ngaysinh = document.forms["frm-ttdatve"]["brtday"];
+			idkhachhang.value = id.value;
+			hoten.value = name.value;
+			sodienthoai.value = phone.value;
+			gioitinh.value = gender.value=="Không xác định"? 0:(gender.value=="Nam"? 1:2);
+			ngaysinh.value = hd_brtday.value;
+			hoten.style.borderColor = "#ccc";
+			sodienthoai.style.borderColor = "#ccc";
+			gioitinh.style.borderColor = "#ccc";
+			ngaysinh.style.borderColor = "#ccc";
+			hoten.setAttribute("readonly","");
+			sodienthoai.setAttribute("readonly","");
+			gioitinh.setAttribute("disabled","");
+			ngaysinh.setAttribute("readonly","");
+			var children = document.getElementsByClassName("kqtimkh")[0].getElementsByTagName("li");
+			for(var i=0;i<children.length;i++)
+			{
+				if(children[i].getAttribute("data-ma") == id.value)
+				{
+					children[i].getElementsByTagName("span")[0].classList.add("uncheckkh");
+					continue;
+				}
+				children[i].getElementsByTagName("span")[0].classList.remove("uncheckkh");
+			}
+			$("#modalttkhachhang").modal("hide");
+		}
 		function chonve(ev)
 		{
 			if(ev.classList.contains("vedangchon"))
@@ -853,7 +892,7 @@
 					}
 				});
 			}
-			else
+			else if(ev.classList.contains("vecontrong"))
 			{
 				ev.classList.add("vedangchon");
 				$.ajax({
@@ -870,6 +909,49 @@
 							ev.classList.remove("vedangchon");
 						}
 						else if(data.kq == 1)
+						{
+							var title = "Vị trí ghế: "+data.ttghe[0].Vị_trí_ghế+"<br>";
+							title += "Khách đặt: "+(data.ttghe[0].Tên==null? 'Chưa có':data.ttghe[0].Tên)+"<br>";
+							title += "Số điện thoại: "+(data.ttghe[0].Sđt==null? 'Chưa có':data.ttghe[0].Sđt)+"<br>";				
+							title += "Nhân viên đặt: "+(data.ttghe[0].Họ_Tên==null? 'Chưa có':data.ttghe[0].Họ_Tên)+"<br>";	
+							ev.getElementsByClassName("tooltip-info")[0].innerHTML = title;
+							ev.classList.remove("vecontrong");
+							ev.classList.remove("vedangchon");
+							ev.classList.add("vedadat");
+							$("#modalalert .modal-body").html("Vé không sẵn có!");
+							$("#modalalert").modal("show");
+						}
+						else if(data.kq == 2)
+						{
+							var title = "Vị trí ghế: "+data.ttghe[0].Vị_trí_ghế+"<br>";
+							title += "Khách đặt: "+(data.ttghe[0].Tên==null? 'Chưa có':data.ttghe[0].Tên)+"<br>";
+							title += "Số điện thoại: "+(data.ttghe[0].Sđt==null? 'Chưa có':data.ttghe[0].Sđt)+"<br>";				
+							title += "Nhân viên đặt: "+(data.ttghe[0].Họ_Tên==null? 'Chưa có':data.ttghe[0].Họ_Tên)+"<br>";	
+							ev.getElementsByClassName("tooltip-info")[0].innerHTML = title;
+							ev.getElementsByTagName("i")[0].innerHTML = data.ttghe[0].Thời_gian_còn;
+							ev.getElementsByTagName("i")[0].setAttribute("onload","showTime(this)");
+							ev.getElementsByTagName("i")[0].style.display = "block";
+							$(ev).find("i").trigger("onload");
+							ev.classList.remove("vecontrong");
+							ev.classList.remove("vedangchon");
+							ev.classList.add("vedanggiu");
+							$("#modalalert .modal-body").html("Vé không sẵn có!");
+							$("#modalalert").modal("show");
+						}
+						else if(data.kq == 3)
+						{
+							var title = "Vị trí ghế: "+data.ttghe[0].Vị_trí_ghế+"<br>";
+							title += "Khách đặt: "+(data.ttghe[0].Tên==null? 'Chưa có':data.ttghe[0].Tên)+"<br>";
+							title += "Số điện thoại: "+(data.ttghe[0].Sđt==null? 'Chưa có':data.ttghe[0].Sđt)+"<br>";				
+							title += "Nhân viên đặt: "+(data.ttghe[0].Họ_Tên==null? 'Chưa có':data.ttghe[0].Họ_Tên)+"<br>";	
+							ev.getElementsByClassName("tooltip-info")[0].innerHTML = title;
+							ev.classList.remove("vecontrong");
+							ev.classList.remove("vedangchon");
+							ev.classList.add("vedadat");
+							$("#modalalert .modal-body").html("Vé không sẵn có!");
+							$("#modalalert").modal("show");
+						}
+						else if(data.kq == 4)
 						{
 							var title = "Vị trí ghế: "+data.ttghe[0].Vị_trí_ghế+"<br>";
 							title += "Khách đặt: "+(data.ttghe[0].Tên==null? 'Chưa có':data.ttghe[0].Tên)+"<br>";
@@ -896,6 +978,8 @@
 			else if(ev.innerHTML.valueOf() == 0)
 			{
 				ev.style.display = "none";
+				ev.parentNode.classList.remove("vedanggiu");
+				ev.parentNode.classList.add("vecontrong");
 			}
 		}
 		document.getElementById("chonchuyenxe").onclick = function(ev){
@@ -909,9 +993,15 @@
 			var vedachon = document.forms["frm-ttdatve"]["vedachon"];
 			var noidi = document.forms["frm-ttdatve"]["noidi"];
 			var noiden = document.forms["frm-ttdatve"]["noiden"];
-			if(vedachon.value=="")
+			if(document.forms['ttchuyenxe']['vechon'].value=="")
 			{
-				alert("Chưa chọn vé!");
+				$("#modalalert .modal-body").html("Chưa chọn vé!");
+				$("#modalalert").modal("show");
+			}
+			else if(idchuyenxe.value != ""&&idchuyenxe.value != document.forms['ttchuyenxe']['idchuyenxe'].value)
+			{
+				$("#modalalert .modal-body").html("Đang chọn chuyến xe khác. Hãy hủy chuyến cũ để chọn lại!");
+				$("#modalalert").modal("show");
 			}
 			else
 			{
@@ -920,11 +1010,26 @@
 				noidi.value = document.forms['ttchuyenxe']['noidi'].value;
 				noiden.value = document.forms['ttchuyenxe']['noiden'].value;
 				$("#modaldatve").modal("hide");
+				document.forms["frm-ttdatve"].previousElementSibling.getElementsByTagName("i")[0].innerHTML = " - Chuyến xe #"+idchuyenxe.value;
+				var results = document.getElementsByClassName("searchresult")[0].getElementsByTagName("li");
+				for(var i=0;i<results.length;i++)
+				{
+					if(results[i].getAttribute("data-ma") == idchuyenxe.value)
+					{
+						results[i].getElementsByTagName("i")[0].style.color = "green";
+						continue;
+					}
+					results[i].getElementsByTagName("i")[0].style.color = "gray";
+				}
 			}
 		};
 		document.getElementById("huychonchuyenxe").onclick = function(ev){
 			var idchuyenxe = document.forms['ttchuyenxe']['idchuyenxe'].value;
 			var vedachon = document.forms['ttchuyenxe']['vechon'].value!=""? document.forms['ttchuyenxe']['vechon'].value.slice(0,document.forms['ttchuyenxe']['vechon'].value.length - 1).split(","):null;
+			var ttdatve_idchuyenxe = document.forms["frm-ttdatve"]["idchuyenxe"];
+			var ttdatve_vedachon = document.forms["frm-ttdatve"]["vedachon"];
+			var ttdatve_noidi = document.forms["frm-ttdatve"]["noidi"];
+			var ttdatve_noiden = document.forms["frm-ttdatve"]["noiden"];
 			// alert(vedachon.length+" "+vedachon);
 			if(vedachon != null)
 			{
@@ -940,7 +1045,26 @@
 					success: function(data){
 						if(data.kq == 1)
 						{
-							alert("Đã hủy thành công!");
+							if(ttdatve_idchuyenxe.value == idchuyenxe)
+							{
+								ttdatve_idchuyenxe.value = "";
+								ttdatve_vedachon.value = "";
+								ttdatve_noidi.value = "";
+								ttdatve_noiden.value = "";
+							}
+							document.forms["frm-ttdatve"].previousElementSibling.getElementsByTagName("i")[0].innerHTML = "";
+							var results = document.getElementsByClassName("searchresult")[0].getElementsByTagName("li");
+							for(var i=0;i<results.length;i++)
+							{
+								if(results[i].getAttribute("data-ma") == idchuyenxe)
+								{
+									results[i].getElementsByTagName("i")[0].style.color = "gray";
+									break;
+								}
+							}
+							$("#modalalert .modal-body").html("Đã hủy thành công!");
+							$("#modalalert").modal("show");
+							$("#modaldatve").modal("hide");
 						}
 					},
 					timeout: 10000,
@@ -949,7 +1073,167 @@
 					}
 				});
 			}
-			$("#modaldatve").modal("hide");
+			else
+			{
+				$("#modaldatve").modal("hide");
+			}
 		};
+		function registerAccount()
+		{
+			var idkhachhang = document.forms["frm-ttdatve"]["idkhachhang"];
+			var idnhanvien = document.forms["frm-ttdatve"]["idnhanvien"];
+			var hoten = document.forms["frm-ttdatve"]["hoten"];
+			var sodienthoai = document.forms["frm-ttdatve"]["sodienthoai"];
+			var gioitinh = document.forms["frm-ttdatve"]["gender"];
+			var ngaysinh = document.forms["frm-ttdatve"]["brtday"];
+			if(idkhachhang.value != "")
+			{
+				$("#modalalert .modal-body").html("Đã có tài khoản được chọn!");
+				$("#modalalert").modal("show");
+			}
+			else if(idkhachhang.value == "")
+			{
+				hoten.style.borderColor = "#ccc";
+				sodienthoai.style.borderColor = "#ccc";
+				gioitinh.style.borderColor = "#ccc";
+				ngaysinh.style.borderColor = "#ccc";
+				if(hoten.value == ""||sodienthoai.value == ""||gioitinh.value == 0||ngaysinh.value == "")
+				{
+					hoten.style.borderColor = hoten.value==""? "red":hoten.style.borderColor;
+					sodienthoai.style.borderColor = sodienthoai.value==""? "red":sodienthoai.style.borderColor;
+					gioitinh.style.borderColor = gioitinh.value==0? "red":gioitinh.style.borderColor;
+					ngaysinh.style.borderColor = ngaysinh.value==""? "red":ngaysinh.style.borderColor;
+					$("#modalalert .modal-body").html("Dữ liệu để đăng ký không đầy đủ!");
+					$("#modalalert").modal("show");
+				}
+				else
+				{
+					var format_phone = /^(0[3578]|09)[0-9]{8}$/;
+					var format_name = /[a-zA-Z][^#&<>\"~;$^%{}?]{1,50}$/;
+					if(sodienthoai.value.search(format_phone) == -1&&hoten.value.search(format_name) == -1)
+					{
+						hoten.style.borderColor = "red";
+						sodienthoai.style.borderColor = "red";
+						$("#modalalert .modal-body").html("Dữ liệu Di động và Họ tên không đúng định dạng!");
+						$("#modalalert").modal("show");
+					}
+					else if(sodienthoai.value.search(format_phone) == -1)
+					{
+						sodienthoai.style.borderColor = "red";
+						$("#modalalert .modal-body").html("Dữ liệu Di động không đúng định dạng!");
+						$("#modalalert").modal("show");
+					}
+					else if(hoten.value.search(format_name) == -1)
+					{
+						hoten.style.borderColor = "red";
+						$("#modalalert .modal-body").html("Dữ liệu Họ tên không đúng định dạng!");
+						$("#modalalert").modal("show");
+					}
+					else
+					{
+						$.ajax({
+							url: '{{route("qldv-dangky")}}',
+							type: 'POST',
+							data: {
+								_token: '{{csrf_token()}}',
+								SDT: sodienthoai.value,
+								MK: sodienthoai.value,
+								NGAYSINH: ngaysinh.value,
+								GT: gioitinh.value,
+								NAME: hoten.value
+							},
+							success: function (data) {
+								if(data.kq==0)
+								{
+									sodienthoai.style.borderColor = "red";
+									$("#modalalert .modal-body").html("Dữ liệu Di động đã tồn tại. Hãy dùng dữ liệu khác!");
+									$("#modalalert").modal("show");
+								}
+								else if(data.kq==1)
+								{
+									idkhachhang.value = data.id;
+									hoten.setAttribute("readonly","");
+									sodienthoai.setAttribute("readonly","");
+									gioitinh.setAttribute("disabled","");
+									ngaysinh.setAttribute("readonly","");
+									$("#modalalert .modal-body").html("Đã đăng ký thành công với mật khẩu tạm thời là số điện thoại!");
+									$("#modalalert").modal("show");
+								}                       
+							}
+						});
+					}
+				}
+			}
+		}
+		function bookTicket()
+		{
+			var idchuyenxe = document.forms["frm-ttdatve"]["idchuyenxe"];
+			var idkhachhang = document.forms["frm-ttdatve"]["idkhachhang"];
+			var idnhanvien = document.forms["frm-ttdatve"]["idnhanvien"];
+			var hoten = document.forms["frm-ttdatve"]["hoten"];
+			var sodienthoai = document.forms["frm-ttdatve"]["sodienthoai"];
+			var gioitinh = document.forms["frm-ttdatve"]["gender"];
+			var ngaysinh = document.forms["frm-ttdatve"]["brtday"];
+			var vedachon = document.forms["frm-ttdatve"]["vedachon"];
+			// var noidi = document.forms["frm-ttdatve"]["noidi"];
+			// var noiden = document.forms["frm-ttdatve"]["noiden"];
+			if(idchuyenxe.value == ""||idkhachhang.value == "")
+			{
+				$("#modalalert .modal-body").html("Chưa chọn chuyến xe hoặc khách hàng!");
+				$("#modalalert").modal("show");
+			}
+			else
+			{
+				$.ajax({
+					url: '{{route("qldv-datve")}}',
+					type: 'post',
+					data: {
+						_token: '{{csrf_token()}}',
+						idnhanvien: idnhanvien.value,
+						idkhachhang: idkhachhang.value,
+						idchuyenxe: idchuyenxe.value,
+						vedachon: vedachon.value!=""? vedachon.value.slice(0,vedachon.value.length - 1).split(","):null
+					},
+					success: function(data){
+						if(data.kq == 1)
+						{
+							var display = document.getElementById("modaldadat").getElementsByClassName("modal-body")[0].getElementsByTagName("ul")[0];
+							var str = "";
+							for(var i=0;i<data.data.length;i++)
+							{
+								str += " <li data-ma='"+data.data[i].Mã+"'>Vé #"+data.data[i].Mã+" - "+data.data[i].Vị_trí_ghế+"/ "+data.data[i].Tiền_vé+"đ</li>";
+							}
+							display.innerHTML = str;
+							document.getElementById("modaldadat").getElementsByClassName("modal-footer")[0].getElementsByTagName("input")[0].style.textAlign = "right";
+							document.getElementById("modaldadat").getElementsByClassName("modal-footer")[0].getElementsByTagName("input")[0].value = data.tongtien + "đ";
+							document.forms["frm-ttdatve"].reset();
+							idchuyenxe.value = "";
+							idkhachhang.value = "";
+							hoten.removeAttribute("readonly");
+							sodienthoai.removeAttribute("readonly");
+							gioitinh.removeAttribute("disabled");
+							ngaysinh.removeAttribute("readonly");
+							document.forms["frm-ttdatve"].previousElementSibling.getElementsByTagName("i")[0].innerHTML = "";
+							$("#modaldadat").modal({backdrop: "static"});
+						}
+						else
+						{
+							$("#modalalert .modal-body").html("Đặt vé thất bại!");
+							$("#modalalert").modal("show");
+						}
+					}
+				});
+			}
+		}
+		function refreshPage()
+		{
+			location.href = location.href;
+		}
+		$("#modaldadat").on("hide.bs.modal", function(){ //Bắt sự kiện modal đặt vé tắt
+			//Code Sự kiện tắt modal đặt vé
+		});
+		$("#modaldatve").on("hide.bs.modal", function(){ //Bắt sự kiện modal đặt vé tắt
+			//Code Sự kiện tắt modal đặt vé
+		});
     </script>
 @endsection

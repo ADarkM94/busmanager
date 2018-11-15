@@ -106,6 +106,7 @@
                     }
                 }
                 var ngaysinh = $(".txtngaysinh").val();
+				alert(ngaysinh);
                 /*dien thoai*/
                 if(sdt!=""){
                    if(sdt.search(bieuthuc)==-1){

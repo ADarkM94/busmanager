@@ -179,7 +179,8 @@ class Controller extends BaseController
             $account["Ngày_sinh"] = $ngaysinh;
             $account["Giới tính"] = $gt;
             $account->save();
-            return \response()->json(['kq'=>1]);
+			$id = $account->Mã;
+            return \response()->json(['kq'=>1,'id' => $id]);
            
         }
         else{

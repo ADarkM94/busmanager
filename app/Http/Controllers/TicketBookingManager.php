@@ -4,10 +4,40 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Khachhang;
 
 class TicketBookingManager extends Controller
 {
     //
+	public function qldv_checkLogin(Request $request)
+    {
+        $username = $request->username;
+        $password = $request->password;
+        if($username == null||$password == null)
+        {
+            return redirect()->back()->with(['alert' => 'Tên tài khoản hoặc mật khẩu không được để trống','username' => $username]);
+            // return response()->json(var_dump($errors);
+        }
+        $account = DB::table('employee')->where([['Username','=',$username],['Password','=',md5($password)],['Loại_NV','!=','TX']])->get();
+        if(!empty($account[0]))
+        {
+            session(['qldv.islogin' => 1]);
+            session(['qldv.id' => $account[0]->Mã]);
+            session(['qldv.name' => $account[0]->Họ_Tên]);
+            return redirect('/qldv');
+        }
+        else
+		{
+            return redirect()->back()->with(['alert' => 'Tài khoản hoặc mật khẩu không đúng','username' => $username]);
+        }
+    }
+
+    public  function qldv_logout()
+	{
+        session()->forget('qldv');
+        return redirect()->back();
+    }
+	
 	/* public function searchtinh(Request $request)
 	{
 		$txtsearch = strtolower($request->txtsearch);
@@ -19,11 +49,13 @@ class TicketBookingManager extends Controller
 		}
 		return response()->json(['data' => 0]);
 	} */
+	
 	public function trangdatve()
 	{
 		$diadiem = DB::table('tinh')->select('Tên','Tên_không_dấu')->get();
 		return view('quanlydatve.datve',['diadiem' => $diadiem]);
 	}
+	
 	public function searchroute(Request $request)
 	{
 		$noidi = $request->noidi;
@@ -42,6 +74,7 @@ class TicketBookingManager extends Controller
 		}
 		return response()->json(['kq' => 1,'data' => $chuyenxe]);
 	}
+	
 	public function routedetails(Request $request)
 	{
 		$machuyenxe = $request->idchuyenxe;
@@ -68,34 +101,52 @@ class TicketBookingManager extends Controller
 			return response()->json(['kq' => 0,'error' => $e]);
 		}
 	}
-	public function qldv_chonve(Request $request)
+	
+	public function qldv_chonve(Request $request) //Chọn vé
 	{
 		$mave = $request->idve;
 		$manhanvien = $request->idnhanvien;
-		if(DB::select("SELECT * FROM ve WHERE Mã = ? AND Trạng_thái != 0",[$mave]))
+		if(!empty(DB::select("SELECT * FROM ve WHERE Mã = ? AND Trạng_thái = 1",[$mave])))
 		{
-			return response()->json(['kq' => 0]);
+			$ve = DB::table('ve')->leftJoin('customer','ve.Mã_khách_hàng','=','customer.Mã')->leftJoin('employee','ve.Mã_nhân_viên_đặt','=','employee.Mã')->where('ve.Mã','=',$mave)->select('ve.Vị_trí_ghế','customer.Tên','customer.Sđt','employee.Họ_Tên')->get();
+			return response()->json(['kq' => 1,'ttghe' => $ve]);
 		}
-		else
+		else if(!empty(DB::select("SELECT * FROM ve WHERE Mã = ? AND Trạng_thái = 2 AND Mã_khách_hàng IS NOT NULL",[$mave])))
+		{
+			$ve = DB::table('ve')->leftJoin('customer','ve.Mã_khách_hàng','=','customer.Mã')->leftJoin('employee','ve.Mã_nhân_viên_đặt','=','employee.Mã')->where('ve.Mã','=',$mave)->select('ve.Vị_trí_ghế','ve.Thời_điểm_chọn','customer.Tên','customer.Sđt','employee.Họ_Tên')->get();
+			$thoigiancon = 600 - intval(strtotime(date("Y-m-d H:i:s"))) + intval(strtotime($ve[0]->Thời_điểm_chọn));
+			$ve[0]->Thời_gian_còn = $thoigiancon;
+			return response()->json(['kq' => 2,'ttghe' => $ve]);
+		}
+		else if(!empty(DB::select("SELECT * FROM ve WHERE Mã = ? AND Trạng_thái = 2 AND Mã_khách_hàng IS NULL",[$mave])))
+		{
+			$ve = DB::table('ve')->leftJoin('customer','ve.Mã_khách_hàng','=','customer.Mã')->leftJoin('employee','ve.Mã_nhân_viên_đặt','=','employee.Mã')->where('ve.Mã','=',$mave)->select('ve.Vị_trí_ghế','customer.Tên','customer.Sđt','employee.Họ_Tên')->get();
+			return response()->json(['kq' => 3,'ttghe' => $ve]);
+		}
+		else if(DB::select("SELECT * FROM ve WHERE Mã = ? AND Trạng_thái = 0",[$mave]))
 		{
 			try
 			{
-				DB::update("UPDATE `ve` SET `Trạng_thái` = 2, `Mã_nhân_viên_đặt` = ? WHERE `Mã` = ? AND `Trạng_thái` = 0",[$manhanvien,$mave]);
+				$updated_at = date('Y-m-d H:i:s');
+				DB::update("UPDATE `ve` SET `Trạng_thái` = 2, `Mã_nhân_viên_đặt` = ?, `updated_at` = ? WHERE `Mã` = ? AND `Trạng_thái` = 0",[$manhanvien,$updated_at,$mave]);
 				// sleep(.1);
 				$ve = DB::table('ve')->leftJoin('customer','ve.Mã_khách_hàng','=','customer.Mã')->leftJoin('employee','ve.Mã_nhân_viên_đặt','=','employee.Mã')->where('ve.Mã','=',$mave)->select('ve.Vị_trí_ghế','customer.Tên','customer.Sđt','employee.Họ_Tên')->get();
-				return response()->json(['kq' => 1,'ttghe' => $ve]);
+				return response()->json(['kq' => 4,'ttghe' => $ve]);
 			} catch(\Exception $e)
 			{
 				return response()->json(['kq' => 0]);
 			}
 		}
+		return response()->json(['kq' => 0]);
 	}
-	public function qldv_huychonve(Request $request)
+	
+	public function qldv_huychonve(Request $request) //Hủy chọn vé
 	{
 		$mave = $request->idve;
+		$updated_at = date('Y-m-d H:i:s');
 		try
 		{
-			DB::update("UPDATE `ve` SET `Trạng_thái` = 0, `Mã_nhân_viên_đặt` = NULL WHERE `Mã` = ? AND `Trạng_thái` = 2",[$mave]);
+			DB::update("UPDATE `ve` SET `Trạng_thái` = 0, `Mã_nhân_viên_đặt` = NULL, `updated_at` = ? WHERE `Mã` = ? AND `Trạng_thái` = 2",[$updated_at,$mave]);
 			// sleep(.1);
 			$ve = DB::table('ve')->leftJoin('customer','ve.Mã_khách_hàng','=','customer.Mã')->leftJoin('employee','ve.Mã_nhân_viên_đặt','=','employee.Mã')->where('ve.Mã','=',$mave)->select('ve.Vị_trí_ghế','customer.Tên','customer.Sđt','employee.Họ_Tên')->get();
 			return response()->json(['kq' => 1,'ttghe' => $ve]);
@@ -104,15 +155,17 @@ class TicketBookingManager extends Controller
 			return response()->json(['kq' => 0]);
 		}
 	}
-	public function qldv_huychonchuyenxe(Request $request)
+	
+	public function qldv_huychonchuyenxe(Request $request) //Hủy chọn chuyến xe
 	{
 		$vitrive = $request->vitrive;
 		$machuyenxe = $request->idchuyenxe;
+		$updated_at = date('Y-m-d H:i:s');
 		for($i=0;$i<count($vitrive);$i++)
 		{
 			try
 			{
-				DB::update("UPDATE `ve` SET `Trạng_thái` = 0, `Mã_nhân_viên_đặt` = NULL WHERE `Mã_chuyến_xe` = ? AND `Trạng_thái` = 2 AND `Vị_trí_ghế` = ?",[$machuyenxe,$vitrive[$i]]);
+				DB::update("UPDATE `ve` SET `Trạng_thái` = 0, `Mã_nhân_viên_đặt` = NULL, `updated_at` = ? WHERE `Mã_chuyến_xe` = ? AND `Trạng_thái` = 2 AND `Vị_trí_ghế` = ?",[$updated_at,$machuyenxe,$vitrive[$i]]);
 				// sleep(.1);
 			} catch(\Exception $e)
 			{
@@ -121,6 +174,7 @@ class TicketBookingManager extends Controller
 		}
 		return response()->json(['kq' => 1]);
 	}
+	
 	public function qldv_searchcustomer(Request $request) //Tìm khách hàng
 	{
 		$datasearch = $request->datasearch;
@@ -143,6 +197,7 @@ class TicketBookingManager extends Controller
 		}
 		return response()->json(['kq' => 0]);
 	}
+	
 	public function qldv_infokhachhang(Request $request) //Xuất ra thông tin khách hàng đã đăng ký
 	{
 		$idkhachhang = $request->idkhachhang;
@@ -159,6 +214,70 @@ class TicketBookingManager extends Controller
 		{
 			return response()->json(['kq' => 0]);
 		}
+	}
+	
+	public function qldv_xldatve(Request $request)
+	{
+		$manhanvien = $request->idnhanvien;
+		$makhachhang = $request->idkhachhang;
+		$machuyenxe = $request->idchuyenxe;
+		$vedachon = $request->vedachon;
+		try
+		{
+			$data = [];
+			for($i=0;$i<count($vedachon);$i++)
+			{
+				$updated_at = date('Y-m-d H:i:s');
+				if(DB::update("UPDATE `ve` SET `Mã_khách_hàng` = ?, `Trạng_thái` = 1, `updated_at` = ? WHERE `Mã_chuyến_xe` = ? AND `Mã_nhân_viên_đặt` = ? AND `Vị_trí_ghế` = ? AND `Trạng_thái` = 2",[$makhachhang,$updated_at,$machuyenxe,$manhanvien,$vedachon[$i]]))
+				{
+					$data[$i] = DB::table('ve')->join('chuyen_xe','ve.Mã_chuyến_xe','=','chuyen_xe.Mã')->where('ve.Mã_chuyến_xe','=',$machuyenxe)->where('ve.Vị_trí_ghế','=',$vedachon[$i])->select('ve.Mã','ve.Vị_trí_ghế','chuyen_xe.Tiền_vé')->get()[0];
+				}
+			}
+			$tongtien = count($vedachon)*$data[0]->Tiền_vé;
+			return response()->json(['kq' => 1,'data' => $data,'tongtien' => $tongtien]);
+		}
+		catch(\Exception $e)
+		{
+			return response()->json(['kq' => 0]);
+		}
+	}
+	
+	public function qldv_xldangky(Request $request){
+        $sdt = $request->SDT;
+        $mk = $request->MK;
+        $ngaysinh = $request->NGAYSINH;
+        $gt = $request->GT;
+        $name = $request->NAME;
+        $namekd = FunctionBase::convertAlias($name);
+        $kt = DB::select("SELECT * FROM customer WHERE Sđt = ? ",[$sdt]);
+        if(!$kt){
+            $account = new Khachhang;
+            $account["Sđt"] = $sdt;
+            $account["Password"] = md5($mk);
+            $account["Tên"] = $name;
+            $account["Tên_không_dấu"] =$namekd;
+            $account["Ngày_sinh"] = $ngaysinh;
+            $account["Giới tính"] = $gt;
+            $account->save();
+			$id = $account->Mã;
+            return \response()->json(['kq' => 1,'id' => $id]);
+           
+        }
+        else{
+            return \response()->json(['kq' => 0]);
+        }
+    }
+	
+	public function qldv_userinfo(Request $request)
+	{
+		$id = $request->id;
+		$ttnhanvien = DB::table('employee')->where('Mã','=',$id)->get();
+		if($ttnhanvien)
+		{
+			sleep(3);
+			return response()->json(['kq' => 1,'userinfo' => $ttnhanvien]);
+		}
+		return response()->json(['kq' => 0]);
 	}
 	// public function ticketinfo(/*Request $request*/$idve)
 	// {

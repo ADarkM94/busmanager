@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 14, 2018 lúc 10:53 PM
+-- Thời gian đã tạo: Th10 15, 2018 lúc 04:26 PM
 -- Phiên bản máy phục vụ: 10.1.32-MariaDB
 -- Phiên bản PHP: 7.2.5
 
@@ -170,7 +170,11 @@ INSERT INTO `customer` (`Mã`, `Tên`, `Tên_không_dấu`, `Ngày_sinh`, `Giớ
 (25, 'Hoàng Văn Hoàng', 'Hoang Van Hoang', '1991-08-14', '1', NULL, '83d634317da9e6facbb206b52937abc3', 'vanhoang@gmail.com', '0838384858', '2018-10-24 08:59:43', '2018-10-24 08:59:43'),
 (26, 'Hoàng Minh', 'Hoang Minh', '1992-02-12', '1', NULL, '83d634317da9e6facbb206b52937abc3', 'hoangminh@gmail.com', '0932323445', '2018-10-24 09:00:35', '2018-10-24 09:00:35'),
 (27, 'Hoàng Kim', 'Hoang Kim', '1995-02-12', '1', NULL, '83d634317da9e6facbb206b52937abc3', 'hoangkim@gmail.com', '0556765434', '2018-10-24 09:01:34', '2018-10-24 09:01:34'),
-(28, 'Phan Anh Minh', 'Phan Anh Minh', '1994-04-10', '1', NULL, '96e79218965eb72c92a549dd5a330112', 'phananhminh@gmail.com', '0986645434', '2018-10-25 16:36:29', '2018-11-13 02:17:55');
+(28, 'Phan Anh Minh', 'Phan Anh Minh', '1994-04-10', '1', NULL, '96e79218965eb72c92a549dd5a330112', 'phananhminh@gmail.com', '0986645434', '2018-10-25 16:36:29', '2018-11-13 02:17:55'),
+(29, 'Phan Anh Sơn', 'Phan Anh Son', '2000-02-20', '1', NULL, '96e79218965eb72c92a549dd5a330112', NULL, '0981123235', '2018-11-15 09:26:47', '2018-11-15 09:26:47'),
+(30, 'Nguyễn Dũng', 'Nguyen Dung', '1989-03-11', '1', NULL, 'cd60ed4aeff406acc74d57b6ac7d0a9f', NULL, '0988877744', '2018-11-15 09:55:37', '2018-11-15 09:55:37'),
+(31, 'Nguyễn Hùng', 'Nguyen Hung', '1985-03-10', '1', NULL, 'e01e6a729e6fa7b970727061f92fe53c', NULL, '0977788844', '2018-11-15 09:57:37', '2018-11-15 09:57:37'),
+(32, 'Nguyễn Thị Hạnh', 'Nguyen Thi Hanh', '1995-10-21', '2', NULL, 'dcd3103f1503bbc5c7db0991ff9c08bb', NULL, '0978788787', '2018-11-15 11:58:42', '2018-11-15 11:58:42');
 
 -- --------------------------------------------------------
 
@@ -262,10 +266,10 @@ INSERT INTO `lo_trinh` (`Mã`, `Mã_nhân_viên_tạo`, `Mã_nhân_viên_chỉnh
 
 CREATE TABLE `news` (
   `news_id` int(10) UNSIGNED NOT NULL,
-  `title` varchar(255) NOT NULL,
+  `title` varchar(255) CHARACTER SET utf8 NOT NULL,
   `image` varchar(255) NOT NULL,
-  `introduce` text NOT NULL,
-  `content` longtext NOT NULL,
+  `introduce` text CHARACTER SET utf8 NOT NULL,
+  `content` longtext CHARACTER SET utf8 NOT NULL,
   `id_admin_created` int(10) NOT NULL,
   `id_admin_changed` int(10) NOT NULL,
   `created_at` datetime NOT NULL,
@@ -387,7 +391,7 @@ CREATE TABLE `ve` (
   `Mã_khách_hàng` int(11) DEFAULT NULL,
   `Sđt_khách_hàng` varchar(255) DEFAULT NULL,
   `Vị_trí_ghế` varchar(255) NOT NULL,
-  `Trạng_thái` int(11) DEFAULT NULL,
+  `Trạng_thái` int(11) NOT NULL DEFAULT '0',
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   `is_hide` tinyint(1) NOT NULL DEFAULT '0',
@@ -2338,14 +2342,14 @@ INSERT INTO `ve` (`Mã`, `Mã_chuyến_xe`, `Mã_nhân_viên_đặt`, `Mã_khác
 (4784, 18, NULL, NULL, NULL, 'B-18', 0, '2018-11-01 12:39:52', '2018-11-01 12:39:52', 0, NULL),
 (4785, 18, NULL, NULL, NULL, 'B-19', 0, '2018-11-01 12:39:52', '2018-11-01 12:39:52', 0, NULL),
 (4786, 18, NULL, NULL, NULL, 'B-20', 0, '2018-11-01 12:39:52', '2018-11-01 12:39:52', 0, NULL),
-(4833, 20, NULL, NULL, NULL, 'A-1', 0, '2018-11-02 01:26:08', '2018-11-02 01:26:08', 0, NULL),
-(4834, 20, NULL, NULL, NULL, 'A-2', 0, '2018-11-02 01:26:08', '2018-11-02 01:26:08', 0, NULL),
-(4835, 20, NULL, NULL, NULL, 'A-3', 0, '2018-11-02 01:26:08', '2018-11-02 01:26:08', 0, NULL),
-(4836, 20, NULL, NULL, NULL, 'A-4', 0, '2018-11-02 01:26:08', '2018-11-02 01:26:08', 0, NULL),
-(4837, 20, NULL, NULL, NULL, 'A-5', 0, '2018-11-02 01:26:08', '2018-11-02 01:26:08', 0, NULL),
-(4838, 20, NULL, NULL, NULL, 'A-6', 0, '2018-11-02 01:26:08', '2018-11-02 01:26:08', 0, NULL),
-(4839, 20, NULL, NULL, NULL, 'A-7', 0, '2018-11-02 01:26:08', '2018-11-02 01:26:08', 0, NULL),
-(4840, 20, NULL, NULL, NULL, 'A-8', 0, '2018-11-02 01:26:08', '2018-11-02 01:26:08', 0, NULL),
+(4833, 20, NULL, NULL, NULL, 'A-1', 0, '2018-11-02 01:26:08', '2018-11-15 14:10:09', 0, NULL),
+(4834, 20, NULL, NULL, NULL, 'A-2', 0, '2018-11-02 01:26:08', '2018-11-15 13:25:16', 0, NULL),
+(4835, 20, NULL, NULL, NULL, 'A-3', 0, '2018-11-02 01:26:08', '2018-11-15 13:54:30', 0, NULL),
+(4836, 20, NULL, NULL, NULL, 'A-4', 0, '2018-11-02 01:26:08', '2018-11-15 14:09:45', 0, NULL),
+(4837, 20, NULL, NULL, NULL, 'A-5', 0, '2018-11-02 01:26:08', '2018-11-15 13:58:55', 0, NULL),
+(4838, 20, NULL, NULL, NULL, 'A-6', 0, '2018-11-02 01:26:08', '2018-11-15 13:59:43', 0, NULL),
+(4839, 20, NULL, NULL, NULL, 'A-7', 0, '2018-11-02 01:26:08', '2018-11-15 14:00:31', 0, NULL),
+(4840, 20, NULL, NULL, NULL, 'A-8', 0, '2018-11-02 01:26:08', '2018-11-15 13:59:35', 0, NULL),
 (4841, 20, NULL, NULL, NULL, 'A-9', 0, '2018-11-02 01:26:08', '2018-11-02 01:26:08', 0, NULL),
 (4842, 20, NULL, NULL, NULL, 'A-10', 0, '2018-11-02 01:26:08', '2018-11-02 01:26:08', 0, NULL),
 (4843, 20, NULL, NULL, NULL, 'A-11', 0, '2018-11-02 01:26:08', '2018-11-02 01:26:08', 0, NULL),
@@ -2378,7 +2382,7 @@ INSERT INTO `ve` (`Mã`, `Mã_chuyến_xe`, `Mã_nhân_viên_đặt`, `Mã_khác
 (4870, 20, NULL, NULL, NULL, 'B-18', 0, '2018-11-02 01:26:08', '2018-11-02 01:26:08', 0, NULL),
 (4871, 20, NULL, NULL, NULL, 'B-19', 0, '2018-11-02 01:26:08', '2018-11-02 01:26:08', 0, NULL),
 (4872, 20, NULL, NULL, NULL, 'B-20', 0, '2018-11-02 01:26:08', '2018-11-02 01:26:08', 0, NULL),
-(4919, 21, NULL, NULL, NULL, 'A-1', 0, '2018-11-02 01:26:42', '2018-11-02 01:26:42', 0, NULL),
+(4919, 21, NULL, NULL, NULL, 'A-1', 0, '2018-11-02 01:26:42', '2018-11-15 14:10:05', 0, NULL),
 (4920, 21, NULL, NULL, NULL, 'A-2', 0, '2018-11-02 01:26:42', '2018-11-02 01:26:42', 0, NULL),
 (4921, 21, NULL, NULL, NULL, 'A-3', 0, '2018-11-02 01:26:42', '2018-11-02 01:26:42', 0, NULL),
 (4922, 21, NULL, NULL, NULL, 'A-4', 0, '2018-11-02 01:26:42', '2018-11-02 01:26:42', 0, NULL),
@@ -2648,7 +2652,7 @@ ALTER TABLE `chuyen_xe`
 -- AUTO_INCREMENT cho bảng `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `Mã` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `Mã` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT cho bảng `duong_di`
