@@ -279,6 +279,40 @@ class TicketBookingManager extends Controller
 		}
 		return response()->json(['kq' => 0]);
 	}
+	public function qldv_sendgps() { //Test OK
+
+        $response = new \Symfony\Component\HttpFoundation\StreamedResponse(function() {
+            while (true) {
+				$hientai = date('Y-m-d H:i:s');
+                $ngaytruoc = date('Y-m-d',strtotime($hientai) - 24*3600);
+				$ngaysau = date('Y-m-d',strtotime($hientai) + 24*3600);
+				// $xe = DB::table('chuyen_xe')->join('xe','chuyen_xe.Mã_xe','=','xe.Mã')->where('chuyen_xe.Ngày_xuất_phát','BETWEEN',$ngaytruoc,'AND',$ngaysau)->select('chuyen_xe.Mã','xe.location')->get();
+				$xe = DB::table('chuyen_xe')->join('xe','chuyen_xe.Mã_xe','=','xe.Mã')->select('chuyen_xe.Mã','xe.location')->get();
+                echo 'data: ' . json_encode($xe) . "\n\n";
+                ob_flush();
+                flush();
+                sleep(3);
+            }
+        });
+
+        $response->headers->set('Content-Type', 'text/event-stream');
+        return $response;
+    }
+	// public function qldv_testSSE() { //Test OK
+
+        // $response = new \Symfony\Component\HttpFoundation\StreamedResponse(function() {
+            // while (true) {
+                // $ngay = date('d-m-Y H-i-s');
+                // echo 'data: ' . json_encode($ngay) . "\n\n";
+                // ob_flush();
+                // flush();
+                // sleep(3);
+            // }
+        // });
+
+        // $response->headers->set('Content-Type', 'text/event-stream');
+        // return $response;
+    // }
 	// public function ticketinfo(/*Request $request*/$idve)
 	// {
 		// $idve = $request->idve; //Gửi lên idve

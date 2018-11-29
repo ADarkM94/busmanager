@@ -215,6 +215,32 @@
 			}
 		});
 	}
+	if(window.EventSource !== undefined){
+		// supports eventsource object go a head...
+		var es = new EventSource("{{route('qldv_sendgps')}}");
+        es.addEventListener("message", function(e) {
+            var arr = JSON.parse(e.data);
+			var str = "";
+			for(var i=0;i<arr.length;i++)
+			{
+				str += "<li data-location='"+arr[i].location+"'>Chuyến xe #"+arr[i].Mã+" <i class='glyphicon glyphicon-record' style='color: green;'></i></li>"
+			}
+			document.getElementsByClassName("chuyenxe")[0].getElementsByTagName("ul")[0].innerHTML = str;
+        }, false);
+	} else {
+		// EventSource not supported, 
+		// apply ajax long poll fallback
+    }
+	// if(window.EventSource !== undefined){
+		// // supports eventsource object go a head...
+		// var es = new EventSource("");
+        // es.addEventListener("message", function(e) {
+            // alert(JSON.parse(e.data));
+        // }, false);
+	// } else {
+		// // EventSource not supported, 
+		// // apply ajax long poll fallback
+    // }
 </script>
 @yield('script')
 </body>

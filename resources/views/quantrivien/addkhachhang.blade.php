@@ -41,23 +41,23 @@
                     <input type="hidden" name="ID" value="{{$ttkhachhang['Mã']}}">
                 @endisset
 				<div class="form-group col-lg-6">
-					<label>Tên</label>
-					<input type="text" class="form-control" name="name" value="{{isset($ttkhachhang['Tên'])? $ttkhachhang['Tên']:''}}" placeholder="Tên đầy đủ">
+					<label>Tên<i class="text text-danger">*</i></label>
+					<input type="text" class="form-control" name="name" value="{{isset($ttkhachhang['Tên'])? $ttkhachhang['Tên']:''}}" placeholder="Tên đầy đủ" required>
                 </div>
 				<div class="form-group col-lg-6">
-					<label>Ngày sinh</label>
-					<input type="date" class="form-control"  name="brtday" value="{{isset($ttkhachhang['Ngày_sinh'])? $ttkhachhang['Ngày_sinh']:''}}" placeholder="Ngày sinh">
+					<label>Ngày sinh<i class="text text-danger">*</i></label>
+					<input type="date" class="form-control"  name="brtday" value="{{isset($ttkhachhang['Ngày_sinh'])? $ttkhachhang['Ngày_sinh']:''}}" placeholder="Ngày sinh" required>
                 </div>
 				<div class="form-group col-lg-12">
-					<label>Giới tính</label>
+					<label>Giới tính<i class="text text-danger">*</i></label>
 					<br>
 					<input type="radio" class="form-inline" name="gender" value="0" <?php if(!isset($ttkhachhang)||$ttkhachhang['Giới tính']=='0') echo "checked";?>> Không xác định
 					<input type="radio" class="form-inline" name="gender" value="1" <?php if(isset($ttkhachhang)&&$ttkhachhang['Giới tính']=='1') echo "checked";?>> Nam
 					<input type="radio" class="form-inline" name="gender" value="2" <?php if(isset($ttkhachhang)&&$ttkhachhang['Giới tính']=='2') echo "checked";?>> Nữ
                 </div>
 				<div class="form-group col-lg-6">
-					<label>Email<i class="text text-danger">*</i></label>
-					<input type="email" class="form-control"  name="email" value="{{isset($ttkhachhang['Email'])? $ttkhachhang['Email']:''}}" placeholder="Địa chỉ Email" required>
+					<label>Email</label>
+					<input type="email" class="form-control"  name="email" value="{{isset($ttkhachhang['Email'])? $ttkhachhang['Email']:''}}" placeholder="Địa chỉ Email">
                 </div>
 				<div class="form-group col-lg-6">
 					<label>Số điện thoại<i class="text text-danger">*</i></label>
@@ -90,11 +90,47 @@
         }
         option[1].classList.add('selected');
         option[1].getElementsByTagName('img')[0].setAttribute('src','{{asset("images/icons/customer-hover.png")}}');
-        /* document.forms["ttkhachhang"]["submit"].onclick = function (ev) {
+        document.forms["ttkhachhang"]["submit"].onclick = function (ev) {
             ev.preventDefault();
-            var name = document.forms["ttkhachhang"]["name"].value;
-            var password = document.forms["ttkhachhang"]["password"].value;
-            var email = document.forms["ttkhachhang"]["email"].value;
-        }; */
+            var name = document.forms["ttkhachhang"]["name"];
+			var brtday = document.forms["ttkhachhang"]["brtday"];
+			var gender = document.forms["ttkhachhang"]["gender"];
+            var email = document.forms["ttkhachhang"]["email"];
+            var phone = document.forms["ttkhachhang"]["phone"];
+            var password = document.forms["ttkhachhang"]["password"];
+            var address = document.forms["ttkhachhang"]["address"];
+			name.style.borderColor = "#ccc";
+			password.style.borderColor = "#ccc";
+			email.style.borderColor = "#ccc";
+			phone.style.borderColor = "#ccc";
+			if(name.value == "")
+			{
+				name.style.borderColor = "red";
+			}
+			else if(name.value != "")
+			{
+				
+			}
+			if(password.value == "")
+			{
+				password.style.borderColor = "red";
+			}
+			else if(password.value != "")
+			{
+				
+			}
+			if(email.value != "")
+			{
+				
+			}
+			if(phone.value == "")
+			{
+				phone.style.borderColor = "red";
+			}
+			else if(phone.value != "")
+			{
+				
+			}
+        };
     </script>
 @endsection
