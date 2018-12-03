@@ -3,47 +3,27 @@
     Tin tức
 @endsection
 @section('content')
+   <!-- Trang tin tức --> 
     <div class="maintintuc">
         <div class="trangtintuc">
             <div class="trangtentintuc"><h2>Tin Tức</h2></div>
             <ul>
+                <ul>
+              @foreach($tintuc as $y)
                 <li>
-                    <img src="images/12.jpg">
-                    <a><strong>CHUYỂN TUYẾN HẢI PHÒNG ↔ HỒ CHÍ MINH, VŨNG TÀU VỀ BẾN THƯỢNG LÝ - HẢI PHÒNG TỪ 22/11/2017</strong></a>
+                    <?php  $id = $y->news_id; ?>
+                    <img src="upload/{{$y->image}}">
+                    
+                    <a href="{{asset("showtintuc/{$id}")}}"><strong>{{$y->title}}</strong></a>
                 </li>
-                <li>
-                    <img src="images/12.jpg">
-                    <a><strong>CHUYỂN TUYẾN HẢI PHÒNG ↔ HỒ CHÍ MINH, VŨNG TÀU VỀ BẾN THƯỢNG LÝ - HẢI PHÒNG TỪ 22/11/2017</strong></a>
-                </li>
-
-                <li>
-                    <img src="images/12.jpg">
-                    <a><strong>CHUYỂN TUYẾN HẢI PHÒNG ↔ HỒ CHÍ MINH, VŨNG TÀU VỀ BẾN THƯỢNG LÝ - HẢI PHÒNG TỪ 22/11/2017</strong></a>
-                </li>
-
-                <li>
-                    <img src="images/12.jpg">
-                    <a><strong>CHUYỂN TUYẾN HẢI PHÒNG ↔ HỒ CHÍ MINH, VŨNG TÀU VỀ BẾN THƯỢNG LÝ - HẢI PHÒNG TỪ 22/11/2017</strong></a>
-                </li>
-
-                <li>
-                    <img src="images/12.jpg">
-                    <a><strong>CHUYỂN TUYẾN HẢI PHÒNG ↔ HỒ CHÍ MINH, VŨNG TÀU VỀ BẾN THƯỢNG LÝ - HẢI PHÒNG TỪ 22/11/2017</strong></a>
-                </li>
-                <li>
-                    <img src="images/12.jpg">
-                    <a><strong>CHUYỂN TUYẾN HẢI PHÒNG ↔ HỒ CHÍ MINH, VŨNG TÀU VỀ BẾN THƯỢNG LÝ - HẢI PHÒNG TỪ 22/11/2017</strong></a>
-                </li>
+                @endforeach
+             </ul>
             </ul>
         </div>
+        <div style="clear: left;"></div>
+          <!-- Phân trang --> 
         <ul class="pager">
-            <li><a href="tintuc">Previous</a></li>
-            <li><a href="tintuc">1</a></li>
-            <li><a href="tintuc">2</a></li>
-            <li><a href="tintuc">3</a></li>
-            <li><a href="tintuc">4</a></li>
-            <li><a href="tintuc">5</a></li>
-            <li><a href="tintuc">Next</a></li>
+           {!! $tintuc->links() !!}
         </ul>
     </div>
 @endsection

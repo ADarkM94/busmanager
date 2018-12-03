@@ -5,7 +5,7 @@
 @section('content')
     <div class="modal fade" id="doithongtin" role="dialog">
         <div class="modal-dialog" style="width: 500px;">
-      <!-- Modal content-->
+      <!-- Đổi thông tin-->
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -58,7 +58,7 @@
     <div  class="modal fade" id="doimatkhau" role="dialog">
          <div class="modal-dialog" style="width: 500px;">
     
-      <!-- Modal content-->
+      <!-- Đổi mật khẩu-->
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -96,6 +96,7 @@
      </div>
      </div>
     </div>
+     <!-- Hiển thị thông tin khách -->
     <div class="thongtinkhach1">
     <div class="mainthongtinkhach">
         <div class="tenthongtinkhach"><h3>THÔNG TIN CÁ NHÂN</h3></div>
@@ -150,12 +151,15 @@
                 @endif
             </tr>
             <tr style="border: none;">
+                 <!-- button đổi thông tin -->
                 <td><button type="button" class="btn btn btn-warning btn-lg buttondoithongtin" data-toggle="modal" data-target="#doithongtin">Đổi thông tin</button></td>
+                 <!-- button đổi mật khẩu -->
                 <td><button class="btn btn btn-warning btn-lg buttondoimatkhau" data-toggle="modal" data-target="#doimatkhau">Đổi mật khẩu</button></td>
             </tr>
         </table>
         @endforeach
     </div>
+     <!-- Lịch sử chuyến đi -->
     <div class="lichsudi">
         <div class="tenthongtinkhach"><h3>Lịch Sử Đã Đặt</h3></div>
              <table>
@@ -184,6 +188,7 @@
 @section('script')
     <script type="text/javascript">
         $(document).ready(function(){
+            /*Xử lý đổi thông tin*/
             $(".buttondoithongtin").click(function(){
                 var tenkh = $(".tenkh").html();
                 var diachikh = $(".diachikh").html();
@@ -194,10 +199,12 @@
                   $(".dttemail").val(emailkh);
                   $(".dttngaysinh").val(ngaysinh);
             });
+            /*Xử lý đóng đổi thông tin*/
             $(".colsedoithongtin").click(function(){
                 $(".dnloi").html("");
                 $(".dnloi2").html("");
             });
+            /*Cập nhật đổi thông tin*/
             $(".capnhat").click(function(){
                 var kt=true;
                 var bieuthuc = /[a-zA-Z][^#&<>\"~;$^%{}?]{1,50}$/;
@@ -254,7 +261,7 @@
                     }
                
             });
-                     /*doi mat khau*/
+            /*Đổi mật khẩu*/
             $(".closedoimatkhau").click(function(){
                 $(".doimatkhau").fadeOut();
                 $(".dmkloi").html("");
@@ -266,6 +273,7 @@
                 $(".mkmoi").val("");
                 $(".remkmoi").val("");
             });
+            /*Xử lý cập nhật mật khẩu*/
             $(".capnhatmk").click(function(){
                 var kt2 = true;
                 var xemmk=true;

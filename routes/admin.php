@@ -102,9 +102,30 @@ Route::middleware('admincheck')->group(function (){
 
 //Phần tỉnh
 
-    Route:: post('admin/addprovince', 'AdminController@addprovince')->name('addprovince');
+    Route::post('admin/addprovince', 'AdminController@addprovince')->name('addprovince');
 
     Route::post('admin/delprovince', 'AdminController@delprovince')->name('delprovince');
+
+//Phần tin tức
+
+	Route::get('admin/tintuc', 'AdminController@tintuc');
+	
+	Route::post('admin/addtintuc', 'AdminController@addtintuc')->name('addtintuc');
+	
+	Route::post('admin/edittintuc', 'AdminController@edittintuc')->name('edittintuc');
+	
+	Route::get('admin/deltintuc/{id?}', 'AdminController@deltintuc');
+	
+//Phần giới thiệu
+
+	Route::post('admin/editgioithieu', 'AdminController@editgioithieu')->name('editgioithieu');
+	
+//Phần hàm dùng chung
+
+	Route::post('admin/checkexist', 'AdminController@admin_checkexist')->name('admin_checkexist');
+	
+	Route::post('admin/retrievedata', 'AdminController@admin_retrievedata');
+	
 });
 
 /* Kết thúc phần Route cho trang quản trị hệ thống */

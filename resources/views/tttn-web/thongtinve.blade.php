@@ -3,6 +3,7 @@
     Trang chủ
 @endsection
 @section('content')
+    <!-- Thông tin vé -->
     <div class="mainthongtinve">
         <h3>Thông Tin Vé Đã Đặt</h3>
             <?php $dem=0;

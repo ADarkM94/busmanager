@@ -1,4 +1,7 @@
 @extends('quantrivien.main')
+@section('title')
+	Quản lý Chuyến xe
+@endsection
 @section('content')
     <div class="content row show" style="overflow: hidden; position: relative; padding: 3em 1em 1em;">
         <h4 style="padding: .5em; position: absolute; top: 0; left: 0; width: 100%;">Bảng Chuyến Xe</h4>
@@ -222,7 +225,7 @@
                 render: function(ui){
                     if(ui.rowData["Loại_ghế"]==0)
                         return "Ghế ngồi";
-                    else if(ui.rowData["Loại_ghế"])
+                    else if(ui.rowData["Loại_ghế"]==1)
                         return "Giường nằm";
                 },
                 filter: {

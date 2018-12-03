@@ -1,4 +1,7 @@
 @extends("quantrivien.main")
+@section('title')
+	Quản lý Xe
+@endsection
 @section("content")
     <div class="content xe row show" style="overflow: hidden; position: relative; padding: 3em 1em 1em;">
         <h4 style="padding: .5em; position: absolute; top: 0; left: 0; width: 100%;">Bảng Xe</h4>

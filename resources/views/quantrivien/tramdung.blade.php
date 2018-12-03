@@ -1,4 +1,7 @@
 @extends("quantrivien.main")
+@section('title')
+	Quản lý Trạm dừng
+@endsection
 @section("content")
     <div class="content tramdung row show" style="overflow: hidden; position: relative; padding: 3em 1em 1em;">
         <h4 style="padding: .5em; position: absolute; top: 0; left: 0; width: 100%;">Bảng Trạm Dừng</h4>
@@ -59,11 +62,41 @@
             hoverMode: 'row',
             numberCell: { show: true, title: 'STT', width: 50, align: 'center'},
             stripeRows: true,
+			freezeCols: 1,
             cellDblClick: function (event,ui) {
                 window.open("{{url('/admin/addtramdung')}}" + "/" + ui.rowData["Mã"]);
             }
         };
         obj.colModel = [
+			{
+                title: "Thao tác",
+                width: 100,
+                editor: false,
+                dataIndx: "View",
+                align: 'center',
+                render: function (ui) {
+                    var str = '';
+                    str += '<a title="Edit" id="idEditBusStop" ><i class="glyphicon glyphicon-edit  text-success" style="padding-right: 5px; cursor: pointer;"></i></a>';
+                    str += '<a title="Delete" id="idDelBusStop" ><i class="glyphicon glyphicon-remove  text-danger" style="padding-right: 5px; cursor: pointer;"></i></a>';
+                    return str;
+                },
+                postRender: function (ui) {
+                    var rowData = ui.rowData,
+                        $cell = this.getCell(ui);
+                    //add button
+                    $cell.find("a#idEditBusStop")
+                        .unbind("click")
+                        .bind("click", function (evt) {
+                            window.open("{{url('admin/addtramdung')}}"+"/"+rowData["Mã"]);
+                        });
+                    $cell.find("a#idDelBusStop")
+                        .unbind("click")
+                        .bind("click", function (evt) {
+                            if(confirm("Bạn chắc chắn muốn xóa?"))
+                                location.assign("{{url('admin/deltramdung')}}"+"/"+rowData["Mã"]);
+                        });
+                }
+            },
             {
                 title: "Tên",
                 width: 200,
@@ -120,36 +153,7 @@
                     condition: 'contain',
                     listeners: ['keyup']
                 }
-            },
-            {
-                title: "Thao tác",
-                width: 100,
-                editor: false,
-                dataIndx: "View",
-                align: 'center',
-                render: function (ui) {
-                    var str = '';
-                    str += '<a title="Edit" id="idEditBusStop" ><i class="glyphicon glyphicon-edit  text-success" style="padding-right: 5px; cursor: pointer;"></i></a>';
-                    str += '<a title="Delete" id="idDelBusStop" ><i class="glyphicon glyphicon-remove  text-danger" style="padding-right: 5px; cursor: pointer;"></i></a>';
-                    return str;
-                },
-                postRender: function (ui) {
-                    var rowData = ui.rowData,
-                        $cell = this.getCell(ui);
-                    //add button
-                    $cell.find("a#idEditBusStop")
-                        .unbind("click")
-                        .bind("click", function (evt) {
-                            window.open("{{url('admin/addtramdung')}}"+"/"+rowData["Mã"]);
-                        });
-                    $cell.find("a#idDelBusStop")
-                        .unbind("click")
-                        .bind("click", function (evt) {
-                            if(confirm("Bạn chắc chắn muốn xóa?"))
-                                location.assign("{{url('admin/deltramdung')}}"+"/"+rowData["Mã"]);
-                        });
-                }
-            }
+            }            
         ];
         var objlen = 0;
         for(var i =0; i<obj.colModel.length;i++){

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Quản trị viên</title>
+    <title>@yield('title')</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -31,6 +31,7 @@
                 <span onclick="showMenu(this)"><img src="{{asset('images/icons/user.png')}}" alt="icon">{{session('admin.name','AdminTest')}}&nbsp;<i class="glyphicon glyphicon-menu-down" ></i>
                     <ul>
                         <li onclick="showUserInfo({{session('admin.id')}})"><i class="glyphicon glyphicon-info-sign"></i>Thông tin</li>
+						<li onclick="showWebInfo()"><i class="glyphicon glyphicon-globe"></i>WebInfo</li>
                         <a href="{{route('adminlogout')}}">
                             <li><i class="glyphicon glyphicon-off"></i>Thoát</li>
                         </a>
@@ -71,6 +72,9 @@
                     </a>
                     <a href="{{url('/admin/tramdung')}}">
                         <li class="option"><img src="{{asset('images/icons/parking.png')}}" alt="icon">&nbsp;Trạm dừng</li>
+                    </a>
+					<a href="{{url('/admin/tintuc')}}">
+                        <li class="option"><img src="{{asset('images/icons/newspaper.png')}}" alt="icon">&nbsp;Tin tức</li>
                     </a>
                 </ul>
             </div>
@@ -143,6 +147,35 @@
 				<a href="{{asset('admin/addnhanvien/').'/'.session('admin.id')}}" class="btn btn-success"><i class="glyphicon glyphicon-edit"></i>&nbsp;Thay Đổi Thông Tin</a>
 			</div>
 		</div>
+	</div>
+</div>
+<div id="editgioithieu" class="modal fade">
+	<div class="modal-dialog">
+	<form id="formeditgioithieu" action="{{route('editgioithieu')}}" method="POST" enctype="multipart/form-data">
+	   	<input type="hidden" name="_token" value="{{csrf_token()}}">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Giới Thiệu</h4>
+			</div>
+			<div class="modal-body">
+				<div class="hienloi">
+					<div class="alert alert-danger" id="loigt"></div>
+				</div>	
+				<div class="input-group">
+					<span class="input-group-addon">Nội dung</span>
+					<textarea class="form-control txtnoidunggt" id="noidunggt" rows="5" name="noidunggt"></textarea>
+					<script type="text/javascript"> CKEDITOR.replace('noidunggt');</script>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<input type="submit" class=" btn btn-success txtcapnhatgt" name="submit" value="Sửa">
+				<a href="{{route("gioithieu")}}" target="_blank" class="btn btn-warning"><i class="glyphicon glyphicon-eye-open" style="color: white;"></i>&nbsp;Xem</a>
+				<button type="button" class="btn btn-default txtclosegt" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</form>
 	</div>
 </div>
 @yield('excontent')
@@ -251,6 +284,41 @@
 			}
 		});
 	}
+	function showWebInfo()
+	{
+		document.getElementById("loigt").innerHTML = "";
+		document.getElementById("loigt").style.display = "none";
+		document.getElementById("cke_noidunggt").style.borderColor = "#ccc";
+		$.ajax({
+            type:'POST',
+            url:'{{asset("/admin/retrievedata")}}',
+			data: {
+				_token: '{{csrf_token()}}',
+				typedata: 'gioithieu'
+			},
+            success:function(data){
+                if (data.kq == 1) {
+                    CKEDITOR.instances["noidunggt"].setData(data.data[0].noidung);
+					$("#editgioithieu").modal();
+                }                   
+            }
+        });
+	}
+	document.forms["formeditgioithieu"]["submit"].onclick = function(ev){
+		document.getElementById("cke_noidunggt").style.borderColor = "#ccc";
+		var str = "";
+		if(CKEDITOR.instances["noidunggt"].getData() == "")
+		{
+			document.getElementById("cke_noidunggt").style.borderColor = "red";
+			str += "Nội dung không được để trống!";
+		}
+		if(str != "")
+		{
+			ev.preventDefault();
+			document.getElementById("loigt").innerHTML = str;
+			document.getElementById("loigt").style.display = "block";
+		}
+	};
 </script>
 @yield('script')
 <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDPoe4NcaI69_-eBqxW9Of05dHNF0cRJ78&callback=showMap"></script> -->

@@ -3,201 +3,228 @@
     Chọn vé
 @endsection
 @section('content')
-    <script>
-        $(function(){
-          $('td[onload]').trigger('onload');
-        });
-    </script>
-    <div class="buoc">
-        <ul>
-            <li>Tìm Chuyến</li>
-            <li>Chọn Vé</li>
-            <li style="background: #f57812; color: #FFF;" class="stay">Chi Tiếc vé</li>
-        </ul>
-    </div>
-    
-<!-- chu ý-->
+    <!-- Thêm sự kiện onload vào thẻ td  -->
+      <script>
+          $(function(){
+            $('td[onload]').trigger('onload');
+          });
+      </script>
+    <!-- Phần bước  -->
+      <div class="buoc">
+          <ul>
+              <li>Tìm Chuyến</li>
+              <li>Chọn Vé</li>
+              <li style="background: #f57812; color: #FFF;" class="stay">Chi Tiếc vé</li>
+          </ul>
+      </div>
+    <!-- kết thức phần bước  -->
+    <!-- Phần chọn vé  -->
     <div class="chonvemain">
-        <div class="chonveleft">
-            @foreach($chonve as $t)
-            <h3>Thông tin vé</h3>
-            <p><i class="fa fa-bus"></i> Nơi Khởi Hành: <a>{{$t->Nơi_đi}}</a></p><br>
-            <p><i class="fa fa-bus"></i> Nơi đến: <a>{{$t->Nơi_đến}}</a></p> <br>
-            <p><span class="glyphicon glyphicon-time"></span> Ngày đi: {{$t->Ngày_xuất_phát}}  {{$t->Giờ_xuất_phát}}</p><br>
-            <p><span class="glyphicon glyphicon-bed"></span> Loại Ghế: {{($t->Loại_ghế==1)? 'Giường Nằm':'Ghế Ngồi'}} </p><br>
-            <p><i class="fa fa-balance-scale"></i> Giá vé: {{$t->Tiền_vé/1000}}.000 VNĐ</p><br>
-            <p><i class="fa fa-address-card-o"></i> Vé đang chọn: </p><br>
-            <button type="button" style="background: #f57812; border: none;" class="btn btn-success chondatve"  data-id={{$id}}>Đặt vé</button>
-        </div>
-         @endforeach
+        <!-- Thông tin chuyến xe -->
+          <div class="chonveleft">
+              @foreach($chonve as $t)
+              <h3>Thông tin vé</h3>
+              <p><i class="fa fa-bus"></i> Nơi Khởi Hành: <a>{{$t->Nơi_đi}}</a></p><br>
+              <p><i class="fa fa-bus"></i> Nơi đến: <a>{{$t->Nơi_đến}}</a></p> <br>
+              <p><span class="glyphicon glyphicon-time"></span> Ngày đi: {{$t->Ngày_xuất_phát}}  {{$t->Giờ_xuất_phát}}</p><br>
+              <p><span class="glyphicon glyphicon-bed"></span> Loại Ghế: {{($t->Loại_ghế==1)? 'Giường Nằm':'Ghế Ngồi'}} </p><br>
+              <p><i class="fa fa-balance-scale"></i> Giá vé: {{$t->Tiền_vé/1000}}.000 VNĐ</p><br>
+              <p><i class="fa fa-address-card-o"></i> Vé đang chọn: </p><br>
+              <button type="button" style="background: #f57812; border: none;" class="btn btn-success chondatve"  data-id={{$id}}>Đặt vé</button>
+          </div>
+          @endforeach
+        <!-- kết thưc thông tin chuyến xe -->
+        <!-- Phần sơ đồ xe -->
         <div class="chonveright">
             @if($sodo[0]->Loại_ghế == 1)
             <div class="tengiuong"><h3>Sơ đồ xe</h3></div>
-            <div class="chuygiuong">
-                <ul>
-                <li><i class="loaighetrong"></i> &nbsp;Còn trống</li>
-                <li><i class="loaighechon"></i> &nbsp;Đang chọn</li>
-                <li><i class="loaigheban"></i> &nbsp;Đã bán</li>
-                <li><i class="loaighecochon"></i> &nbsp;Có Người Chọn</li>
-                <li><buttontype="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#chonloaidexuat" style="background: #f57812; border: none;" title="Đề xuất vị trí">Đề xuất</button></li>
-            </ul>
-            </div>
-                <?php  $sd = $sodo[0]->Sơ_đồ; $dem=0; ?>
-                 <div class="sodogiuong">
-                 <table class="bangve tangduoi">
-                  <tr>
-                      <td class="giuongtaixe" title="Ghế tài xế"></td>
-                      <td colspan="4"></td>
-                   </tr>
-                    @for($i=1;$i<7;$i++)
-                    <tr>
-                       @for($j=0;$j<5;$j++)
-                            @if($sd[$i * 5 + $j]==1)
-                                @if($ve[$dem]->Trạng_thái == 1)
-                                <td class="giuong" title="Giường đã bán cho khách"><div class="contentgiuong">{{$ve[$dem]->Vị_trí_ghế}}</div></td>
-                                @elseif($ve[$dem]->Trạng_thái ==0)
-                                <td class="giuongcontrong" title="Ghế trống" data-ma={{$ve[$dem]->Mã}}>
-                                    <div class="contentgiuong">{{$ve[$dem]->Vị_trí_ghế}}</div></td>
-                                @elseif($ve[$dem]->Trạng_thái == 2)
-                                    @if($ve[$dem]->Mã_khách_hàng == Session::get('makh'))
-                                        <td class="giuongdangchon" title="Ghế Đang Chọn" data-ma={{$ve[$dem]->Mã}}></div><div class="contentgiuong">{{$ve[$dem]->Vị_trí_ghế}}</div></td>
-
-                                    @else
-                                         <td class="giuongcochon" title="Đã Có Người Chọn" data-ma={{$ve[$dem]->Mã}}></div><div class="contentgiuong">{{$ve[$dem]->Vị_trí_ghế}}</div></td>
-
-                                    @endif
-                                @endif
-                                  <?php  $dem++; ?>
-                            @else
-                                <td class="giuongtrong"></td>
-                            @endif
-                       @endfor
-                    </tr>
-                    @endfor
-                </table>
-                <table class="bangve tangtren">
-                  <tr>
-                    <td class="giuongtaixe" title="Ghế tài xế">
-                    </td>
-                    <td colspan="4"></td>
-                  </tr>
-                    @for($i=7;$i<13;$i++)
-                    <tr>
-                       @for($j=0;$j<5;$j++)
-                            @if($sd[$i * 5 + $j]==1)
-                                @if($ve[$dem]->Trạng_thái == 1)
-                                <td class="giuong" title="Giường đã bán cho khách"></div><div class="contentgiuong">{{$ve[$dem]->Vị_trí_ghế}}</div></td>
-                                @elseif($ve[$dem]->Trạng_thái ==0)
-                                <td class="giuongcontrong" title="Ghế trống" data-ma={{$ve[$dem]->Mã}}>
-                                    <div class="contentgiuong">{{$ve[$dem]->Vị_trí_ghế}}</div></td>
-                                @elseif($ve[$dem]->Trạng_thái == 2)
-                                    @if($ve[$dem]->Mã_khách_hàng == Session::get('makh'))
-                                        <td class="giuongdangchon" title="Ghế Đang Chọn" data-ma={{$ve[$dem]->Mã}}></div><div class="contentgiuong">{{$ve[$dem]->Vị_trí_ghế}}</div></td>
-
-                                    @else
-                                         <td class="giuongcochon" title="Đã Có Người Chọn" data-ma={{$ve[$dem]->Mã}}></div><div class="contentgiuong">{{$ve[$dem]->Vị_trí_ghế}}</div></td>
-
-                                    @endif
-                                @endif
-                                  <?php  $dem++; ?>
-                            @else
-                                <td class="giuongtrong"></td>
-                            @endif
-                       @endfor
-                    </tr>
-                    @endfor
-            </table>
-            <div class="tang">
-                <button class="duoi">Tầng Dưới</button>
-                <button class="tren">Tầng Trên</button>
-            </div>
-             </div>
-              
-               @else
-                <div class="tengiuong"><h3>Sơ đồ xe</h3></div>
-                <div class="chuygiuong">
-                    <ul>
+            <!-- Chú ý giường -->
+              <div class="chuygiuong">
+                  <ul>
                     <li><i class="loaighetrong"></i> &nbsp;Còn trống</li>
                     <li><i class="loaighechon"></i> &nbsp;Đang chọn</li>
                     <li><i class="loaigheban"></i> &nbsp;Đã bán</li>
                     <li><i class="loaighecochon"></i> &nbsp;Có Người Chọn</li>
-                    <li><button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#chonloaidexuat" style="background: #f57812;border: none;" title="Đề xuất vị trí">Đề xuất</button></li>
-                </ul>
-                </div>
-               <div class="sodoghe">
-               <table class="bangve">
-                    <?php  $sd = $sodo[0]->Sơ_đồ; $dem=0; ?>
-                    @for($i=0;$i<12;$i++)
+                    <li><buttontype="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#chonloaidexuat" style="background: #f57812; border: none;" title="Đề xuất vị trí">Đề xuất</button></li>
+                  </ul>
+              </div>
+            <!-- kết thúc chú ý giường -->
+            <!-- Sơ đồ xe giường nằm -->
+                <?php  $sd = $sodo[0]->Sơ_đồ; $dem=0; ?>
+                 <div class="sodogiuong">
+                  <!-- Tầng dưới -->
+                   <table class="bangve tangduoi">
                     <tr>
-                        @for($j=0;$j<6;$j++)
-                            @if($sd[$i * 6 + $j]==1 && ($i * 6 + $j)==0)
-                                <td class="ghetaixe" title="Ghế tài xế">
-                                  <img src="../images/ghetaixe2.png">
-                                </td>
-                            @elseif($sd[$i * 6 + $j] == 1)
-                                @if($ve[$dem]->Trạng_thái == 1)
-                                <td class="ghe" title="Ghế đã bán cho khách" data-ma={{$ve[$dem]->Mã}} />
-                                    <img src="../images/ghe.png"/>
-                                     
-                                    <div class="content">{{$ve[$dem]->Vị_trí_ghế}}</div></td>
-                                @elseif($ve[$dem]->Trạng_thái ==0)
-                                    <td class="ghecontrong" title="Ghế trống" data-ma={{$ve[$dem]->Mã}}><img src="../images/ghe.png">
-                                      <p class="text1" type="text"></p>
-                                        <div class="content">{{$ve[$dem]->Vị_trí_ghế}}</div></td>
-                                @elseif($ve[$dem]->Trạng_thái == 2)
-                                    @if($ve[$dem]->Mã_khách_hàng == Session::get('makh'))
-                                        <td class="ghedangchon" title="Ghế Đang Chọn" onload="demnguoc2({{$ve[$dem]->Mã}},{{$ve[$dem]->TG}})" data-ma={{$ve[$dem]->Mã}}><img src="../images/ghe.png">
-                                           <p class="text1" type="text"  ></p><div class="content">{{$ve[$dem]->Vị_trí_ghế}}</div></td>
+                        <td class="giuongtaixe" title="Ghế tài xế"></td>
+                        <td colspan="4"></td>
+                     </tr>
+                      @for($i=1;$i<7;$i++)
+                      <tr>
+                         @for($j=0;$j<5;$j++)
+                              @if($sd[$i * 5 + $j]==1)
+                                  @if($ve[$dem]->Trạng_thái == 1)
+                                  <td class="giuong" title="Giường đã bán cho khách"><div class="contentgiuong">{{$ve[$dem]->Vị_trí_ghế}}</div></td>
+                                  @elseif($ve[$dem]->Trạng_thái ==0)
+                                  <td class="giuongcontrong" title="Ghế trống" data-ma={{$ve[$dem]->Mã}}><p class="text1"  type="text"  ></p>
+                                      <div class="contentgiuong">{{$ve[$dem]->Vị_trí_ghế}}</div></td>
+                                  @elseif($ve[$dem]->Trạng_thái == 2)
+                                      @if($ve[$dem]->Mã_khách_hàng == Session::get('makh'))
+                                          <td class="giuongdangchon" title="Ghế Đang Chọn" onload="demnguoc2({{$ve[$dem]->Mã}},{{$ve[$dem]->TG}})" data-ma={{$ve[$dem]->Mã}}><p class="text1"  type="text"  ></p><div class="contentgiuong">{{$ve[$dem]->Vị_trí_ghế}}</div></td>
 
-                                    @else
-                                         <td class="ghecochon" title="Đã Có Người Chọn" onload="demnguoc1({{$ve[$dem]->Mã}},{{$ve[$dem]->TG}})" data-ma={{$ve[$dem]->Mã}}><img src="../images/ghe.png">
-                                           <p class="text1"  type="text"  ></p><div class="content">{{$ve[$dem]->Vị_trí_ghế}}</div></td>
+                                      @else
+                                           <td class="giuongcochon" title="Đã Có Người Chọn" onload="demnguoc1({{$ve[$dem]->Mã}},{{$ve[$dem]->TG}})" data-ma={{$ve[$dem]->Mã}}><p class="text1"  type="text"  ></p><div class="contentgiuong">{{$ve[$dem]->Vị_trí_ghế}}</div></td>
 
-                                    @endif
-                                @endif
-                                <?php $dem++; ?>
-                            @else
-                                <td class="ghetrong"></td>
-                            @endif
-                        @endfor
-                    </tr>
-                    @endfor
-               @endif
-            </table>
+                                      @endif
+                                  @endif
+                                    <?php  $dem++; ?>
+                              @else
+                                  <td class="giuongtrong"></td>
+                              @endif
+                         @endfor
+                      </tr>
+                      @endfor
+                  </table>
+                  <!-- Kết thúc tầng dưới -->
+                  <!-- Tầng trên -->
+                      <table class="bangve tangtren">
+                        <tr>
+                          <td class="giuongtaixe" title="Ghế tài xế">
+                          </td>
+                          <td colspan="4"></td>
+                        </tr>
+                          @for($i=7;$i<13;$i++)
+                          <tr>
+                             @for($j=0;$j<5;$j++)
+                                  @if($sd[$i * 5 + $j]==1)
+                                      @if($ve[$dem]->Trạng_thái == 1)
+                                      <td class="giuong" title="Giường đã bán cho khách"></div><div class="contentgiuong">{{$ve[$dem]->Vị_trí_ghế}}</div></td>
+                                      @elseif($ve[$dem]->Trạng_thái ==0)
+                                      <td class="giuongcontrong" title="Ghế trống" data-ma={{$ve[$dem]->Mã}}><p class="text1"  type="text"  ></p>
+                                          <div class="contentgiuong">{{$ve[$dem]->Vị_trí_ghế}}</div></td>
+                                      @elseif($ve[$dem]->Trạng_thái == 2)
+                                          @if($ve[$dem]->Mã_khách_hàng == Session::get('makh'))
+                                              <td class="giuongdangchon" title="Ghế Đang Chọn" onload="demnguoc2({{$ve[$dem]->Mã}},{{$ve[$dem]->TG}})" data-ma={{$ve[$dem]->Mã}}><p class="text1"  type="text"  ></p>
+                                                <div class="contentgiuong">{{$ve[$dem]->Vị_trí_ghế}}</div></td>
+
+                                          @else
+                                               <td class="giuongcochon" title="Đã Có Người Chọn" onload="demnguoc1({{$ve[$dem]->Mã}},{{$ve[$dem]->TG}})" data-ma={{$ve[$dem]->Mã}}>
+                                                <p class="text1"  type="text"  ></p>
+                                                <div class="contentgiuong">{{$ve[$dem]->Vị_trí_ghế}}</div></td>
+
+                                          @endif
+                                      @endif
+                                        <?php  $dem++; ?>
+                                  @else
+                                      <td class="giuongtrong"></td>
+                                  @endif
+                             @endfor
+                          </tr>
+                          @endfor
+                      </table>
+                  <!-- Kết thúc tầng trên -->
+                  <!-- Phần chọn tầng -->
+                      <div class="tang">
+                          <button class="duoi">Tầng Dưới</button>
+                          <button class="tren">Tầng Trên</button>
+                      </div>
+                  <!-- Kết thúc chọn tầng -->
+                </div>
+              <!-- Kết thúc sơ đồ xe giường nằm -->
+               @else
+              <!-- Phần sơ đồ xe ngồi -->
+                <div class="tengiuong"><h3>Sơ đồ xe</h3></div>
+                <!-- Chú ý xe ngồi -->
+                  <div class="chuygiuong">
+                      <ul>
+                        <li><i class="loaighetrong"></i> &nbsp;Còn trống</li>
+                        <li><i class="loaighechon"></i> &nbsp;Đang chọn</li>
+                        <li><i class="loaigheban"></i> &nbsp;Đã bán</li>
+                        <li><i class="loaighecochon"></i> &nbsp;Có Người Chọn</li>
+                        <li><button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#chonloaidexuat" style="background: #f57812;border: none;" title="Đề xuất vị trí">Đề xuất</button></li>
+                      </ul>
+                  </div>
+                <!-- kết thúc chú ý xe ngồi -->
+                <!-- Phần sơ đồ xe ngồi -->
+                  <div class="sodoghe">
+                      <!-- Sơ đồ xe ngồi -->
+                         <table class="bangve">
+                              <?php  $sd = $sodo[0]->Sơ_đồ; $dem=0; ?>
+                              @for($i=0;$i<12;$i++)
+                              <tr>
+                                  @for($j=0;$j<6;$j++)
+                                      @if($sd[$i * 6 + $j]==1 && ($i * 6 + $j)==0)
+                                          <td class="ghetaixe" title="Ghế tài xế">
+                                            <img src="../images/ghetaixe2.png">
+                                          </td>
+                                      @elseif($sd[$i * 6 + $j] == 1)
+                                          @if($ve[$dem]->Trạng_thái == 1)
+                                          <td class="ghe" title="Ghế đã bán cho khách" data-ma={{$ve[$dem]->Mã}} />
+                                              <img src="../images/ghe.png"/>
+                                               
+                                              <div class="content">{{$ve[$dem]->Vị_trí_ghế}}</div></td>
+                                          @elseif($ve[$dem]->Trạng_thái ==0)
+                                              <td class="ghecontrong" title="Ghế trống" data-ma={{$ve[$dem]->Mã}}><img src="../images/ghe.png">
+                                                <p class="text1" type="text"></p>
+                                                  <div class="content">{{$ve[$dem]->Vị_trí_ghế}}</div></td>
+                                          @elseif($ve[$dem]->Trạng_thái == 2)
+                                              @if($ve[$dem]->Mã_khách_hàng == Session::get('makh'))
+                                                  <td class="ghedangchon" title="Ghế Đang Chọn" onload="demnguoc2({{$ve[$dem]->Mã}},{{$ve[$dem]->TG}})" data-ma={{$ve[$dem]->Mã}}><img src="../images/ghe.png">
+                                                     <p class="text1" type="text"  ></p><div class="content">{{$ve[$dem]->Vị_trí_ghế}}</div></td>
+
+                                              @else
+                                                   <td class="ghecochon" title="Đã Có Người Chọn" onload="demnguoc1({{$ve[$dem]->Mã}},{{$ve[$dem]->TG}})" data-ma={{$ve[$dem]->Mã}}><img src="../images/ghe.png">
+                                                     <p class="text1"  type="text"  ></p><div class="content">{{$ve[$dem]->Vị_trí_ghế}}</div></td>
+
+                                              @endif
+                                          @endif
+                                          <?php $dem++; ?>
+                                      @else
+                                          <td class="ghetrong"></td>
+                                      @endif
+                                  @endfor
+                              </tr>
+                              @endfor
+                         @endif
+                      </table>
+                  <!-- Kết thúc sơ đồ xe ngồi -->
+              </div>
+            <!-- Kết thúc phần sơ đồ xe ngồi  -->
+          </div>
+        <!-- Kết thúc sơ đồ xe -->
+    </div>
+    <!-- kết thúc phần chọn vé -->
+@endsection
+@section('excontent')
+  <!-- Phần vé đề xuất -->
+      <div id="vedexuat" class="modal fade" role="dialog">
+          <div class="modal-dialog" style="width: 400px;">
+
+          <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Vé Được Đề Xuất</h4>
+              </div>
+              <div class="modal-body">
+                <div style="text-align: center;" >
+                  <h4 style="background: #f57812; text-align: center; color: #FFF; height: 40px; line-height: 40px; border-radius: 0.5em;">Vé Tốt Nhất</h4>
+                  <div class="vetotnhat"></div>
+                </div>
+                <div style="text-align: center;">
+                  <h4 style="background: #f57812; text-align: center; color: #FFF; height: 40px; line-height: 40px; border-radius: 0.5em;">Các Vé Tiếp Theo</h4>
+                  <div class="vetieptheo"></div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger " data-dismiss="modal">Close</button>
+              </div>
             </div>
         </div>
     </div>
-@endsection
-@section('excontent')
-  <div id="vedexuat" class="modal fade" role="dialog">
-    <div class="modal-dialog" style="width: 400px;">
-
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Vé Được Đề Xuất</h4>
-      </div>
-      <div class="modal-body">
-        <div style="text-align: center;" >
-          <h4 style="background: #f57812; text-align: center; color: #FFF; height: 40px; line-height: 40px; border-radius: 0.5em;">Vé Tốt Nhất</h4>
-          <div class="vetotnhat"></div>
-        </div>
-        <div style="text-align: center;">
-          <h4 style="background: #f57812; text-align: center; color: #FFF; height: 40px; line-height: 40px; border-radius: 0.5em;">Các Vé Tiếp Theo</h4>
-          <div class="vetieptheo"></div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger " data-dismiss="modal">Close</button>
-      </div>
-    </div>
-
-  </div>
-</div>
+  <!-- Kết thúc phần vé đề xuất -->
+  <!-- Phần chọn loại đề xuất -->
     <div id="chonloaidexuat" class="modal fade" role="dialog">
         <div class="modal-dialog" style="width:400px;">
-
           <!-- Modal content-->
           <div class="modal-content">
             <div class="modal-header">
@@ -212,12 +239,12 @@
               <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
             </div>
           </div>
-
         </div>
     </div>
+  <!-- Kết thúc phần chọn loại đề xuất -->
+  <!-- Phần đề xuất cho người thân -->
     <div id="dexuatchonguoithan" class="modal fade" role="dialog">
         <div class="modal-dialog" style="width:400px;">
-
           <!-- Modal content-->
           <div class="modal-content">
             <div class="modal-header">
@@ -250,196 +277,201 @@
 
         </div>
     </div>
+  <!-- Kết thúc phần đề xuất cho người thân -->
 @endsection
 @section('script')
     <script type="text/javascript">
         mang=[];
-        function myfunction(){
-          alert("ticketsuggestionaasa");
-        }
-        function demnguoc(ma,thoigian){
-            thoigian = thoigian -1;
-            if(thoigian !=-1){
-             $("td[data-ma='"+ma+"'] .text1").html(thoigian + "s");
-              setTimeout("demnguoc("+ma+","+thoigian+")",1000);
+       /*đếm thời gian giữ vé*/
+            function demnguoc(ma,thoigian){
+                thoigian = thoigian -1;
+                if(thoigian !=-1){
+                 $("td[data-ma='"+ma+"'] .text1").html(thoigian + "s");
+                  setTimeout("demnguoc("+ma+","+thoigian+")",1000);
+                }
+                else{
+                  $("td[data-ma='"+ma+"'] .text1").hide();
+                  
+                }
             }
-            else{
-              $("td[data-ma='"+ma+"'] .text1").hide();
-              
-            }
-        }
-        function demnguoc1(ma,thoigian){
-           /*$("td[data-ma='"+ma+"'] .text1").show();*/
-          ma = $("td[data-ma='"+ma+"']").attr("data-ma");
-            thoigian = thoigian -1;
-            if(thoigian !=-1){
-             $("td[data-ma='"+ma+"'] .text1").html(thoigian + "s");
-              setTimeout("demnguoc1("+ma+","+thoigian+")",1000);
-            }
-            else{
-              $("td[data-ma='"+ma+"'] .text1").hide();
-                $("td[data-ma='"+ma+"']").addClass("ghecontrong");
-                $("td[data-ma='"+ma+"']").removeClass("ghecochon");
+            function demnguoc1(ma,thoigian){
+               /*$("td[data-ma='"+ma+"'] .text1").show();*/
+              ma = $("td[data-ma='"+ma+"']").attr("data-ma");
+                thoigian = thoigian -1;
+                if(thoigian !=-1){
+                 $("td[data-ma='"+ma+"'] .text1").html(thoigian + "s");
+                  setTimeout("demnguoc1("+ma+","+thoigian+")",1000);
+                }
+                else{
+                  $("td[data-ma='"+ma+"'] .text1").hide();
+                    $("td[data-ma='"+ma+"']").addClass("ghecontrong");
+                    $("td[data-ma='"+ma+"']").removeClass("ghecochon");
 
+                }
             }
-        }
-         function demnguoc2(ma,thoigian){
-          /*$("td[data-ma='"+ma+"'] .text1").show();*/
-          ma = $("td[data-ma='"+ma+"']").attr("data-ma");
-            thoigian = thoigian -1;
-            if(thoigian !=-1){
-             $("td[data-ma='"+ma+"'] .text1").html(thoigian + "s");
-              setTimeout("demnguoc1("+ma+","+thoigian+")",1000);
-            }
-            else{
-              $("td[data-ma='"+ma+"'] .text1").hide();
-                $("td[data-ma='"+ma+"']").addClass("ghecontrong");
-                $("td[data-ma='"+ma+"']").removeClass("ghedangchon");
+             function demnguoc2(ma,thoigian){
+              /*$("td[data-ma='"+ma+"'] .text1").show();*/
+              ma = $("td[data-ma='"+ma+"']").attr("data-ma");
+                thoigian = thoigian -1;
+                if(thoigian !=-1){
+                 $("td[data-ma='"+ma+"'] .text1").html(thoigian + "s");
+                  setTimeout("demnguoc1("+ma+","+thoigian+")",1000);
+                }
+                else{
+                  $("td[data-ma='"+ma+"'] .text1").hide();
+                    $("td[data-ma='"+ma+"']").addClass("ghecontrong");
+                    $("td[data-ma='"+ma+"']").removeClass("ghedangchon");
 
+                }
             }
-        }
-        function datghe(bien,ma){
-            makh = {{Session::get('makh')}};
-                 bien.addClass("ghedangchon");
-                 bien.removeClass("ghecontrong");
-                 mang.push(ma);
-                  $("td[data-ma='"+ma+"'] .text1").show();
-                 demnguoc(ma,600);
-                $.ajax({
-                    url: '{{route("xulydatve")}}',
-                    type: 'POST',
-                    data: {
-                        _token: '{{csrf_token()}}',
-                        MA: ma,
-                        MAKH: makh
-                    },
-                    success: function (data) {
-                       if(data.kq == 0){
-                        bien.addClass("ghecontrong");
-                        bien.removeClass("ghedangchon");
-                        for (i=0; i < mang.length; i++) {
-                           if(mang[i]==ma){
-                                mang[i]=null;
-                                break;
+        /*Xử lý đặt ghế*/
+            function datghe(bien,ma){
+                makh = {{Session::get('makh')}};
+                     bien.addClass("ghedangchon");
+                     bien.removeClass("ghecontrong");
+                     mang.push(ma);
+                      $("td[data-ma='"+ma+"'] .text1").show();
+                     demnguoc(ma,600);
+                    $.ajax({
+                        url: '{{route("xulydatve")}}',
+                        type: 'POST',
+                        data: {
+                            _token: '{{csrf_token()}}',
+                            MA: ma,
+                            MAKH: makh
+                        },
+                        success: function (data) {
+                           if(data.kq == 0){
+                            bien.addClass("ghecontrong");
+                            bien.removeClass("ghedangchon");
+                            for (i=0; i < mang.length; i++) {
+                               if(mang[i]==ma){
+                                    mang[i]=null;
+                                    break;
+                               }
                            }
-                       }
-                       }
-                       else if(data.kq==1){
-                        bien.addClass("ghe");
-                        bien.removeClass("ghedangchon");
-                        for (i=0; i < mang.length; i++) {
-                           if(mang[i]==ma){
-                                mang[i]=null;
-                                break;
                            }
-                       }
-                        alert("Xin lổi - Ghế này đã có người mua !")
-                       }
-                       else if(data.kq == 2){
-                        time= data.TGC;
-                        bien.addClass("ghecochon");
-                        bien.removeClass("ghedangchon");
-                        demnguoc(ma,time);
-                        for (i=0; i < mang.length; i++) {
-                           if(mang[i]==ma){
-                                mang[i]=null;
-                                break;
+                           else if(data.kq==1){
+                            bien.addClass("ghe");
+                            bien.removeClass("ghedangchon");
+                            for (i=0; i < mang.length; i++) {
+                               if(mang[i]==ma){
+                                    mang[i]=null;
+                                    break;
+                               }
                            }
-                       }
-                        alert("Xin lổi - Ghế này đã có người chọn !")
-                       }
-                    }
-             });
-        }
-        function datgiuong(bien,ma){
-          makh = {{Session::get('makh')}};
-                        bien.addClass("giuongdangchon");
-                        bien.removeClass("giuongcontrong");
-                        mang.push(ma);
-                $.ajax({
-                    url: '{{route("xulydatve")}}',
-                    type: 'POST',
-                    data: {
-                        _token: '{{csrf_token()}}',
-                        MA: ma,
-                        MAKH: makh
-                    },
-                    success: function (data) {
-                      if(data.kq==0){
-                        bien.addClass("giuongcontrong");
-                        bien.removeClass("giuongdangchon");
-                        for (i=0; i < mang.length; i++) {
-                           if(mang[i]==ma){
-                                mang[i]=null;
-                                break;
+                            alert("Xin lổi - Ghế này đã có người mua !")
                            }
-                       }
-                      }
-                       else if(data.kq==1){
-                        bien.addClass("giuong");
-                        bien.removeClass("giuongdangchon");
-                        for (i=0; i < mang.length; i++) {
-                           if(mang[i]==ma){
-                                mang[i]=null;
-                                break;
+                           else if(data.kq == 2){
+                            time= data.TGC;
+                            bien.addClass("ghecochon");
+                            bien.removeClass("ghedangchon");
+                            demnguoc(ma,time);
+                            for (i=0; i < mang.length; i++) {
+                               if(mang[i]==ma){
+                                    mang[i]=null;
+                                    break;
+                               }
                            }
-                       }
-                        alert("Xin lổi - Ghế này đã có người mua !")
-                       }
-                       else if(data.kq == 2){
-                        bien.addClass("giuongcochon");
-                        bien.removeClass("giuongdangchon");
-                        for (i=0; i < mang.length; i++) {
-                           if(mang[i]==ma){
-                                mang[i]=null;
-                                break;
+                            alert("Xin lổi - Ghế này đã có người chọn !")
                            }
-                       }
-                        alert("Xin lổi - Ghế này đã có người chọn !")
-                       }
-                    }
-             });
-        }
+                        }
+                 });
+            }
+        /*Xử lý đặt giường*/
+            function datgiuong(bien,ma){
+              makh = {{Session::get('makh')}};
+                            bien.addClass("giuongdangchon");
+                            bien.removeClass("giuongcontrong");
+                            mang.push(ma);
+                            $("td[data-ma='"+ma+"'] .text1").show();
+                     demnguoc(ma,600);
+                    $.ajax({
+                        url: '{{route("xulydatve")}}',
+                        type: 'POST',
+                        data: {
+                            _token: '{{csrf_token()}}',
+                            MA: ma,
+                            MAKH: makh
+                        },
+                        success: function (data) {
+                          if(data.kq==0){
+                            bien.addClass("giuongcontrong");
+                            bien.removeClass("giuongdangchon");
+                            for (i=0; i < mang.length; i++) {
+                               if(mang[i]==ma){
+                                    mang[i]=null;
+                                    break;
+                               }
+                           }
+                          }
+                           else if(data.kq==1){
+                            bien.addClass("giuong");
+                            bien.removeClass("giuongdangchon");
+                            for (i=0; i < mang.length; i++) {
+                               if(mang[i]==ma){
+                                    mang[i]=null;
+                                    break;
+                               }
+                           }
+                            alert("Xin lổi - Ghế này đã có người mua !")
+                           }
+                           else if(data.kq == 2){
+                            bien.addClass("giuongcochon");
+                            bien.removeClass("giuongdangchon");
+                            for (i=0; i < mang.length; i++) {
+                               if(mang[i]==ma){
+                                    mang[i]=null;
+                                    break;
+                               }
+                           }
+                            alert("Xin lổi - Ghế này đã có người chọn !")
+                           }
+                        }
+                 });
+            }
         $(document).ready(function(){
-         $(".bangve").delegate(".ghecontrong","click",function(){
-                ma = $(this).attr("data-ma");
-                bien = $(this);
-                datghe(bien,ma);
-            });
-          $(".bangve").delegate(".ghedangchon","click",function(){
-                ma = $(this).attr("data-ma");
-                bien = $(this);
-
-                $.ajax({
-                    url: '{{route("xulydatve2")}}',
-                    type: 'POST',
-                    data: {
-                        _token: '{{csrf_token()}}',
-                        MA: ma,
-                    },
-                    success: function (data) {
-                       if(data.kq == 1){
-                        bien.addClass("ghecontrong");
-                        bien.removeClass("ghedangchon");
-                         /*$("td[data-ma='"+ma+"']").off('click',demnguoc);*/
-                        $("td[data-ma='"+ma+"'] .text1").hide();
-                       for (i=0; i < mang.length; i++) {
-                           if(mang[i]==ma){
-                                mang[i]=null;
-                                break;
+          /*kích chọn vé ghế*/
+             $(".bangve").delegate(".ghecontrong","click",function(){
+                    ma = $(this).attr("data-ma");
+                    bien = $(this);
+                    datghe(bien,ma);
+                });
+          /*kích hủy vé ghế*/
+              $(".bangve").delegate(".ghedangchon","click",function(){
+                    ma = $(this).attr("data-ma");
+                    bien = $(this);
+                    $.ajax({
+                        url: '{{route("xulydatve2")}}',
+                        type: 'POST',
+                        data: {
+                            _token: '{{csrf_token()}}',
+                            MA: ma,
+                        },
+                        success: function (data) {
+                           if(data.kq == 1){
+                            bien.addClass("ghecontrong");
+                            bien.removeClass("ghedangchon");
+                             /*$("td[data-ma='"+ma+"']").off('click',demnguoc);*/
+                            $("td[data-ma='"+ma+"'] .text1").hide();
+                           for (i=0; i < mang.length; i++) {
+                               if(mang[i]==ma){
+                                    mang[i]=null;
+                                    break;
+                               }
                            }
-                       }
-                       location.reload();
-                       }
-                    }
-             });
-        });
+                           location.reload();
+                           }
+                        }
+                 });
+            });
+          /*kích chọn vé giường*/
                 $(".bangve").delegate(".giuongcontrong","click",function(){
                 ma = $(this).attr("data-ma");
                 bien = $(this);
-                datgiuong(bien,ma);
-                
-            });
+                datgiuong(bien,ma);    
+              });
+          /*kích hủy chọn vé giường*/
                $(".bangve").delegate(".giuongdangchon","click",function(){
                 ma = $(this).attr("data-ma");
                 bien = $(this);
@@ -460,10 +492,12 @@
                                 break;
                            }
                        }
+                       location.reload();
                        }
                     }
-             });
-        });
+                  });
+                });
+            /*xử lý đặt vé*/
                $(".chondatve").click(function(){
                     id = $(this).attr("data-id");
                     makh ={{Session::get('makh')}};
@@ -483,6 +517,7 @@
                     }
                     });
                });
+            /*xử lý chọn tầng*/
                $(".tren").click(function(){
                     $(".tren").css({"background":"#f57812","color":"#FFF"});
                     $(".duoi").css({"background":"#CCC","color":"#000"});
@@ -490,11 +525,13 @@
                     $(".tangduoi").hide();
                });
                $(".duoi").click(function(){
-                $(".duoi").css({"background":"#f57812","color":"#FFF"});
-                $(".tren").css({"background":"#CCC","color":"#000"});
-                $(".tangduoi").show();
-                $(".tangtren").hide();
+                  $(".duoi").css({"background":"#f57812","color":"#FFF"});
+                  $(".tren").css({"background":"#CCC","color":"#000"});
+                  $(".tangduoi").show();
+                  $(".tangtren").hide();
                });
+            /*kết thúc xử lý chọn tầng*/
+            /* đề xuất cho mình*/
               $(".dxchominh").click(function () {
                    makh = '{{session('makh')}}';
                    machuyenxe = '{{$chonve[0]->Mã}}';
@@ -512,12 +549,14 @@
                         $(".vetotnhat").html(vitri);
                         for(i=1;i<6;i++){
                           vitri = data.kq[i].Vị_trí_ghế;
+                          ma = data.kq[i].Mã;
                           $(".vetieptheo").after(vitri);
                            $(".vetieptheo").after("<br>");
                         }
                       }
                   }) ;
                });
+            /*đề xuất cho người thân*/
                $(".chondxnguoithan").click(function () {
                    machuyenxe = '{{$chonve[0]->Mã}}';
                    var kt = true;
@@ -541,7 +580,7 @@
                       type: 'post',
                       success: function (data) {
                         if(data.kq == 0){
-                          alert("dasdasdasdasd");
+                          alert("Xin Lôi! Trang Chưa đủ dữ liệu để đề xuất !");
                         }
                         else{
                           alert('Trang web đề nghị cho bạn những ghế sau:\n'+data.kq[0].Vị_trí_ghế);
@@ -549,6 +588,6 @@
                       }
                   }) ;
                });
-});
-    </script>
+      });
+  </script>
 @endsection

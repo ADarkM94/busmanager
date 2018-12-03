@@ -1,8 +1,18 @@
 @extends('quantrivien.main')
+@section('title')
+	@if(isset($ttnhanvien))
+		Chỉnh sửa thông tin nhân viên
+	@else
+		Thêm nhân viên
+	@endif
+@endsection
 @section('content')
     <style>
         .row > *:nth-child(2) {
             text-align: left;
+        }
+		.header .row > *:nth-child(2) {
+            text-align: center;
         }
     </style>
     <div class="content show row" id="addnhanvien">

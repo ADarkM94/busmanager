@@ -1,4 +1,7 @@
 @extends('quantrivien.main')
+@section('title')
+	Thông tin khách hàng
+@endsection
 @section('content')
     <div class="content khachhang row show"  style="position: relative;">
         <h4 style="clear: both; padding: .5em 1em; text-align: center; width: 100%;">Thông tin khách hàng</h4>

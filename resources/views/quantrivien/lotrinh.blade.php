@@ -1,4 +1,7 @@
 @extends('quantrivien.main')
+@section('title')
+	Quản lý Lộ trình
+@endsection
 @section('content')
     <div class="content lotrinh row show">
         <div class="col-lg-8" style="position: relative; height: 100%; font-size: 1em; padding: 3em 1em 1em;">

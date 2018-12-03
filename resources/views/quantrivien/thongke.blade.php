@@ -1,4 +1,7 @@
 @extends('quantrivien.main')
+@section('title')
+	Quản lý Thống kê
+@endsection
 @section('content')
     <div class="content thongke show">
         <div>

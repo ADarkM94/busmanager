@@ -270,6 +270,9 @@ a:hover, a:visited {
 .menu > ul > a:nth-child(9) > .option:hover > img {
     content: url("../images/icons/parking-hover.png");
 }
+.menu > ul > a:nth-child(10) > .option:hover > img {
+    content: url("../images/icons/newspaper-hover.png");
+}
 .option:not([class~='selected']):hover {
     background: #004964;
     color: white;
@@ -955,6 +958,9 @@ a:hover, a:visited {
 	background: #004964;
 	color: white;
 	text-align: center;
+}
+#editve .row > * {
+	text-align: left;
 }
 @keyframes loading {
 	0% { transform: translate(-50%,-50%) rotateZ(0deg);}

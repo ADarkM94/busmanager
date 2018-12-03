@@ -1,36 +1,32 @@
 @extends('quantrivien.main')
+@section('title')
+	@if(isset($ttkhachhang))
+		Chỉnh sửa khách hàng
+	@else
+		Thêm khách hàng
+	@endif
+@endsection
 @section('content')
     <style>
         .row > *:nth-child(2) {
             text-align: left;
         }
+		.header .row > *:nth-child(2) {
+            text-align: center;
+        }
     </style>
     <div class="content show row" id="addkhachhang">
         <div class="col-lg-3">
             @if(session('alert'))
-                <div class="modal fade" id="alertmessage">
-					<div class="modal-dialog" style="width: 400px; margin-top: 200px;">
-						<div class="modal-content" style="text-align: center;">
-							<div class="modal-header">
-								<div class="modal-title">Thông báo</div>
-							</div>
-							<div class="modal-body alert alert-warning" style="text-align: center; margin-bottom: 0;">
-								{{session('alert')}}
-							</div>
-							<div class="modal-footer" style="text-align: center;">
-								<span class="btn btn-success" data-dismiss="modal">OK</span>
-							</div>
-						</div>
-					</div>
-				</div>
 				<script>
 					$(document).ready(function(){
+						$('#alertmessage .modal-body').html('{{session('alert')}}');
 						$('#alertmessage').modal('show');
 					});
 				</script>
             @endif
         </div>
-        <form name="ttkhachhang" class="col-lg-6" action="{{route('addcustomer')}}" method="post">
+        <form id="frm-khachhang" name="ttkhachhang" class="col-lg-6" action="{{route('addcustomer')}}" method="post">
             @csrf
             <fieldset>
                 <legend><?php echo isset($ttkhachhang)? 'Sửa Thông Tin Người Dùng':'Thêm Người Dùng';?></legend>
@@ -81,6 +77,20 @@
     </div>
 @endsection
 @section('excontent')
+	<div class="modal fade" id="alertmessage">
+		<div class="modal-dialog" style="width: 400px; margin-top: 200px;">
+			<div class="modal-content" style="text-align: center;">
+				<div class="modal-header">
+					<div class="modal-title">Thông báo</div>
+				</div>
+				<div class="modal-body alert alert-warning" style="text-align: center; margin-bottom: 0;">
+				</div>
+				<div class="modal-footer" style="text-align: center;">
+					<span class="btn btn-success" data-dismiss="modal">OK</span>
+				</div>
+			</div>
+		</div>
+	</div>
 @endsection
 @section('script')
     <script>
@@ -90,8 +100,10 @@
         }
         option[1].classList.add('selected');
         option[1].getElementsByTagName('img')[0].setAttribute('src','{{asset("images/icons/customer-hover.png")}}');
+	</script>
+	@if(isset($ttkhachhang))
+	<script>
         document.forms["ttkhachhang"]["submit"].onclick = function (ev) {
-            ev.preventDefault();
             var name = document.forms["ttkhachhang"]["name"];
 			var brtday = document.forms["ttkhachhang"]["brtday"];
 			var gender = document.forms["ttkhachhang"]["gender"];
@@ -99,38 +111,244 @@
             var phone = document.forms["ttkhachhang"]["phone"];
             var password = document.forms["ttkhachhang"]["password"];
             var address = document.forms["ttkhachhang"]["address"];
+			var idkhachhang = '{{$ttkhachhang["Mã"]}}';
+			var str = "";
+			var format_phone = /^(0[3578]|09)[0-9]{8}$/;
+			var format_name = /[a-zA-Z][^#&<>\"~;$^%{}?]{1,50}$/;
+			var format_email = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}$/;
 			name.style.borderColor = "#ccc";
-			password.style.borderColor = "#ccc";
+			brtday.style.borderColor = "#ccc";
 			email.style.borderColor = "#ccc";
 			phone.style.borderColor = "#ccc";
+			password.style.borderColor = "#ccc";
 			if(name.value == "")
 			{
 				name.style.borderColor = "red";
+				str += "Tên không được để trống!<br>";
 			}
 			else if(name.value != "")
 			{
-				
+				if(name.value.search(format_name) == -1)
+				{
+					name.style.borderColor = "red";
+					str += "Tên không đúng định dạng!<br>";
+				}
 			}
-			if(password.value == "")
+			if(brtday.value == "")
 			{
-				password.style.borderColor = "red";
+				brtday.style.borderColor = "red";
+				str += "Ngày sinh không được để trống!<br>";
 			}
-			else if(password.value != "")
+			if(gender.value == 0)
 			{
-				
-			}
+				str += "Giới tính không được để không xác định!<br>";
+			}			
 			if(email.value != "")
 			{
-				
+				if(email.value.search(format_email) == -1)
+				{
+					email.style.borderColor = "red";
+					str += "Email không đúng định dạng!<br>";
+				}
+				else
+				{
+					$.ajax({
+						url: "{{route('admin_checkexist')}}",
+						type: "post",
+						data: {
+							_token: "{{csrf_token()}}",
+							typecheck: "useremail_change",
+							datacheck: email.value,
+							idcheck: idkhachhang
+						},
+						success: function(data){
+							if(data.kq == 1)
+							{
+								email.style.borderColor = "red";
+								str += "Email đã tồn tại!<br>";
+							}
+						},
+						async: false
+					});
+				}
 			}
 			if(phone.value == "")
 			{
 				phone.style.borderColor = "red";
+				str += "Số điện thoại không được để trống!<br>";
 			}
 			else if(phone.value != "")
 			{
-				
+				if(phone.value.search(format_phone) == -1)
+				{
+					phone.style.borderColor = "red";
+					str += "Số điện thoại không đúng định dạng!<br>";
+				}
+				else
+				{
+					$.ajax({
+						url: "{{route('admin_checkexist')}}",
+						type: "post",
+						data: {
+							_token: "{{csrf_token()}}",
+							typecheck: "userphone_change",
+							datacheck: phone.value,
+							idcheck: idkhachhang
+						},
+						success: function(data){
+							if(data.kq == 1)
+							{
+								phone.style.borderColor = "red";
+								str += "Số điện thoại đã tồn tại!<br>";
+							}
+						},
+						async: false
+					});
+				}
+			}
+			// if(password.value == "")
+			// {
+				// password.style.borderColor = "red";
+				// str += "Password không được để trống!<br>";
+			// }
+			// else if(password.value != "")
+			// {
+				// if(password.value.length < 6 || password.value.length > 30)
+				// {
+					// password.style.borderColor = "red";
+					// str += "Password không được ít hơn 6 ký tự và vượt quá 30 ký tự!<br>";
+				// }
+			// }
+			if(str != "")
+			{
+				ev.preventDefault();
+				$('#alertmessage .modal-body').html(str);
+				$('#alertmessage').modal('show');
 			}
         };
     </script>
+	@else
+	<script>
+        document.forms["ttkhachhang"]["submit"].onclick = function (ev) {
+            var name = document.forms["ttkhachhang"]["name"];
+			var brtday = document.forms["ttkhachhang"]["brtday"];
+			var gender = document.forms["ttkhachhang"]["gender"];
+            var email = document.forms["ttkhachhang"]["email"];
+            var phone = document.forms["ttkhachhang"]["phone"];
+            var password = document.forms["ttkhachhang"]["password"];
+            var address = document.forms["ttkhachhang"]["address"];
+			var str = "";
+			var format_phone = /^(0[3578]|09)[0-9]{8}$/;
+			var format_name = /[a-zA-Z][^#&<>\"~;$^%{}?]{1,50}$/;
+			var format_email = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}$/;
+			name.style.borderColor = "#ccc";
+			brtday.style.borderColor = "#ccc";
+			email.style.borderColor = "#ccc";
+			phone.style.borderColor = "#ccc";
+			password.style.borderColor = "#ccc";
+			if(name.value == "")
+			{
+				name.style.borderColor = "red";
+				str += "Tên không được để trống!<br>";
+			}
+			else if(name.value != "")
+			{
+				if(name.value.search(format_name) == -1)
+				{
+					name.style.borderColor = "red";
+					str += "Tên không đúng định dạng!<br>";
+				}
+			}
+			if(brtday.value == "")
+			{
+				brtday.style.borderColor = "red";
+				str += "Ngày sinh không được để trống!<br>";
+			}
+			if(gender.value == 0)
+			{
+				str += "Giới tính không được để không xác định!<br>";
+			}			
+			if(email.value != "")
+			{
+				if(email.value.search(format_email) == -1)
+				{
+					email.style.borderColor = "red";
+					str += "Email không đúng định dạng!<br>";
+				}
+				else
+				{
+					$.ajax({
+						url: "{{route('admin_checkexist')}}",
+						type: "post",
+						data: {
+							_token: "{{csrf_token()}}",
+							typecheck: "useremail_create",
+							datacheck: email.value
+						},
+						success: function(data){
+							if(data.kq == 1)
+							{
+								email.style.borderColor = "red";
+								str += "Email đã tồn tại!<br>";
+							}
+						},
+						async: false
+					});
+				}
+			}
+			if(phone.value == "")
+			{
+				phone.style.borderColor = "red";
+				str += "Số điện thoại không được để trống!<br>";
+			}
+			else if(phone.value != "")
+			{
+				if(phone.value.search(format_phone) == -1)
+				{
+					phone.style.borderColor = "red";
+					str += "Số điện thoại không đúng định dạng!<br>";
+				}
+				else
+				{
+					$.ajax({
+						url: "{{route('admin_checkexist')}}",
+						type: "post",
+						data: {
+							_token: "{{csrf_token()}}",
+							typecheck: "userphone_create",
+							datacheck: phone.value
+						},
+						success: function(data){
+							if(data.kq == 1)
+							{
+								phone.style.borderColor = "red";
+								str += "Số điện thoại đã tồn tại!<br>";
+							}
+						},
+						async: false
+					});
+				}
+			}
+			if(password.value == "")
+			{
+				password.style.borderColor = "red";
+				str += "Password không được để trống!<br>";
+			}
+			else if(password.value != "")
+			{
+				if(password.value.length < 6 || password.value.length > 30)
+				{
+					password.style.borderColor = "red";
+					str += "Password không được ít hơn 6 ký tự và vượt quá 30 ký tự!<br>";
+				}
+			}
+			if(str != "")
+			{
+				ev.preventDefault();
+				$('#alertmessage .modal-body').html(str);
+				$('#alertmessage').modal('show');
+			}
+        };
+    </script>
+	@endif
 @endsection

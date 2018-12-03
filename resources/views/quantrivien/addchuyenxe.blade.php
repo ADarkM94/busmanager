@@ -1,30 +1,26 @@
 @extends('quantrivien.main')
+@section('title')
+	@if(isset($ttchuyenxe))
+		Chỉnh sửa chuyến xe
+	@else
+		Thêm chuyến xe
+	@endif
+@endsection
 @section('content')
     <style>
         .row > *:nth-child(2) {
             text-align: left;
         }
+		.header .row > *:nth-child(2) {
+            text-align: center;
+        }
     </style>
     <div class="content show row" id="addchuyenxe">
         <div class="col-lg-2">
             @if(session('alert'))
-                <div class="modal fade" id="alertmessage">
-					<div class="modal-dialog" style="width: 400px; margin-top: 200px;">
-						<div class="modal-content" style="text-align: center;">
-							<div class="modal-header">
-								<div class="modal-title">Thông báo</div>
-							</div>
-							<div class="modal-body alert alert-warning" style="text-align: center; margin-bottom: 0;">
-								{{session('alert')}}
-							</div>
-							<div class="modal-footer" style="text-align: center;">
-								<span class="btn btn-success" data-dismiss="modal">OK</span>
-							</div>
-						</div>
-					</div>
-				</div>
 				<script>
 					$(document).ready(function(){
+						$('#alertmessage .modal-body').html('{{session('alert')}}');
 						$('#alertmessage').modal('show');
 					});
 				</script>
@@ -43,7 +39,7 @@
                 @endisset
 				<div class="row" style="padding-left: 1em; padding-right: 1em;">
 					<div class="col-lg-6">
-					<label>Trạng thái</label>
+					<label>Trạng thái<i class="text text-danger">*</i></label>
 					<select name="status" class="form-control">
 						<option value="0" {{(isset($ttchuyenxe['Trạng_thái'])&&$ttchuyenxe['Trạng_thái']==0)? 'selected':''}}>Waiting</option>
 						<option value="1" {{(isset($ttchuyenxe['Trạng_thái'])&&$ttchuyenxe['Trạng_thái']==1)? 'selected':''}}>Running</option>
@@ -54,34 +50,31 @@
 				</div>
 				<br>
                 <div class="col-lg-6">
-                    <label>Mã Lộ trình</label>
-                    {{-- <input type="hidden" name="idlotrinh" value="{{isset($ttchuyenxe['Nơi_đi'])? $ttchuyenxe['Mã_lộ_trình']:''}}">--}}
+                    <label>Mã Lộ trình<i class="text text-danger">*</i></label>
                     <input type="text" list="lotrinh" class="form-control"  name="lotrinh" value="{{isset($ttchuyenxe['Nơi_đi'])? $ttchuyenxe['Mã_lộ_trình']:''}}" placeholder="Lộ trình" required>
                     <br>
-                    <label>Mã Tài xế</label>
-                    {{-- <input type="hidden" name="idtaixe" value="{{isset($ttchuyenxe['Tài_xế'])? $ttchuyenxe['Mã_tài_xế']:''}}">--}}
+                    <label>Mã Tài xế<i class="text text-danger">*</i></label>
                     <input type="text" list="taixe" class="form-control" name="taixe" value="{{isset($ttchuyenxe['Tài_xế'])? $ttchuyenxe['Mã_tài_xế']:''}}" placeholder="Tài xế" required>
                     <br>
-                    <label>Mã Xe</label>
-                    {{--<input type="hidden" name="idxe" value="{{isset($ttchuyenxe['Biển_số'])? $ttchuyenxe['Mã_xe']:''}}">--}}
+                    <label>Mã Xe<i class="text text-danger">*</i></label>
                     <input type="text" list="xe" class="form-control" name="xe" value="{{isset($ttchuyenxe['Biển_số'])? $ttchuyenxe['Mã_xe']:''}}" placeholder="Chọn xe" required>
                     <br>
                 </div>
                 <div class="col-lg-6">
-                    <label>Giờ khởi hành</label>
+                    <label>Giờ khởi hành<i class="text text-danger">*</i></label>
                     <input type="time" class="form-control"  name="starttime" value="{{isset($ttchuyenxe['Giờ_xuất_phát'])? $ttchuyenxe['Giờ_xuất_phát']:''}}" required>
                     <br>
-                    <label>Ngày khởi hành</label>
+                    <label>Ngày khởi hành<i class="text text-danger">*</i></label>
                     <input type="date" class="form-control"  name="startdate" value="{{isset($ttchuyenxe['Ngày_xuất_phát'])? $ttchuyenxe['Ngày_xuất_phát']:''}}" required>
                     <br>
-                    <label>Tiền vé</label>
+                    <label>Tiền vé<i class="text text-danger">*</i></label>
                     <input type="number" min="0" class="form-control"  name="tien" value="{{isset($ttchuyenxe['Tiền_vé'])? $ttchuyenxe['Tiền_vé']:''}}" required>
                     <br>
                 </div>
                 <div id="ticket"></div>
                 <br>
                 <div style="text-align: center; clear: both;">
-                    <input type="submit" class="btn btn-success" value="<?php echo isset($ttchuyenxe)? 'Sửa Thông Tin Chuyến Xe':'Thêm Chuyến Xe';?>">
+                    <input type="submit" name="submit" class="btn btn-success" value="<?php echo isset($ttchuyenxe)? 'Sửa Thông Tin Chuyến Xe':'Thêm Chuyến Xe';?>">
                     <input type="button" onclick="location.assign('{{url('/admin/chuyenxe')}}')" class="btn btn-danger" value="Hủy">
                 </div>
             </fieldset>
@@ -111,26 +104,24 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button class="close" data-dismiss="modal">&times;</button>
-                    <div class="modal-title">Thông Tin Vé</div>
+                    <h4 class="modal-title">Thông Tin Vé</h4>
                 </div>
                 <div class="modal-body">
-                    <form name="editticket">
-                        <input type="hidden" name="ID" value="">
-                        <div class="row">
-                            <div class="col-lg-6" style="font-size: 1em; width: 50%">
-                                <label>Giá</label>
-                                <input type="number" min="0" class="form-control" name="giave" placeholder="Giá vé" readonly>
-                            </div>
-                            <div class="col-lg-6" style="width: 50%; text-align: left;">
-                                <label>Trạng thái</label>
-                                <select class="form-control" name="trangthai">
-                                    <option value="0">Waiting</option>
-                                    <option value="1">Booked</option>
-                                    <option value="2">Completed</option>
-                                    <option value="3">Banned</option>
-                                </select>
-                            </div>
+                    <form name="editticket" class="row">
+                        <input type="hidden" name="ID" value="">                        
+                        <div class="col-lg-6 form-group">
+                            <label>Giá</label>
+                            <input type="number" min="0" class="form-control" name="giave" placeholder="Giá vé" readonly>
                         </div>
+                        <div class="col-lg-6 form-group">
+                            <label>Trạng thái</label>
+                            <select class="form-control" name="trangthai">
+                                <option value="0">Waiting</option>
+                                <option value="1">Booked</option>
+                                <option value="2">Locked</option>
+                                <option value="3">Banned</option>
+                            </select>
+                        </div>                        
                     </form>
                 </div>
                 <div class="modal-footer" style="text-align: center;">
@@ -139,6 +130,20 @@
             </div>
         </div>
     </div>
+	<div class="modal fade" id="alertmessage">
+		<div class="modal-dialog" style="width: 400px; margin-top: 200px;">
+			<div class="modal-content" style="text-align: center;">
+				<div class="modal-header">
+					<div class="modal-title">Thông báo</div>
+				</div>
+				<div class="modal-body alert alert-warning" style="text-align: center; margin-bottom: 0;">
+				</div>
+				<div class="modal-footer" style="text-align: center;">
+					<span class="btn btn-success" data-dismiss="modal">OK</span>
+				</div>
+			</div>
+		</div>
+	</div>
 @endsection
 @section('script')
     <script>
@@ -148,6 +153,108 @@
         }
         option[2].classList.add('selected');
         option[2].getElementsByTagName('img')[0].setAttribute('src','{{asset("images/icons/chuyenxe-hover.png")}}');
+		document.forms["ttchuyenxe"]["submit"].onclick = function(ev){
+			var lotrinh = document.forms["ttchuyenxe"]["lotrinh"];
+			var taixe = document.forms["ttchuyenxe"]["taixe"];
+			var xe = document.forms["ttchuyenxe"]["xe"];
+			var starttime = document.forms["ttchuyenxe"]["starttime"];
+			var startdate = document.forms["ttchuyenxe"]["startdate"];
+			var tien = document.forms["ttchuyenxe"]["tien"];
+			var str = "";
+			lotrinh.style.borderColor = "#ccc";
+			taixe.style.borderColor = "#ccc";
+			xe.style.borderColor = "#ccc";
+			starttime.style.borderColor = "#ccc";
+			startdate.style.borderColor = "#ccc";
+			tien.style.borderColor = "#ccc";
+			if(lotrinh.value == "")
+			{
+				lotrinh.style.borderColor = "red";
+				str += "Mã lộ trình không được để trống!<br>";
+			}
+			else
+			{ 
+				var check = true;
+				for(var i=0;i<lotrinh.list.options.length;i++)
+				{
+					if(lotrinh.value == lotrinh.list.options[i].value)
+					{
+						check = false;
+						break;
+					}
+				}
+				if(check)
+				{
+					lotrinh.style.borderColor = "red";
+					str += "Mã lộ trình không tồn tại!<br>";
+				}
+			}
+			if(taixe.value == "")
+			{
+				taixe.style.borderColor = "red";
+				str += "Mã tài xế không được để trống!<br>";
+			}
+			else
+			{ 
+				var check = true;
+				for(var i=0;i<taixe.list.options.length;i++)
+				{
+					if(taixe.value == taixe.list.options[i].value)
+					{
+						check = false;
+						break;
+					}
+				}
+				if(check)
+				{
+					taixe.style.borderColor = "red";
+					str += "Mã tài xế không tồn tại!<br>";
+				}
+			}
+			if(xe.value == "")
+			{
+				xe.style.borderColor = "red";
+				str += "Mã xe không được để trống!<br>";
+			}
+			else
+			{ 
+				var check = true;
+				for(var i=0;i<xe.list.options.length;i++)
+				{
+					if(xe.value == xe.list.options[i].value)
+					{
+						check = false;
+						break;
+					}
+				}
+				if(check)
+				{
+					xe.style.borderColor = "red";
+					str += "Mã xe không tồn tại!<br>";
+				}
+			}
+			if(starttime.value == "")
+			{
+				starttime.style.borderColor = "red";
+				str += "Giờ khởi hành không được để trống!<br>";
+			}
+			if(startdate.value == "")
+			{
+				startdate.style.borderColor = "red";
+				str += "Ngày khởi hành không được để trống!<br>";
+			}
+			if(tien.value == "")
+			{
+				tien.style.borderColor = "red";
+				str += "Tiền vé không được để trống!<br>";
+			}
+			if(str != "")
+			{
+				ev.preventDefault();
+				$('#alertmessage .modal-body').html(str);
+				$('#alertmessage').modal('show');
+			}
+		};
     </script>
     @isset($ttchuyenxe)
         <script>

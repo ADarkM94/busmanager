@@ -3,10 +3,14 @@
     Giới thiệu
 @endsection
 @section('content')
-    <div class="maingioithieu">
-        <div class="trangtentintuc"><h2>Giới Thiệu</h2></div>
-        <div style="margin-top: 4em;">
-            <p>Là một trong những công ty hàng đầu trong lĩnh vực xe khách đường dài.</p>
-        </div>
-    </div>
+	<!-- Giới thiệu -->
+	    <div class="maingioithieu">
+	        <div class="trangtentintuc"><h2>Giới Thiệu</h2></div>
+	        <div style="margin-top: 4em;">
+	        @foreach($gioithieu as $t)
+				{!! $t->noidung !!}
+	        @endforeach
+	    	</div>
+	    </div>
+	<!-- Kết thúc phần giới thiệu -->
 @endsection

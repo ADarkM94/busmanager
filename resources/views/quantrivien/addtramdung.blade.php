@@ -1,8 +1,18 @@
 @extends('quantrivien.main')
+@section('title')
+	@if(isset($tttramdung))
+		Chỉnh sửa thông tin trạm dừng
+	@else
+		Thêm trạm dừng
+	@endif
+@endsection
 @section('content')
     <style>
         .row > *:nth-child(2) {
             text-align: left;
+        }
+		.header .row > *:nth-child(2) {
+            text-align: center;
         }
     </style>
     <div class="content show row" id="addtramdung">

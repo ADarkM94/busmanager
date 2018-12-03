@@ -71,8 +71,8 @@
 	width: 90%;
 	padding-top: 0.5em;
 	padding-bottom: 0.5em;
-	background:rgb(247,247,247);
-	box-shadow: 0 0 1em #CCC;
+	
+	
 	border: 0.5px solid #CCC;
 }
 #form-lienhe textarea{
@@ -82,16 +82,16 @@
 	padding-top: 0.5em;
 	padding-bottom: 0.5em;
 	height: 10em;
-	box-shadow: 0 0 1em #CCC;
+	
 	border: 0.5px solid #CCC;
-	background:rgb(247,247,247);
+	
 }
 #form-lienhe  table{
 	width: 100%;
 }
 #form-lienhe p{
 	margin-top: 0.5em;
-	color: #CCC;
+	color: #000;
 }
 /*button*/
 #form-lienhe button{

@@ -1,4 +1,7 @@
 @extends('quantrivien.main')
+@section('title')
+	Quản lý Vé
+@endsection
 @section('content')
     <div class="content row show" style="overflow: hidden; position: relative; padding: 3em 1em 1em">
         <h4 style="padding: .5em; position: absolute; top: 0; left: 0; width: 100%;">Bảng Vé Xe</h4>
@@ -126,7 +129,7 @@
                             return '<small style="font-size: .8em;" class="btn btn-success">Booked</small>';
                             break;
                         case 2:
-                            return '<small style="font-size: .8em;" class="btn btn-warning">Completed</small>';
+                            return '<small style="font-size: .8em;" class="btn btn-warning">Locked</small>';
                             break;
                         case 3:
                             return '<small style="font-size: .8em;" class="btn btn-danger">Banned</small>';
@@ -140,7 +143,7 @@
                         {'':'All'},
                         {'0':'Waiting'},
                         {'1':'Booked'},
-                        {'2':'Completed'},
+                        {'2':'Locked'},
                         {'3':'Banned'}
                     ],
                     listeners: ['change']

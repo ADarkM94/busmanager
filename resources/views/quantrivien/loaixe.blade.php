@@ -1,4 +1,7 @@
 @extends('quantrivien.main')
+@section('title')
+	Quản lý Loại xe
+@endsection
 @section('content')
     <div class="content loaixe row show">
         <div class="col-lg-6">
