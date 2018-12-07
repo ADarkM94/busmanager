@@ -95,6 +95,8 @@ Route::middleware('admincheck')->group(function (){
     Route::post('admin/addbusroute', 'AdminController@addbusroute')->name('addbusroute');
 
     Route::post('admin/delbusroute', 'AdminController@delbusroute')->name('delbusroute');
+	
+	Route::post('admin/getlocations', 'AdminController@admin_getlocations')->name("admin_getlocations");
 
 //Phần tỉnh
 

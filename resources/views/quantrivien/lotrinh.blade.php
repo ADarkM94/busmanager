@@ -113,6 +113,20 @@
             </div>
         </div>
     </div>
+	<div class="modal fade" id="viewmap">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Tên Trạm Dừng</h4>
+                </div>
+                <div class="modal-body" style="height: 600px">
+                </div>
+                <div class="modal-footer">
+                    <span class="btn btn-danger" data-dismiss="modal" data-target="#viewmap">Close</span>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 @section('script')
     <script>
@@ -235,6 +249,10 @@
                 dataType: "string",
                 editor: false,
                 align: "center",
+				render: function(ui){
+                    var str = "<a href='javascript:void(0)' data-locations='"+ui.rowData['Các_trạm_dừng_chân']+"' onclick='openmaproad(this)' title='Xem vị trí'><i class='glyphicon glyphicon-eye-open' style='color: #00bf00;'></i></a>";
+                    return str;
+                }
                /* filter: {
                     type: 'textbox',
                     condition: 'contain',
@@ -588,7 +606,8 @@
 				});
 			}            
         }
-        function delprovince(id) {
+        function delprovince(id) 
+		{
             $.ajax({
                 url: '{{route("delprovince")}}',
                 type: 'POST',
@@ -607,5 +626,63 @@
                 }
             });
         }
+		function openmaproad(ev)
+		{
+			var locations = ev.getAttribute("data-locations").split(",");
+			$.ajax({
+				url: '{{route("admin_getlocations")}}',
+				type: 'post',
+				data: {
+					_token: '{{csrf_token()}}',
+					locations: locations
+				},
+				success: function(data){
+					if(data.kq == 1)
+					{
+						showMap(data.data);
+						$("#viewmap").modal();
+					}
+				}
+			});
+		}
+		function showMap(locations)
+		{
+			// var locations = [
+				// ['Bondi Beach', -33.890542, 151.274856, 4],
+				// ['Coogee Beach', -33.923036, 151.259052, 5],
+				// ['Cronulla Beach', -34.028249, 151.157507, 3],
+				// ['Manly Beach', -33.80010128657071, 151.28747820854187, 2],
+				// ['Maroubra Beach', -33.950198, 151.259302, 1]
+			// ];
+			var locations = locations;
+			var center = locations[0];
+			
+			var map = new google.maps.Map(document.getElementById("viewmap").getElementsByClassName("modal-body")[0], {
+				zoom: 15,
+				center: new google.maps.LatLng(center[0], center[1]),
+				mapTypeId: google.maps.MapTypeId.ROADMAP
+			});
+
+			var infowindow = new google.maps.InfoWindow();
+			
+			var marker, i;
+
+			for (i = 0; i < locations.length; i++) {  
+				marker = new google.maps.Marker({
+					position: new google.maps.LatLng(locations[i][0], locations[i][1]),
+					map: map
+				});
+
+				google.maps.event.addListener(marker, 'click', (function(marker, i) {
+					return function() {
+						infowindow.setContent(locations[i][2]);
+						infowindow.open(map, marker);
+					}
+				})(marker, i));
+			}
+			infowindow.setContent(center[2]);
+			infowindow.open(map, marker);
+		}
     </script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDPoe4NcaI69_-eBqxW9Of05dHNF0cRJ78"></script>
 @endsection

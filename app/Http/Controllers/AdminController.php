@@ -469,6 +469,19 @@ class AdminController extends Controller
             return \response()->json(['result'=>'1']);
         }
     }
+	public function admin_getlocations(Request $request)
+	{
+		$locations = $request->locations;
+		$toado = [];
+		for($i=0;$i<count($locations);$i++)
+		{
+			$name = DB::table("tram_dung")->where("Mã","=",$locations[$i])->select("Tên")->get()[0]->Tên;
+			$location = explode(",",DB::table("tram_dung")->where("Mã","=",$locations[$i])->select("Tọa_độ")->get()[0]->Tọa_độ);
+			$location[2] = $name;
+			$toado[$i] = $location;
+		}
+		return response()->json(['kq' => 1,'data' => $toado]);
+	}
 
     //Phần tỉnh
     public function addprovince(Request $request) {
