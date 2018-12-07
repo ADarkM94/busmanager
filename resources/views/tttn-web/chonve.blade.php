@@ -202,21 +202,21 @@
           <!-- Modal content-->
             <div class="modal-content">
               <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <button type="button" class="close dongdx" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">Vé Được Đề Xuất</h4>
               </div>
               <div class="modal-body">
-                <div style="text-align: center;" >
+                <div style="text-align: left;" >
                   <h4 style="background: #f57812; text-align: center; color: #FFF; height: 40px; line-height: 40px; border-radius: 0.5em;">Vé Tốt Nhất</h4>
                   <div class="vetotnhat"></div>
                 </div>
-                <div style="text-align: center;">
+                <div style="text-align: left;">
                   <h4 style="background: #f57812; text-align: center; color: #FFF; height: 40px; line-height: 40px; border-radius: 0.5em;">Các Vé Tiếp Theo</h4>
                   <div class="vetieptheo"></div>
                 </div>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-danger " data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger dongdx" data-dismiss="modal">Close</button>
               </div>
             </div>
         </div>
@@ -232,7 +232,7 @@
               <h3 class="modal-title">Bạn muốn mua vé cho ai ?</h3>
             </div>
             <div class="modal-body" style="margin-left: 20%;">
-                <button type="button" class="btn dxchominh" onclick="$(body).css('padding-right','0');"  data-dismiss="modal" data-toggle="modal" data-target="#vedexuat" style="background: #f57812; color: #FFF; height: 50px;">Cho Mình</button>
+                <button type="button" class="btn dxchominh" onclick="$(body).css('padding-right','0');"  data-dismiss="modal" data-toggle="modal" data-target="#vedexuat" data-backdrop="static" style="background: #f57812; color: #FFF; height: 50px;">Cho Mình</button>
                  <button type="button" class="btn dxnguoithan" onclick="$(body).css('padding-right','0');"  data-dismiss="modal" data-toggle="modal" data-target="#dexuatchonguoithan" style="background: #f57812;color: #FFF; height: 50px; margin-left: 30px;">Người Thân</button>
             </div>
             <div class="modal-footer">
@@ -270,7 +270,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn chondxnguoithan" onclick="$(body).css('padding-right','0');" data-dismiss="modal" style="background: #f57812; color: #FFF;">Đề xuất</button>
+              <button type="button" class="btn chondxnguoithan" onclick="$(body).css('padding-right','0');" data-backdrop="static"  data-dismiss="modal"  data-toggle="modal" data-target="#vedexuat" style="background: #f57812; color: #FFF;">Đề xuất</button>
               <button type="button" class="btn btn-danger " data-dismiss="modal">Close</button>
             </div>
           </div>
@@ -533,6 +533,8 @@
             /*kết thúc xử lý chọn tầng*/
             /* đề xuất cho mình*/
               $(".dxchominh").click(function () {
+                  $(".vetotnhat").empty();
+                  $(".vetieptheo").empty();
                    makh = '{{session('makh')}}';
                    machuyenxe = '{{$chonve[0]->Mã}}';
                   $.ajax({
@@ -546,18 +548,21 @@
                       success: function (data) {
                         dem = data.kq.length;
                         vitri = data.kq[0].Vị_trí_ghế;
-                        $(".vetotnhat").html(vitri);
+                        ma = data.kq[0].Mã;
+                        $(".vetotnhat").append("<div class='vitridx'>Vị Trí: <strong>"+vitri+"</strong> <button class='giuvedx' data-ma='"+ma+"'>Chọn Vé</button><button class='huygiudx' data-ma='"+ma+"' >Bỏ Chọn</button></div>");
                         for(i=1;i<6;i++){
                           vitri = data.kq[i].Vị_trí_ghế;
                           ma = data.kq[i].Mã;
-                          $(".vetieptheo").after(vitri);
-                           $(".vetieptheo").after("<br>");
+                          $(".vetieptheo").append("<div class='vitridx'>Vị Trí: <strong>"+vitri+"</strong> <button class='giuvedx' data-ma='"+ma+"'>Chọn Vé</button><button class='huygiudx' data-ma='"+ma+"'>Bỏ Chọn</button></div>");
+                           $(".vetieptheo").append("<br>");
                         }
                       }
                   }) ;
                });
             /*đề xuất cho người thân*/
                $(".chondxnguoithan").click(function () {
+                  $(".vetotnhat").empty();
+                  $(".vetieptheo").empty();
                    machuyenxe = '{{$chonve[0]->Mã}}';
                    var kt = true;
                    var gioitinh = document.getElementsByName("txtgioitinh");
@@ -583,11 +588,101 @@
                           alert("Xin Lôi! Trang Chưa đủ dữ liệu để đề xuất !");
                         }
                         else{
-                          alert('Trang web đề nghị cho bạn những ghế sau:\n'+data.kq[0].Vị_trí_ghế);
+                            dem = data.kq.length;
+                            vitri = data.kq[0].Vị_trí_ghế;
+                            ma = data.kq[0].Mã;
+                            $(".vetotnhat").append("<div class='vitridx'>Vị Trí: <strong>"+vitri+"</strong> <button class='giuvedx' data-ma='"+ma+"'>Chọn Vé</button><button class='huygiudx' data-ma='"+ma+"' >Bỏ Chọn</button></div>");
+                            for(i=1;i<6;i++){
+                          vitri = data.kq[i].Vị_trí_ghế;
+                          ma = data.kq[i].Mã;
+                          $(".vetieptheo").append("<div class='vitridx'>Vị Trí: <strong>"+vitri+"</strong> <button class='giuvedx' data-ma='"+ma+"'>Chọn Vé</button><button class='huygiudx' data-ma='"+ma+"'>Bỏ Chọn</button></div>");
+                           $(".vetieptheo").append("<br>");
                         }
+                      }
                       }
                   }) ;
                });
+                /*Chọn vé đễ xuất*/
+                $("#vedexuat").delegate(".giuvedx","click",function(){
+                    ma = $(this).attr("data-ma");
+                    makh = {{Session::get('makh')}};
+                    mang.push(ma);
+                    $(this).hide();
+                    $(".huygiudx[data-ma='"+ma+"']").fadeIn();
+                    $.ajax({
+                        url: '{{route("xulydx")}}',
+                        type: 'POST',
+                        data: {
+                            _token: '{{csrf_token()}}',
+                            MA: ma,
+                            MAKH: makh
+                        },
+                        success: function (data) {
+                            if(data.kq==0){
+                                $(".huygiudx[data-ma='"+ma+"']").hide();
+                                $(".giuvedx[data-ma='"+ma+"']").fadeIn();
+                                for (i=0; i < mang.length; i++) {
+                               if(mang[i]==ma){
+                                    mang[i]=null;
+                                    break;
+                               }
+                              }
+                            }
+                            if(data.kq==1){
+                              $(".huygiudx[data-ma='"+ma+"']").hide();
+                              $(".giuvedx[data-ma='"+ma+"']").hide();
+                              for (i=0; i < mang.length; i++) {
+                               if(mang[i]==ma){
+                                    mang[i]=null;
+                                    break;
+                               }
+                           }
+                              alert("Xin lổi - Ghế này đã có người mua !");
+                            }
+                            if(data.kq==2){
+                             $(".huygiudx[data-ma='"+ma+"']").hide();
+                              $(".giuvedx[data-ma='"+ma+"']").hide();
+                              for (i=0; i < mang.length; i++) {
+                               if(mang[i]==ma){
+                                    mang[i]=null;
+                                    break;
+                               }
+                           }
+                              alert("Xin lổi - Ghế này đã có người chọn !");
+                            }
+                        }
+                 });
+                });
+            /* Hủy chọn vé đề xuất*/
+                $("#vedexuat").delegate(".huygiudx","click",function(){
+                    ma = $(this).attr("data-ma");
+                    $(this).hide();
+                    $(".giuvedx[data-ma='"+ma+"']").fadeIn();
+                    $.ajax({
+                        url: '{{route("huygiudx")}}',
+                        type: 'POST',
+                        data: {
+                            _token: '{{csrf_token()}}',
+                            MA: ma,
+                        },
+                        success: function (data) {
+                           if(data.k ==1){
+                              for (i=0; i < mang.length; i++) {
+                                 if(mang[i]==ma){
+                                      mang[i]=null;
+                                      break;
+                                 }
+                             }
+                             }
+                        }
+                 });
+                     
+                });
+                /*tắt đề xuất*/
+                $(".dongdx").click(function(){
+                  location.reload();
+                });
+                
       });
   </script>
 @endsection

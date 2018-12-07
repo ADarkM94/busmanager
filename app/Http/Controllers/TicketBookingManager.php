@@ -49,7 +49,25 @@ class TicketBookingManager extends Controller
 		}
 		return response()->json(['data' => 0]);
 	} */
+	//Phần giám sát
+	public function qldv_giamsat($id = "")
+	{
+		if($id == "")
+		{
+			$id = DB::table("chuyen_xe")->where("Trạng_thái","=",0)->orderBy("Mã","desc")->select("Mã")->get()[0]->Mã;
+			if(!session('qldv.idgiamsat'))
+			{
+				session(['qldv.idgiamsat' => $id]);
+			}
+		}
+		else
+		{
+			session(['qldv.idgiamsat' => $id]);
+		}		
+		return view('quanlydatve.giamsat');
+	}
 	
+	//Phần trang đặt vé
 	public function trangdatve()
 	{
 		$diadiem = DB::table('tinh')->select('Tên','Tên_không_dấu')->get();
@@ -287,14 +305,13 @@ class TicketBookingManager extends Controller
                 $ngaytruoc = date('Y-m-d',strtotime($hientai) - 24*3600);
 				$ngaysau = date('Y-m-d',strtotime($hientai) + 24*3600);
 				// $xe = DB::table('chuyen_xe')->join('xe','chuyen_xe.Mã_xe','=','xe.Mã')->where('chuyen_xe.Ngày_xuất_phát','BETWEEN',$ngaytruoc,'AND',$ngaysau)->select('chuyen_xe.Mã','xe.location')->get();
-				$xe = DB::table('chuyen_xe')->join('xe','chuyen_xe.Mã_xe','=','xe.Mã')->select('chuyen_xe.Mã','xe.location')->get();
+				$xe = DB::table('chuyen_xe')->join('xe','chuyen_xe.Mã_xe','=','xe.Mã')->orderBy("chuyen_xe.Mã","desc")->select('chuyen_xe.Mã','xe.location')->get();
                 echo 'data: ' . json_encode($xe) . "\n\n";
                 ob_flush();
                 flush();
                 sleep(3);
             }
         });
-
         $response->headers->set('Content-Type', 'text/event-stream');
         return $response;
     }

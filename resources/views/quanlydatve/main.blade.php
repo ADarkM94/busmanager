@@ -215,6 +215,7 @@
 			}
 		});
 	}
+	var locations = [];
 	if(window.EventSource !== undefined){
 		// supports eventsource object go a head...
 		var es = new EventSource("{{route('qldv_sendgps')}}");
@@ -223,14 +224,54 @@
 			var str = "";
 			for(var i=0;i<arr.length;i++)
 			{
-				str += "<li data-location='"+arr[i].location+"'>Chuyến xe #"+arr[i].Mã+" <i class='glyphicon glyphicon-record' style='color: green;'></i></li>"
+				var locate = arr[i].location.split(",");
+				var location = ["Chuyến xe "+arr[i].Mã,locate[0],locate[1],arr[i].Mã];
+				locations.push(location);
 			}
+			for(var i=0;i<arr.length;i++)
+			{
+				if(arr[i].Mã == '{{session("qldv.idgiamsat")? session("qldv.idgiamsat"):"undefined"}}')
+				{
+					str += "<li style='background: red;' onclick='location.href = \"{{asset("qldv/giamsat")}}/"+arr[i].Mã+"\"' data-location='"+arr[i].location+"' data-id='"+arr[i].Mã+"'>Chuyến xe #"+arr[i].Mã+" <i class='glyphicon glyphicon-record' style='color: green;'></i></li>";
+				}
+				else
+				{
+					str += "<li onclick='location.href = \"{{asset("qldv/giamsat")}}/"+arr[i].Mã+"\"' data-location='"+arr[i].location+"' data-id='"+arr[i].Mã+"'>Chuyến xe #"+arr[i].Mã+" <i class='glyphicon glyphicon-record' style='color: green;'></i></li>";
+				}
+			}
+			if(document.getElementsByClassName("bando").length != 0)
+			{
+				showMap1(locations);
+			}			
 			document.getElementsByClassName("chuyenxe")[0].getElementsByTagName("ul")[0].innerHTML = str;
         }, false);
 	} else {
 		// EventSource not supported, 
 		// apply ajax long poll fallback
     }
+	// function showMap2(ev)
+	// {
+		// var locate = ev.getAttribute("data-location").split(",");
+		// if(locations.length == 0)
+		// {
+			// alert("Lỗi cập nhật dữ liệu!");
+		// }
+		// else
+		// {
+			// ev.style.backgroundColor = "red";
+			// showMap1(locations,locate,ev.getAttribute("data-id"));
+		// }
+	// }
+	window.onclick = function(ev){
+		var chuyenxe = document.getElementsByClassName("chuyenxe")[0].getElementsByTagName("li");
+		for(var i=0;i<chuyenxe.length;i++)
+		{
+			if(ev.target != chuyenxe[i])
+			{
+				chuyenxe[i].style.backgroundColor = "#004964";
+			}
+		}
+	};
 	// if(window.EventSource !== undefined){
 		// // supports eventsource object go a head...
 		// var es = new EventSource("");

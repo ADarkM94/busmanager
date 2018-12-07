@@ -17,28 +17,6 @@
     </style>
     <div class="content show row" id="addtramdung">
         <div class="col-lg-3">
-            @if(session('alert'))
-                <div class="modal fade" id="alertmessage">
-					<div class="modal-dialog" style="width: 400px; margin-top: 200px;">
-						<div class="modal-content" style="text-align: center;">
-							<div class="modal-header">
-								<div class="modal-title">Thông báo</div>
-							</div>
-							<div class="modal-body alert alert-warning" style="text-align: center; margin-bottom: 0;">
-								{{session('alert')}}
-							</div>
-							<div class="modal-footer" style="text-align: center;">
-								<span class="btn btn-success" data-dismiss="modal">OK</span>
-							</div>
-						</div>
-					</div>
-				</div>
-				<script>
-					$(document).ready(function(){
-						$('#alertmessage').modal('show');
-					});
-				</script>
-            @endif
         </div>
         <form name="tramdung" class="col-lg-6" action="{{route('addbusstop')}}" method="post">
             @csrf
@@ -51,16 +29,16 @@
                     <input type="hidden" name="ID" value="{{$tttramdung['Mã']}}">
                 @endif
                 <input type="hidden" name="employeeID" value="{{session('admin.id')}}">
-                <label>Tên trạm dừng</label>
-                <input type="text" class="form-control" name="name" value="{{isset($tttramdung['Tên'])? $tttramdung['Tên']:''}}" placeholder="Tên trạm dừng">
+                <label>Tên trạm dừng<i class="text text-danger">*</i></label>
+                <input type="text" class="form-control" name="name" value="{{isset($tttramdung['Tên'])? $tttramdung['Tên']:''}}" placeholder="Tên trạm dừng" required>
                 <br>
-                <label>Tọa độ</label>
+                <label>Tọa độ<i class="text text-danger">*</i></label>
                 <input type="text" class="form-control"  name="toado" value="{{isset($tttramdung['Tọa_độ'])? $tttramdung['Tọa_độ']:''}}" placeholder="Tọa độ" readonly>
                 <br>
                 <div id="viewmap" style="width: 100%; height: 500px;"></div>
                 <br>
                 <div style="text-align: center">
-                    <input type="submit" class="btn btn-success" value="<?php echo isset($tttramdung)? 'Sửa Thông Tin':'Thêm Trạm Dừng';?>">
+                    <input type="submit" class="btn btn-success" name="submit" value="<?php echo isset($tttramdung)? 'Sửa Thông Tin':'Thêm Trạm Dừng';?>">
                     <input type="button" onclick="location.assign('{{url('/admin/tramdung')}}')" class="btn btn-danger" value="Hủy">
                 </div>
             </fieldset>
@@ -111,4 +89,99 @@
         }
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDPoe4NcaI69_-eBqxW9Of05dHNF0cRJ78&callback=openmap"></script>
+	@if(isset($tttramdung))
+		<script>
+			document.forms["tramdung"]["submit"].onclick = function(ev){
+				var id = document.forms["tramdung"]["ID"];
+				var name = document.forms["tramdung"]["name"];
+				var toado = document.forms["tramdung"]["toado"];
+				var str = "";
+				name.style.borderColor = "#ccc";
+				toado.style.borderColor = "#ccc";
+				if(name.value == "")
+				{
+					name.style.borderColor = "red";
+					str += "Tên trạm dừng không được để trống!<br>";
+				}
+				else
+				{
+					$.ajax({
+						url: "{{route('admin_checkexist')}}",
+						type: "post",
+						data: {
+							_token: "{{csrf_token()}}",
+							typecheck: "tentramdung_change",
+							datacheck: name.value,
+							idcheck: id.value
+						},
+						success: function(data){
+							if(data.kq == 1)
+							{
+								name.style.borderColor = "red";
+								str += "Tên trạm dừng đã tồn tại!<br>";
+							}
+						},
+						async: false
+					});
+				}
+				if(toado.value == "")
+				{
+					toado.style.borderColor = "red";
+					str += "Chưa chọn tọa độ!<br>";
+				}
+				if(str != "")
+				{
+					ev.preventDefault();
+					$('#alertmessage .modal-body').html(str);
+					$('#alertmessage').modal('show');
+				}
+			};
+		</script>
+	@else
+		<script>
+			document.forms["tramdung"]["submit"].onclick = function(ev){
+				var name = document.forms["tramdung"]["name"];
+				var toado = document.forms["tramdung"]["toado"];
+				var str = "";
+				name.style.borderColor = "#ccc";
+				toado.style.borderColor = "#ccc";
+				if(name.value == "")
+				{
+					name.style.borderColor = "red";
+					str += "Tên trạm dừng không được để trống!<br>";
+				}
+				else
+				{
+					$.ajax({
+						url: "{{route('admin_checkexist')}}",
+						type: "post",
+						data: {
+							_token: "{{csrf_token()}}",
+							typecheck: "tentramdung_create",
+							datacheck: name.value
+						},
+						success: function(data){
+							if(data.kq == 1)
+							{
+								name.style.borderColor = "red";
+								str += "Tên trạm dừng đã tồn tại!<br>";
+							}
+						},
+						async: false
+					});
+				}
+				if(toado.value == "")
+				{
+					toado.style.borderColor = "red";
+					str += "Chưa chọn tọa độ!<br>";
+				}
+				if(str != "")
+				{
+					ev.preventDefault();
+					$('#alertmessage .modal-body').html(str);
+					$('#alertmessage').modal('show');
+				}
+			};
+		</script>
+	@endif
 @endsection

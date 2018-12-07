@@ -7,7 +7,7 @@
         <div>
             <div class="col-lg-4">
                 <div class="the">
-                    <a href="">
+                    <a href="{{url('admin/khachhang')}}">
                         <div>
                             <div class="glyphicon glyphicon-user"></div>
                         </div>
@@ -16,16 +16,16 @@
                         &nbsp;
                         <div>
                             <p>Khách hàng</p>
-                            <p>Đã đăng ký: <i>1000</i></p>
-                            <p>Đang online: <i>100</i></p>
-                            <p>Lượng truy cập: <i>100</i></p>
+                            <p>Đã đăng ký: <i>{{$slkhachhang}}</i></p>
+                            <p>Đang online: <i>10</i></p>
+                            <p>Lượng truy cập: <i>0</i></p>
                         </div>
                     </a>
                 </div>
             </div>
             <div class="col-lg-4">
                 <div class="the">
-                    <a href="">
+                    <a href="{{url('admin/chuyenxe')}}">
                         <div>
                             <div class="glyphicon glyphicon-calendar"></div>
                         </div>
@@ -34,9 +34,9 @@
                         &nbsp;
                         <div>
                             <p>Lịch trình</p>
-                            <p>Só chuyến xe: <i>1000</i></p>
-                            <p>Đã đi: <i>100</i></p>
-                            <p>Đang chờ: <i>100</i></p>
+                            <p>Só chuyến xe: <i>{{$slchuyenxe}}</i></p>
+                            <p>Đã đi: <i>{{$slchuyenxedadi}}</i></p>
+                            <p>Đang chờ: <i>{{$slchuyenxedangcho}}</i></p>
                         </div>
                     </a>
                 </div>
@@ -52,9 +52,9 @@
                         &nbsp;
                         <div>
                             <p>Doang thu</p>
-                            <p>Theo tháng: <i>1000</i></p>
-                            <p>Theo quý: <i>100</i></p>
-                            <p>Theo năm: <i>100</i></p>
+                            <p>Theo tháng: <i>{{($tongdt/10000000)." triệu"}}</i></p>
+                            <p>Theo quý: <i>{{($tongdt/10000000)." triệu"}}</i></p>
+                            <p>Theo năm: <i>{{($tongdt/10000000)." triệu"}}</i></p>
                         </div>
                     </a>
                 </div>
@@ -100,11 +100,10 @@
 		var myChart1 = new Chart(bieudo1, {
     type: 'line',
     data: {
-        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
         datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
-            backgroundColor: 'rgba(255, 99, 132, 1)',
+            label: '# chi phí',
+            data: {{json_encode($chiphi)}},
             pointBackgroundColor: [
                 'rgba(0,73,100,1)',
                 'rgba(54, 162, 235, 1)',
@@ -121,13 +120,49 @@
                 'rgba(153, 102, 255, 1)',
                 'rgba(255, 159, 64, 1)'
             ],
+			backgroundColor: 'rgba(255, 99, 132, 1)',
+			fill: false,
             borderWidth: 1,
-			borderColor: '#FFA000'
+			borderColor: 'rgba(255, 99, 132, 1)'
+        },
+		{
+            label: '# doanh thu',
+            data: {{json_encode($doanhthu)}},
+            pointBackgroundColor: [
+                'rgba(0,73,100,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+			pointBorderColor: [
+                'rgba(0,73,100,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+			backgroundColor: 'rgba(54, 162, 235, 1)',
+			fill: false,
+            borderWidth: 1,
+			borderColor: 'rgba(54, 162, 235, 1)'
         }]
     },
     options: {
+		responsive: true,
+		title: {
+			display: true,
+			text: "Biểu đồ đường chi phí/doanh thu năm "+"{{date('Y')}}", 
+		},
         scales: {
             yAxes: [{
+				display: true,
+				scaleLabel: {
+					display: true,
+					labelString: "Đơn vị(triệu đồng)"
+				},
                 ticks: {
                     beginAtZero:true
                 }
@@ -138,32 +173,35 @@
 var myChart2 = new Chart(bieudo2, {
     type: 'bar',
     data: {
-        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
         datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
-            backgroundColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-            borderColor: [
-                'rgba(255,99,132,1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
+            label: '# chi phí',
+            data: {{json_encode($chiphi)}},
+            backgroundColor: 'rgba(255, 99, 132, 1)',
+            borderColor: 'rgba(255,99,132,1)',
+            borderWidth: 1
+        },
+		{
+            label: '# doanh thu',
+            data: {{json_encode($doanhthu)}},
+            backgroundColor: 'rgba(54, 162, 235, 1)',
+            borderColor: 'rgba(54, 162, 235, 1)',
             borderWidth: 1
         }]
     },
     options: {
+		responsive: true,
+		title: {
+			display: true,
+			text: "Biểu đồ cột chi phí/doanh thu năm "+"{{date('Y')}}", 
+		},
         scales: {
             yAxes: [{
+				display: true,
+				scaleLabel: {
+					display: true,
+					labelString: "Đơn vị(triệu đồng)"
+				},
                 ticks: {
                     beginAtZero:true
                 }

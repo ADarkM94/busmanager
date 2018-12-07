@@ -14,13 +14,9 @@ Route::post('admin/login', 'AdminController@checkLogin')->name('adminlogin');
 
 Route::middleware('admincheck')->group(function (){
     Route::get('admin/logout', 'AdminController@logout')->name('adminlogout');
-    Route::get('admin/', function () {
-        return view('quantrivien.thongke');
-    });
+    Route::get('admin/', 'AdminController@thongke');
 
-    Route::get('admin/thongke', function () {
-        return view('quantrivien.thongke');
-    });
+    Route::get('admin/thongke', 'AdminController@thongke');
 
 //Phần khách hàng
 
@@ -120,11 +116,19 @@ Route::middleware('admincheck')->group(function (){
 
 	Route::post('admin/editgioithieu', 'AdminController@editgioithieu')->name('editgioithieu');
 	
+//Phần liên hệ
+
+	Route::get('admin/sendmessage','AdminController@admin_sendmessage')->name('admin_sendmessage');
+	
+	Route::post('admin/showmessage', 'AdminController@admin_showmessage')->name('admin_showmessage');
+	
 //Phần hàm dùng chung
 
 	Route::post('admin/checkexist', 'AdminController@admin_checkexist')->name('admin_checkexist');
 	
 	Route::post('admin/retrievedata', 'AdminController@admin_retrievedata');
+	
+	Route::post('admin/changepassword', 'AdminController@admin_changepassword')->name('admin_changepassword');
 	
 });
 

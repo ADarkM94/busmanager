@@ -68,6 +68,26 @@ class AdminController extends Controller
         session()->forget('admin');
         return redirect()->back();
     }
+	
+	//Phần thống kê
+	public function thongke()
+	{
+		$slkhachhang = count(DB::table("customer")->select("Mã")->get());
+		$slchuyenxe = count(DB::table("chuyen_xe")->select("Mã")->get());
+		$slchuyenxedadi = count(DB::table("chuyen_xe")->where('Trạng_thái','=',2)->select("Mã")->get());
+		$slchuyenxedangcho = count(DB::table("chuyen_xe")->where('Trạng_thái','=',0)->select("Mã")->get());
+		$thongke = DB::table("thong_ke")->where('Năm','=',date("Y"))->orderBy("Tháng","asc")->select("Chi_phí","Doanh_thu")->get();
+		$chiphi = [];
+		$doanhthu = [];
+		$tongdt = 0;
+		for($i=0;$i<count($thongke);$i++)
+		{
+			$chiphi[$i] = $thongke[$i]->Chi_phí/1000000;
+			$doanhthu[$i] = $thongke[$i]->Doanh_thu/1000000;
+			$tongdt += $thongke[$i]->Doanh_thu;
+		}
+		return view("quantrivien.thongke",compact("slkhachhang","slchuyenxe","slchuyenxedadi","slchuyenxedangcho","chiphi","doanhthu","tongdt"));
+	}
 
     //Phần khách hàng
     public function khachhang()
@@ -731,7 +751,7 @@ class AdminController extends Controller
 	public function tintuc()
 	{
 		try {
-			$tintuc = DB::table('news')->join('employee as em1','news.id_admin_created','=','em1.Mã')->join('employee as em2','news.id_admin_changed','=','em2.Mã')->select('news.news_id','news.title','news.image','news.introduce','news.content','news.check_slide','news.is_disabled','em1.Họ_Tên as admin_created','em2.Họ_Tên as admin_changed')->orderBy('news.news_id','asc')->get();
+			$tintuc = DB::table('news')->join('employee as em1','news.id_admin_created','=','em1.Mã')->join('employee as em2','news.id_admin_changed','=','em2.Mã')->select('news.news_id','news.title','news.image','news.introduce','news.content','news.check_slide','news.is_disabled','em1.Họ_Tên as admin_created','em2.Họ_Tên as admin_changed')->orderBy('news.news_id','desc')->get();
 			return view('quantrivien.tintuc',compact('tintuc'));
 		} catch (\Exception $e) {
 			return $e;
@@ -813,7 +833,7 @@ class AdminController extends Controller
 		{
 			try {
 				DB::table("gioi_thieu")->insert(["noidung" => $noidung, "id_admin_created" => $idadmin, "id_admin_changed" => $idadmin, "created_at" => $time, "updated_at" => $time]);
-				return redirect()->back();
+				return redirect()->back()->with(['alert' => 'Sửa thông tin giới thiệu thành công!']);
 			} catch (\Exception $e) {
 				return $e;
 			}
@@ -823,7 +843,48 @@ class AdminController extends Controller
 			$id = $gt[0]->gt_id;
 			try {
 				DB::update("UPDATE `gioi_thieu` SET `noidung` = ?, `id_admin_changed` = ?, `updated_at` = ? WHERE gt_id = ?",[$noidung,$idadmin,$time,$id]);
-				return redirect()->back();
+				return redirect()->back()->with(['alert' => 'Sửa thông tin giới thiệu thành công!']);
+			} catch (\Exception $e) {
+				return $e;
+			}
+		}
+	}
+	
+	//Phần gửi thông báo liên hệ
+	public function admin_sendmessage() 
+	{ //Test OK
+
+        $response = new \Symfony\Component\HttpFoundation\StreamedResponse(function() {
+            while (true) {
+				$lienhe = DB::table('lienhe')->leftJoin('admin_lienhe','lienhe.lh_id','=','admin_lienhe.lh_id')->select('lienhe.*','admin_lienhe.is_checked as is_new')->get();
+				$solienhemoi = count(DB::table('lienhe')->select('lh_id')->orderBy('lh_id','desc')->get()) - count(DB::table('admin_lienhe')->where('admin_id','=',session('admin.id'))->select('*')->get());
+                echo 'data: ' . json_encode(['lienhe' => $lienhe,'sllhnew' => $solienhemoi]) . "\n\n";
+                ob_flush();
+                flush();
+                sleep(60);
+            }
+        });
+        $response->headers->set('Content-Type', 'text/event-stream');
+        return $response;
+    }
+	public function admin_showmessage(Request $request)
+	{
+		$id = $request->data;
+		if(count(DB::table("admin_lienhe")->where([['lh_id','=',$id],['admin_id','=',session("admin.id")]])->select("*")->get()) == 0)
+		{
+			try {
+				DB::insert("INSERT INTO `admin_lienhe`(`lh_id`, `admin_id`, `is_checked`) VALUES (?,?,'1')",[$id,session("admin.id")]);
+				$data = DB::table("lienhe")->where("lh_id","=",$id)->select("*")->get();
+				return response()->json(['kq' => 1,'data' => $data]);
+			} catch (\Exception $e) {
+				return $e;
+			}
+		}
+		else
+		{
+			try {
+				$data = DB::table("lienhe")->where("lh_id","=",$id)->select("*")->get();
+				return response()->json(['kq' => 1,'data' => $data]);
 			} catch (\Exception $e) {
 				return $e;
 			}
@@ -873,10 +934,6 @@ class AdminController extends Controller
 						return response()->json(['kq' => 0]);
 					}
 				}
-				else
-				{
-					return response()->json(['kq' => 0]);
-				}
 				break;
 			case "userphone_change":
 				if(count(DB::select("SELECT * FROM customer WHERE Sđt = ? AND Mã = ?",[$datacheck,$request->idcheck])) == 1)
@@ -894,9 +951,150 @@ class AdminController extends Controller
 						return response()->json(['kq' => 0]);
 					}
 				}
+				break;
+			case "employeeusername_create":
+				if(count(DB::select("SELECT * FROM employee WHERE Username = ?",[$datacheck])) != 0)
+				{
+					return response()->json(['kq' => 1]);
+				}
 				else
 				{
 					return response()->json(['kq' => 0]);
+				}
+				break;
+			case "employeeemail_create":
+				if(count(DB::select("SELECT * FROM employee WHERE Email = ?",[$datacheck])) != 0)
+				{
+					return response()->json(['kq' => 1]);
+				}
+				else
+				{
+					return response()->json(['kq' => 0]);
+				}
+				break;
+			case "employeephone_create":
+				if(count(DB::select("SELECT * FROM employee WHERE Sđt = ?",[$datacheck])) != 0)
+				{
+					return response()->json(['kq' => 1]);
+				}
+				else
+				{
+					return response()->json(['kq' => 0]);
+				}
+				break;
+			case "employeeusername_change":
+				if(count(DB::select("SELECT * FROM employee WHERE Username = ? AND Mã = ?",[$datacheck,$request->idcheck])) == 1)
+				{
+					return response()->json(['kq' => 0]);
+				}
+				else if(count(DB::select("SELECT * FROM employee WHERE Username = ? AND Mã = ?",[$datacheck,$request->idcheck])) == 0)
+				{
+					if(count(DB::select("SELECT * FROM employee WHERE Username = ?",[$datacheck])) != 0)
+					{
+						return response()->json(['kq' => 1]);
+					}
+					else
+					{
+						return response()->json(['kq' => 0]);
+					}
+				}
+				break;
+			case "employeeemail_change":
+				if(count(DB::select("SELECT * FROM employee WHERE Email = ? AND Mã = ?",[$datacheck,$request->idcheck])) == 1)
+				{
+					return response()->json(['kq' => 0]);
+				}
+				else if(count(DB::select("SELECT * FROM employee WHERE Email = ? AND Mã = ?",[$datacheck,$request->idcheck])) == 0)
+				{
+					if(count(DB::select("SELECT * FROM employee WHERE Email = ?",[$datacheck])) != 0)
+					{
+						return response()->json(['kq' => 1]);
+					}
+					else
+					{
+						return response()->json(['kq' => 0]);
+					}
+				}
+				break;
+			case "employeephone_change":
+				if(count(DB::select("SELECT * FROM employee WHERE Sđt = ? AND Mã = ?",[$datacheck,$request->idcheck])) == 1)
+				{
+					return response()->json(['kq' => 0]);
+				}
+				else if(count(DB::select("SELECT * FROM employee WHERE Sđt = ? AND Mã = ?",[$datacheck,$request->idcheck])) == 0)
+				{
+					if(count(DB::select("SELECT * FROM employee WHERE Sđt = ?",[$datacheck])) != 0)
+					{
+						return response()->json(['kq' => 1]);
+					}
+					else
+					{
+						return response()->json(['kq' => 0]);
+					}
+				}
+				break;
+			case "employeepassword_change":
+				if(count(DB::select("SELECT * FROM employee WHERE Password = ? AND Mã = ?",[md5($datacheck),$request->idcheck])) == 1)
+				{
+					return response()->json(['kq' => 0]);
+				}
+				else
+				{
+					return response()->json(['kq' => 1]);
+				}
+				break;
+			case "bienso_create":
+				if(count(DB::select("SELECT * FROM xe WHERE Biển_số = ?",[$datacheck])) != 0)
+				{
+					return response()->json(['kq' => 1]);
+				}
+				else
+				{
+					return response()->json(['kq' => 0]);
+				}
+				break;
+			case "bienso_change":
+				if(count(DB::select("SELECT * FROM xe WHERE Biển_số = ? AND Mã = ?",[$datacheck,$request->idcheck])) == 1)
+				{
+					return response()->json(['kq' => 0]);
+				}
+				else if(count(DB::select("SELECT * FROM xe WHERE Biển_số = ? AND Mã = ?",[$datacheck,$request->idcheck])) == 0)
+				{
+					if(count(DB::select("SELECT * FROM xe WHERE Biển_số = ?",[$datacheck])) != 0)
+					{
+						return response()->json(['kq' => 1]);
+					}
+					else
+					{
+						return response()->json(['kq' => 0]);
+					}
+				}
+				break;
+			case "tentramdung_create": //Kiểm tra tên trạm dừng khi tạo mới
+				if(count(DB::select("SELECT * FROM tram_dung WHERE Tên = ?",[$datacheck])) != 0)
+				{
+					return response()->json(['kq' => 1]);
+				}
+				else
+				{
+					return response()->json(['kq' => 0]);
+				}
+				break;
+			case "tentramdung_change": //Kiểm tra tên trạm dừng khi thay đổi
+				if(count(DB::select("SELECT * FROM tram_dung WHERE Tên = ? AND Mã = ?",[$datacheck,$request->idcheck])) == 1)
+				{
+					return response()->json(['kq' => 0]);
+				}
+				else if(count(DB::select("SELECT * FROM tram_dung WHERE Tên = ? AND Mã = ?",[$datacheck,$request->idcheck])) == 0)
+				{
+					if(count(DB::select("SELECT * FROM tram_dung WHERE Tên = ?",[$datacheck])) != 0)
+					{
+						return response()->json(['kq' => 1]);
+					}
+					else
+					{
+						return response()->json(['kq' => 0]);
+					}
 				}
 				break;
 			default:
@@ -908,7 +1106,7 @@ class AdminController extends Controller
 		{
 			case 'tintuc':
 				try {
-					$tintuc = DB::table('news')->join('employee as em1','news.id_admin_created','=','em1.Mã')->join('employee as em2','news.id_admin_changed','=','em2.Mã')->select('news.news_id','news.title','news.image','news.introduce','news.content','news.check_slide','news.is_disabled','em1.Họ_Tên as admin_created','em2.Họ_Tên as admin_changed')->orderBy('news.news_id','asc')->get();
+					$tintuc = DB::table('news')->join('employee as em1','news.id_admin_created','=','em1.Mã')->join('employee as em2','news.id_admin_changed','=','em2.Mã')->select('news.news_id','news.title','news.image','news.introduce','news.content','news.check_slide','news.is_disabled','em1.Họ_Tên as admin_created','em2.Họ_Tên as admin_changed')->orderBy('news.news_id','desc')->get();
 					return response()->json(['kq' => 1,'data' => $tintuc]);
 				} catch(\Exception $e) {
 					return response()->json(['kq' => 0]);
@@ -923,6 +1121,29 @@ class AdminController extends Controller
 				}
 				break;
 			default:
+		}
+	}
+	public function admin_changepassword(Request $request) //Hàm thay đổi mật khẩu
+	{
+		$id = $request->id;
+		$olddata = $request->olddata;
+		$newdata = $request->newdata;
+		$type = $request->typepassword;
+		if($type == "employeepassword")
+		{
+			if(count(DB::select("SELECT * FROM employee WHERE Password = ? AND Mã = ?",[md5($olddata),$id])) == 1)
+			{
+				try {
+					DB::update("UPDATE `employee` SET Password = ? WHERE Mã = ?",[md5($newdata),$id]);
+					return response()->json(['kq' => 1]);
+				} catch (\Exception $e) {
+					return $e;
+				}				
+			}
+			else
+			{
+				return response()->json(['kq' => 0]);
+			}
 		}
 	}
 }

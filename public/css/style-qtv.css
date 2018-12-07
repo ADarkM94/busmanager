@@ -70,15 +70,77 @@ a:hover, a:visited {
     height: 100%;
 }
 .userzone > span:nth-child(1) {
+	padding: .5em;
+	font-size: 1em;
+	color: white;
+	background: #001A24;
+	position: relative;
+}
+.userzone > span:nth-child(1) > .badge {
+	position: absolute;
+	bottom: 1.4em;
+	right: 1.4em;
+}
+.userzone > span:nth-child(1) > ul {
+	position: absolute;
+	list-style-type: none;
+	display: none;
+	background: #004964;
+	top: calc(100% + 1em);
+	left: 50%;
+	transform: translate(-50%,0);
+	padding: .5em;
+	border-radius: 5px;
+	height: 20em;
+	overflow: auto;
+}
+.userzone > span:nth-child(1) > ul > li {
+	padding: .1em .5em;
+	position: relative;
+	border-radius: 10px;
+	margin: .2em 0;
+	max-width: 10em;
+	background: white;
+	color: #004964;
+	border: 1px solid #004964;
+}
+.userzone > span:nth-child(1) > ul > li h6 {
+	text-align: left;
+	padding: 0;
+}
+.userzone > span:nth-child(1) > ul > li p {
+	text-align: left;
+	padding: 1em;
+	overflow: hidden;
+	text-overflow: ellipsis; 
+	width: 9.5em;
+}
+.userzone > span:nth-child(1) > ul > li p {
+	padding: 0;
+}
+.userzone > span:nth-child(1) > ul > li > .badge {
+	position: absolute;
+	top: 0;
+	right: 0;
+	padding: .5em 1em;
+}
+.userzone > span:nth-child(1) > ul > li:hover {
+	border: 1px solid #FFA000;
+}
+.userzone > span:nth-child(1):active > ul {
+	display: block;
+}
+.userzone > span:nth-child(2) {
     position: relative;
     padding: 1em;
     padding-left: 3.5em;
     border-radius: 5px 5px 0 0;
     background: #001A24;
     color: white;
-	border: 1px solid #001A24;
+	border: 1px solid transparent;
+	border-bottom: none;
 }
-.userzone > span:nth-child(1) > img {
+.userzone > span:nth-child(2) > img {
     position: absolute;
     top: .375em;
     left: .375em;
@@ -88,10 +150,10 @@ a:hover, a:visited {
     border: 1px solid #004964;
     background: white;
 }
-.userzone > span:nth-child(1) > i {
+.userzone > span:nth-child(2) > i {
     /* vertical-align: middle; */
 }
-.userzone > span:nth-child(1) > ul{
+.userzone > span:nth-child(2) > ul{
     display: none;
     position: absolute;
     top: calc(100%);
@@ -108,13 +170,13 @@ a:hover, a:visited {
     border: 1px solid white;
     border-top: none;
 }
-.userzone > span:nth-child(1) > ul li {
+.userzone > span:nth-child(2) > ul li {
     padding: .5em 1em;
 }
-.userzone > span:nth-child(1) > ul li > i{
+.userzone > span:nth-child(2) > ul li > i{
     padding-right: 1em;
 }
-.userzone > span:nth-child(1) > ul li:hover {
+.userzone > span:nth-child(2) > ul li:hover {
     background: white;
     color: #004964;
 }
@@ -812,7 +874,7 @@ a:hover, a:visited {
 	animation: loadingc 3s;
 	animation-iteration-count: infinite;
 }
-#userinfo .loading {
+#userinfo .loading, #messagedetails .loading {
 	top: 0;
 	left: 0;
 	width: 100%;
@@ -820,7 +882,7 @@ a:hover, a:visited {
 	display: none;
 	background: white;
 }
-#userinfo .loading::before {
+#userinfo .loading::before, #messagedetails .loading::before {
 	content: "";
 	width: 50px;
 	height: 50px;
@@ -834,7 +896,7 @@ a:hover, a:visited {
 	animation: loading 1s;
 	animation-iteration-count: infinite;
 }
-#userinfo .loading::after {
+#userinfo .loading::after, #messagedetails .loading::after {
 	content: "Đangtải...";
 	padding: 1px;
 	width: 59px;

@@ -57,18 +57,21 @@
     /*Tin tức*/
     Route::get('/tintuc','Controller@tintuc')->name('tintuc');
     /*Form tin tức*/
-    // Route::get('/formtintuc', function(){
-        // return view('tttn-web.formtintuc');
-    // } );
-    // /*Thêm giới thiệu*/
-    // Route::post('/addgioithieu','Controller@addgioithieu')->name('addgioithieu');
-    // /*Thêm tin tức*/
-    // Route::post('/addtintuc','Controller@addtintuc')->name('addtintuc');
+    Route::get('/formtintuc', function(){
+        return view('tttn-web.formtintuc');
+    } );
+    /*Thêm giới thiệu*/
+    Route::post('/addgioithieu','Controller@addgioithieu')->name('addgioithieu');
+    /*Thêm tin tức*/
+    Route::post('/addtintuc','Controller@addtintuc')->name('addtintuc');
     /*Show tin tức*/
     Route::get('/showtintuc/{id}','Controller@showtintuc')->name('showtintuc');
     /*Xử lý liên hệ*/
     Route::post('/xulylienhe','Controller@xulylienhe')->name('xulylienhe');
-
+    /*Xử lý đề xuất*/
+     Route::post('/xulydx','Controller@xulydx')->name('xulydx');
+     /*Hủy chọn vé đề xuất*/
+     Route::post('/huygiudx','Controller@huygiudx')->name('huygiudx');
 /* Kết thúc phần Route cho trang khách hàng */
 /* Bắt đầu phần Route để test chức năng */
 

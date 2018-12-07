@@ -23,26 +23,24 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button class="close" data-dismiss="modal">&times;</button>
-                    <div class="modal-title">Thông Tin Vé</div>
+                    <h4 class="modal-title">Thông Tin Vé</h4>
                 </div>
                 <div class="modal-body">
-                    <form name="editticket">
-                        <input type="hidden" name="ID" value="">
-                        <div class="row">
-                            <div class="col-lg-6" style="font-size: 1em; width: 50%">
-                                <label>Giá</label>
-                                <input type="number" min="0" class="form-control" name="giave" placeholder="Giá vé" readonly>
-                            </div>
-                            <div class="col-lg-6" style="width: 50%; text-align: left;">
-                                <label>Trạng thái</label>
-                                <select class="form-control" name="trangthai">
-                                    <option value="0">Waiting</option>
-                                    <option value="1">Booked</option>
-                                    <option value="2">Completed</option>
-                                    <option value="3">Banned</option>
-                                </select>
-                            </div>
+                    <form name="editticket" class="row">
+                        <input type="hidden" name="ID" value="">                        
+                        <div class="col-lg-6 form-group">
+                            <label>Giá</label>
+                            <input type="number" min="0" class="form-control" name="giave" placeholder="Giá vé" readonly>
                         </div>
+                        <div class="col-lg-6 form-group">
+                            <label>Trạng thái</label>
+                            <select class="form-control" name="trangthai">
+                                <option value="0">Waiting</option>
+                                <option value="1">Booked</option>
+                                <option value="2">Locked</option>
+                                <option value="3">Banned</option>
+                            </select>
+                        </div>                        
                     </form>
                 </div>
                 <div class="modal-footer" style="text-align: center;">

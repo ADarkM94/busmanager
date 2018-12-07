@@ -200,6 +200,53 @@ class Controller extends BaseController
                         return \response()->json(['kq'=>2,'TGC'=>$time]);
                 }
             }
+    /*Xử lý đề xuất*/
+        public function xulydx(Request $request){
+                $ma = $request -> MA;
+                $makh = $request -> MAKH;
+                /* Kiểm tra trạng thái vé*/
+                    $kt = DB::table("ve")
+                        ->where("Mã","=",$ma)
+                        ->select("Trạng_thái","Thời_điểm_chọn")
+                        ->get();
+                    if($kt[0]->Trạng_thái == 0){
+                        $time = date("Y-m-d H:i:s");
+                        /* update trạng thái vé*/
+                        DB::update("UPDATE `ve` SET `Trạng_thái`= ?,`Mã_khách_hàng`= ?, `Thời_điểm_chọn`= ? WHERE `Mã`= ?",
+                            [2,$makh,$time,$ma]);
+                        /*hàm sleep đếm ngược*/
+                        sleep(600);
+                        /*kiểm tra trạng thái và mã khách hàng*/
+                            $kt2 = DB::table("ve")
+                                ->where("Mã","=",$ma)
+                                ->select("Trạng_thái","Mã_khách_hàng","Mã","Thời_điểm_chọn")
+                                ->get();
+                            if($kt2[0]->Trạng_thái == 2  && $kt2[0]->Thời_điểm_chọn == $time){
+                                /*update trạng thái vé*/
+                                DB::update("UPDATE `ve` SET `Trạng_thái`= ?,`Mã_khách_hàng`= ?, `Thời_điểm_chọn`=? WHERE `Mã`= ?",
+                                    [0,null,null,$ma]);
+                    }
+                    /*trả về kq ajax*/
+                        return \response()->json(['kq'=>0]);
+                }
+                else if($kt[0]->Trạng_thái == 1){
+                    /*trả về kq ajax*/
+                        return \response()->json(['kq'=>1]);
+                }
+                else if($kt[0]->Trạng_thái == 2){
+                    /*trả về kq ajax*/
+                        return \response()->json(['kq'=>2]);
+                }
+            }
+    /*Hủy vé đề xuất*/
+        public function huygiudx(Request $request){
+                $ma = $request -> MA;
+                /*update trạng thái vé*/
+                    DB::update("UPDATE `ve` SET `Trạng_thái`= ?,`Mã_khách_hàng`= ?, `Thời_điểm_chọn`= ? WHERE `Mã`= ?",
+                        [0,Null,Null,$ma]);
+                /*trả kết quả về ajax*/
+                    return \response()->json(['kq'=>1]);
+        }
     /* Xử lý hủy giữ vé*/
         public function xulydatve2(Request $request){
                 $ma = $request -> MA;
@@ -388,26 +435,27 @@ class Controller extends BaseController
         public function tintuc(){
             /* lấy thông tin tin tức*/
                  $tintuc = DB::table("news")
+					 ->where('is_disabled','=','0')
                      ->orderBy('news_id', 'desc')
                      ->paginate(9);
             /* trả về trang tin tức*/
                 return view('tttn-web.tintuc',["tintuc"=>$tintuc]);
         }
     /* Thêm tin tức*/
-        // public function addtintuc(Request $request){
-            // $tieude = $request->tieude;
-            // $hinhanh = $request->hinhanh;
-            // $namehinhanh = $hinhanh->getClientOriginalName();
-            // $hinhanh->move('upload',$hinhanh->getClientOriginalName());
-            // $mota = $request->mota;
-            // $noidung=$request->noidung;
-            // $time = date("Y-m-d H:i:s");
+        public function addtintuc(Request $request){
+            $tieude = $request->tieude;
+            $hinhanh = $request->hinhanh;
+            $namehinhanh = $hinhanh->getClientOriginalName();
+            $hinhanh->move('upload',$hinhanh->getClientOriginalName());
+            $mota = $request->mota;
+            $noidung=$request->noidung;
+            $time = date("Y-m-d H:i:s");
 
-            // DB::table("news")->insert(
-        // ["title" => $tieude, "image" => $namehinhanh, "introduce" => $mota, "content" => $noidung, "check_slide" => 0 ,"id_admin_created"=>1, "id_admin_changed" =>1, "created_at" => $time, "updated_at" => $time]
-             // );
-             // return view('tttn-web.formtintuc');
-        // }
+            DB::table("news")->insert(
+        ["title" => $tieude, "image" => $namehinhanh, "introduce" => $mota, "content" => $noidung, "check_slide" => 0 ,"id_admin_created"=>1, "id_admin_changed" =>1, "created_at" => $time, "updated_at" => $time]
+             );
+             return view('tttn-web.formtintuc');
+        }
     /* Show chi tiết tin tức*/
         public function showtintuc($id){
              $tintuc = DB::table("news")
@@ -424,14 +472,14 @@ class Controller extends BaseController
             return view('tttn-web.viewtintuc',["tintuc"=>$tintuc,"tintuckhac"=>$tintuckhac]);
         }
     /* Thêm giới thiệu*/
-        // public function addgioithieu(Request $request){
-               // $noidung = $request->noidunggt; 
-               // $time = date("Y-m-d H:i:s");
-                 // DB::table("gioi_thieu")->insert(
-        // ["noidung" => $noidung, "id_admin_created"=>1, "id_admin_changed" =>1, "created_at" => $time, "updated_at" => $time]
-            // );
-             // return view('tttn-web.formtintuc');
-        // }
+        public function addgioithieu(Request $request){
+               $noidung = $request->noidunggt; 
+               $time = date("Y-m-d H:i:s");
+                 DB::table("gioi_thieu")->insert(
+        ["noidung" => $noidung, "id_admin_created"=>1, "id_admin_changed" =>1, "created_at" => $time, "updated_at" => $time]
+            );
+             return view('tttn-web.formtintuc');
+        }
     /* Show giới thiệu*/
         public function gioithieu(){
             $gioithieu = DB::table("gioi_thieu")->orderBy('gt_id', 'desc')->limit(1)->select("*")->get();

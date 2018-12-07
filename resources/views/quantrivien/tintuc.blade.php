@@ -3,16 +3,6 @@
 	Quản lý Tin tức
 @endsection
 @section('content')
-	@if(session('alert'))
-		<script>
-			$(document).ready(function(){
-				$('#alertmessage .modal-body').html('{{session('alert')}}');
-				$('#alertmessage').modal('show');
-			});
-		</script>
-    @endif
-	<script type="text/javascript" src="{{asset('ckeditor/ckeditor.js')}}"></script>
-    <script type="text/javascript" src="{{asset('ckfinder/ckfinder.js')}}"></script>
     <div class="content row show" style="overflow: hidden; position: relative; padding: 3em 1em 1em;">
         <h4 style="padding: .5em; position: absolute; top: 0; left: 0; width: 100%;">Bảng Tin Tức</h4>
         <div id="tintuc">
@@ -153,21 +143,6 @@
 				</div>
 			</div>
 			</form>
-		</div>
-	</div>
-	<!--Modal thông báo-->
-	<div class="modal fade" id="alertmessage">
-		<div class="modal-dialog" style="width: 400px; margin-top: 200px;">
-			<div class="modal-content" style="text-align: center;">
-				<div class="modal-header">
-					<div class="modal-title">Thông báo</div>
-				</div>
-				<div class="modal-body alert alert-warning" style="text-align: center; margin-bottom: 0;">
-				</div>
-				<div class="modal-footer" style="text-align: center;">
-					<span class="btn btn-success" data-dismiss="modal">OK</span>
-				</div>
-			</div>
 		</div>
 	</div>
 @endsection

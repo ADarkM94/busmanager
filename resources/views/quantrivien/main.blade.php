@@ -19,15 +19,28 @@
     <script src="{{asset('plugins/jquery-ui-1.12.1/jquery-ui.min.js')}}"></script>
     <script src="{{asset('plugins/paramquery-3.3.4/pqgrid.min.js')}}"></script>
     <script src="{{asset('plugins/paramquery-3.3.4/jsZip-2.5.0/jszip.min.js')}}"></script>
+	<script type="text/javascript" src="{{asset('ckeditor/ckeditor.js')}}"></script>
+    <script type="text/javascript" src="{{asset('ckfinder/ckfinder.js')}}"></script>
     <link rel="stylesheet" type="text/css" href="{{asset('css/style-qtv.css')}}">
 </head>
 <body>
+@if(session('alert'))
+	<script>
+		$(document).ready(function(){
+			$('#alertmessage .modal-body').html('{{session('alert')}}');
+			$('#alertmessage').modal('show');
+		});
+	</script>
+@endif
 <div class="container-fluid">
     <div class="header">
         <div class="row">
             <h3 class="col-lg-4"><a href="{{asset('admin/')}}">AWE Admin</a></h3>
             <h5 class="col-lg-4"><a href="{{url('/')}}" title="Chuyển về trang khách hàng"><img src="{{asset('/images/icons/luggage.png')}}" height="30" alt="icon">AwesomeTravel</a></h5>
             <div class="col-lg-4 userzone">
+				<span onclick="showMessage(this)" class="glyphicon glyphicon-bell">
+					<ul></ul>
+				</span>
                 <span onclick="showMenu(this)"><img src="{{asset('images/icons/user.png')}}" alt="icon">{{session('admin.name','AdminTest')}}&nbsp;<i class="glyphicon glyphicon-menu-down" ></i>
                     <ul>
                         <li onclick="showUserInfo({{session('admin.id')}})"><i class="glyphicon glyphicon-info-sign"></i>Thông tin</li>
@@ -91,6 +104,7 @@
         </div>
     </div>
 </div>
+@yield('excontent')
 <div class="modal fade" id="userinfo">
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -178,7 +192,67 @@
 	</form>
 	</div>
 </div>
-@yield('excontent')
+<!--Modal thông báo-->
+<div class="modal fade" id="alertmessage">
+	<div class="modal-dialog" style="width: 400px; margin-top: 200px;">
+		<div class="modal-content" style="text-align: center;">
+			<div class="modal-header">
+				<h4 class="modal-title">Thông báo</h4>
+			</div>
+			<div class="modal-body alert alert-warning" style="text-align: center; margin-bottom: 0;">
+			</div>
+			<div class="modal-footer" style="text-align: center;">
+				<span class="btn btn-success" data-dismiss="modal">OK</span>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="messagedetails">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title" style="word-wrap: break-word;">Nội dung liên hệ</h4>
+			</div>
+			<div class="modal-body">
+				<div class="loading"></div>
+				<form name="frm-messagedetails" class="row"> 
+					<div class="col-lg-12">
+						<div class="form-group col-lg-6" style="text-align: left;">
+							<label>Người gửi</label>
+							<input type="text" name="name" class="form-control" readonly>
+						</div>
+					</div>
+					<div class="col-lg-12">
+						<div class="form-group col-lg-6" style="text-align: left;">
+							<label>Email</label>
+							<input type="text" name="email" class="form-control" readonly>
+						</div>
+						<div class="form-group col-lg-6" style="text-align: left;">
+							<label>Số đt</label>
+							<input type="text" name="phone" class="form-control" readonly>
+						</div>
+					</div>
+					<div class="col-lg-12">
+						<div class="form-group col-lg-6" style="text-align: left;">
+							<label>Thời gian gửi</label>
+							<input type="text" name="posttime" class="form-control" readonly>
+						</div>
+					</div>
+					<div class="col-lg-12">
+						<div class="form-group col-lg-12" style="text-align: left;">
+							<label>Nội dung</label>
+							<textarea class="form-control" name="noidung" rows="10" style="resize: none; overflow: auto;" readonly></textarea>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
 <script>
     document.getElementsByClassName("container-fluid")[0].style.paddingTop=document.getElementsByClassName("header")[0].clientHeight+15+"px";
     document.getElementsByClassName("container-fluid")[0].style.paddingBottom= "15px";
@@ -210,7 +284,7 @@
 	{
 		if(ev.getElementsByTagName("i")[0].classList.contains("glyphicon-menu-down"))
 		{
-			ev.getElementsByTagName("ul")[0].style.display = "block";
+			ev.getElementsByTagName("ul")[0].classList.add("show");
 			ev.style.border = "1px solid white";
 			ev.style.borderBottom = "none";
 			ev.getElementsByTagName("i")[0].classList.remove("glyphicon-menu-down");
@@ -220,7 +294,7 @@
 		{
 			ev.getElementsByTagName("i")[0].classList.remove("glyphicon-menu-up");
 			ev.getElementsByTagName("i")[0].classList.add("glyphicon-menu-down");
-			ev.getElementsByTagName("ul")[0].style.display = "none";
+			ev.getElementsByTagName("ul")[0].classList.remove("show");
 			ev.style.border = "1px solid transparent";
 			ev.style.borderBottom = "none";
 		}
@@ -272,14 +346,16 @@
 				}
 				else
 				{
-					alert('Tải thông tin thất bại!');
+					$('#alertmessage .modal-body').html('Tải thông tin thất bại!');
+					$('#alertmessage').modal('show');
 				}
 			},
 			timeout: 10000,
 			error: function(xhr){
 				if(xhr.statusText=="timeout")
 				{
-					alert('Vui lòng kiểm tra kết nối!');
+					$('#alertmessage .modal-body').html('Vui lòng kiểm tra kết nối!');
+					$('#alertmessage').modal('show');
 				}
 			}
 		});
@@ -319,6 +395,79 @@
 			document.getElementById("loigt").style.display = "block";
 		}
 	};
+	function showMessage(ev)
+	{
+		ev.getElementsByTagName("ul")[0].classList.toggle("show");
+	}
+	window.onclick = function(ev){
+		if(ev.target != document.getElementsByClassName("userzone")[0].getElementsByTagName("span")[0])
+		{
+			document.getElementsByClassName("userzone")[0].getElementsByTagName("span")[0].getElementsByTagName("ul")[0].classList.remove("show");
+		}
+	};
+	function checkmessage(ev)
+	{
+		var id = ev.getAttribute("data-id");
+		var loadingscreen = document.getElementById("messagedetails").getElementsByClassName("loading")[0];
+		var title = document.getElementById("messagedetails").getElementsByClassName("modal-title")[0];
+		var name = document.forms["frm-messagedetails"]["name"];
+		var email = document.forms["frm-messagedetails"]["email"];
+		var phone = document.forms["frm-messagedetails"]["phone"];
+		var posttime = document.forms["frm-messagedetails"]["posttime"];
+		var content = document.forms["frm-messagedetails"]["noidung"];
+		loadingscreen.classList.add("show");
+		$("#messagedetails").modal();
+		$.ajax({
+			url: '{{route("admin_showmessage")}}',
+			type: 'post',
+			data: {
+				_token: '{{csrf_token()}}',
+				data: id
+			},
+			success: function(data){
+				if(data.kq == 1)
+				{
+					title.innerHTML = data.data[0].tieu_de;
+					name.value = data.data[0].ho_ten;
+					email.value = data.data[0].email;
+					phone.value = data.data[0].dien_thoai;
+					posttime.value = data.data[0].ngay_dang;
+					content.value = data.data[0].noi_dung;
+					if($(".userzone span:nth-child(1) li[data-id='"+id+"'] span") !== undefined&&$(".userzone span:nth-child(1) li[data-id='"+id+"'] span").css("display") != "none")
+					{
+						document.getElementsByClassName("userzone")[0].getElementsByTagName("span")[0].getElementsByTagName("i")[0].innerHTML -= 1;
+						$(".userzone span:nth-child(1) li[data-id='"+id+"'] span").css({display: "none"});
+					}					
+					loadingscreen.classList.remove("show");
+				}
+			},
+			timeout: 10000,
+			error: function(xhr){
+				if(xhr.statusText == "timeout")
+				{
+					
+				}
+			}
+		});
+	}
+	if(window.EventSource !== undefined){
+		// supports eventsource object go a head...
+		var es = new EventSource("{{route('admin_sendmessage')}}");
+        es.addEventListener("message", function(e) {
+            var arr = JSON.parse(e.data);
+			var str = "<i class='badge'>"+arr.sllhnew+"</i>";
+			str += "<ul>";
+			for(var i=0;i<arr.lienhe.length;i++)
+			{
+				str += "<li onclick='checkmessage(this)' class='media border' data-id='"+arr.lienhe[i].lh_id+"' title='"+arr.lienhe[i].tieu_de+"'><div class='media-body'><h6>"+arr.lienhe[i].ho_ten+"<br><small><i>Gửi lúc "+arr.lienhe[i].ngay_dang+"</i></small></h6><p>"+arr.lienhe[i].tieu_de+"</p></div>"+(arr.lienhe[i].is_new == null? "<span class='badge badge-secondary'>new</span>":"");
+			}
+			str += "</ul>";
+			document.getElementsByClassName("userzone")[0].getElementsByTagName("span")[0].innerHTML = str;
+        }, false);
+	} else {
+		// EventSource not supported, 
+		// apply ajax long poll fallback
+    }
 </script>
 @yield('script')
 <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDPoe4NcaI69_-eBqxW9Of05dHNF0cRJ78&callback=showMap"></script> -->

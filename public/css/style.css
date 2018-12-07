@@ -720,10 +720,10 @@ a{
 	border: none;
 	border-radius: 1em;
 	box-shadow: 0 0 0.2em #000;
+	cursor: not-allowed;
 }
 .ghetaixe{
-	height: 3.6em;;
-	/* background:#f57812; */
+	height: 3.6em;
 	border: none;
 	border-radius: 1em;
 	box-shadow: 0 0 0.2em #000;
@@ -745,7 +745,7 @@ a{
 	background: #c3e9f4;
 	border: none;
 	border-radius: 1em;
-	cursor: pointer;
+	cursor: not-allowed;
 }
 .ghedangchon{
 	height: 2em;
@@ -765,6 +765,7 @@ a{
 	border: none;
 	border-radius: 1em;
 	box-shadow: 0 0 0.2em #000;
+	cursor: not-allowed;
 }
 .giuongtaixe{
 	background-image: url(../images/ghetaixe2.png);
@@ -793,8 +794,9 @@ a{
 	border: none;
 	border-radius: 1em;
 	box-shadow: 0 0 0.2em #000;
-	cursor: pointer;
+	cursor: not-allowed;
 	height: 5em;
+
 }
 .giuongdangchon{
 	background: green;
@@ -1133,6 +1135,29 @@ a{
 .ghecontrong .text1{
 	display: none;
 }
+.giuongdangchon .text1{
+	position: absolute;
+	z-index: 0.8;
+	top:37%;
+	left: 30%;
+	width: 100%;
+	color: #000;
+	height: 15px;
+	color: #FFF;
+}
+.giuongcochon .text1{
+	position: absolute;
+	z-index: 0.8;
+	top:37%;
+	left: 30%;
+	width: 100%;
+	color: #000;
+	height: 15px;
+	color: #000;
+}
+.giuongcontrong .text1{
+	display: none;
+}
 /*trang chi tiết tin tức*/
 .mainviewtintuc{
 	width: 90%;
@@ -1147,7 +1172,64 @@ a{
 .mainviewtintuc span{
 	font-weight: bold;
 	}
-
+/*Đễ xuất*/
+.vitridx{
+	margin-left: 10%;
+}
+.vitridx strong{
+	margin-left: 10px;
+}
+.vitridx button{
+	background: #f57812;
+	color: #FFF;
+}
+.vitridx button:hover{
+	color: #DDD;
+}
+.giuvedx{
+	margin-left: 50px;
+	display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+.huygiudx{
+	margin-left: 50px;
+	display: none;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
 @-webkit-keyframes fade {
   from {opacity: .4} 
   to {opacity: 1}

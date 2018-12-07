@@ -15,12 +15,10 @@ Route::post('qldv/login', 'TicketBookingManager@qldv_checkLogin')->name('qldv_lo
 Route::middleware('qldvcheck')->group(function(){
 	Route::get('qldv/logout', 'TicketBookingManager@qldv_logout')->name('qldv_logout');
 	Route::get('/qldv', function() {
-		return view('quanlydatve.giamsat');
+		return redirect('qldv/datve');
 	});
 
-	Route::get('/qldv/giamsat', function() {
-		return view('quanlydatve.giamsat');
-	});
+	Route::get('/qldv/giamsat/{id?}', 'TicketBookingManager@qldv_giamsat');
 
 	Route::get('/qldv/datve','TicketBookingManager@trangdatve');
 

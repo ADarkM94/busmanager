@@ -13,5 +13,24 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         //
+		'datveAndroid',
+        'gettinh',
+        'chuyenxeAndroid',
+        'chonveAndroid',
+        'lichsuAndroid',
+        'dangkyAndroid',
+        'dangnhapAndroid',
+        'updateUserAndroid',
+        'changePassAndroid',
+        'dangnhapDriverAndroid',
+        'dangkyDriverAndroid',
+        'ticketInfoAndroid',
+        'checkphoneAndroid',
+        'dangkyveAndroid',
+        'xulydatveAndroid',
+        'destroydatveAndroid',
+        'capnhatDriver',
+        'doimatkhauDriver',
+		'ticketAndroid'
     ];
 }
