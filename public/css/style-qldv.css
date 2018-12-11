@@ -238,6 +238,7 @@ a:hover, a:visited {
 	border-radius: 10px;
 	overflow: auto;
 	background: white;
+	text-align: center;
 }
 .searchroute > span {
 	color: #004964;
@@ -339,7 +340,7 @@ a:hover, a:visited {
 	animation-iteration-count: infinite;
 }
 .searchresult > div > ul {
-	padding-left: 0em;
+	padding-left: 3em;
 	text-align: center;
 }
 .ttdatve {
@@ -368,7 +369,7 @@ a:hover, a:visited {
 	margin-top: 1em;
 }
 .searchcustomer {
-	min-height: 60%;
+	min-height: calc(100% - 1.5em);
 	padding: 1em 2em;
 	border: 1px solid #008cff;
 	margin: .5em 0;
@@ -417,9 +418,8 @@ a:hover, a:visited {
 	width: 100%;
 	height: 100%;
 	padding: 0;
-	padding-left: 2em;
 	margin: 0;
-	padding-left: 3em;
+	padding-left: 5em;
 	list-style: none;
 	overflow: auto;
 }
@@ -657,7 +657,7 @@ a:hover, a:visited {
 	color: white;
 }
 #modaldadat .modal-dialog {
-	width: 300px;
+	width: 500px;
 }
 #modaldadat .modal-title {
 	text-align: center;
@@ -675,23 +675,24 @@ a:hover, a:visited {
 }
 #modaldadat .modal-body > ul {
 	width: 100%;
-	height: 100%;
+	height: 40%;
 	padding: 0;
 	margin: 0;
 	padding-left: 1em;
 	list-style: none;
 	overflow: auto;
+	border: 1px solid grey;
+	border-radius: 5px;
 }
 #modaldadat .modal-body > ul > li {
-	margin: .5em 0;
+	margin: .5em;
 	position: relative;
 	padding: .2em 1em;
 	background: #008cff;
 	color: white;
-	float: left;
-	clear: both;
 	border-radius: 5px;
 	cursor: pointer;
+	text-align: center;
 }
 #modaldadat .modal-body > ul > li > span {
 	position: absolute;

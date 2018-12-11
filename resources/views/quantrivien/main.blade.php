@@ -433,7 +433,7 @@
 					phone.value = data.data[0].dien_thoai;
 					posttime.value = data.data[0].ngay_dang;
 					content.value = data.data[0].noi_dung;
-					if($(".userzone span:nth-child(1) li[data-id='"+id+"'] span") !== undefined&&$(".userzone span:nth-child(1) li[data-id='"+id+"'] span").css("display") != "none")
+					if(data.data[0].is_new == null)
 					{
 						document.getElementsByClassName("userzone")[0].getElementsByTagName("span")[0].getElementsByTagName("i")[0].innerHTML -= 1;
 						$(".userzone span:nth-child(1) li[data-id='"+id+"'] span").css({display: "none"});

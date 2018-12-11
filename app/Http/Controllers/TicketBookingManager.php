@@ -243,6 +243,9 @@ class TicketBookingManager extends Controller
 		try
 		{
 			$data = [];
+			$ttchuyenxe = DB::table("chuyen_xe")->join("lo_trinh","chuyen_xe.Mã_lộ_trình","=","lo_trinh.Mã")->where("chuyen_xe.Mã","=",$machuyenxe)->select("lo_trinh.Nơi_đi","lo_trinh.Nơi_đến","chuyen_xe.Ngày_xuất_phát","chuyen_xe.Giờ_xuất_phát","lo_trinh.Thời_gian_đi_dự_kiến")->get();
+			$ttchuyenxe[0]->Ngày_đi = date("d-m-Y H:i:s",strtotime($ttchuyenxe[0]->Ngày_xuất_phát." ".$ttchuyenxe[0]->Giờ_xuất_phát));
+			$ttchuyenxe[0]->Ngày_đến = date("d-m-Y H:i:s",strtotime($ttchuyenxe[0]->Ngày_đi)+$ttchuyenxe[0]->Thời_gian_đi_dự_kiến);
 			for($i=0;$i<count($vedachon);$i++)
 			{
 				$updated_at = date('Y-m-d H:i:s');
@@ -252,7 +255,7 @@ class TicketBookingManager extends Controller
 				}
 			}
 			$tongtien = count($vedachon)*$data[0]->Tiền_vé;
-			return response()->json(['kq' => 1,'data' => $data,'tongtien' => $tongtien]);
+			return response()->json(['kq' => 1,'data' => $data,'tongtien' => $tongtien,'ttchuyenxe' => $ttchuyenxe]);
 		}
 		catch(\Exception $e)
 		{

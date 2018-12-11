@@ -1,119 +1,131 @@
 @extends('quanlydatve.main')
 @section('content')
-    <div class="content datve show row">
-        <div class="col-lg-4">
-            <div class="searchroute">
-                <span>Tìm chuyến xe</span>
-                <form name="searchchuyenxe">
-                    <div>
-                        <div class="input-group" style="position: relative;">
-                            <span class="input-group-addon">Nơi đi&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                            <input type="text" name="noidi" class="form-control" list="diadiem" placeholder="Nơi đi">
-							<!--ul id="kqsearchtinh"></ul-->
-                        </div>
-                        <br>
-                        <div class="input-group">
-                            <span class="input-group-addon">Nơi đến</span>
-                            <input type="text" name="noiden" class="form-control" list="diadiem" placeholder="Nơi đến">
-                        </div>
-                        <br>
-                        <div class="input-group">
-                            <span class="input-group-addon">Ngày đi&nbsp;</span>
-                            <input type="date" name="ngaydi" class="form-control">
-                        </div>
-                        <br>
-                        <div class="selecttype">
-                            <span>Loại xe</span>
-                            <label class="radio-inline"><input type="radio" name="loaighe" value="0" checked>Ghế ngồi</label>
-                            <label class="radio-inline"><input type="radio" name="loaighe" value="1">Giường nằm</label>
-                        </div>
-                    </div>
-                </form>
-                <span class="glyphicon glyphicon-search" id="timchuyenxe"></span>
-            </div>
-            <div class="searchresult">
-                <div class="chuyenxe">
-					<div class="loading"></div>
-                    <ul>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-4">
-            <div class="ttdatve">
-                <span>Thông tin đặt vé<i></i></span>
-                <form name="frm-ttdatve" class="form-vertical">
-					<input type="hidden" name="idchuyenxe">
-					<input type="hidden" name="idkhachhang">
-					<input type="hidden" name="idnhanvien" value="{{session('qldv.id')}}"> <!--Sẽ thay bằng session mã nhân viên sau-->
-                    <div class="input-group">
-						<label class="input-group-addon">Họ tên&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-						<input type="text" name="hoten" class="form-control" placeholder="Họ tên">
-					</div>	
-                    <br>
-					<div class="input-group">
-						<label class="input-group-addon">Di động&nbsp;&nbsp;&nbsp;&nbsp;</label>
-						<input type="text" name="sodienthoai" class="form-control" placeholder="Số điện thoại">
+    <div class="col-lg-12">
+        <span>
+            <ul>
+                <a href="{{asset('qldv/giamsat')}}">
+                    <li class="option selected">Bản đồ</li>
+                </a>
+				<a href="{{asset('qldv/datve')}}">
+                    <li class="option">Nhập vé</li>
+                </a>
+            </ul>
+        </span>
+		<div class="content datve show row">
+			<div class="col-lg-4">
+				<div class="searchroute">
+					<span>Tìm chuyến xe</span>
+					<form name="searchchuyenxe">
+						<div>
+							<div class="input-group" style="position: relative;">
+								<span class="input-group-addon">Nơi đi&nbsp;&nbsp;&nbsp;&nbsp;</span>
+								<input type="text" name="noidi" class="form-control" list="diadiem" placeholder="Nơi đi">
+								<!--ul id="kqsearchtinh"></ul-->
+							</div>
+							<br>
+							<div class="input-group">
+								<span class="input-group-addon">Nơi đến</span>
+								<input type="text" name="noiden" class="form-control" list="diadiem" placeholder="Nơi đến">
+							</div>
+							<br>
+							<div class="input-group">
+								<span class="input-group-addon">Ngày đi&nbsp;</span>
+								<input type="date" name="ngaydi" class="form-control">
+							</div>
+							<br>
+							<div class="selecttype">
+								<span>Loại xe</span>
+								<label class="radio-inline"><input type="radio" name="loaighe" value="0" checked>Ghế ngồi</label>
+								<label class="radio-inline"><input type="radio" name="loaighe" value="1">Giường nằm</label>
+							</div>
+						</div>
+					</form>
+					<span class="glyphicon glyphicon-search" id="timchuyenxe"></span>
+				</div>
+				<div class="searchresult">
+					<div class="chuyenxe">
+						<div class="loading"></div>
+						<ul>
+						</ul>
 					</div>
-                    <br>
-					<div class="input-group">
-						<label class="input-group-addon">Giới tính&nbsp;&nbsp;</label>
-						<select name="gender" class="form-control">
-							<option value="0">Không xác định</option>
-							<option value="1">Nam</option>
-							<option value="2">Nữ</option>
-						</select>
-					</div>
+				</div>
+			</div>
+			<div class="col-lg-4">
+				<div class="ttdatve">
+					<span>Thông tin đặt vé<i></i></span>
+					<form name="frm-ttdatve" class="form-vertical">
+						<input type="hidden" name="idchuyenxe">
+						<input type="hidden" name="idkhachhang">
+						<input type="hidden" name="idnhanvien" value="{{session('qldv.id')}}"> <!--Sẽ thay bằng session mã nhân viên sau-->
+						<div class="input-group">
+							<label class="input-group-addon">Họ tên&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+							<input type="text" name="hoten" class="form-control" placeholder="Họ tên">
+						</div>	
+						<br>
+						<div class="input-group">
+							<label class="input-group-addon">Di động&nbsp;&nbsp;&nbsp;&nbsp;</label>
+							<input type="text" name="sodienthoai" class="form-control" placeholder="Số điện thoại">
+						</div>
+						<br>
+						<div class="input-group">
+							<label class="input-group-addon">Giới tính&nbsp;&nbsp;</label>
+							<select name="gender" class="form-control">
+								<option value="0">Không xác định</option>
+								<option value="1">Nam</option>
+								<option value="2">Nữ</option>
+							</select>
+						</div>
+						<br>
+						<div class="input-group">
+							<label class="input-group-addon">Ngày sinh</label>
+							<input type="date" name="brtday" class="form-control">
+						</div>
+						<br>
+						<div class="input-group">
+							<label class="input-group-addon">Đã chọn&nbsp;&nbsp;&nbsp;</label>
+							<input type="text" name="vedachon" class="form-control" placeholder="Các vị trí ghế đã chọn" readonly>
+						</div>
+						<br>
+						<div class="input-group">
+							<label class="input-group-addon">Nơi đi&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+							<input type="text" name="noidi" class="form-control" placeholder="Nơi đi" readonly>
+						</div>
+						<br>
+						<div class="input-group">
+							<label class="input-group-addon">Nơi đến&nbsp;&nbsp;&nbsp;</label>
+							<input type="text" name="noiden" class="form-control" placeholder="Nơi đến" readonly>
+						</div>
+					</form>
+					<span data-toggle="modal" data-target="#modaldadat">Vé đã đặt</span>
+					<span onclick="registerAccount()">Tạo tài khoản</span>
 					<br>
-					<div class="input-group">
-						<label class="input-group-addon">Ngày sinh</label>
-						<input type="date" name="brtday" class="form-control">
+					<span onclick="bookTicket()">Đặt vé</span>
+				</div>
+			</div>
+			<div class="col-lg-4">
+				<div class="searchcustomer">
+					<span>Tìm Khách Hàng</span>
+					<form name="timkhachhang">
+						<div>
+							<input type="text" name="searchkh" class="form-control" placeholder="Search">
+							<span id="timkh" class="glyphicon glyphicon-search"></span>
+						</div>
+						<div>
+							<label>Tìm theo:</label>
+							<label class="kh-filter"><input type="checkbox" onclick="if(document.getElementById('kh-filter0').checked == true){ document.getElementById('kh-filter1').checked = true; document.getElementById('kh-filter2').checked = true; document.getElementById('kh-filter1').disabled = true; document.getElementById('kh-filter2').disabled = true;} else { document.getElementById('kh-filter1').disabled = false; document.getElementById('kh-filter2').disabled = false;}" id="kh-filter0" value="0">Tất cả</label>
+							<label class="kh-filter"><input type="checkbox" id="kh-filter1" value="1" checked>Tên</label>
+							<label class="kh-filter"><input type="checkbox" id="kh-filter2" value="2">Sđt</label>
+						</div>
+					</form>
+					<div class="kqtimkh">
+						<div class="loading"></div>
+						<ul>
+						</ul>
 					</div>
-                    <br>
-					<div class="input-group">
-						<label class="input-group-addon">Đã chọn&nbsp;&nbsp;&nbsp;</label>
-						<input type="text" name="vedachon" class="form-control" placeholder="Các vị trí ghế đã chọn" readonly>
-					</div>
-                    <br>
-					<div class="input-group">
-						<label class="input-group-addon">Nơi đi&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-						<input type="text" name="noidi" class="form-control" placeholder="Nơi đi" readonly>
-					</div>
-                    <br>
-					<div class="input-group">
-						<label class="input-group-addon">Nơi đến&nbsp;&nbsp;&nbsp;</label>
-						<input type="text" name="noiden" class="form-control" placeholder="Nơi đến" readonly>
-					</div>
-                </form>
-                <span>Vé đã đặt</span>
-				<span onclick="registerAccount()">Tạo tài khoản</span>
-				<br>
-                <span onclick="bookTicket()">Đặt vé</span>
-            </div>
-        </div>
-        <div class="col-lg-4">
-            <div class="searchcustomer">
-                <span>Tìm Khách Hàng</span>
-                <form name="timkhachhang">
-                    <div>
-                        <input type="text" name="searchkh" class="form-control" placeholder="Search">
-                        <span id="timkh" class="glyphicon glyphicon-search"></span>
-                    </div>
-					<div>
-						<label>Tìm theo:</label>
-						<label class="kh-filter"><input type="checkbox" onclick="if(document.getElementById('kh-filter0').checked == true){ document.getElementById('kh-filter1').checked = true; document.getElementById('kh-filter2').checked = true; document.getElementById('kh-filter1').disabled = true; document.getElementById('kh-filter2').disabled = true;} else { document.getElementById('kh-filter1').disabled = false; document.getElementById('kh-filter2').disabled = false;}" id="kh-filter0" value="0">Tất cả</label>
-						<label class="kh-filter"><input type="checkbox" id="kh-filter1" value="1" checked>Tên</label>
-						<label class="kh-filter"><input type="checkbox" id="kh-filter2" value="2">Sđt</label>
-					</div>
-                </form>
-                <div class="kqtimkh">
-					<div class="loading"></div>
-                    <ul>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
+				</div>
+			</div>
+		</div>
+	</div>
 @endsection
 @section('excontent')
     <datalist id="diadiem" style="display: none;">
@@ -176,7 +188,26 @@
                 <div class="modal-header">
                     <div class="modal-title">Đã đặt thành công</div>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body row">
+					<form name="frm-ttdadat">
+						<div class="form-group col-lg-6">
+							<label>Nơi đi</label>
+							<input type="text" class="form-control" name="noidi" placeholder="Điểm đi" readonly>
+						</div>
+						<div class="form-group col-lg-6">
+							<label>Nơi đến</label>
+							<input type="text" class="form-control" name="noiden" placeholder="Điểm đến" readonly>
+						</div>
+						<div class="form-group col-lg-6">
+							<label>Thời gian đi</label>
+							<input type="text" class="form-control" name="thoigiandi" placeholder="Thời gian đi" readonly>
+						</div>
+						<div class="form-group col-lg-6">
+							<label>Thời gian đến dự kiến</label>
+							<input type="text" class="form-control" name="thoigianden" placeholder="Thời gian đến dự kiến" readonly>
+						</div>
+					</form>
+					<h5 style="display: block; margin: .5em; color: #004964;">Vé đã đặt</h5>
                     <ul>
                         <!--li>Thông tin vé # <span class="glyphicon glyphicon-remove" style="color: red;"></span></li-->
                     </ul>
@@ -299,6 +330,20 @@
 		var date = new Date; 
 		document.forms['searchchuyenxe']['ngaydi'].min = date.getFullYear()+'-'+((date.getMonth()+1)<10? ('0'+(date.getMonth()+1)):(date.getMonth()+1))+'-'+(date.getDate()<10? ('0'+date.getDate()):date.getDate());
 		document.forms['searchchuyenxe']['ngaydi'].defaultValue = date.getFullYear()+'-'+((date.getMonth()+1)<10? ('0'+(date.getMonth()+1)):(date.getMonth()+1))+'-'+(date.getDate()<10? ('0'+date.getDate()):date.getDate());
+		document.forms['searchchuyenxe']['ngaydi'].onblur = function(){
+			if(this.value != "")
+			{
+				if(Date.parse(this.value) < Date.parse(this.min))
+				{
+					$("#modalalert .modal-body").html("Ngày đi không được nhỏ hơn ngày hiện tại!");
+					$("#modalalert").modal("show");
+					date = new Date; 
+					this.min = date.getFullYear()+'-'+((date.getMonth()+1)<10? ('0'+(date.getMonth()+1)):(date.getMonth()+1))+'-'+(date.getDate()<10? ('0'+date.getDate()):date.getDate());
+					this.defaultValue = date.getFullYear()+'-'+((date.getMonth()+1)<10? ('0'+(date.getMonth()+1)):(date.getMonth()+1))+'-'+(date.getDate()<10? ('0'+date.getDate()):date.getDate());
+					this.value = this.defaultValue;
+				}
+			}
+		};
 		document.getElementById('timchuyenxe').onclick = function(){
 			var noidi = document.forms['searchchuyenxe']['noidi'];
 			var noiden = document.forms['searchchuyenxe']['noiden'];
@@ -1175,8 +1220,10 @@
 			var gioitinh = document.forms["frm-ttdatve"]["gender"];
 			var ngaysinh = document.forms["frm-ttdatve"]["brtday"];
 			var vedachon = document.forms["frm-ttdatve"]["vedachon"];
-			// var noidi = document.forms["frm-ttdatve"]["noidi"];
-			// var noiden = document.forms["frm-ttdatve"]["noiden"];
+			var noidi = document.forms["frm-ttdadat"]["noidi"];
+			var noiden = document.forms["frm-ttdadat"]["noiden"];
+			var thoigiandi = document.forms["frm-ttdadat"]["thoigiandi"];
+			var thoigianden = document.forms["frm-ttdadat"]["thoigianden"];
 			if(idchuyenxe.value == ""||idkhachhang.value == "")
 			{
 				$("#modalalert .modal-body").html("Chưa chọn chuyến xe hoặc khách hàng!");
@@ -1204,6 +1251,10 @@
 								str += " <li data-ma='"+data.data[i].Mã+"'>Vé #"+data.data[i].Mã+" - "+data.data[i].Vị_trí_ghế+"/ "+data.data[i].Tiền_vé+"đ</li>";
 							}
 							display.innerHTML = str;
+							noidi.value = data.ttchuyenxe[0].Nơi_đi;
+							noiden.value = data.ttchuyenxe[0].Nơi_đến;
+							thoigiandi.value = data.ttchuyenxe[0].Ngày_đi;
+							thoigianden.value = data.ttchuyenxe[0].Ngày_đến;
 							document.getElementById("modaldadat").getElementsByClassName("modal-footer")[0].getElementsByTagName("input")[0].style.textAlign = "right";
 							document.getElementById("modaldadat").getElementsByClassName("modal-footer")[0].getElementsByTagName("input")[0].value = data.tongtien + "đ";
 							document.forms["frm-ttdatve"].reset();

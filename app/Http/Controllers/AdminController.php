@@ -886,8 +886,8 @@ class AdminController extends Controller
 		if(count(DB::table("admin_lienhe")->where([['lh_id','=',$id],['admin_id','=',session("admin.id")]])->select("*")->get()) == 0)
 		{
 			try {
+				$data = DB::table("lienhe")->leftJoin("admin_lienhe","lienhe.lh_id","=","admin_lienhe.lh_id")->where("lienhe.lh_id","=",$id)->select("lienhe.*","admin_lienhe.is_checked as is_new")->get();
 				DB::insert("INSERT INTO `admin_lienhe`(`lh_id`, `admin_id`, `is_checked`) VALUES (?,?,'1')",[$id,session("admin.id")]);
-				$data = DB::table("lienhe")->where("lh_id","=",$id)->select("*")->get();
 				return response()->json(['kq' => 1,'data' => $data]);
 			} catch (\Exception $e) {
 				return $e;
@@ -896,7 +896,7 @@ class AdminController extends Controller
 		else
 		{
 			try {
-				$data = DB::table("lienhe")->where("lh_id","=",$id)->select("*")->get();
+				$data = DB::table("lienhe")->leftJoin("admin_lienhe","lienhe.lh_id","=","admin_lienhe.lh_id")->where("lienhe.lh_id","=",$id)->select("lienhe.*","admin_lienhe.is_checked as is_new")->get();
 				return response()->json(['kq' => 1,'data' => $data]);
 			} catch (\Exception $e) {
 				return $e;
