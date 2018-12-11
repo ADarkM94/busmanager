@@ -545,7 +545,7 @@ class AdminController extends Controller
             $ticket = DB::table('ve')->join('chuyen_xe','ve.Mã_chuyến_xe','=','chuyen_xe.Mã')
                 ->join('xe','xe.Mã','=','chuyen_xe.Mã_xe')
                 ->join('bus_model','bus_model.Mã','=','xe.Mã_loại_xe')
-                ->select('ve.Mã','ve.Mã_chuyến_xe','ve.Mã_nhân_viên_đặt','ve.Mã_khách_hàng','ve.Sđt_khách_hàng','ve.Vị_trí_ghế','ve.Trạng_thái','chuyen_xe.Tiền_vé','bus_model.Loại_ghế')
+                ->select('ve.Mã','ve.Mã_chuyến_xe','ve.Mã_nhân_viên_đặt','ve.Mã_khách_hàng','ve.Mã_đặt_vé','ve.Vị_trí_ghế','ve.Trạng_thái','chuyen_xe.Tiền_vé','bus_model.Loại_ghế')
                 ->where('Mã_chuyến_xe','=',$id)->get();
             foreach ($ttchuyenxes as $row){
                 $ttchuyenxe = $row;
@@ -714,7 +714,7 @@ class AdminController extends Controller
         $ticket = DB::table('ve')->join('chuyen_xe','ve.Mã_chuyến_xe','=','chuyen_xe.Mã')
             ->join('xe','xe.Mã','=','chuyen_xe.Mã_xe')
             ->join('bus_model','bus_model.Mã','=','xe.Mã_loại_xe')
-            ->select('ve.Mã','ve.Mã_chuyến_xe','ve.Mã_nhân_viên_đặt','ve.Mã_khách_hàng','ve.Sđt_khách_hàng','ve.Vị_trí_ghế','ve.Trạng_thái','chuyen_xe.Tiền_vé','bus_model.Loại_ghế')
+            ->select('ve.Mã','ve.Mã_chuyến_xe','ve.Mã_nhân_viên_đặt','ve.Mã_khách_hàng','ve.Mã_đặt_vé','ve.Vị_trí_ghế','ve.Trạng_thái','chuyen_xe.Tiền_vé','bus_model.Loại_ghế')
             ->get();
         return view('quantrivien.ve',['ticket'=>$ticket]);
     }
@@ -733,7 +733,7 @@ class AdminController extends Controller
             $ticket = DB::table('ve')->join('chuyen_xe','ve.Mã_chuyến_xe','=','chuyen_xe.Mã')
                 ->join('xe','xe.Mã','=','chuyen_xe.Mã_xe')
                 ->join('bus_model','bus_model.Mã','=','xe.Mã_loại_xe')
-                ->select('ve.Mã','ve.Mã_chuyến_xe','ve.Mã_nhân_viên_đặt','ve.Mã_khách_hàng','ve.Sđt_khách_hàng','ve.Vị_trí_ghế','ve.Trạng_thái','chuyen_xe.Tiền_vé','bus_model.Loại_ghế')
+                ->select('ve.Mã','ve.Mã_chuyến_xe','ve.Mã_nhân_viên_đặt','ve.Mã_khách_hàng','ve.Mã_đặt_vé','ve.Vị_trí_ghế','ve.Trạng_thái','chuyen_xe.Tiền_vé','bus_model.Loại_ghế')
                 ->get();
             return \response()->json(['msg'=>$ticket]);
         }
@@ -742,7 +742,7 @@ class AdminController extends Controller
                 ->join('xe','xe.Mã','=','chuyen_xe.Mã_xe')
                 ->join('bus_model','bus_model.Mã','=','xe.Mã_loại_xe')
                 ->where('ve.Mã_chuyến_xe','=',$id)
-                ->select('ve.Mã','ve.Mã_chuyến_xe','ve.Mã_nhân_viên_đặt','ve.Mã_khách_hàng','ve.Sđt_khách_hàng','ve.Vị_trí_ghế','ve.Trạng_thái','chuyen_xe.Tiền_vé','bus_model.Loại_ghế')
+                ->select('ve.Mã','ve.Mã_chuyến_xe','ve.Mã_nhân_viên_đặt','ve.Mã_khách_hàng','ve.Mã_đặt_vé','ve.Vị_trí_ghế','ve.Trạng_thái','chuyen_xe.Tiền_vé','bus_model.Loại_ghế')
                 ->get();
             return \response()->json(['msg'=>$ticket]);
         }
