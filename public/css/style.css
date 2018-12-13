@@ -27,6 +27,9 @@ a{
 	margin-left: 5em;
 	float: left;
 }
+.headerlogo:hover{
+	cursor: pointer;
+}
 .header button:hover{
 	background: #FFF;
 	color: #CCC;
@@ -104,11 +107,13 @@ a{
 	position: relative;
 }
 /*left*/
-.left{
+.mainleft{
 	width: 100%;
 	min-height: 400px;
 }
-
+.mainleft:hover{
+	cursor: pointer;
+}
 /*right*/
 .mainright{
 	width: 28%;
@@ -361,38 +366,36 @@ a{
 .footer ul li{
 	width: 49%;
 	float: left;
-	text-align: center;
+	text-align: left;
+	padding-left: 10%;
 	color: #FFF;
+}
+.footer h3{
+	padding-left: 10%;
+}
+.footer strong{
+	padding-left: 10%;
 }
 /*đặt vé*/
 .maindatve{
 	width: 100%;
 	min-height: 400px;
 }
-.maindatve ul{
-	width: 100%;
-	list-style-type: none;
-	margin-top: 2em;
-	border-radius: 1em;
-	height: 300px;
-}
-.maindatve ul li{
-	width: 33%;
-	float: left;
-	text-align: center;
-	color: #004963;
-	font-weight: 500;
-	font-size: 18px;
-	margin-top: 1em;
-}
+
 /*địa điểm đặt vé*/
 .diadiemdatve{
 	width: 100%;
 	margin: auto;
 	margin-top: 1em;
+	margin-left: 2em;
 }
 .diaiemdatve .the{
 	position: relative;
+}
+.diadiemdatve label{
+	margin-left: 20%;
+	font-size: 20px;
+	color: #004963;
 }
 .diadiemdatve i{
 	position: absolute;
@@ -400,12 +403,13 @@ a{
 	margin-left: 5px;
 	color:#f57812; 
 }
-.diadiemdatve select{
-	width: 300px;
+.diadiemdatve input[type = text]{
+	width: 80%;
 	height: 30px;
 	padding-left: 2em;
 	cursor: pointer;
 	color: #004963;
+
 	border: none;
 	box-shadow: 0 3px #F3AD45; 
 }
@@ -421,6 +425,7 @@ a{
 .timchuyendidatve h3{
 	color: #FFF;
 	font-weight: bold;
+
 }
 /*chọn ngày đi*/
 .ngaydidatve{
@@ -428,6 +433,11 @@ a{
 	margin: auto;
 	margin-top: 1em;
 	margin-left: 2em;
+}
+.ngaydidatve label{
+	margin-left: 20%;
+	font-size: 20px;
+	color: #004963;
 }
 .ngaydidatve #datepicker{
 	width:300px; 
@@ -457,8 +467,8 @@ a{
 	border: 1px solid #F3AD45;
 	background: #FFF;
 	font-weight: bold;
-	width: 75%;
-	margin-left: 3em;
+	width: 80%;
+	
 	border-radius: 1em;
 	text-align: left;
 	padding-left: 20%;
@@ -466,7 +476,10 @@ a{
 .chonloaixe input:hover{
 	cursor: pointer;
 }
-
+.chonloaixe p{
+	font-size: 20px;
+	color: #004963;
+}
 /*chuyến xe*/
 .chuyenxemain{
 	width: 100%;
@@ -905,6 +918,9 @@ a{
 	width: 80%;
 	margin: auto;
 }
+.buoc li.tay:hover{
+	cursor: pointer;
+}
 .buoc ul li:not([class~='stay']){
 	width: calc(70% / 3);
 	float: left;
@@ -984,13 +1000,14 @@ a{
 	min-height: 450px;
 	margin: auto;
 	background: #FFF;
-	text-align: center;
+	text-align: left;
 	border-radius: 0.5em;
 	box-shadow: 0 0 2em #CCC;
 	padding-top: 1em;
+	padding-left: 10%;
 }
 .mainthongtinve h3{
-	text-align: center;
+	margin-left: 15%;
 	color: #000;
 }
 .mainthongtinve button{
@@ -1013,7 +1030,31 @@ a{
 	padding: 0.5em;
 	margin:0.3em;
 }
-
+.close{
+	transition: all 0.5s ease-in-out;
+}
+/*hiện thông tin vé*/
+#thongtinve span{
+	background: #FFF;
+	border: none;
+	color: rgb(0,64,87);
+	font-weight: bold;
+	width: 150px;
+}
+#thongtinve input{
+	background: #FFF;
+	border: none; 
+	box-shadow: none;
+}
+#thongtinve textarea{
+	background: #FFF;
+	border: none; 
+	box-shadow: none;
+}
+/*close*/
+	.close:hover{
+		transform: rotate(90deg);
+	}
 /*thông tin khách*/
 .thongtinkhach1{
 	width: 100%;

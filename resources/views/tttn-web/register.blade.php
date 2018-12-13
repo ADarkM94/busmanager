@@ -2,7 +2,7 @@
     <div class="modal-dialog" style="width:500px;">
         <div class="modal-content">
             <form>
-                <div class="modal-header">
+                <div class="modal-header"  style="background: rgb(0,64,87); color: #FFF; text-align: center;">
                     <h4 class="modal-title">Thông tin Đăng ký</h4>
                 </div>
                 <!-- hiện lổi -->
@@ -62,7 +62,7 @@
                     <div class="input-group">
                         <!-- button đăng ký -->
                         <span class="input-group-addon"><i class="glyphicon glyphicon-log-in"></i></span>
-                        <input type="button" class="form-control form-control-success dangky" name="register" value="Đăng Ký">
+                        <input type="button" style="color: #FFF;background: rgb(0,64,87);"  class="form-control form-control-success dangky" name="register" value="Đăng Ký">
                     </div>
                     <br>
                     <!-- đã có tài khoản -->

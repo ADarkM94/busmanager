@@ -21,7 +21,7 @@
     <!-- phần header -->
         <div class="header">
             <!-- Logo -->
-                <img src="{{asset('images/logo.png')}}" height="40">
+                <img  class="headerlogo" src="{{asset('images/logo1.png')}}" onclick="location.href='{{url("/")}}';" height="40">
             <!-- Phần Chữ chạy  -->
                 <div style="width: 70%;color: #FFF; float: left;"><div style="width: 70%; margin-left:40%; margin-top: 10px;"><marquee direction="left">CHÀO MỪNG BẠN ĐẾN VỚI WEBSITE CỦA CHÚNG TÔI, CHÚC BẠN CÓ CHUYẾN ĐI VUI VẺ !</marquee>
                 </div></div>
@@ -94,7 +94,10 @@
                     </li>
                     <li>
                         <h4> &copy; Bản Quyền Thuộc Về Đại Học Bách Khoa HCM </h4>
-                        <h4>Tất cả vì khách hàng - Thiết Kế bới Nhóm 30</h4>
+                        <h4>&#9679; Thiết Kế Bởi: </h4>
+                        <strong>Nguyễn Thành Nhân - 51202526</strong><br>
+                        <strong>Phan Anh Minh - 51202164</strong><br>
+                        <strong>Nguyễn Đặng Sỹ Luân - 51302247</strong><br>
                     </li>
                 </ul>
             </div>

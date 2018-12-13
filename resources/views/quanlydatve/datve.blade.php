@@ -1347,7 +1347,6 @@
 		function showHistory()
 		{
 			var idnhanvien = '{{session("qldv.id")}}';
-			$("#modaldanhsachdondatve").modal("hide");
 			$.ajax({
 				url: '{{route("qldv_showhistory")}}',
 				type: 'post',
@@ -1410,7 +1409,7 @@
 							str = "Chưa có đơn đặt vé nào!";
 						}
 						$("#modaldanhsachdondatve .modal-body").html(str);
-						$("#modaldanhsachdondatve").modal();
+						$("#modaldanhsachdondatve").modal("show");
 					}
 				},
 				timeout: 10000,

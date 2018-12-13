@@ -12,9 +12,9 @@
     <!-- Phần bước  -->
       <div class="buoc">
           <ul>
-              <li>Tìm Chuyến</li>
-              <li>Chọn Vé</li>
-              <li style="background: #f57812; color: #FFF;" class="stay">Chi Tiếc vé</li>
+              <li onclick="vetrangtruoc2()" class="tay">Tìm Chuyến</li>
+              <li onclick="vetrangtruoc()" class="tay">Chọn Vé</li>
+              <li style="background: #f57812; color: #FFF;" class="stay tay">Chi Tiếc vé</li>
           </ul>
       </div>
     <!-- kết thức phần bước  -->
@@ -201,8 +201,8 @@
 
           <!-- Modal content-->
             <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close dongdx" data-dismiss="modal">&times;</button>
+              <div class="modal-header" style="background: rgb(0,64,87); color: #FFF; text-align: center;">
+                <button type="button" class="close dongdx" data-dismiss="modal" style="color: white;opacity: 1;">&times;</button>
                 <h4 class="modal-title">Vé Được Đề Xuất</h4>
               </div>
               <div class="modal-body">
@@ -227,8 +227,8 @@
         <div class="modal-dialog" style="width:400px;">
           <!-- Modal content-->
           <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <div class="modal-header" style="background: rgb(0,64,87); color: #FFF; text-align: center;">
+              <button type="button" class="close" data-dismiss="modal" style="color: white;opacity: 1;">&times;</button>
               <h3 class="modal-title">Bạn muốn mua vé cho ai ?</h3>
             </div>
             <div class="modal-body" style="margin-left: 20%;">
@@ -247,8 +247,8 @@
         <div class="modal-dialog" style="width:400px;">
           <!-- Modal content-->
           <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <div class="modal-header" style="background: rgb(0,64,87); color: #FFF; text-align: center;">
+              <button type="button" class="close" data-dismiss="modal" style="color: white;opacity: 1;">&times;</button>
               <h3 class="modal-title">Nhập thông tin người thân !</h3>
             </div>
             <div class="modal-body">
@@ -281,6 +281,13 @@
 @endsection
 @section('script')
     <script type="text/javascript">
+        function vetrangtruoc(){
+            history.back();
+        }
+         function vetrangtruoc2(){
+            history.back();
+             history.back();
+        }
         mang=[];
        /*đếm thời gian giữ vé*/
             function demnguoc(ma,thoigian){
@@ -546,15 +553,21 @@
                       },
                       type: 'post',
                       success: function (data) {
-                        dem = data.kq.length;
-                        vitri = data.kq[0].Vị_trí_ghế;
-                        ma = data.kq[0].Mã;
-                        $(".vetotnhat").append("<div class='vitridx'>Vị Trí: <strong>"+vitri+"</strong> <button class='giuvedx' data-ma='"+ma+"'>Chọn Vé</button><button class='huygiudx' data-ma='"+ma+"' >Bỏ Chọn</button></div>");
-                        for(i=1;i<6;i++){
-                          vitri = data.kq[i].Vị_trí_ghế;
-                          ma = data.kq[i].Mã;
-                          $(".vetieptheo").append("<div class='vitridx'>Vị Trí: <strong>"+vitri+"</strong> <button class='giuvedx' data-ma='"+ma+"'>Chọn Vé</button><button class='huygiudx' data-ma='"+ma+"'>Bỏ Chọn</button></div>");
-                           $(".vetieptheo").append("<br>");
+                        if(data.kq == 0){
+                          alert("Xin Lôi! Trang Chưa đủ dữ liệu để đề xuất !");
+                          $("#vedexuat").modal("hide"); 
+                        }
+                        else{
+                          dem = data.kq.length;
+                          vitri = data.kq[0].Vị_trí_ghế;
+                          ma = data.kq[0].Mã;
+                          $(".vetotnhat").append("<div class='vitridx'>Vị Trí: <strong>"+vitri+"</strong> <button class='giuvedx' data-ma='"+ma+"'>Chọn Vé</button><button class='huygiudx' data-ma='"+ma+"' >Bỏ Chọn</button></div>");
+                          for(i=1;i<6;i++){
+                            vitri = data.kq[i].Vị_trí_ghế;
+                            ma = data.kq[i].Mã;
+                            $(".vetieptheo").append("<div class='vitridx'>Vị Trí: <strong>"+vitri+"</strong> <button class='giuvedx' data-ma='"+ma+"'>Chọn Vé</button><button class='huygiudx' data-ma='"+ma+"'>Bỏ Chọn</button></div>");
+                             $(".vetieptheo").append("<br>");
+                          }
                         }
                       }
                   }) ;
@@ -586,6 +599,7 @@
                       success: function (data) {
                         if(data.kq == 0){
                           alert("Xin Lôi! Trang Chưa đủ dữ liệu để đề xuất !");
+                           $("#vedexuat").modal("hide"); 
                         }
                         else{
                             dem = data.kq.length;

@@ -7,8 +7,8 @@
         <div class="modal-dialog" style="width: 500px;">
       <!-- Đổi thông tin-->
       <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <div class="modal-header" style="background: rgb(0,64,87); color: #FFF; text-align: center;">
+          <button type="button" class="close" data-dismiss="modal" style="color: white;opacity: 1;">&times;</button>
           <h4 class="modal-title">Đổi Thông Tin</h4>
         </div>
         <div class="modal-body">
@@ -56,12 +56,12 @@
         </div>
     </div>
     <div  class="modal fade" id="doimatkhau" role="dialog">
-         <div class="modal-dialog" style="width: 500px;">
+         <div class="modal-dialog" style="width: 450px;">
     
       <!-- Đổi mật khẩu-->
       <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <div class="modal-header" style="background: rgb(0,64,87); color: #FFF; text-align: center;">
+          <button type="button" class="close" data-dismiss="modal" style="color: white;opacity: 1;">&times;</button>
           <h4 class="modal-title">Đổi Mật Khẩu</h4>
         </div>
         <div class="modal-body">
@@ -161,6 +161,7 @@
     </div>
      <!-- Lịch sử chuyến đi -->
     <div class="lichsudi">
+        <?php $i=0;?>
         <div class="tenthongtinkhach"><h3>Lịch Sử Đã Đặt</h3></div>
              <table>
             <tr>
@@ -172,7 +173,7 @@
                 <th>Giá</th>
             </tr>
             @foreach($lichsudi as $t)
-                <tr>
+                <tr class="dongthongtinve" data-id = {{ $i }}>
                     <td><span>{{$t->Nơi_đi}} -> {{$t->Nơi_đến}}</span></td>
                     <td><span>{{$t->Ngày_xuất_phát}} : {{$t->Giờ_xuất_phát}}</span></td>
                     <td><span>{{$t->Thời_gian_đến_dự_kiến}}</span></td>
@@ -180,10 +181,65 @@
                      <td><span>{{$t->Vị_trí_ghế}}</span></td>
                     <td><span>{{($t->Tiền_vé)/1000}}.000 VNĐ</span></td>
                 </tr>
+                <?php $i++; ?>
                 @endforeach
         </table>
     </div>
 </div>
+@endsection
+@section('excontent')
+    <div id="thongtinve" class="modal fade">
+        <div class="modal-dialog" style="width: 500px;">
+            <div class="modal-content">
+                <div class="modal-header" style="background: rgb(0,64,87); color: #FFF; text-align: center;">
+                    <button class="close" data-dismiss="modal" style="color: white;opacity: 1;">&times;</button>
+                    <h4 class="modal-title">Thông Tin Vé</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group">
+                        <span class="input-group-addon">Nơi đi: </span>
+                        <input id="Noidi" type="text" readonly class="form-control" >
+                      </div>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group">
+                        <span class="input-group-addon">Nơi đến: </span>
+                        <input id="Noiden" type="text" readonly class="form-control" >
+                      </div>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group">
+                        <span class="input-group-addon">Thời gian đi: </span>
+                        <input id="Thoigiandi" type="text" readonly class="form-control" >
+                      </div>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group">
+                        <span class="input-group-addon">Thời gian đến: </span>
+                        <input id="Thoigianden" type="text" readonly class="form-control" >
+                      </div>
+                </div>
+                 <div class="modal-body">
+                    <div class="input-group">
+                        <span class="input-group-addon">Loại xe: </span>
+                        <input id="Loaixe" type="text" readonly class="form-control" >
+                      </div>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group">
+                        <span class="input-group-addon">Tiền vé: </span>
+                        <input id="Tienve" type="text" readonly class="form-control" >
+                      </div>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group">
+                        <span class="input-group-addon">Vị trí: </span>
+                        <textarea id="Vitri" type="text" readonly class="form-control" ></textarea>
+                      </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 @section('script')
     <script type="text/javascript">
@@ -260,6 +316,24 @@
                      });
                     }
                
+            });
+            /* xem thong tin ve*/
+            $(".dongthongtinve").dblclick(function(){
+                var id = $(this).attr("data-id");
+                var lichsudi = JSON.parse('{!!json_encode($lichsudi)!!}');
+                $("#Noidi").val(""+lichsudi[id].Nơi_đi+"");
+                $("#Noiden").val(""+lichsudi[id].Nơi_đến+"");
+                $("#Thoigiandi").val(""+lichsudi[id].Ngày_xuất_phát+" : "+lichsudi[id].Giờ_xuất_phát+"");
+                if(lichsudi[id]==1){
+                     $("#Loaixe").val("Giường Ngồi");
+                }
+                else{
+                    $("#Loaixe").val("Ghế Ngồi");
+                }
+                $("#Tienve").val(""+lichsudi[id].Tiền_vé/1000+".000 VNĐ");
+                $("#Vitri").val(""+lichsudi[id].Vị_trí_ghế+"");
+                $("#Thoigianden").val(""+lichsudi[id].Thời_gian_đến_dự_kiến+"");
+               $("#thongtinve").modal("show"); 
             });
             /*Đổi mật khẩu*/
             $(".closedoimatkhau").click(function(){

@@ -325,7 +325,7 @@ class TicketBookingManager extends Controller
 	{
 		$id = $request->data;
 		try {
-			$data = DB::table("dondatve")->where("Mã_nhân_viên_đặt","=",$id)->select("Mã","created_at","Trạng_thái")->orderBy("Trạng_thái","asc")->orderBy("Mã","desc")->get();
+			$data = DB::table("dondatve")->where("Mã_nhân_viên_đặt","=",$id)->select("Mã","created_at","Trạng_thái")->orderBy("Trạng_thái","asc")->orderBy("created_at","desc")->get();
 			for($i=0;$i<count($data);$i++)
 			{
 				$data[$i]->Ngày = date("d-m-Y",strtotime($data[$i]->created_at));

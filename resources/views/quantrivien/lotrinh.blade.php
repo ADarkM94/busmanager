@@ -647,14 +647,6 @@
 		}
 		function showMap(locations)
 		{
-			// var locations = [
-				// ['Bondi Beach', -33.890542, 151.274856, 4],
-				// ['Coogee Beach', -33.923036, 151.259052, 5],
-				// ['Cronulla Beach', -34.028249, 151.157507, 3],
-				// ['Manly Beach', -33.80010128657071, 151.28747820854187, 2],
-				// ['Maroubra Beach', -33.950198, 151.259302, 1]
-			// ];
-			var locations = locations;
 			var center = locations[0];
 			
 			var map = new google.maps.Map(document.getElementById("viewmap").getElementsByClassName("modal-body")[0], {
@@ -672,16 +664,23 @@
 					position: new google.maps.LatLng(locations[i][0], locations[i][1]),
 					map: map
 				});
+				
+				if(i == 0)
+				{
+					infowindow.setContent(locations[i][2]);
+					infowindow.open(map, marker);
+				}
 
 				google.maps.event.addListener(marker, 'click', (function(marker, i) {
 					return function() {
 						infowindow.setContent(locations[i][2]);
 						infowindow.open(map, marker);
+						map.setOptions({
+							center: new google.maps.LatLng(locations[i][0], locations[i][1])
+						});
 					}
 				})(marker, i));
 			}
-			infowindow.setContent(center[2]);
-			infowindow.open(map, marker);
 		}
     </script>
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDPoe4NcaI69_-eBqxW9Of05dHNF0cRJ78"></script>

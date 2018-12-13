@@ -31,7 +31,7 @@ class Controller extends BaseController
     /*Hiển thị trang chủ*/
         public function Index(){
             /*lấy thông tin các tỉnh*/
-                $tinh = DB::select("SELECT Tên FROM tinh");
+                $tinh = DB::select("SELECT * FROM tinh");
             /*lấy 3 tin tức mới nhất*/
                 $tintuc = DB::table("news")
                     ->orderBy('news_id', 'desc')
@@ -41,16 +41,15 @@ class Controller extends BaseController
             /* lấy ảnh slide*/
                 $slide = DB::table("news")
                     ->where("check_slide","=","1")
-                    ->limit(3)
-                    ->select("image")
+                    ->select("image","title","news_id")
                     ->get();
             /*Trả về trang chủ*/
                 return view('tttn-web.index',["tinh" => $tinh,"tintuc"=>$tintuc, "slide"=>$slide]);
         }
     /* Tìm chuyến xe ở trang chủ*/
         public function Chuyenxe1(Request $request){
-            $Noidi = $request->Noidi;
-            $Noiden = $request->Noiden;
+            $Noidi = $request->noidi;
+            $Noiden = $request->noiden;
             /*chuyển đổi thời gian đúng định dạng Y-m-d*/
                 $Thoigian =  date('Y-m-d',strtotime($request->Ngaydi));
             /*lấy thông tin chuyến xe tìm được */
@@ -76,11 +75,11 @@ class Controller extends BaseController
         }
     /*Tìm chuyến xe ở trang đặt vé*/
         public function Chuyenxe2(Request $request){
-            $Noidi = $request->Noidi;
-            $Noiden = $request->Noiden;
-            $Giuong = $request->Giuong;
+            $Noidi = $request->noidi;
+            $Noiden = $request->noiden;
+            $Loaixe = $request->loaixe;
             /*chuyển đổi thời giann đúng định dạng Y-m-d*/
-                $Thoigian =  date('Y-m-d',strtotime($request->Ngaydi));
+                $Ngaydi =  date('Y-m-d',strtotime($request->Ngaydi));
             /*Thông tin chuyến xe tìm được*/
                 $Chuyenxe = DB::table("chuyen_xe")
                     ->join("lo_trinh","chuyen_xe.Mã_lộ_trình","=","lo_trinh.Mã")
@@ -90,10 +89,11 @@ class Controller extends BaseController
                     ->where("Nơi_đến","=",$Noiden)
                     ->where("Trạng_thái","=","0")
                     ->where("is_del","=",0)
-                    ->where('Ngày_xuất_phát','=',$Thoigian)
-                    ->where('bus_model.Loại_ghế','=',$Giuong)
+                    ->where('Ngày_xuất_phát','=',$Ngaydi)
+                    ->where('bus_model.Loại_ghế','=',$Loaixe)
                     ->select("Nơi_đi","Nơi_đến","Ngày_xuất_phát","Giờ_xuất_phát","lo_trinh.Thời_gian_đi_dự_kiến","chuyen_xe.Mã","Tiền_vé","Loại_ghế","Biển_số")
                     ->get();
+                   
             /*Thêm thời gian đến dự kiến*/
                 foreach ($Chuyenxe as $key => $value ) {
                 $time = $Chuyenxe[$key]->Ngày_xuất_phát." ".$Chuyenxe[$key]->Giờ_xuất_phát;
@@ -101,12 +101,13 @@ class Controller extends BaseController
                 $Chuyenxe[$key]->Thời_gian_đến_dự_kiến = date('Y-m-d H:i:s',$tmp);
                 }
             /* Trả về trang chuyến xe*/
-            return view('tttn-web.chuyenxe',["Chuyenxe" => $Chuyenxe]);
+             return view('tttn-web.chuyenxe',["Chuyenxe" => $Chuyenxe]);
+            
         }
     /*Hiển thị trang đặt vé*/
         public function Datve() {
             /*lấy thông tin các tỉnh*/
-                $tinh = DB::select("SELECT Tên FROM tinh");
+                $tinh = DB::select("SELECT * FROM tinh");
             /* trả về trang đặt vé*/
                 return view('tttn-web.datve',["tinh" => $tinh]);
         }

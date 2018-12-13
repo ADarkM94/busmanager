@@ -51,6 +51,12 @@
 				var beach = locations[i];
 				var myLatLng = new google.maps.LatLng(beach[1], beach[2]);
 				var infowindow = new google.maps.InfoWindow();
+				var marker = new google.maps.Marker({
+					position: myLatLng,
+					map: map,
+					title: beach[0],
+					zIndex: beach[3]
+				});
 				if(locations[i][3] == '{{session("qldv.idgiamsat")}}')
 				{
 					infowindow.setContent(locations[i][0]);
@@ -59,13 +65,6 @@
 						center: new google.maps.LatLng(locations[i][1], locations[i][2])
 					});
 				}
-				var marker = new google.maps.Marker({
-					position: myLatLng,
-					map: map,
-					title: beach[0],
-					zIndex: beach[3]
-				});
-				
 				google.maps.event.addListener(marker, 'click', (function(marker, i) {
 					return function() {
 						// infowindow.setContent(locations[i][0]);

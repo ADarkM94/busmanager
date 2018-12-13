@@ -14,7 +14,7 @@
             <p><i class="fa fa-bus"></i> Nơi đến: <a>{{$t->Nơi_đến}}</a></p> <br>
             <p><span class="glyphicon glyphicon-time"></span> Thời gian khởi hành: {{$t->Ngày_xuất_phát}} : {{$t->Giờ_xuất_phát}}</p><br>
             <p><span class="glyphicon glyphicon-bed"></span> {{($t->Loại_ghế==1)? 'Giường Nằm':'Ghế Ngồi'}}</p><br>
-            <p><i class="fa fa-balance-scale"></i> Giá vé : {{$t->Tiền_vé}} </p><br>
+            <p><i class="fa fa-balance-scale"></i> Giá vé : {{$t->Tiền_vé/1000}}.000 VNĐ </p><br>
             <?php $tien=$t->Tiền_vé; ?>
             @endforeach
             <p><i class="fa fa-address-card-o"></i> Vé đã đặt :
@@ -23,7 +23,7 @@
                 <?php $dem++; ?>
             @endforeach
              </p><br>
-            <p><i class="fa fa-gavel"></i> Tổng tiền: <b>{{$dem * $tien }}</b> </p></divbr>
+            <p><i class="fa fa-gavel"></i> Tổng tiền: <b>{{$dem * $tien/1000 }}.000 VNĐ</b> </p></divbr>
             
             <h4 style="color: rgb(0,64,87);"">Nhân viên chúng tôi sẻ liên hệ với quý khách để quý khách thanh toán tiền.</h4>
             <h3 style="color: rgb(0,64,87);">Chúc quý khách có một chuyến đi vui vẻ.</3>
