@@ -3,10 +3,10 @@
 	Thông tin khách hàng
 @endsection
 @section('content')
-    <div class="content khachhang row show"  style="position: relative;">
-        <h4 style="clear: both; padding: .5em 1em; text-align: center; width: 100%;">Thông tin khách hàng</h4>
-        <div class="col-lg-2"></div>
-        <div class="col-lg-8">
+    <div class="content khachhang row show" id="viewkhachhang">
+        <div class="col-lg-3"></div>
+        <div class="col-lg-6">
+			<h4>Thông tin khách hàng</h4>
             <form name="ttkhachhang">
                 <div class="row form-group">
                     <div class="col-lg-6" style="text-align: left;">
@@ -30,15 +30,15 @@
                         <input type="tel" name="phone" class="form-control" value="{{isset($ttkhachhang)? $ttkhachhang['Sđt']:''}}" readonly="">
                     </div>
                 </div>
-                <div class="row form-group" style="text-align: left;">
-                    <h4 style=" display: block; text-align: center;">Các chuyến xe đã đi</h4>
+                <div class="row form-group" style="text-align: center;">
+                    <h4 style=" display: block;">Các chuyến xe đã đi</h4>
                     <br>
                     <div id="chuyendi" style="height: 200px; padding-right: 0;">
                     </div>
                 </div>
             </form>
         </div>
-        <div class="col-lg-2"></div>
+        <div class="col-lg-3"></div>
     </div>
 @endsection
 @section('excontent')
@@ -140,7 +140,6 @@
                 sorting: "local",
                 sortDir: "down"
             };
-            obj.pageModel = {type: 'local', rPP: 5, rPPOptions: [5, 10, 15, 20]};
             var $grid = $("#chuyendi").pqGrid(obj);
             $grid.pqGrid("refreshDataAndView");
         });

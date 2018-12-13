@@ -11,7 +11,7 @@
                 <i class="glyphicon glyphicon-plus"></i>Thêm
             </a>
             <a href="javascript:void(0)" onclick="refreshNV()" title="Làm Mới">
-                <i class="glyphicon glyphicon-refresh"></i>Refresh
+                <i class="glyphicon glyphicon-refresh"></i>Reset
             </a>
             <a href="javascript:void(0)" onclick="showFull(this,'employee',obj,objlen)">
                 <i class="glyphicon glyphicon-resize-full"></i>
@@ -352,7 +352,41 @@
             }
         });
         function refreshNV(){
-            $("#employee").pqGrid("reset",{filter : true});
+            $.ajax({
+                type:'POST',
+                url:'{{asset("/admin/retrievedata")}}',
+				data: {
+					_token: '{{csrf_token()}}',
+					typedata: 'nhanvien'
+				},
+                success:function(data){
+                    if (data.kq == 1) {
+                        obj.dataModel = {
+                            data: data.data,
+                            location: "local",
+                            sorting: "local",
+                            sortDir: "down"
+                        };
+                        obj.pageModel = {type: 'local', rPP: 50, rPPOptions: [50, 100, 150, 200]};
+                        var $grid = $("#employee").pqGrid(obj);
+                        if(objlen <= document.getElementById('employee').offsetWidth){
+                            $grid.pqGrid('option','scrollModel',{autoFit: true}).pqGrid("refreshDataAndView");
+                        }
+                        else{
+                            $grid.pqGrid('option','scrollModel',{horizontal: true,autoFit: false,flexContent: true}).pqGrid("refreshDataAndView");
+                        }
+						$("#employee").pqGrid("reset",{filter : true});
+                    }                   
+                },
+				timeout: 10000,
+				error: function(xhr){
+					if(xhr.statusText == "timeout")
+					{
+						$("#alertmessage .modal-body").html("Vui lòng kiểm tra kết nối!");
+						$("#alertmessage").modal("show");
+					}
+				}
+            });
         }
         function showFull(ev,id,obj,s){
             if(ev.getElementsByTagName("i")[0].classList.contains("glyphicon-resize-full")){

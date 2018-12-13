@@ -11,7 +11,7 @@
             <a href="javascript:void(0)" onclick="addnews()" title="Thêm Chuyến Xe">
                 <i class="glyphicon glyphicon-plus"></i>Thêm
             </a>
-            <a href="javascript:void(0)" onclick="refresh()" title="Làm Mới">
+            <a href="javascript:void(0)" onclick="refreshTT()" title="Làm Mới">
                 <i class="glyphicon glyphicon-refresh"></i>Reset
             </a>
             <a href="javascript:void(0)" onclick="showFull(this,'tintuc',obj,objlen)">
@@ -371,7 +371,7 @@
                 $grid.pqGrid('option','scrollModel',{horizontal: true,autoFit: false,flexContent: true}).pqGrid("refreshDataAndView");
             }
         });
-        function refresh() {
+        function refreshTT() {
             $.ajax({
                 type:'POST',
                 url:'{{asset("/admin/retrievedata")}}',
@@ -397,7 +397,15 @@
                         }
                         $("#tintuc").pqGrid("reset",{filter : true});
                     }                   
-                }
+                },
+				timeout: 10000,
+				error: function(xhr){
+					if(xhr.statusText == "timeout")
+					{
+						$("#alertmessage .modal-body").html("Vui lòng kiểm tra kết nối!");
+						$("#alertmessage").modal("show");
+					}
+				}
             });
         }
         function showFull(ev,id,obj,s){

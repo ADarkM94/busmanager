@@ -11,7 +11,7 @@
                 <i class="glyphicon glyphicon-plus"></i>Thêm
             </a>
             <a href="javascript:void(0)" onclick="refreshXE()" title="Làm Mới">
-                <i class="glyphicon glyphicon-refresh"></i>Refresh
+                <i class="glyphicon glyphicon-refresh"></i>Reset
             </a>
             <a href="javascript:void(0)" onclick="showFull(this,'bus',obj,objlen)">
                 <i class="glyphicon glyphicon-resize-full"></i>
@@ -24,6 +24,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
+					<button class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">Tên Trạm Dừng</h4>
                 </div>
                 <div class="modal-body" style="height: 600px">
@@ -170,7 +171,7 @@
                 editor: false,
                 align: "center",
                 render: function(ui){
-                    var str = "<a href='javascript:void(0)' data-toggle='modal' data-target='#viewmap' onclick='openmap("+ui.rowData['location']+")' title='Xem vị trí'><i class='glyphicon glyphicon-eye-open' style='color: #00bf00;'></i></a>";
+                    var str = "<a href='javascript:void(0)' data-toggle='modal' data-target='#viewmap' onclick='openmap("+ui.rowData['location']+",\""+ui.rowData['Biển_số']+"\")' title='Xem vị trí'><i class='glyphicon glyphicon-eye-open' style='color: #00bf00;'></i></a>";
                     return str;
                 }
             },
@@ -268,7 +269,41 @@
             }
         });
         function refreshXE(){
-            $("#bus").pqGrid("reset",{filter : true});
+            $.ajax({
+                type:'POST',
+                url:'{{asset("/admin/retrievedata")}}',
+				data: {
+					_token: '{{csrf_token()}}',
+					typedata: 'xe'
+				},
+                success:function(data){
+                    if (data.kq == 1) {
+                        obj.dataModel = {
+                            data: data.data,
+                            location: "local",
+                            sorting: "local",
+                            sortDir: "down"
+                        };
+                        obj.pageModel = {type: 'local', rPP: 50, rPPOptions: [50, 100, 150, 200]};
+                        var $grid = $("#bus").pqGrid(obj);
+                        if(objlen <= document.getElementById('bus').offsetWidth){
+                            $grid.pqGrid('option','scrollModel',{autoFit: true}).pqGrid("refreshDataAndView");
+                        }
+                        else{
+                            $grid.pqGrid('option','scrollModel',{horizontal: true,autoFit: false,flexContent: true}).pqGrid("refreshDataAndView");
+                        }
+						$("#bus").pqGrid("reset",{filter : true});
+                    }                   
+                },
+				timeout: 10000,
+				error: function(xhr){
+					if(xhr.statusText == "timeout")
+					{
+						$("#alertmessage .modal-body").html("Vui lòng kiểm tra kết nối!");
+						$("#alertmessage").modal("show");
+					}
+				}
+            });
         }
         function showFull(ev,id,obj,s){
             if(ev.getElementsByTagName("i")[0].classList.contains("glyphicon-resize-full")){
@@ -307,17 +342,21 @@
                 }
             }
         }
-		function openmap(x,y){
+		function openmap(x,y,bienso){
             var mapOptions = {
                 center: new google.maps.LatLng(x, y),
                 zoom: 16,
                 mapTypeId:google.maps.MapTypeId.ROADMAP
             };
+			var infowindow = new google.maps.InfoWindow();
             var marker = new google.maps.Marker({
                 position: new google.maps.LatLng(x, y)
             });
             var map = new google.maps.Map(document.getElementById("viewmap").getElementsByClassName("modal-body")[0],mapOptions);
             marker.setMap(map);
+			infowindow.setContent(bienso);
+			infowindow.open(map, marker);
+			$("#viewmap .modal-title").html("Xe "+bienso);
         }
     </script>
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDPoe4NcaI69_-eBqxW9Of05dHNF0cRJ78"></script>

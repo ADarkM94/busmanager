@@ -350,7 +350,15 @@
                     }
                     else if (index == 2) {
                     }
-                }
+                },
+				timeout: 10000,
+				error: function(xhr){
+					if(xhr.statusText == "timeout")
+					{
+						$("#alertmessage .modal-body").html("Vui lòng kiểm tra kết nối!");
+						$("#alertmessage").modal("show");
+					}
+				}
             });
         }
         function showFull(ev,id,obj,s){

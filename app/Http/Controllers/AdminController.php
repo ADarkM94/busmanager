@@ -1130,6 +1130,41 @@ class AdminController extends Controller
 	{
 		switch($request->typedata)
 		{
+			case 'khachhang':
+				try {
+					$customer = Khachhang::all();
+					return response()->json(['kq' => 1,'data' => $customer]);
+				} catch (\Exception $e) {
+					return response()->json(['kq' => 0]);
+				}
+				break;
+			case 'nhanvien':
+				try {
+					$employee = Nhanvien::all();
+					return response()->json(['kq' => 1,'data' => $employee]);
+				} catch (\Exception $e) {
+					return response()->json(['kq' => 0]);
+				}
+				break;
+			case 'xe':
+				try {
+					$bus = DB::table('xe')->join('bus_model','xe.Mã_loại_xe','=','bus_model.Mã')
+					->select('xe.Mã','xe.Biển_số','xe.Mã_loại_xe','bus_model.Loại_ghế','xe.Ngày_bảo_trì_gần_nhất','xe.Ngày_bảo_trì_tiếp_theo','xe.location')->get();
+					return response()->json(['kq' => 1,'data' => $bus]);
+				} catch (\Exception $e) {
+					return response()->json(['kq' => 0]);
+				}
+				break;
+			case 'tramdung':
+				try {
+					$busstop = DB::table('tram_dung')->join('employee','tram_dung.Mã_nhân_viên_tạo','=','employee.Mã')
+					->join('employee as employee1','tram_dung.Mã_nhân_viên_chỉnh_sửa','=','employee1.Mã')
+					->select('tram_dung.Mã','tram_dung.Tên','tram_dung.Tọa_độ','tram_dung.Mã_nhân_viên_tạo','tram_dung.Mã_nhân_viên_chỉnh_sửa','employee.Họ_Tên as Nhân_viên_tạo','employee1.Họ_Tên as Nhân_viên_chỉnh_sửa')->get();
+					return response()->json(['kq' => 1,'data' => $busstop]);
+				} catch (\Exception $e) {
+					return response()->json(['kq' => 0]);
+				}
+				break;
 			case 'tintuc':
 				try {
 					$tintuc = DB::table('news')->join('employee as em1','news.id_admin_created','=','em1.Mã')->join('employee as em2','news.id_admin_changed','=','em2.Mã')->select('news.news_id','news.title','news.image','news.introduce','news.content','news.check_slide','news.is_disabled','em1.Họ_Tên as admin_created','em2.Họ_Tên as admin_changed')->orderBy('news.news_id','desc')->get();
