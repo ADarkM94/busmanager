@@ -90,6 +90,19 @@
 	</div>
 </div>
 @yield('excontent')
+<div id="modalalert" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Thông báo</h4>
+			</div>
+			<div class="modal-body">
+				Nội dung thông báo...
+			</div>
+		</div>
+	</div>
+</div>
 <script>
     document.getElementsByClassName("container-fluid")[0].style.paddingTop = document.getElementsByClassName("header")[0].clientHeight + 45 + "px";
     document.getElementsByClassName("container-fluid")[0].style.paddingBottom = "15px";

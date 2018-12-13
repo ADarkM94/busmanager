@@ -34,7 +34,7 @@
                         &nbsp;
                         <div>
                             <p>Lịch trình</p>
-                            <p>Só chuyến xe: <i>{{$slchuyenxe}}</i></p>
+                            <p>Số chuyến xe: <i>{{$slchuyenxe}}</i></p>
                             <p>Đã đi: <i>{{$slchuyenxedadi}}</i></p>
                             <p>Đang chờ: <i>{{$slchuyenxedangcho}}</i></p>
                         </div>
@@ -100,50 +100,22 @@
 		var myChart1 = new Chart(bieudo1, {
     type: 'line',
     data: {
-        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
+        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
         datasets: [{
-            label: '# chi phí',
-            data: {{json_encode($chiphi)}},
-            pointBackgroundColor: [
-                'rgba(0,73,100,1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-			pointBorderColor: [
-                'rgba(0,73,100,1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
+            label: '# năm {{$chuyenxe[0]["Năm"]}}',
+            data: {{json_encode($chuyenxe[0]["Doanh_thu"])}},
+            pointBackgroundColor: 'rgba(0,73,100,1)',
+			pointBorderColor: 'rgba(0,73,100,1)',
 			backgroundColor: 'rgba(255, 99, 132, 1)',
 			fill: false,
             borderWidth: 1,
 			borderColor: 'rgba(255, 99, 132, 1)'
         },
 		{
-            label: '# doanh thu',
-            data: {{json_encode($doanhthu)}},
-            pointBackgroundColor: [
-                'rgba(0,73,100,1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-			pointBorderColor: [
-                'rgba(0,73,100,1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
+            label: '# năm {{$chuyenxe[1]["Năm"]}}',
+            data: {{json_encode($chuyenxe[1]["Doanh_thu"])}},
+            pointBackgroundColor: 'rgba(0,73,100,1)',
+			pointBorderColor: 'rgba(0,73,100,1)',
 			backgroundColor: 'rgba(54, 162, 235, 1)',
 			fill: false,
             borderWidth: 1,
@@ -154,7 +126,7 @@
 		responsive: true,
 		title: {
 			display: true,
-			text: "Biểu đồ đường chi phí/doanh thu năm "+"{{date('Y')}}", 
+			text: "Biểu đồ đường doanh thu năm {{$chuyenxe[0]['Năm']}}/{{$chuyenxe[1]['Năm']}}", 
 		},
         scales: {
             yAxes: [{
@@ -173,17 +145,17 @@
 var myChart2 = new Chart(bieudo2, {
     type: 'bar',
     data: {
-        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
+        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
         datasets: [{
-            label: '# chi phí',
-            data: {{json_encode($chiphi)}},
+            label: '# năm {{$chuyenxe[0]["Năm"]}}',
+            data: {{json_encode($chuyenxe[0]['Chuyến_xe'])}},
             backgroundColor: 'rgba(255, 99, 132, 1)',
             borderColor: 'rgba(255,99,132,1)',
             borderWidth: 1
         },
 		{
-            label: '# doanh thu',
-            data: {{json_encode($doanhthu)}},
+            label: '# năm {{$chuyenxe[1]["Năm"]}}',
+            data: {{json_encode($chuyenxe[1]['Chuyến_xe'])}},
             backgroundColor: 'rgba(54, 162, 235, 1)',
             borderColor: 'rgba(54, 162, 235, 1)',
             borderWidth: 1
@@ -193,14 +165,14 @@ var myChart2 = new Chart(bieudo2, {
 		responsive: true,
 		title: {
 			display: true,
-			text: "Biểu đồ cột chi phí/doanh thu năm "+"{{date('Y')}}", 
+			text: "Biểu đồ cột chuyến xe năm {{$chuyenxe[0]['Năm']}}/{{$chuyenxe[1]['Năm']}}", 
 		},
         scales: {
             yAxes: [{
 				display: true,
 				scaleLabel: {
 					display: true,
-					labelString: "Đơn vị(triệu đồng)"
+					labelString: "Đơn vị(chuyến xe)"
 				},
                 ticks: {
                     beginAtZero:true

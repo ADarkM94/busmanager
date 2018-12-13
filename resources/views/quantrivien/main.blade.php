@@ -192,21 +192,6 @@
 	</form>
 	</div>
 </div>
-<!--Modal thông báo-->
-<div class="modal fade" id="alertmessage">
-	<div class="modal-dialog" style="width: 400px; margin-top: 200px;">
-		<div class="modal-content" style="text-align: center;">
-			<div class="modal-header">
-				<h4 class="modal-title">Thông báo</h4>
-			</div>
-			<div class="modal-body alert alert-warning" style="text-align: center; margin-bottom: 0;">
-			</div>
-			<div class="modal-footer" style="text-align: center;">
-				<span class="btn btn-success" data-dismiss="modal">OK</span>
-			</div>
-		</div>
-	</div>
-</div>
 <div class="modal fade" id="messagedetails">
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -249,6 +234,21 @@
 			</div>
 			<div class="modal-footer">
 				<button class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!--Modal thông báo-->
+<div class="modal fade" id="alertmessage">
+	<div class="modal-dialog" style="width: 400px; margin-top: 200px;">
+		<div class="modal-content" style="text-align: center;">
+			<div class="modal-header">
+				<h4 class="modal-title">Thông báo</h4>
+			</div>
+			<div class="modal-body alert alert-warning" style="text-align: center; margin-bottom: 0;">
+			</div>
+			<div class="modal-footer" style="text-align: center;">
+				<span class="btn btn-success" data-dismiss="modal">OK</span>
 			</div>
 		</div>
 	</div>

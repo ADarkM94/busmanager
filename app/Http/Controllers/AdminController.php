@@ -76,17 +76,30 @@ class AdminController extends Controller
 		$slchuyenxe = count(DB::table("chuyen_xe")->select("Mã")->get());
 		$slchuyenxedadi = count(DB::table("chuyen_xe")->where('Trạng_thái','=',2)->select("Mã")->get());
 		$slchuyenxedangcho = count(DB::table("chuyen_xe")->where('Trạng_thái','=',0)->select("Mã")->get());
-		$thongke = DB::table("thong_ke")->where('Năm','=',date("Y"))->orderBy("Tháng","asc")->select("Chi_phí","Doanh_thu")->get();
-		$chiphi = [];
-		$doanhthu = [];
+		$thongke = DB::table("thong_ke")->where('Năm','=',date("Y"))->orderBy("Tháng","asc")->select("Chi_phí","Doanh_thu","Số_chuyến_xe")->get();
+		$thongke1 = DB::table("thong_ke")->where('Năm','=',(date("Y") - 1))->orderBy("Tháng","asc")->select("Chi_phí","Doanh_thu","Số_chuyến_xe")->get();
+		$chuyenxe = [];
+		$dem = 0;
+		$tmp1 = [];
+		$tmp2 = [];
 		$tongdt = 0;
+		for($i=0;$i<count($thongke1);$i++)
+		{			
+			$tmp1[$i] = $thongke1[$i]->Số_chuyến_xe;
+			$tmp2[$i] = $thongke1[$i]->Doanh_thu/1000000;
+		}
+		$chuyenxe[$dem]=['Năm' => (date("Y") - 1),'Chuyến_xe' => $tmp1,'Doanh_thu' => $tmp2];
+		$tmp1 = [];
+		$tmp2 = [];
+		$dem += 1;
 		for($i=0;$i<count($thongke);$i++)
-		{
-			$chiphi[$i] = $thongke[$i]->Chi_phí/1000000;
-			$doanhthu[$i] = $thongke[$i]->Doanh_thu/1000000;
+		{			
+			$tmp1[$i] = $thongke[$i]->Số_chuyến_xe;
+			$tmp2[$i] = $thongke[$i]->Doanh_thu/1000000;
 			$tongdt += $thongke[$i]->Doanh_thu;
 		}
-		return view("quantrivien.thongke",compact("slkhachhang","slchuyenxe","slchuyenxedadi","slchuyenxedangcho","chiphi","doanhthu","tongdt"));
+		$chuyenxe[$dem]=['Năm' => date("Y"),'Chuyến_xe' => $tmp1,'Doanh_thu' => $tmp2];
+		return view("quantrivien.thongke",compact("slkhachhang","slchuyenxe","slchuyenxedadi","slchuyenxedangcho","chuyenxe","tongdt"));
 	}
 
     //Phần khách hàng
@@ -305,7 +318,7 @@ class AdminController extends Controller
     //Phần xe
     public function xe(){
         $bus = DB::table('xe')->join('bus_model','xe.Mã_loại_xe','=','bus_model.Mã')
-            ->select('xe.Mã','xe.Biển_số','xe.Mã_loại_xe','bus_model.Loại_ghế','xe.Ngày_bảo_trì_gần_nhất','xe.Ngày_bảo_trì_tiếp_theo')->get();
+            ->select('xe.Mã','xe.Biển_số','xe.Mã_loại_xe','bus_model.Loại_ghế','xe.Ngày_bảo_trì_gần_nhất','xe.Ngày_bảo_trì_tiếp_theo','xe.location')->get();
         $typebuses = Loaixe::all();
         $typebus = [];
         foreach ($typebuses as $row){

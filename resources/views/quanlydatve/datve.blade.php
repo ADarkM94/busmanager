@@ -96,7 +96,7 @@
 							<input type="text" name="noiden" class="form-control" placeholder="Nơi đến" readonly>
 						</div>
 					</form>
-					<span data-toggle="modal" data-target="#modaldadat">Vé đã đặt</span>
+					<span onclick="showHistory()">Lịch sử đã đặt</span>
 					<span onclick="registerAccount()">Tạo tài khoản</span>
 					<br>
 					<span onclick="bookTicket()">Đặt vé</span>
@@ -139,7 +139,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <div class="modal-title">Chuyến xe #</div>
+                    <h4 class="modal-title">Chuyến xe #</h4>
                 </div>
                 <div class="modal-body row">
 					<div class="col-lg-4">
@@ -186,7 +186,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <div class="modal-title">Đã đặt thành công</div>
+                    <h4 class="modal-title">Đã đặt thành công</h4>
                 </div>
                 <div class="modal-body row">
 					<form name="frm-ttdadat">
@@ -266,15 +266,123 @@
 			</div>
 		</div>
 	</div>
-	<div id="modalalert" class="modal fade">
+	<div class="modal fade" id="modaldanhsachdondatve">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
 					<button class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title">Thông báo</h4>
+					<h4 class="modal-title">Các Đơn đặt vé đã thực hiện</h4>
 				</div>
 				<div class="modal-body">
-					Nội dung thông báo...
+					<!--div class="panel-group">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+									<div class="panel-title" data-toggle="collapse" data-target="#collapse1">
+										qqqqqqqqqqqq
+									</div>
+							</div>
+							<div class="panel-collapse collapse" id="collapse1">
+								<div style="text-align: right;">	
+									<span class="btn btn-success">
+										<i class="glyphicon glyphicon-exclamation-sign"></i>&nbsp;Chi tiết
+									</span>
+									&nbsp;
+									<span class="btn btn-danger">
+										<i class="glyphicon glyphicon-remove"></i>&nbsp;Hủy
+									</span>
+								</div>
+							</div>
+						</div>
+					</div-->
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-danger" data-dismiss="modal">Đóng</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="modalchitietdondatve">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Chi tiết đơn đặt vé</h4>
+				</div>
+				<div class="modal-body">
+					<div class="loading"></div>
+					<form name="frm-chitietdondatve" class="row">
+						<div class="col-lg-6">
+							<div class="input-group">
+								<label class="input-group-addon">Chuyến xe&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+								<input type="text" class="form-control" name="machuyenxe" placeholder="Mã chuyến xe" readonly>
+							</div>
+							<br>
+							<div class="input-group">
+								<label class="input-group-addon">Nơi đi&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+								<input type="text" class="form-control" name="noidi" placeholder="Nơi đi" readonly>
+							</div>
+							<br>
+							<div class="input-group">
+								<label class="input-group-addon">Nơi đến&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+								<input type="text" class="form-control" name="noiden" placeholder="Nơi đến" readonly>
+							</div>
+							<br>
+							<div class="input-group">
+								<label class="input-group-addon">Thời gian đi&nbsp;&nbsp;&nbsp;&nbsp;</label>
+								<input type="text" class="form-control" name="thoigiandi" placeholder="Thời gian đi" readonly>
+							</div>
+							<br>
+							<div class="input-group">
+								<label class="input-group-addon">Thời gian đến</label>
+								<input type="text" class="form-control" name="thoigianden" placeholder="Thời gian đến" readonly>
+							</div>
+							<br>
+						</div>
+						<div class="col-lg-6">
+							<div class="input-group">
+								<label class="input-group-addon">Khách hàng&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+								<input type="text" class="form-control" name="makhachhang" placeholder="Mã khách hàng" readonly>
+							</div>
+							<br>
+							<div class="input-group">
+								<label class="input-group-addon">Tên khách hàng</label>
+								<input type="text" class="form-control" name="name" placeholder="Họ tên khách hàng" readonly>
+							</div>
+							<br>
+							<div class="input-group">
+								<label class="input-group-addon">Giới tính&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+								<input type="text" class="form-control" name="gender" placeholder="Giới tính" readonly>
+							</div>
+							<br>
+							<div class="input-group">
+								<label class="input-group-addon">Ngày sinh&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+								<input type="text" class="form-control" name="brtday" placeholder="Ngày sinh" readonly>
+							</div>
+							<br>
+							<div class="input-group">
+								<label class="input-group-addon">Số điện thoại&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+								<input type="text" class="form-control" name="phone" placeholder="Số điện thoại" readonly>
+							</div>
+							<br>
+						</div>
+						<div class="col-lg-3"></div>
+						<div class="col-lg-6">
+							<br>
+							<div class="input-group">
+								<label class="input-group-addon">Vị trí đặt&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+								<input type="text" class="form-control" name="vitridat" placeholder="Vị trí đặt" readonly>
+							</div>
+							<br>
+							<div class="input-group">
+								<label class="input-group-addon">Tổng tiền&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+								<input type="text" class="form-control" name="tongtien" placeholder="Tổng tiền" readonly>
+							</div>
+						</div>
+						<div class="col-lg-3"></div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-danger" data-dismiss="modal">Đóng</button>
 				</div>
 			</div>
 		</div>
@@ -287,46 +395,6 @@
             option[i].classList.remove('selected');
         }
         option[1].classList.add('selected');
-		/* window.onclick = function(ev){
-			if(ev.target != document.getElementById('kqsearchtinh'))
-			{
-				document.getElementById('kqsearchtinh').style.display = 'none';
-			}
-		};
-		function searchtinh(ev)
-		{
-			var txtsearch = ev.value;
-			$('#kqsearchtinh').html('');
-			$('#kqsearchtinh').css('display','none');
-			$.ajax({
-				url: '',
-				type: 'post',
-				data: {
-					_token: '',
-					txtsearch: txtsearch
-				},
-				success: function(data){
-					if(data.kq==1)
-					{
-						for(var i=0;i<data.data.length;i++)
-						{
-							if($('#kqsearchtinh').html()=='')
-							{
-								$('#kqsearchtinh').html($('#kqsearchtinh').html()+'<li class="selected" onclick="choosetinh(this)">'+data.data[i].Tên+'</li>');
-							}
-							$('#kqsearchtinh').html($('#kqsearchtinh').html()+'<li onclick="choosetinh(this)">'+data.data[i].Tên+'</li>');
-							$('#kqsearchtinh').css('display','block');
-						}
-					}
-				}
-			});
-		}
-		function choosetinh(ev)
-		{
-			ev.parentNode.previousElementSibling.value=ev.innerHTML;
-			$('#kqsearchtinh').html('');
-			$('#kqsearchtinh').css('display','none');
-		} */
 		var date = new Date; 
 		document.forms['searchchuyenxe']['ngaydi'].min = date.getFullYear()+'-'+((date.getMonth()+1)<10? ('0'+(date.getMonth()+1)):(date.getMonth()+1))+'-'+(date.getDate()<10? ('0'+date.getDate()):date.getDate());
 		document.forms['searchchuyenxe']['ngaydi'].defaultValue = date.getFullYear()+'-'+((date.getMonth()+1)<10? ('0'+(date.getMonth()+1)):(date.getMonth()+1))+'-'+(date.getDate()<10? ('0'+date.getDate()):date.getDate());
@@ -1270,6 +1338,179 @@
 						else
 						{
 							$("#modalalert .modal-body").html("Đặt vé thất bại!");
+							$("#modalalert").modal("show");
+						}
+					}
+				});
+			}
+		}
+		function showHistory()
+		{
+			var idnhanvien = '{{session("qldv.id")}}';
+			$("#modaldanhsachdondatve").modal("hide");
+			$.ajax({
+				url: '{{route("qldv_showhistory")}}',
+				type: 'post',
+				data: {
+					_token: '{{csrf_token()}}',
+					data: idnhanvien
+				},
+				success: function(data){
+					if(data.kq == 1)
+					{
+						var str = '';
+						var isfirst = true;
+						for(var i=0;i<data.data.length;i++)
+						{
+							if(data.data[i].Trạng_thái == 0||data.data[i].Trạng_thái == 1 )
+							{
+								str += '<div class="panel-group">';
+								str += '<div class="panel panel-default">';
+								str += '<div class="panel-heading">';
+								str += '<div class="panel-title" data-toggle="collapse" data-target="#collapse'+i+'">';
+								str += '#'+(i+1)+' Đơn đặt vé <i>#'+data.data[i].Mã+'</i> Ngày <i>'+data.data[i].Ngày+'</i> Lúc <i>'+data.data[i].Giờ+'</i>';
+								str += '</div>';
+								str += '</div>';
+								str += '<div class="panel-collapse collapse" id="collapse'+i+'">';
+								str += '<div style="text-align: right; padding: .25em;">';	
+								str += '<span class="btn btn-success" onclick="chitietDondatve('+data.data[i].Mã+')">';
+								str += '<i class="glyphicon glyphicon-exclamation-sign"></i>&nbsp;Chi tiết</span>&nbsp;';
+								str += '<span class="btn btn-danger" onclick="huyDondatve('+data.data[i].Mã+')"><i class="glyphicon glyphicon-remove"></i>&nbsp;Hủy</span>';
+								str += '</div>';
+								str += '</div>';
+								str += '</div>';
+								str += '</div>';
+							}
+							else if(data.data[i].Trạng_thái == 2)
+							{
+								if(isfirst)
+								{
+									str += "<hr>";
+									isfirst = false;
+								}
+								str += '<div class="panel-group">';
+								str += '<div class="panel panel-default">';
+								str += '<div class="panel-heading">';
+								str += '<div class="panel-title" data-toggle="collapse" data-target="#collapse'+i+'">';
+								str += '#'+(i+1)+' Đơn đặt vé <i>#'+data.data[i].Mã+'</i> Ngày <i>'+data.data[i].Ngày+'</i> Lúc <i>'+data.data[i].Giờ+'</i>';
+								str += '<span class="badge">Đã Hủy</span></div>';
+								str += '</div>';
+								str += '<div class="panel-collapse collapse" id="collapse'+i+'">';
+								str += '<div style="text-align: right; padding: .25em;">';	
+								str += '<span class="btn btn-success" onclick="chitietDondatve('+data.data[i].Mã+')">';
+								str += '<i class="glyphicon glyphicon-exclamation-sign"></i>&nbsp;Chi tiết</span>&nbsp;';
+								str += '</div>';
+								str += '</div>';
+								str += '</div>';
+								str += '</div>';
+							}							
+						}
+						if(str == "")
+						{
+							str = "Chưa có đơn đặt vé nào!";
+						}
+						$("#modaldanhsachdondatve .modal-body").html(str);
+						$("#modaldanhsachdondatve").modal();
+					}
+				},
+				timeout: 10000,
+				error: function(xhr){
+					if(xhr.statusText == "timeout")
+					{
+						$("#modalalert .modal-body").html("Vui lòng kiểm tra kết nối!");
+						$("#modalalert").modal("show");
+					}
+				}
+			});
+		}
+		function chitietDondatve(id)
+		{
+			var machuyenxe = document.forms["frm-chitietdondatve"]["machuyenxe"];
+			var noidi = document.forms["frm-chitietdondatve"]["noidi"];
+			var noiden = document.forms["frm-chitietdondatve"]["noiden"];
+			var thoigiandi = document.forms["frm-chitietdondatve"]["thoigiandi"];
+			var thoigianden = document.forms["frm-chitietdondatve"]["thoigianden"];
+			var vitridat = document.forms["frm-chitietdondatve"]["vitridat"];
+			var tongtien = document.forms["frm-chitietdondatve"]["tongtien"];
+			var makhachhang = document.forms["frm-chitietdondatve"]["makhachhang"];
+			var name = document.forms["frm-chitietdondatve"]["name"];
+			var brtday = document.forms["frm-chitietdondatve"]["brtday"];
+			var gender = document.forms["frm-chitietdondatve"]["gender"];
+			var phone = document.forms["frm-chitietdondatve"]["phone"];
+			var loading = document.getElementById("modalchitietdondatve").getElementsByClassName("loading")[0];
+			$("#modalchitietdondatve").modal();
+			loading.classList.add("show");
+			$.ajax({
+				url: '{{route("qldv_showdetails")}}',
+				type: 'post',
+				data: {
+					_token: '{{csrf_token()}}',
+					data: id
+				},
+				success: function(data){
+					if(data.kq == 1)
+					{
+						machuyenxe.value = data.data.Mã_chuyến_xe;
+						noidi.value = data.data.Nơi_đi;
+						noiden.value = data.data.Nơi_đến;
+						thoigiandi.value = data.data.Ngày_đi;
+						thoigianden.value = data.data.Ngày_đến;
+						makhachhang.value = data.data.Mã_khách_hàng;
+						name.value = data.data.Tên;
+						brtday.value = data.data.Ngày_sinh;
+						gender.value = data.data.Giới_tính==0? "Không xác định":(data.data.Giới_tính==1? "Nam":"Nữ");
+						phone.value = data.data.Sđt;
+						vitridat.value = data.data.Vị_trí_đặt;
+						tongtien.value = data.data.Tổng_tiền;
+						loading.classList.remove("show");
+					}
+					else
+					{
+						$("#modalchitietdondatve").modal("hide");
+						$("#modalalert .modal-body").html("Có lỗi xảy ra!");
+						$("#modalalert").modal("show");
+					}
+				},
+				timeout: 10000,
+				error: function(xhr){
+					if(xhr.statusText == "timeout")
+					{
+						$("#modalchitietdondatve").modal("hide");
+						$("#modalalert .modal-body").html("Vui lòng kiểm tra kết nối!");
+						$("#modalalert").modal("show");
+					}
+				}
+			});
+		}
+		function huyDondatve(id)
+		{
+			if(confirm("Bạn chắc chắc muốn hủy đơn đặt vé này?"))
+			{
+				$.ajax({
+					url: '{{route("qldv_huydondatve")}}',
+					type: 'post',
+					data: {
+						_token: '{{csrf_token()}}',
+						data: id
+					},
+					success: function(data){
+						if(data.kq == 1)
+						{
+							showHistory();
+							$("#modalalert .modal-body").html("Hủy đơn đặt vé thành công!");
+							$("#modalalert").modal("show");
+						}
+						else
+						{
+							$("#modalalert .modal-body").html("Hủy đơn đặt vé thất bại!");
+							$("#modalalert").modal("show");
+						}
+					},
+					timeout: 10000,
+					error: function(xhr){
+						if(xhr.statusText == "timeout")
+						{
+							$("#modalalert .modal-body").html("Vui lòng kiểm tra kết nối!");
 							$("#modalalert").modal("show");
 						}
 					}

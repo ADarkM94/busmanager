@@ -240,16 +240,19 @@ class TicketBookingManager extends Controller
 		$makhachhang = $request->idkhachhang;
 		$machuyenxe = $request->idchuyenxe;
 		$vedachon = $request->vedachon;
+		$madatve = $makhachhang.strtotime(date("Y-m-d H:i:s"));
 		try
 		{
 			$data = [];
+			$updated_at = date('Y-m-d H:i:s');
+			DB::insert("INSERT INTO `dondatve`(`Mã`,`Mã_nhân_viên_đặt`,`Mã_khách_hàng`,`Mã_chuyến_xe`,`Vị_trí_đặt`,`Trạng_thái`,`created_at`,`updated_at`) VALUES (?,?,?,?,?,?,?,?)",[$madatve,$manhanvien,$makhachhang,$machuyenxe,implode(",",$vedachon),0,$updated_at,$updated_at]);
 			$ttchuyenxe = DB::table("chuyen_xe")->join("lo_trinh","chuyen_xe.Mã_lộ_trình","=","lo_trinh.Mã")->where("chuyen_xe.Mã","=",$machuyenxe)->select("lo_trinh.Nơi_đi","lo_trinh.Nơi_đến","chuyen_xe.Ngày_xuất_phát","chuyen_xe.Giờ_xuất_phát","lo_trinh.Thời_gian_đi_dự_kiến")->get();
 			$ttchuyenxe[0]->Ngày_đi = date("d-m-Y H:i:s",strtotime($ttchuyenxe[0]->Ngày_xuất_phát." ".$ttchuyenxe[0]->Giờ_xuất_phát));
 			$ttchuyenxe[0]->Ngày_đến = date("d-m-Y H:i:s",strtotime($ttchuyenxe[0]->Ngày_đi)+$ttchuyenxe[0]->Thời_gian_đi_dự_kiến);
 			for($i=0;$i<count($vedachon);$i++)
 			{
 				$updated_at = date('Y-m-d H:i:s');
-				if(DB::update("UPDATE `ve` SET `Mã_khách_hàng` = ?, `Trạng_thái` = 1, `updated_at` = ? WHERE `Mã_chuyến_xe` = ? AND `Mã_nhân_viên_đặt` = ? AND `Vị_trí_ghế` = ? AND `Trạng_thái` = 2",[$makhachhang,$updated_at,$machuyenxe,$manhanvien,$vedachon[$i]]))
+				if(DB::update("UPDATE `ve` SET `Mã_khách_hàng` = ?, `Mã_đặt_vé` = ?, `Trạng_thái` = 1, `updated_at` = ? WHERE `Mã_chuyến_xe` = ? AND `Mã_nhân_viên_đặt` = ? AND `Vị_trí_ghế` = ? AND `Trạng_thái` = 2",[$makhachhang,$madatve,$updated_at,$machuyenxe,$manhanvien,$vedachon[$i]]))
 				{
 					$data[$i] = DB::table('ve')->join('chuyen_xe','ve.Mã_chuyến_xe','=','chuyen_xe.Mã')->where('ve.Mã_chuyến_xe','=',$machuyenxe)->where('ve.Vị_trí_ghế','=',$vedachon[$i])->select('ve.Mã','ve.Vị_trí_ghế','chuyen_xe.Tiền_vé')->get()[0];
 				}
@@ -259,7 +262,7 @@ class TicketBookingManager extends Controller
 		}
 		catch(\Exception $e)
 		{
-			return response()->json(['kq' => 0]);
+			return response()->json(['kq' => $e]);
 		}
 	}
 	
@@ -318,6 +321,51 @@ class TicketBookingManager extends Controller
         $response->headers->set('Content-Type', 'text/event-stream');
         return $response;
     }
+	public function qldv_showhistory(Request $request)
+	{
+		$id = $request->data;
+		try {
+			$data = DB::table("dondatve")->where("Mã_nhân_viên_đặt","=",$id)->select("Mã","created_at","Trạng_thái")->orderBy("Trạng_thái","asc")->orderBy("Mã","desc")->get();
+			for($i=0;$i<count($data);$i++)
+			{
+				$data[$i]->Ngày = date("d-m-Y",strtotime($data[$i]->created_at));
+				$data[$i]->Giờ = date("H:i:s",strtotime($data[$i]->created_at));
+			}
+			return response()->json(['kq' => 1,'data' => $data]);
+		} catch (\Exception $e) {
+			return response()->json(['kq' => 0,'data' => $e]);
+		}
+	}
+	public function qldv_showdetails(Request $request)
+	{
+		$id = $request->data;
+		try {
+			$details = DB::table("dondatve")->join("chuyen_xe","dondatve.Mã_chuyến_xe","=","chuyen_xe.Mã")
+			->join("customer","dondatve.Mã_khách_hàng","=","customer.Mã")
+			->join("lo_trinh","chuyen_xe.Mã_lộ_trình","=","lo_trinh.Mã")
+			->where("dondatve.Mã","=",$id)
+			->select("dondatve.Mã","dondatve.Mã_chuyến_xe","dondatve.Mã_khách_hàng","dondatve.Vị_trí_đặt","lo_trinh.Nơi_đi","lo_trinh.Nơi_đến","chuyen_xe.Giờ_xuất_phát","chuyen_xe.Ngày_xuất_phát","lo_trinh.Thời_gian_đi_dự_kiến","chuyen_xe.Tiền_vé","customer.Tên","customer.Ngày_sinh","customer.Giới tính as Giới_tính","customer.Sđt")->get();
+			$detail = $details[0];
+			$detail->Ngày_đi = date("d-m-Y H:i:s",strtotime($detail->Ngày_xuất_phát." ".$detail->Giờ_xuất_phát));
+			$detail->Ngày_đến = date("d-m-Y H:i:s",strtotime($detail->Ngày_đi)+$detail->Thời_gian_đi_dự_kiến);
+			$detail->Tổng_tiền = count(explode(",",$detail->Vị_trí_đặt))*intval($detail->Tiền_vé); 
+			return response()->json(['kq' => 1,'data' => $detail]);
+		} catch (\Exception $e) {
+			return response()->json(['kq' => 0,'error' => $e]);
+		}
+	}
+	public function qldv_huydondatve(Request $request)
+	{
+		$id = $request->data;
+		try {
+			$updated_at = date('Y-m-d H:i:s');
+			DB::update("UPDATE `ve` SET `Mã_nhân_viên_đặt` = NULL, `Mã_khách_hàng` = NULL, `Trạng_thái` = 0, `Mã_đặt_vé` = NULL, `updated_at` = ? WHERE `Mã_đặt_vé` = ?",[$updated_at,$id]);
+			DB::update("UPDATE `dondatve` SET `Trạng_thái` = 2, `updated_at` = ? WHERE `Mã` = ?",[$updated_at,$id]);
+			return response()->json(['kq' => 1]);
+		} catch (\Exception $e) {
+			return response()->json(['kq' => 0,'error' => $e]);
+		}
+	}
 	// public function qldv_testSSE() { //Test OK
 
         // $response = new \Symfony\Component\HttpFoundation\StreamedResponse(function() {

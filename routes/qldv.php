@@ -44,6 +44,12 @@ Route::middleware('qldvcheck')->group(function(){
 	
 	Route::get('qldv/sendgps','TicketBookingManager@qldv_sendgps')->name('qldv_sendgps');
 	
+	Route::post('qldv/showhistory','TicketBookingManager@qldv_showhistory')->name('qldv_showhistory');
+	
+	Route::post('qldv/showdetails','TicketBookingManager@qldv_showdetails')->name('qldv_showdetails');
+	
+	Route::post('qldv/huydondatve','TicketBookingManager@qldv_huydondatve')->name('qldv_huydondatve');
+	
 	// Route::get('qldv/testsse','TicketBookingManager@qldv_testSSE')->name('qldv_testSSE');
 });
 

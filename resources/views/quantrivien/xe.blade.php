@@ -20,6 +20,20 @@
     </div>
 @endsection
 @section("excontent")
+	<div class="modal fade" id="viewmap">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Tên Trạm Dừng</h4>
+                </div>
+                <div class="modal-body" style="height: 600px">
+                </div>
+                <div class="modal-footer">
+                    <span class="btn btn-danger" data-dismiss="modal" data-target="#viewmap">Close</span>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 @section("script")
     <script>
@@ -56,7 +70,7 @@
         obj.colModel = [
             {
                 title: "Thao tác",
-                width: 100,
+                width: 70,
                 editor: false,
                 dataIndx: "View",
                 align: 'center',
@@ -100,7 +114,7 @@
             },
             {
                 title: "Loại xe",
-                width: 70,
+                width: 100,
                 dataIndx: "Mã_loại_xe",
                 dataType: "string",
                 editor: false,
@@ -146,6 +160,18 @@
                         {'0':'Ghế ngồi'},
                         {'1':'Giường nằm'}
                     ]
+                }
+            },
+			{
+                title: "Vị trí",
+                width: 70,
+                dataIndx: "location",
+                dataType: "string",
+                editor: false,
+                align: "center",
+                render: function(ui){
+                    var str = "<a href='javascript:void(0)' data-toggle='modal' data-target='#viewmap' onclick='openmap("+ui.rowData['location']+")' title='Xem vị trí'><i class='glyphicon glyphicon-eye-open' style='color: #00bf00;'></i></a>";
+                    return str;
                 }
             },
             {
@@ -281,5 +307,18 @@
                 }
             }
         }
+		function openmap(x,y){
+            var mapOptions = {
+                center: new google.maps.LatLng(x, y),
+                zoom: 16,
+                mapTypeId:google.maps.MapTypeId.ROADMAP
+            };
+            var marker = new google.maps.Marker({
+                position: new google.maps.LatLng(x, y)
+            });
+            var map = new google.maps.Map(document.getElementById("viewmap").getElementsByClassName("modal-body")[0],mapOptions);
+            marker.setMap(map);
+        }
     </script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDPoe4NcaI69_-eBqxW9Of05dHNF0cRJ78"></script>
 @endsection
