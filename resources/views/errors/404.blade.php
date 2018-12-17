@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Admin Login</title>
+    <title>Lỗi 404</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -24,7 +24,7 @@
 <div class="container-fluid">
 	<div class="header">
         <div class="row">
-            <h3 class="col-lg-4"><a href="{{asset('admin/')}}">AWE Admin</a></h3>
+            <h3 class="col-lg-4"><a href="{{asset('admin/')}}"></a></h3>
             <h5 class="col-lg-4"><a href="{{url('/')}}" title="Chuyển về trang khách hàng"><img src="{{asset('/images/icons/luggage.png')}}" height="30" alt="icon">AwesomeTravel</a></h5>
             <div class="col-lg-4 userzone">
             </div>
@@ -32,26 +32,8 @@
         {{--<hr />--}}
     </div>
     <div class="login-form">
-        <form action="{{route('adminlogin')}}" method="post">
-            @csrf
-			<div class="panel panel-default">
-				<div class="panel-heading">Admin Login</div>
-				<div class="panel-body">
-					<div class="alert alert-danger" style='{{session("alert")? "display: block":""}}'>{{session("alert")? session("alert"):"*"}}</div>
-					<div class="form-group">
-						<label>Tài khoản</label>
-						<input type="text" class="form-control" name="username" placeholder="Tài khoản" value='{{session("username")? session("username"):""}}'>
-					</div>
-					<div class="form-group">
-						<label>Mật khẩu</label>
-						<input type="password" class="form-control" name="password" placeholder="Mật khẩu">
-					</div>
-					<div class="form-group">
-						<input type="submit" class="form-control" value="Đăng Nhập">
-					</div>
-				</div>
-			</div>
-        </form>
+		<h2 style="color: white;">Lỗi 404 Không tìm thấy trang</h2>
+		<a href="javascript:void(0);" onclick="window.history.back();">Trở về</a>
     </div>
 </div>
 <script>

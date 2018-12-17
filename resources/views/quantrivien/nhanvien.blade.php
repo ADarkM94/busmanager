@@ -108,7 +108,7 @@
                     type: "select",
                     condition: "equal",
                     options: [
-                        {"":"All"},
+                        {"":"[All]"},
                         {"QTV":"Quản trị viên"},
                         {"QLDV":"Quản lý đặt vé"},
                         {"TX":"Tài xế"}
@@ -157,7 +157,7 @@
                     type: "select",
                     condition: "equal",
                     options: [
-                        {"":"All"},
+                        {"":"[All]"},
                         {"1":"Nam"},
                         {"2":"Nữ"},
                         {"0":"Không xác định"}
@@ -210,6 +210,8 @@
                 align: 'center',
                 filter: {
                     type: 'textbox',
+					attr: 'placeholder="Tìm theo Tên đăng nhập"',
+                    cls: 'filterstyle',
                     condition: 'contain',
                     listeners: ['keyup']
                 }

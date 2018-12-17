@@ -138,7 +138,7 @@
                     type: 'select',
                     condition: 'equal',
                     options: [
-                        {'':'All'},
+                        {'':'[All]'},
                         {'0':'Waiting'},
                         {'1':'Booked'},
                         {'2':'Locked'},

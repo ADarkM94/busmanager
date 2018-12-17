@@ -165,7 +165,7 @@
                         type: "select",
                         condition: "equal",
                         options: [
-                            {"":"All"},
+                            {"":"[All]"},
                             {"1":"Nam"},
                             {"2":"Nữ"},
                             {"0":"Không xác định"}

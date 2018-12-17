@@ -116,7 +116,7 @@
                     type: 'select',
                     condition: 'equal',
                     options: [
-                        {'':'All'},
+                        {'':'[All]'},
                         {'0':'Waiting'},
                         {'1':'Running'},
                         {'2':'Completed'},

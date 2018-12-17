@@ -234,7 +234,7 @@
                         condition: 'equal',
                         listeners: ['change'],
                         options: [
-                            {'':'All'},
+                            {'':'[All]'},
                             {'0':'Ghế ngồi'},
                             {'1':'Giường nằm'}
                         ]
