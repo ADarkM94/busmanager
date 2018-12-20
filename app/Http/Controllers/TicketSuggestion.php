@@ -245,7 +245,7 @@ class TicketSuggestion extends Controller
         $malotrinh = $ttxe[0]->Mã_lộ_trình;
         $maloaixe = $ttxe[0]->Mã_loại_xe;
         $mtxve = DB::table('ve')->where('Mã_chuyến_xe','=',$machuyenxe)->select('Vị_trí_ghế')->get();
-        $mtxkhach = DB::select(DB::raw("SELECT Mã_khách_hàng,COUNT(*) FROM ve,chuyen_xe,xe,customer WHERE ve.Mã_chuyến_xe = chuyen_xe.Mã AND chuyen_xe.Mã_lộ_trình = {$malotrinh} AND chuyen_xe.Mã_xe = xe.Mã AND xe.Mã_loại_xe = {$maloaixe} AND ve.Mã_khách_hàng IS NOT NULL AND ve.Mã_khách_hàng = customer.Mã AND customer.`Giới tính` = '{$gioitinh}' AND customer.Ngày_sinh BETWEEN '{$namdau}' AND '{$namcuoi}' GROUP BY Mã_khách_hàng ORDER BY COUNT(*) DESC"));
+        $mtxkhach = DB::select(DB::raw("SELECT Mã_khách_hàng,COUNT(*) FROM ve,chuyen_xe,xe,customer WHERE ve.Mã_chuyến_xe = chuyen_xe.Mã AND chuyen_xe.Mã_lộ_trình = {$malotrinh} AND chuyen_xe.Mã_xe = xe.Mã AND xe.Mã_loại_xe = {$maloaixe} AND ve.Mã_khách_hàng IS NOT NULL AND ve.Mã_khách_hàng = customer.Mã AND customer.`Giới tính` = '{$gioitinh}' AND ve.Trạng_thái = 1 AND customer.Ngày_sinh BETWEEN '{$namdau}' AND '{$namcuoi}' GROUP BY Mã_khách_hàng ORDER BY COUNT(*) DESC"));
         // return response()->json(var_dump($mtxkhach));
 		$customermax = 30;
 		if($makhachhang!=null)
