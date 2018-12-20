@@ -63,7 +63,7 @@
 					<input type="tel" class="form-control"  name="phone" value="{{isset($ttnhanvien['Sđt'])? $ttnhanvien['Sđt']:''}}" placeholder="Số điện thoại" required>
                 </div>
 				<div class="form-group col-lg-12">
-					<label>Địa chỉ</label>
+					<label>Địa chỉ<i class="text text-danger">*</i></label>
 					<input type="text" class="form-control"  name="address" value="{{isset($ttnhanvien['Địa_chỉ'])? $ttnhanvien['Địa_chỉ']:''}}" placeholder="Địa chỉ" required>
                 </div>
 				<div class="form-group col-lg-6">
@@ -167,6 +167,7 @@
 				username.style.borderColor = "#ccc";
 				email.style.borderColor = "#ccc";
 				phone.style.borderColor = "#ccc";
+				address.style.borderColor = "#ccc";
 				banglai.style.borderColor = "#ccc";
 				chinhanh.style.borderColor = "#ccc";
 				datestart.style.borderColor = "#ccc";
@@ -289,6 +290,11 @@
 							async: false
 						});
 					}
+				}
+				if(address.value == "")
+				{
+					address.style.borderColor = "red";
+					str += "Địa chỉ không được để trống!<br>";
 				}
 				if(typenv.value == "TX")
 				{
@@ -586,6 +592,11 @@
 							async: false
 						});
 					}
+				}
+				if(address.value == "")
+				{
+					address.style.borderColor = "red";
+					str += "Địa chỉ không được để trống!<br>";
 				}
 				if(typenv.value == "TX")
 				{

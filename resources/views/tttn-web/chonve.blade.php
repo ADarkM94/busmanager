@@ -22,6 +22,7 @@
     <div class="chonvemain">
         <!-- Thông tin chuyến xe -->
           <div class="chonveleft">
+              <?php $makh=Session::get('makh'); ?>
               @foreach($chonve as $t)
               <h3>Thông tin vé</h3>
               <p><i class="fa fa-bus"></i> Nơi Khởi Hành: <a>{{$t->Nơi_đi}}</a></p><br>
@@ -29,7 +30,13 @@
               <p><span class="glyphicon glyphicon-time"></span> Ngày đi: {{$t->Ngày_xuất_phát}}  {{$t->Giờ_xuất_phát}}</p><br>
               <p><span class="glyphicon glyphicon-bed"></span> Loại Ghế: {{($t->Loại_ghế==1)? 'Giường Nằm':'Ghế Ngồi'}} </p><br>
               <p><i class="fa fa-balance-scale"></i> Giá vé: {{$t->Tiền_vé/1000}}.000 VNĐ</p><br>
-              <p><i class="fa fa-address-card-o"></i> Vé đang chọn: </p><br>
+              <p><i class="fa fa-address-card-o"></i> Vé đang chọn: <b class="vedangchon">
+                  @foreach($ve as $v)
+                    @if($v->Trạng_thái == 2 && $v->Mã_khách_hàng == $makh )
+                        {{$v->Vị_trí_ghế}}
+                    @endif
+                  @endforeach
+              </b> </p><br>
               <button type="button" style="background: #f57812; border: none;" class="btn btn-success chondatve"  data-id={{$id}}>Đặt vé</button>
           </div>
           @endforeach
@@ -72,7 +79,7 @@
                                           <td class="giuongdangchon" title="Ghế Đang Chọn" onload="demnguoc2({{$ve[$dem]->Mã}},{{$ve[$dem]->TG}})" data-ma={{$ve[$dem]->Mã}}><p class="text1"  type="text"  ></p><div class="contentgiuong">{{$ve[$dem]->Vị_trí_ghế}}</div></td>
 
                                       @else
-                                           <td class="giuongcochon" title="Đã Có Người Chọn" onload="demnguoc1({{$ve[$dem]->Mã}},{{$ve[$dem]->TG}})" data-ma={{$ve[$dem]->Mã}}><p class="text1"  type="text"  ></p><div class="contentgiuong">{{$ve[$dem]->Vị_trí_ghế}}</div></td>
+                                           <td class="giuongcochon" title="Đã Có Người Chọn" onload="demnguoc1({{$ve[$dem]->Mã}},{{$ve[$dem]->TG}})" data-ma={{$ve[$dem]->Mã}}><p class="text1"  type="text"  ></p><!-- <div class="contentgiuong">{{$ve[$dem]->Vị_trí_ghế}}</div></td> -->
 
                                       @endif
                                   @endif
@@ -109,7 +116,7 @@
                                           @else
                                                <td class="giuongcochon" title="Đã Có Người Chọn" onload="demnguoc1({{$ve[$dem]->Mã}},{{$ve[$dem]->TG}})" data-ma={{$ve[$dem]->Mã}}>
                                                 <p class="text1"  type="text"  ></p>
-                                                <div class="contentgiuong">{{$ve[$dem]->Vị_trí_ghế}}</div></td>
+                                                <!-- <div class="contentgiuong">{{$ve[$dem]->Vị_trí_ghế}}</div></td> -->
 
                                           @endif
                                       @endif
@@ -163,7 +170,7 @@
                                                
                                               <div class="content">{{$ve[$dem]->Vị_trí_ghế}}</div></td>
                                           @elseif($ve[$dem]->Trạng_thái ==0)
-                                              <td class="ghecontrong" title="Ghế trống" data-ma={{$ve[$dem]->Mã}}><img src="../images/ghe.png">
+                                              <td class="ghecontrong" title="Ghế trống" data-vitri={{$ve[$dem]->Vị_trí_ghế}} data-ma={{$ve[$dem]->Mã}}><img src="../images/ghe.png">
                                                 <p class="text1" type="text"></p>
                                                   <div class="content">{{$ve[$dem]->Vị_trí_ghế}}</div></td>
                                           @elseif($ve[$dem]->Trạng_thái == 2)
@@ -195,6 +202,19 @@
     <!-- kết thúc phần chọn vé -->
 @endsection
 @section('excontent')
+<div id="khongcosan" class="modal fade">
+        <div class="modal-dialog" style="width: 400px;">
+            <div class="modal-content">
+                <div class="modal-header" style="background: rgb(0,64,87); color: #FFF; text-align: center;">
+                    <button class="close dongthongbao" data-dismiss="modal" style="color: white;opacity: 1;">&times;</button>
+                    <h4 class="modal-title">Thông báo</h4>
+                </div>
+                <div class="modal-body">
+                   
+                </div>
+            </div>
+        </div>
+    </div>
   <!-- Phần vé đề xuất -->
       <div id="vedexuat" class="modal fade" role="dialog">
           <div class="modal-dialog" style="width: 400px;">
@@ -332,13 +352,14 @@
                 }
             }
         /*Xử lý đặt ghế*/
-            function datghe(bien,ma){
+            function datghe(bien,ma,vitri){
                 makh = {{Session::get('makh')}};
                      bien.addClass("ghedangchon");
                      bien.removeClass("ghecontrong");
                      mang.push(ma);
                       $("td[data-ma='"+ma+"'] .text1").show();
                      demnguoc(ma,600);
+                     $(".vedangchon").append("<b> "+vitri+"</b>");
                     $.ajax({
                         url: '{{route("xulydatve")}}',
                         type: 'POST',
@@ -367,7 +388,8 @@
                                     break;
                                }
                            }
-                            alert("Xin lổi - Ghế này đã có người mua !")
+                            $("#khongcosan .modal-body").html("Ghế đã có người mua!");
+                           $("#khongcosan").modal("show"); 
                            }
                            else if(data.kq == 2){
                             time= data.TGC;
@@ -380,7 +402,8 @@
                                     break;
                                }
                            }
-                            alert("Xin lổi - Ghế này đã có người chọn !")
+                            $("#khongcosan .modal-body").html("Ghế Đã có người đặt!");
+                           $("#khongcosan").modal("show"); 
                            }
                         }
                  });
@@ -421,7 +444,8 @@
                                     break;
                                }
                            }
-                            alert("Xin lổi - Ghế này đã có người mua !")
+                            alert("Xin lổi - Ghế này đã có người mua !");
+                            location.reload();
                            }
                            else if(data.kq == 2){
                             bien.addClass("giuongcochon");
@@ -432,7 +456,8 @@
                                     break;
                                }
                            }
-                            alert("Xin lổi - Ghế này đã có người chọn !")
+                            alert("Xin lổi - Ghế này đã có người chọn !");
+                            location.reload();
                            }
                         }
                  });
@@ -441,8 +466,9 @@
           /*kích chọn vé ghế*/
              $(".bangve").delegate(".ghecontrong","click",function(){
                     ma = $(this).attr("data-ma");
+                    vitri = $(this).attr("data-vitri");
                     bien = $(this);
-                    datghe(bien,ma);
+                    datghe(bien,ma,vitri);
                 });
           /*kích hủy vé ghế*/
               $(".bangve").delegate(".ghedangchon","click",function(){
@@ -666,6 +692,10 @@
                             }
                         }
                  });
+                });
+                /*reload*/
+                $(".dongthongbao").click(function(){
+                  location.reload();
                 });
             /* Hủy chọn vé đề xuất*/
                 $("#vedexuat").delegate(".huygiudx","click",function(){

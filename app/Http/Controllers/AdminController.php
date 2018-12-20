@@ -538,7 +538,8 @@ class AdminController extends Controller
             ->join('employee as employee1','chuyen_xe.Mã_tài_xế','=','employee1.Mã')
             ->where('chuyen_xe.is_del','=','0')
             ->select('chuyen_xe.Mã','employee.Họ_Tên as Nhân_viên_tạo','employee1.Họ_Tên as Tài_xế','lo_trinh.Nơi_đi','lo_trinh.Nơi_đến','xe.Biển_số','chuyen_xe.Tiền_vé','bus_model.Loại_ghế','chuyen_xe.Ngày_xuất_phát','chuyen_xe.Giờ_xuất_phát','chuyen_xe.Trạng_thái')
-            ->get();
+            ->orderBy('chuyen_xe.Mã','desc')
+			->get();
         return view("quantrivien.chuyenxe",compact('chuyenxe'));
     }
     public function addchuyenxe($id = "") {
@@ -693,7 +694,7 @@ class AdminController extends Controller
                             if ($sodo[$i * $col + $j] == 1) {
                                 $vitri = 'B-' . ($k);
                                 DB::insert("INSERT INTO `ve`(`Mã_chuyến_xe`, `Vị_trí_ghế`, `Trạng_thái`, `created_at`, `updated_at`) VALUES (?,?,?,?,?)",
-                                    [$request->ID, $vitri, $trangthai, $created_at, $updated_at]);
+                                    [$id, $vitri, $trangthai, $created_at, $updated_at]);
                                 $k++;
                             }
                         }
@@ -739,7 +740,8 @@ class AdminController extends Controller
                 ->join('employee as employee1','chuyen_xe.Mã_tài_xế','=','employee1.Mã')
                 ->where('chuyen_xe.is_del','=','0')
                 ->select('chuyen_xe.Mã','employee.Họ_Tên as Nhân_viên_tạo','employee1.Họ_Tên as Tài_xế','lo_trinh.Nơi_đi','lo_trinh.Nơi_đến','xe.Biển_số','chuyen_xe.Tiền_vé','bus_model.Loại_ghế','chuyen_xe.Ngày_xuất_phát','chuyen_xe.Giờ_xuất_phát','chuyen_xe.Trạng_thái')
-                ->get();
+                ->orderBy('chuyen_xe.Mã','desc')
+				->get();
             return \response()->json(['msg'=>$chuyenxe]);
         }
         elseif ($index==2&&$id==''){
