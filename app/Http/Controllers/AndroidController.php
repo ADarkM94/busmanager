@@ -35,6 +35,7 @@ class AndroidController extends Controller
         $Chuyenxe = DB::table("chuyen_xe")->join("lo_trinh","chuyen_xe.Mã_lộ_trình","=","lo_trinh.Mã")
 		->join("xe","chuyen_xe.Mã_xe","=","xe.Mã")
 		->join("bus_model","xe.Mã_loại_xe","=","bus_model.Mã")
+        ->orderBy('Giờ_xuất_phát')
 		->where("Nơi_đi","=", $Noidi)->where("Nơi_đến","=",$Noiden)
 		->where("Trạng_thái","=","0")
 		->where("is_del","=",0)
@@ -406,7 +407,7 @@ class AndroidController extends Controller
     //         return \response()->json(['kq'=>0]);
     // }
 
-         public function xulydatve2(Request $request){
+         public function android_xulydatve2(Request $request){
     
             $ma = $request -> MA;
 

@@ -72,7 +72,7 @@
                                   @if($ve[$dem]->Trạng_thái == 1)
                                   <td class="giuong" title="Giường đã bán cho khách"><div class="contentgiuong">{{$ve[$dem]->Vị_trí_ghế}}</div></td>
                                   @elseif($ve[$dem]->Trạng_thái ==0)
-                                  <td class="giuongcontrong" title="Ghế trống" data-ma={{$ve[$dem]->Mã}}><p class="text1"  type="text"  ></p>
+                                  <td class="giuongcontrong" title="Ghế trống" data-vitri={{$ve[$dem]->Vị_trí_ghế}} data-ma={{$ve[$dem]->Mã}}><p class="text1"  type="text"  ></p>
                                       <div class="contentgiuong">{{$ve[$dem]->Vị_trí_ghế}}</div></td>
                                   @elseif($ve[$dem]->Trạng_thái == 2)
                                       @if($ve[$dem]->Mã_khách_hàng == Session::get('makh'))
@@ -106,7 +106,7 @@
                                       @if($ve[$dem]->Trạng_thái == 1)
                                       <td class="giuong" title="Giường đã bán cho khách"></div><div class="contentgiuong">{{$ve[$dem]->Vị_trí_ghế}}</div></td>
                                       @elseif($ve[$dem]->Trạng_thái ==0)
-                                      <td class="giuongcontrong" title="Ghế trống" data-ma={{$ve[$dem]->Mã}}><p class="text1"  type="text"  ></p>
+                                      <td class="giuongcontrong" title="Ghế trống" data-vitri={{$ve[$dem]->Vị_trí_ghế}} data-ma={{$ve[$dem]->Mã}}><p class="text1"  type="text"  ></p>
                                           <div class="contentgiuong">{{$ve[$dem]->Vị_trí_ghế}}</div></td>
                                       @elseif($ve[$dem]->Trạng_thái == 2)
                                           @if($ve[$dem]->Mã_khách_hàng == Session::get('makh'))
@@ -409,13 +409,14 @@
                  });
             }
         /*Xử lý đặt giường*/
-            function datgiuong(bien,ma){
+            function datgiuong(bien,ma,vitri){
               makh = {{Session::get('makh')}};
                             bien.addClass("giuongdangchon");
                             bien.removeClass("giuongcontrong");
                             mang.push(ma);
                             $("td[data-ma='"+ma+"'] .text1").show();
                      demnguoc(ma,600);
+                     $(".vedangchon").append("<b> "+vitri+"</b>");
                     $.ajax({
                         url: '{{route("xulydatve")}}',
                         type: 'POST',
@@ -444,8 +445,8 @@
                                     break;
                                }
                            }
-                            alert("Xin lổi - Ghế này đã có người mua !");
-                            location.reload();
+                            $("#khongcosan .modal-body").html("Ghế đã có người mua!");
+                           $("#khongcosan").modal("show"); 
                            }
                            else if(data.kq == 2){
                             bien.addClass("giuongcochon");
@@ -456,8 +457,8 @@
                                     break;
                                }
                            }
-                            alert("Xin lổi - Ghế này đã có người chọn !");
-                            location.reload();
+                             $("#khongcosan .modal-body").html("Ghế Đã có người đặt!");
+                           $("#khongcosan").modal("show");
                            }
                         }
                  });
@@ -501,8 +502,9 @@
           /*kích chọn vé giường*/
                 $(".bangve").delegate(".giuongcontrong","click",function(){
                 ma = $(this).attr("data-ma");
+                vitri = $(this).attr("data-vitri");
                 bien = $(this);
-                datgiuong(bien,ma);    
+                datgiuong(bien,ma,vitri);    
               });
           /*kích hủy chọn vé giường*/
                $(".bangve").delegate(".giuongdangchon","click",function(){
@@ -586,16 +588,29 @@
                         else{
                           dem = data.kq.length;
                           vitri = data.kq[0].Vị_trí_ghế;
+                          dai = vitri.length;
                           ma = data.kq[0].Mã;
-                          $(".vetotnhat").append("<div class='vitridx'>Vị Trí: <strong>"+vitri+"</strong> <button class='giuvedx' data-ma='"+ma+"'>Chọn Vé</button><button class='huygiudx' data-ma='"+ma+"' >Bỏ Chọn</button></div>");
+                          if(dai==3){
+                            $(".vetotnhat").append("<div class='vitridx'>Vị Trí: <strong>"+vitri+"&nbsp</strong> <button class='giuvedx' data-ma='"+ma+"'>Chọn Vé</button><button class='huygiudx' data-ma='"+ma+"' >Bỏ Chọn</button></div>");
+                          }
+                          else{
+                            $(".vetotnhat").append("<div class='vitridx'>Vị Trí: <strong>"+vitri+"</strong> <button class='giuvedx' data-ma='"+ma+"'>Chọn Vé</button><button class='huygiudx' data-ma='"+ma+"' >Bỏ Chọn</button></div>");
+                          }
                           for(i=1;i<6;i++){
                             vitri = data.kq[i].Vị_trí_ghế;
+                            dai = vitri.length;
                             ma = data.kq[i].Mã;
-                            $(".vetieptheo").append("<div class='vitridx'>Vị Trí: <strong>"+vitri+"</strong> <button class='giuvedx' data-ma='"+ma+"'>Chọn Vé</button><button class='huygiudx' data-ma='"+ma+"'>Bỏ Chọn</button></div>");
-                             $(".vetieptheo").append("<br>");
+                            if(dai==3){
+                               $(".vetieptheo").append("<div class='vitridx'>Vị Trí: <strong>"+vitri+"&nbsp</strong> <button class='giuvedx' data-ma='"+ma+"'>Chọn Vé</button><button class='huygiudx' data-ma='"+ma+"'>Bỏ Chọn</button></div>");
+                                $(".vetieptheo").append("<br>");
+                           }
+                           else{
+                               $(".vetieptheo").append("<div class='vitridx'>Vị Trí: <strong>"+vitri+"</strong> <button class='giuvedx' data-ma='"+ma+"'>Chọn Vé</button><button class='huygiudx' data-ma='"+ma+"'>Bỏ Chọn</button></div>");
+                                $(".vetieptheo").append("<br>");
+                           }
                           }
                         }
-                      }
+                      },
                   }) ;
                });
             /*đề xuất cho người thân*/
@@ -630,13 +645,26 @@
                         else{
                             dem = data.kq.length;
                             vitri = data.kq[0].Vị_trí_ghế;
+                            dai = vitri.length;
                             ma = data.kq[0].Mã;
-                            $(".vetotnhat").append("<div class='vitridx'>Vị Trí: <strong>"+vitri+"</strong> <button class='giuvedx' data-ma='"+ma+"'>Chọn Vé</button><button class='huygiudx' data-ma='"+ma+"' >Bỏ Chọn</button></div>");
+                            if(dai==3){
+                              $(".vetotnhat").append("<div class='vitridx'>Vị Trí: <strong>"+vitri+"&nbsp</strong> <button class='giuvedx' data-ma='"+ma+"'>Chọn Vé</button><button class='huygiudx' data-ma='"+ma+"' >Bỏ Chọn</button></div>");
+                            }
+                            else{
+                              $(".vetotnhat").append("<div class='vitridx'>Vị Trí: <strong>"+vitri+"</strong> <button class='giuvedx' data-ma='"+ma+"'>Chọn Vé</button><button class='huygiudx' data-ma='"+ma+"' >Bỏ Chọn</button></div>");
+                            }
                             for(i=1;i<6;i++){
                           vitri = data.kq[i].Vị_trí_ghế;
+                          dai == vitri.length;
                           ma = data.kq[i].Mã;
-                          $(".vetieptheo").append("<div class='vitridx'>Vị Trí: <strong>"+vitri+"</strong> <button class='giuvedx' data-ma='"+ma+"'>Chọn Vé</button><button class='huygiudx' data-ma='"+ma+"'>Bỏ Chọn</button></div>");
-                           $(".vetieptheo").append("<br>");
+                          if(dai==3){
+                              $(".vetieptheo").append("<div class='vitridx'>Vị Trí: <strong>"+vitri+"&nbsp</strong> <button class='giuvedx' data-ma='"+ma+"'>Chọn Vé</button><button class='huygiudx' data-ma='"+ma+"'>Bỏ Chọn</button></div>");
+                             $(".vetieptheo").append("<br>");
+                          }
+                          else{
+                            $(".vetieptheo").append("<div class='vitridx'>Vị Trí: <strong>"+vitri+"</strong> <button class='giuvedx' data-ma='"+ma+"'>Chọn Vé</button><button class='huygiudx' data-ma='"+ma+"'>Bỏ Chọn</button></div>");
+                             $(".vetieptheo").append("<br>");
+                         }
                         }
                       }
                       }

@@ -92,7 +92,7 @@
                         <!-- Button tìm vé  -->
                         <div class="tim">
                             <i class="fa fa-ticket icon-flat bg-btn-actived"></i>
-                            <button type="button" class="btn" id="timchuyendimain"><a href="javascript:void(0)" >Tìm vé</a></button>
+                            <button type="button" class="btn" id="timchuyendimain"><a>Tìm vé</a></button>
                         </div>
                     </div>
                   </form>
@@ -106,17 +106,15 @@
                 <div class="tentintuc"><h3>Tin Tức Nổi Bật</h3></div>
                 <ul>
                   @foreach($tintuc as $y)
-                    <li>
-                        <?php  $id = $y->news_id; ?>
+                    <li onclick="location.href='{{url("showtintuc")}}/{{$y->news_id}}';" >     
                         <img src="upload/{{$y->image}}">
-                        
-                        <a href="{{asset("showtintuc/{$id}")}}"><strong>{{$y->title}}</strong></a>
+                        <a><strong>{{$y->title}}</strong></a>
                     </li>
                     @endforeach
                 </ul>
                 <div style="clear: left;"></div>
                 <div class="tintucbutton">
-                    <button class="btn"><a href="{{asset('/tintuc')}}">Xem Toàn Bộ</a></button>
+                    <button class="btn" onclick="location.href='{{url("tintuc")}}';"><a>Xem Toàn Bộ</a></button>
                 </div>
             </div>
             <div style="clear: left;"></div>

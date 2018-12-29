@@ -42,7 +42,7 @@
                             <td><div class="chuyenxetim">
                                     @if(Session::has('makh'))
                                         <i class="fa fa-arrow-right icon-flat bg-btn-actived"></i>
-                                        <button type="button" class="btn"><a href="chonve/{{$id=$t->Mã}}">Đặt vé</a></button>
+                                        <button type="button" class="btn" onclick="location.href='{{url("chonve")}}/{{$id=$t->Mã}}';"><a>Đặt vé</a></button>
                                     @else
                                         <i class="fa fa-arrow-right icon-flat bg-btn-actived"></i>
                                         <button type="button" class="btn"><a data-toggle="modal" data-target="#login" data-dismiss="modal" >Đặt vé</a></button>

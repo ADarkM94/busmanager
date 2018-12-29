@@ -270,6 +270,12 @@ a{
 	margin-top: 1em;
 	position: relative;
 }
+img {
+  transition: all 0.5s ease-in;
+}
+.tintuc li:hover img{
+	transform: scale(0.98);
+}
 .tentintuc{
 	background-color: #f57812;
 	border-radius: 0 30px 0 30px;
@@ -853,6 +859,12 @@ a{
 	top: -30%;
 	left: 25%;
 }
+img {
+  transition: all 0.5s ease-in;
+}
+.trangtintuc li:hover img{
+	transform: scale(0.98);
+}
 .trangtintuc ul{
 	list-style-type: none;
 	padding-top: 3em;
@@ -1219,6 +1231,7 @@ a{
 }
 .vitridx strong{
 	margin-left: 10px;
+	max-width: 100px;
 }
 .vitridx button{
 	background: #f57812;

@@ -27,10 +27,10 @@
             <br>
             <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-transgender-alt"></i></span>
-                 <label class="checkbox-inline">
+                 <label class="checkbox-inline" style="color: #000;">
                         <input type="radio" name="txtgioitinh" value="1" checked>Nam
                 </label>
-                <label class="checkbox-inline">
+                <label class="checkbox-inline" style="color: #000;">
                         <input type="radio" name="txtgioitinh" value="2">Nữ
                 </label>
             </div>

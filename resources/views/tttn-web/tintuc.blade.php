@@ -10,12 +10,10 @@
             <ul>
                 <ul>
               @foreach($tintuc as $y)
-                <li>
-                    <?php  $id = $y->news_id; ?>
-                    <img src="upload/{{$y->image}}">
-                    
-                    <a href="{{asset("showtintuc/{$id}")}}"><strong>{{$y->title}}</strong></a>
-                </li>
+                <li onclick="location.href='{{url("showtintuc")}}/{{$y->news_id}}';" >     
+                        <img src="upload/{{$y->image}}">
+                        <a><strong>{{$y->title}}</strong></a>
+                    </li>
                 @endforeach
              </ul>
             </ul>

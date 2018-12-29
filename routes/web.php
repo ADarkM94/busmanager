@@ -42,7 +42,8 @@
     Route::post('/dangnhap','Controller@dangnhap')->name('dangnhap');
     /*Đăng xuất*/
     Route::get('logout', function(){
-        Request::session()->flush();
+        Request::session()->forget('makh');
+        Request::session()->forget('sdt');
         $tinh = DB::select("SELECT Tên FROM tinh");
         return redirect(route("home"));
     })->name('logout');
@@ -56,10 +57,6 @@
     Route::post('/doimatkhau','Controller@doimatkhau')->middleware('checkdangnhap')->name('doimatkhau');
     /*Tin tức*/
     Route::get('/tintuc','Controller@tintuc')->name('tintuc');
-    /*Form tin tức*/
-    Route::get('/formtintuc', function(){
-        return view('tttn-web.formtintuc');
-    } );
     /*Thêm giới thiệu*/
     Route::post('/addgioithieu','Controller@addgioithieu')->name('addgioithieu');
     /*Thêm tin tức*/
@@ -73,15 +70,9 @@
      /*Hủy chọn vé đề xuất*/
      Route::post('/huygiudx','Controller@huygiudx')->name('huygiudx');
 /* Kết thúc phần Route cho trang khách hàng */
-/* Bắt đầu phần Route để test chức năng */
 
 Route::get('/checkconnection', 'Controller@checkConnection');
 
-//Testing
-Route::get('/admintest', 'AdminController@test');
-Route::get('/admintest/test', function() {
-    return view('test');
-});
 Route::post('/admintest/login', 'AdminController@login')->name('login');
 
 /* Kết thúc phần Route để test chức năng */
