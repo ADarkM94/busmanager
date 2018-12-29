@@ -27,24 +27,29 @@
                 </div>
                 <div class="modal-body">
                     <form name="editticket" class="row">
-                        <input type="hidden" name="ID" value="">                        
-                        <div class="col-lg-6 form-group">
-                            <label>Giá</label>
-                            <input type="number" min="0" class="form-control" name="giave" placeholder="Giá vé" readonly>
-                        </div>
+                        <input type="hidden" name="ID" value="">   
+						<div class="col-lg-6 form-group">
+                            <label>Mã khách hàng</label>
+                            <input type="text" class="form-control" name="makhachhang" placeholder="Mã khách hàng" readonly>
+                        </div>  
                         <div class="col-lg-6 form-group">
                             <label>Trạng thái</label>
-                            <select class="form-control" name="trangthai">
+                            <select class="form-control" name="trangthai" disabled>
                                 <option value="0">Waiting</option>
                                 <option value="1">Booked</option>
                                 <option value="2">Locked</option>
-                                <option value="3">Banned</option>
                             </select>
-                        </div>                        
+                        </div>  
+						<div class="col-lg-12"><br></div>
+						<div class="col-lg-12 form-group">
+                            <label>Giá</label>
+                            <input type="text" min="0" class="form-control" name="giave" placeholder="Giá vé" readonly>
+                        </div>
                     </form>
                 </div>
                 <div class="modal-footer" style="text-align: center;">
-                    <button class="btn btn-success" id="btnsubmit" onclick="editVe()">Sửa Thông Tin Vé</button>
+					<button class="btn btn-success" id="btnxacnhan" onclick="thaotacVe(0)">Xác nhận Vé</button>
+                    <button class="btn btn-danger" id="btnhuy" onclick="thaotacVe(1)">Hủy Vé</button>
                 </div>
             </div>
         </div>
@@ -107,6 +112,24 @@
                             document.forms["editticket"]["ID"].value = rowData["Mã"];
                             document.forms["editticket"]["giave"].value = rowData["Tiền_vé"];
                             document.forms["editticket"]["trangthai"].value = rowData["Trạng_thái"];
+							document.forms["editticket"]["makhachhang"].value = rowData["Mã_khách_hàng"]!=null? rowData["Mã_khách_hàng"]:"Chưa có";
+							document.getElementById("btnxacnhan").classList.remove("showinline");
+							document.getElementById("btnhuy").classList.remove("showinline");
+							if(rowData["Trạng_thái"] == 1&&rowData["Thời_điểm_chọn"] != null)
+							{
+								document.getElementById("btnxacnhan").classList.add("showinline");
+								document.getElementById("btnhuy").classList.add("showinline");
+							}
+							else if(rowData["Trạng_thái"] == 1&&rowData["Thời_điểm_chọn"] == null)
+							{
+								document.getElementById("btnxacnhan").classList.remove("showinline");
+								document.getElementById("btnhuy").classList.add("showinline");
+							}
+							else if(rowData["Trạng_thái"] == 2)
+							{
+								document.getElementById("btnxacnhan").classList.remove("showinline");
+								document.getElementById("btnhuy").classList.add("showinline");
+							}
                             $("#editve").modal('show');
                         });
                 }
@@ -129,9 +152,6 @@
                         case 2:
                             return '<small style="font-size: .8em;" class="btn btn-warning">Locked</small>';
                             break;
-                        case 3:
-                            return '<small style="font-size: .8em;" class="btn btn-danger">Banned</small>';
-                            break;
                     }
                 },
                 filter: {
@@ -141,8 +161,7 @@
                         {'':'[All]'},
                         {'0':'Waiting'},
                         {'1':'Booked'},
-                        {'2':'Locked'},
-                        {'3':'Banned'}
+                        {'2':'Locked'}
                     ],
                     listeners: ['change']
                 }
@@ -163,15 +182,15 @@
                 }
             },
             {
-                title: "Nhân viên đặt",
+                title: "Mã nhân viên đặt",
                 width: 150,
-                dataIndx: "Nhân_viên_đặt",
+                dataIndx: "Mã_nhân_viên_đặt",
                 dataType: "string",
                 editor: false,
                 align: 'center',
                 filter: {
                     type: 'textbox',
-                    attr: 'placeholder="Tìm theo Nhân viên đặt"',
+                    attr: 'placeholder="Tìm theo Mã nhân viên đặt"',
                     cls: 'filterstyle',
                     condition: 'contain',
                     listeners: ['keyup']
@@ -323,9 +342,14 @@
 				}
             });
         }
-        function editVe() {
+        function thaotacVe(index) {
             var id = document.forms["editticket"]["ID"].value;
-            var trangthai = document.forms["editticket"]["trangthai"].value;
+            var trangthai = index;
+			var str = index==0? "Bạn muốn xác nhận vé này?":"Bạn muốn hủy vé này?";
+			if(!confirm(str))
+			{
+				return;
+			}
             $.ajax({
                 url: '{{route("editticket")}}',
                 type: 'POST',
@@ -337,12 +361,11 @@
                 success: function (data) {
                     if(data.result==1){
                         $("#editve").modal('hide');
-                        alert('Sửa thành công');
-                        refresh(1);
+                        alert(index==0?'Xác nhận Vé thành công':'Hủy Vé thành công');
                         refresh(2);
                     }
                     else {
-                        alert('Sửa thất bại');
+                        alert(index==0?'Xác nhận Vé thất bại':'Hủy Vé thất bại');
                     }
                 }
             });

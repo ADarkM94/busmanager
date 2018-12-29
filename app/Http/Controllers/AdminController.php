@@ -559,7 +559,7 @@ class AdminController extends Controller
             $ticket = DB::table('ve')->join('chuyen_xe','ve.Mã_chuyến_xe','=','chuyen_xe.Mã')
                 ->join('xe','xe.Mã','=','chuyen_xe.Mã_xe')
                 ->join('bus_model','bus_model.Mã','=','xe.Mã_loại_xe')
-                ->select('ve.Mã','ve.Mã_chuyến_xe','ve.Mã_nhân_viên_đặt','ve.Mã_khách_hàng','ve.Mã_đặt_vé','ve.Vị_trí_ghế','ve.Trạng_thái','chuyen_xe.Tiền_vé','bus_model.Loại_ghế')
+                ->select('ve.Mã','ve.Mã_chuyến_xe','ve.Mã_nhân_viên_đặt','ve.Mã_khách_hàng','ve.Mã_đặt_vé','ve.Vị_trí_ghế','ve.Trạng_thái','ve.Thời_điểm_chọn','chuyen_xe.Tiền_vé','bus_model.Loại_ghế')
                 ->where('Mã_chuyến_xe','=',$id)->get();
             foreach ($ttchuyenxes as $row){
                 $ttchuyenxe = $row;
@@ -728,7 +728,7 @@ class AdminController extends Controller
         $ticket = DB::table('ve')->join('chuyen_xe','ve.Mã_chuyến_xe','=','chuyen_xe.Mã')
             ->join('xe','xe.Mã','=','chuyen_xe.Mã_xe')
             ->join('bus_model','bus_model.Mã','=','xe.Mã_loại_xe')
-            ->select('ve.Mã','ve.Mã_chuyến_xe','ve.Mã_nhân_viên_đặt','ve.Mã_khách_hàng','ve.Mã_đặt_vé','ve.Vị_trí_ghế','ve.Trạng_thái','chuyen_xe.Tiền_vé','bus_model.Loại_ghế')
+            ->select('ve.Mã','ve.Mã_chuyến_xe','ve.Mã_nhân_viên_đặt','ve.Mã_khách_hàng','ve.Mã_đặt_vé','ve.Vị_trí_ghế','ve.Trạng_thái', 've.Thời_điểm_chọn','chuyen_xe.Tiền_vé','bus_model.Loại_ghế')
             ->get();
         return view('quantrivien.ve',['ticket'=>$ticket]);
     }
@@ -748,7 +748,7 @@ class AdminController extends Controller
             $ticket = DB::table('ve')->join('chuyen_xe','ve.Mã_chuyến_xe','=','chuyen_xe.Mã')
                 ->join('xe','xe.Mã','=','chuyen_xe.Mã_xe')
                 ->join('bus_model','bus_model.Mã','=','xe.Mã_loại_xe')
-                ->select('ve.Mã','ve.Mã_chuyến_xe','ve.Mã_nhân_viên_đặt','ve.Mã_khách_hàng','ve.Mã_đặt_vé','ve.Vị_trí_ghế','ve.Trạng_thái','chuyen_xe.Tiền_vé','bus_model.Loại_ghế')
+                ->select('ve.Mã','ve.Mã_chuyến_xe','ve.Mã_nhân_viên_đặt','ve.Mã_khách_hàng','ve.Mã_đặt_vé','ve.Vị_trí_ghế','ve.Trạng_thái','ve.Thời_điểm_chọn','chuyen_xe.Tiền_vé','bus_model.Loại_ghế')
                 ->get();
             return \response()->json(['msg'=>$ticket]);
         }
@@ -757,7 +757,7 @@ class AdminController extends Controller
                 ->join('xe','xe.Mã','=','chuyen_xe.Mã_xe')
                 ->join('bus_model','bus_model.Mã','=','xe.Mã_loại_xe')
                 ->where('ve.Mã_chuyến_xe','=',$id)
-                ->select('ve.Mã','ve.Mã_chuyến_xe','ve.Mã_nhân_viên_đặt','ve.Mã_khách_hàng','ve.Mã_đặt_vé','ve.Vị_trí_ghế','ve.Trạng_thái','chuyen_xe.Tiền_vé','bus_model.Loại_ghế')
+                ->select('ve.Mã','ve.Mã_chuyến_xe','ve.Mã_nhân_viên_đặt','ve.Mã_khách_hàng','ve.Mã_đặt_vé','ve.Vị_trí_ghế','ve.Trạng_thái','ve.Thời_điểm_chọn','chuyen_xe.Tiền_vé','bus_model.Loại_ghế')
                 ->get();
             return \response()->json(['msg'=>$ticket]);
         }
@@ -767,8 +767,16 @@ class AdminController extends Controller
         $trangthai = $request->trangthai;
         $updated_at = date('Y-m-d h-i-s');
         try {
-            DB::update("UPDATE `ve` SET `Trạng_thái`= ?,`updated_at`= ? WHERE `Mã`= ?",
-                [$trangthai,$updated_at,$id]);
+            if($trangthai == 0)
+			{
+				DB::update("UPDATE `ve` SET `Trạng_thái`= 1,`updated_at`= ?,`Thời_điểm_chọn`= ? WHERE `Mã`= ?",
+					[$updated_at,null,$id]);
+			}
+			else if($trangthai == 1)
+			{
+				DB::update("UPDATE `ve` SET `Mã_khách_hàng`= NULL,`Mã_nhân_viên_đặt`= NULL,`Mã_đặt_vé`= NULL,`Trạng_thái`= 0,`updated_at`= ?,`Thời_điểm_chọn`= ? WHERE `Mã`= ?",
+					[$updated_at,null,$id]);
+			}
         } catch (\Exception $e) {
             return \response()->json(['result'=>0]);
         }
