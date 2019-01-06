@@ -147,9 +147,11 @@ Route::middleware('admincheck')->group(function (){
     App\Http\Controllers\TicketSuggestion::makeMatrix();
 });*/
 
-Route::get("ticket", "TicketSuggestion@makeMatrix");
+Route::get("ticket", function(){
+	return view("ticket");
+});
 
-Route::post("ticket", "TicketSuggestion@makeMatrix")->name('ticketsuggestion');
+Route::post("ticket", "TicketSuggestion_show@makeMatrix")->name('ticketsuggestion');
 
 /* Route::get('test11', function(){
 	return response()->json(0);
